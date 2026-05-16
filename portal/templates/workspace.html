@@ -1,0 +1,433 @@
+{% extends "base.html" %}
+
+{% block title %}{{ episode.title }} — L-net Podcast Studio{% endblock %}
+
+{% block content %}
+
+<!-- Breadcrumb -->
+<div style="margin-bottom:20px;font-size:14px;color:var(--muted)">
+  <a href="/" style="color:var(--purple);text-decoration:none">מפת הפודקאסטים</a>
+  <span style="margin:0 6px">›</span>
+  <span>{{ cluster.name }}</span>
+  <span style="margin:0 6px">›</span>
+  <span>{{ course.name }}</span>
+</div>
+
+<!-- Episode header -->
+<div style="margin-bottom:32px">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+    <div>
+      <h1 style="font-size:22px;font-weight:600;margin-bottom:6px">{{ episode.title }}</h1>
+      <div style="font-size:14px;color:var(--muted)">
+        {{ cluster.name }} · {{ course.name }}
+      </div>
+    </div>
+    <span id="ep-status-badge"
+          class="{% if episode.status == 'written' %}badge-written{% else %}badge-pending{% endif %}"
+          style="font-size:14px;padding:5px 14px;border-radius:20px;flex-shrink:0;margin-top:4px">
+      {{ 'נכתב ✓' if episode.status == 'written' else 'ממתין לכתיבה' }}
+    </span>
+  </div>
+
+  <!-- Step progress bar -->
+  <div style="margin-top:20px">
+    <div style="display:flex;gap:0;border-radius:8px;overflow:hidden;border:1px solid var(--border)">
+      {% set steps = [
+        (1, 'הזנת חומר'),
+        (2, 'ניתוח תרבותי'),
+        (3, 'כתיבת טיוטה'),
+        (4, 'ביקורת ר\' אברהם'),
+        (5, 'תיקון'),
+        (6, 'ייצוא')
+      ] %}
+      {% for snum, slabel in steps %}
+      <div style="flex:1;text-align:center;padding:8px 4px;font-size:12px;font-weight:500;
+                  {% if ws.step >= snum %}background:var(--purple);color:#fff;
+                  {% elif ws.step == snum - 1 %}background:var(--purple-lt);color:var(--purple);
+                  {% else %}background:var(--bg);color:var(--muted);{% endif %}
+                  {% if not loop.last %}border-left:1px solid var(--border);{% endif %}">
+        {{ slabel }}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- STEP 1 — Content input -->
+<!-- ============================================================ -->
+<div class="ws-step" id="step-1">
+  <div class="step-header">
+    <span class="step-num {% if ws.step >= 2 %}done{% endif %}">
+      {% if ws.step >= 2 %}✓{% else %}1{% endif %}
+    </span>
+    <span class="step-title">הזנת חומר הפרק</span>
+    {% if ws.step >= 2 %}
+    <button class="btn btn-ghost btn-sm" onclick="toggleSection('s1-body')">ערוך מחדש</button>
+    {% endif %}
+  </div>
+
+  <div id="s1-body" {% if ws.step >= 2 %}style="display:none"{% endif %}>
+    <div class="step-body">
+      <label class="field-label">תוכן הפרק הגולמי <span style="color:#c00">*</span></label>
+
+      <div class="upload-zone">
+        <input type="file" id="content-file" accept=".docx" style="display:none" onchange="uploadContent()">
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('content-file').click()">
+          📎 העלה קובץ Word (.docx)
+        </button>
+        <span id="upload-status" style="color:var(--muted);font-size:13px">או הדבק תוכן ידנית בשדה למטה</span>
+      </div>
+
+      <textarea id="raw_content" rows="10" placeholder="הדבק כאן את חומר יחידת הלמידה, או העלה קובץ Word למעלה...">{{ ws.raw_content or '' }}</textarea>
+
+      <label class="field-label" style="margin-top:16px">פרשות / מקורות תורניים לשילוב <span style="color:var(--muted)">(אופציונלי)</span></label>
+      <textarea id="parashiyot" rows="3" placeholder="לדוגמה: פרשת בחוקותי, מסילת ישרים פרק א'...">{{ ws.parashiyot or '' }}</textarea>
+
+      <label class="field-label" style="margin-top:16px">נושאים לשים לב אליהם <span style="color:var(--muted)">(אופציונלי)</span></label>
+      <textarea id="avoid_notes" rows="2" placeholder="לדוגמה: הרבה שפה פסיכולוגית, מוזכרות אפליקציות...">{{ ws.avoid_notes or '' }}</textarea>
+
+      <div style="margin-top:20px">
+        <button class="btn btn-primary" onclick="runStep('analyze')">
+          <span id="btn-analyze-text">הכן ניתוח תרבותי →</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- STEP 2 — Cultural analysis -->
+<!-- ============================================================ -->
+<div class="ws-step {% if ws.step < 2 %}ws-locked{% endif %}" id="step-2">
+  <div class="step-header">
+    <span class="step-num {% if ws.step >= 3 %}done{% endif %}">
+      {% if ws.step >= 3 %}✓{% else %}2{% endif %}
+    </span>
+    <span class="step-title">ניתוח תרבותי + הצעות תורניות</span>
+    {% if ws.step >= 2 %}
+    <button class="btn btn-ghost btn-sm" onclick="runStep('analyze')">הרץ שוב</button>
+    {% endif %}
+  </div>
+
+  {% if ws.step >= 2 %}
+  <div class="step-body">
+    <div class="result-box" id="analysis-display">{{ ws.analysis | safe_nl }}</div>
+    <div style="margin-top:16px">
+      <button class="btn btn-primary" onclick="runStep('draft')">
+        <span id="btn-draft-text">כתוב טיוטה ראשונה →</span>
+      </button>
+    </div>
+  </div>
+  {% else %}
+  <div class="step-body locked-msg">ממתין לסיום שלב 1</div>
+  {% endif %}
+</div>
+
+<!-- ============================================================ -->
+<!-- STEP 3 — Draft script -->
+<!-- ============================================================ -->
+<div class="ws-step {% if ws.step < 3 %}ws-locked{% endif %}" id="step-3">
+  <div class="step-header">
+    <span class="step-num {% if ws.step >= 4 %}done{% endif %}">
+      {% if ws.step >= 4 %}✓{% else %}3{% endif %}
+    </span>
+    <span class="step-title">טיוטה ראשונה</span>
+    {% if ws.step >= 3 %}
+    <button class="btn btn-ghost btn-sm" onclick="runStep('draft')">כתוב מחדש</button>
+    {% endif %}
+  </div>
+
+  {% if ws.step >= 3 %}
+  <div class="step-body">
+    {% if draft_wc %}
+    <div class="word-stats" id="draft-stats">
+      <strong>{{ draft_wc }}</strong> מילים · זמן האזנה משוער: <strong>{{ draft_duration }}</strong>
+      <span style="color:var(--muted)">({{ words_per_minute }} מילים לדקה)</span>
+    </div>
+    {% endif %}
+    <div id="draft-display">
+      {{ ws.draft | render_table | safe }}
+    </div>
+    <div style="margin-top:16px">
+      <button class="btn btn-primary" onclick="runStep('critique')">
+        <span id="btn-critique-text">הרץ ביקורת ר' אברהם →</span>
+      </button>
+    </div>
+  </div>
+  {% else %}
+  <div class="step-body locked-msg">ממתין לסיום שלב 2</div>
+  {% endif %}
+</div>
+
+<!-- ============================================================ -->
+<!-- STEP 4 — Critique -->
+<!-- ============================================================ -->
+<div class="ws-step {% if ws.step < 4 %}ws-locked{% endif %}" id="step-4">
+  <div class="step-header">
+    <span class="step-num {% if ws.step >= 5 %}done{% endif %}">
+      {% if ws.step >= 5 %}✓{% else %}4{% endif %}
+    </span>
+    <span class="step-title">ביקורת ר' אברהם</span>
+    {% if ws.step >= 4 %}
+    <button class="btn btn-ghost btn-sm" onclick="runStep('critique')">הרץ שוב</button>
+    {% endif %}
+  </div>
+
+  {% if ws.step >= 4 %}
+  <div class="step-body">
+    <div class="result-box critique-box" id="critique-display">{{ ws.critique | safe_nl }}</div>
+    <div style="margin-top:16px">
+      <button class="btn btn-primary" onclick="runStep('revise')">
+        <span id="btn-revise-text">תקן לפי הביקורת →</span>
+      </button>
+    </div>
+  </div>
+  {% else %}
+  <div class="step-body locked-msg">ממתין לסיום שלב 3</div>
+  {% endif %}
+</div>
+
+<!-- ============================================================ -->
+<!-- STEP 5 — Revised script -->
+<!-- ============================================================ -->
+<div class="ws-step {% if ws.step < 5 %}ws-locked{% endif %}" id="step-5">
+  <div class="step-header">
+    <span class="step-num {% if ws.step >= 6 %}done{% endif %}">
+      {% if ws.step >= 6 %}✓{% else %}5{% endif %}
+    </span>
+    <span class="step-title">תסריט מתוקן</span>
+    {% if ws.step >= 5 %}
+    <button class="btn btn-ghost btn-sm" onclick="runStep('revise')">תקן שוב</button>
+    {% endif %}
+  </div>
+
+  {% if ws.step >= 5 %}
+  <div class="step-body">
+    {% if revised_wc %}
+    <div class="word-stats" id="revised-stats">
+      <strong>{{ revised_wc }}</strong> מילים · זמן האזנה משוער: <strong>{{ revised_duration }}</strong>
+      <span style="color:var(--muted)">({{ words_per_minute }} מילים לדקה)</span>
+    </div>
+    {% endif %}
+    <div id="revised-display">
+      {{ ws.revised | render_table | safe }}
+    </div>
+    <div style="margin-top:16px">
+      <button class="btn btn-primary" onclick="runStep('export')" id="btn-export">
+        <span id="btn-export-text">ייצא לקובץ Word ↓</span>
+      </button>
+    </div>
+  </div>
+  {% else %}
+  <div class="step-body locked-msg">ממתין לסיום שלב 4</div>
+  {% endif %}
+</div>
+
+<!-- ============================================================ -->
+<!-- STEP 6 — Export done -->
+<!-- ============================================================ -->
+{% if ws.step >= 6 %}
+<div class="ws-step" id="step-6">
+  <div class="step-header">
+    <span class="step-num done">✓</span>
+    <span class="step-title">הפרק מוכן!</span>
+  </div>
+  <div class="step-body">
+    <div class="export-success" id="export-success-box">
+      <span style="font-size:24px">🎙️</span>
+      <div>
+        <strong>הפרק יוצא בהצלחה</strong>
+        <div style="font-size:13px;color:var(--muted);margin-top:4px">קובץ Word מוכן להורדה</div>
+      </div>
+      <a href="/episode/{{ episode.id }}/download" class="btn btn-primary">הורד .docx</a>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- Loading overlay -->
+<div id="loading-overlay">
+  <div class="loading-card">
+    <div class="spinner"></div>
+    <div id="loading-text">Claude עובד...</div>
+    <div style="font-size:13px;color:var(--muted);margin-top:6px">בדרך כלל לוקח 20-40 שניות</div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+const EPISODE_ID = {{ episode.id }};
+
+const LOADING_MESSAGES = {
+  analyze: 'מנתח תוכן ומחפש מקורות תורניים...',
+  draft:   'כותב את הטיוטה הראשונה (~40 שניות)...',
+  critique: 'ר\' אברהם קורא בעיון...',
+  revise:  'מתקן לפי הביקורת...',
+  export:  'מייצר קובץ Word...',
+};
+
+function showLoading(action) {
+  document.getElementById('loading-text').textContent = LOADING_MESSAGES[action] || 'Claude עובד...';
+  document.getElementById('loading-overlay').classList.add('active');
+}
+function hideLoading() {
+  document.getElementById('loading-overlay').classList.remove('active');
+}
+
+function mdToTable(md) {
+  const lines = md.split('\n').filter(l => l.trim().startsWith('|'));
+  if (lines.length < 2) return `<pre style="direction:rtl;white-space:pre-wrap">${md}</pre>`;
+  const tableLines = lines.filter(l => !l.match(/^\|[-| ]+\|$/));
+  let html = '<div class="script-table-wrap"><table class="script-table"><thead><tr>';
+  const headers = tableLines[0].split('|').map(h => h.trim()).filter(Boolean);
+  headers.forEach(h => { html += `<th>${h}</th>`; });
+  html += '</tr></thead><tbody>';
+  for (let i = 1; i < tableLines.length; i++) {
+    const cells = tableLines[i].split('|').map(c => c.trim()).filter(Boolean);
+    html += '<tr>';
+    cells.forEach((c, idx) => {
+      const cls = (idx === 1 && c) ? ' class="speaker"' : '';
+      html += `<td${cls}>${c}</td>`;
+    });
+    html += '</tr>';
+  }
+  html += '</tbody></table></div>';
+  return html;
+}
+
+function splitRevisedAndReport(text) {
+  const sepIdx = text.indexOf('\n---\n');
+  if (sepIdx === -1) return { table: text, report: '' };
+  return { table: text.slice(0, sepIdx).trim(), report: text.slice(sepIdx + 5).trim() };
+}
+
+async function runStep(action) {
+  showLoading(action);
+
+  const body = {};
+  if (action === 'analyze') {
+    body.raw_content = document.getElementById('raw_content').value;
+    body.parashiyot  = document.getElementById('parashiyot').value;
+    body.avoid_notes = document.getElementById('avoid_notes').value;
+    if (!body.raw_content.trim()) { hideLoading(); alert('יש להזין חומר גולמי'); return; }
+  }
+  if (action === 'critique') {
+    // send current draft (may have been edited)
+    const draftEl = document.getElementById('draft-display');
+    // We send the original draft; editing is not inline in this version
+  }
+
+  try {
+    const resp = await fetch(`/episode/${EPISODE_ID}/api/${action}`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body),
+    });
+    const data = await resp.json();
+    hideLoading();
+
+    if (!data.ok) { alert('שגיאה: ' + data.error); return; }
+
+    if (action === 'analyze') {
+      document.getElementById('analysis-display').innerHTML =
+        data.result.replace(/\n/g, '<br>');
+      document.getElementById('step-2').classList.remove('ws-locked');
+      document.getElementById('step-2').scrollIntoView({behavior:'smooth', block:'start'});
+      document.querySelector('#step-2 .step-body .btn')?.removeAttribute('disabled');
+    }
+    if (action === 'draft') {
+      document.getElementById('draft-display').innerHTML = mdToTable(data.result);
+      updateStats('draft', data);
+      document.getElementById('step-3').classList.remove('ws-locked');
+      document.getElementById('step-3').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    if (action === 'critique') {
+      document.getElementById('critique-display').innerHTML =
+        data.result.replace(/\n/g, '<br>');
+      document.getElementById('step-4').classList.remove('ws-locked');
+      document.getElementById('step-4').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    if (action === 'revise') {
+      const { table, report } = splitRevisedAndReport(data.result);
+      let html = mdToTable(table);
+      if (report) html += `<div class="result-box" style="margin-top:16px;font-size:13px">${report.replace(/\n/g,'<br>')}</div>`;
+      document.getElementById('revised-display').innerHTML = html;
+      updateStats('revise', data);
+      document.getElementById('step-5').classList.remove('ws-locked');
+      document.getElementById('step-5').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    if (action === 'export') {
+      if (data.download_url) {
+        document.getElementById('ep-status-badge').textContent = 'נכתב ✓';
+        document.getElementById('ep-status-badge').className = 'badge-written';
+        // Show success box or reload
+        window.location.reload();
+      }
+    }
+
+  } catch (err) {
+    hideLoading();
+    alert('שגיאת רשת: ' + err.message);
+  }
+}
+
+function toggleSection(id) {
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === 'none' ? '' : 'none';
+}
+
+async function uploadContent() {
+  const fileInput = document.getElementById('content-file');
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  const statusEl = document.getElementById('upload-status');
+  statusEl.textContent = `מעלה את ${file.name}...`;
+  statusEl.style.color = 'var(--purple)';
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    const resp = await fetch(`/episode/${EPISODE_ID}/api/upload-content`, {
+      method: 'POST',
+      body: formData,
+    });
+    const data = await resp.json();
+    if (!data.ok) {
+      statusEl.textContent = 'שגיאה: ' + data.error;
+      statusEl.style.color = '#c00';
+      return;
+    }
+    document.getElementById('raw_content').value = data.text;
+    statusEl.textContent = `✓ נטען: ${data.filename} (${data.char_count.toLocaleString('he-IL')} תווים)`;
+    statusEl.style.color = 'var(--green)';
+  } catch (err) {
+    statusEl.textContent = 'שגיאת רשת: ' + err.message;
+    statusEl.style.color = '#c00';
+  }
+}
+
+function updateStats(action, data) {
+  if (!data.word_count) return;
+  const statsHtml = `<strong>${data.word_count}</strong> מילים · זמן האזנה משוער: <strong>${data.duration}</strong> <span style="color:var(--muted)">(120 מילים לדקה)</span>`;
+  const config = {
+    draft:  { container: 'step-3', statsId: 'draft-stats'   },
+    revise: { container: 'step-5', statsId: 'revised-stats' },
+  }[action];
+  if (!config) return;
+  const stepBody = document.querySelector(`#${config.container} .step-body`);
+  let statsEl = document.getElementById(config.statsId);
+  if (!statsEl) {
+    statsEl = document.createElement('div');
+    statsEl.id = config.statsId;
+    statsEl.className = 'word-stats';
+    stepBody.insertBefore(statsEl, stepBody.firstChild);
+  }
+  statsEl.innerHTML = statsHtml;
+}
+</script>
+{% endblock %}

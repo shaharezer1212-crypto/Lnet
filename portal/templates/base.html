@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}L-net Podcast Studio{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F5F5FA;
+      --surface:   #FFFFFF;
+      --border:    #E2E2EE;
+      --purple:    #8B7EC8;
+      --purple-lt: #EAE6F8;
+      --purple-dk: #6557A8;
+      --text:      #2A2A3D;
+      --muted:     #8888A4;
+      --green:     #5BAD78;
+      --green-lt:  #EBF7EF;
+      --radius:    12px;
+      --shadow:    0 2px 10px rgba(100,90,160,0.08);
+    }
+
+    body {
+      font-family: 'Rubik', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 17px;
+      color: var(--purple-dk);
+    }
+    .logo-dot {
+      width: 8px; height: 8px;
+      background: var(--purple);
+      border-radius: 50%;
+    }
+
+    /* ── Layout ── */
+    main {
+      max-width: 900px;
+      margin: 36px auto;
+      padding: 0 20px;
+    }
+
+    /* ── Page title row ── */
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .page-header h1 {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Rubik', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--purple);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--purple-dk); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--purple);
+      border: 1px solid var(--purple);
+    }
+    .btn-ghost:hover { background: var(--purple-lt); }
+    .btn-sm {
+      padding: 4px 12px;
+      font-size: 13px;
+      border-radius: 6px;
+    }
+    .btn-danger {
+      background: transparent;
+      color: #C0392B;
+      border: 1px solid #EDCBCB;
+    }
+    .btn-danger:hover { background: #FDF0F0; }
+
+    /* ── Cluster card ── */
+    .cluster-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .cluster-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 22px;
+      border-bottom: 1px solid var(--border);
+      background: var(--purple-lt);
+      cursor: pointer;
+      user-select: none;
+    }
+    .cluster-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cluster-icon {
+      font-size: 20px;
+    }
+    .cluster-name {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--purple-dk);
+    }
+    .cluster-stats {
+      font-size: 13px;
+      color: var(--muted);
+      margin-right: 6px;
+    }
+    .cluster-actions { display: flex; gap: 8px; align-items: center; }
+
+    /* ── Progress bar ── */
+    .progress-wrap {
+      padding: 10px 22px 0;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .progress-bar {
+      height: 5px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--green);
+      border-radius: 3px;
+      transition: width 0.4s;
+    }
+
+    /* ── Course block ── */
+    .courses-body { padding: 14px 22px 18px; }
+    .course-block {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .course-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      background: #FAFAFF;
+    }
+    .course-name {
+      font-weight: 500;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .course-icon { font-size: 16px; }
+    .course-actions { display: flex; gap: 6px; }
+
+    /* ── Episode list ── */
+    .episode-list { padding: 10px 16px; }
+    .episode-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .episode-row:last-child { border-bottom: none; }
+    .ep-status {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 2px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+    .ep-status.written {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+    .ep-title {
+      flex: 1;
+      font-size: 14px;
+    }
+    .ep-title.written {
+      color: var(--muted);
+      text-decoration: line-through;
+      text-decoration-color: var(--green);
+    }
+    .ep-actions { display: flex; gap: 4px; opacity: 0.4; transition: opacity 0.15s; }
+    .episode-row:hover .ep-actions { opacity: 1; }
+    .badge-written {
+      background: var(--green-lt);
+      color: var(--green);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+    .badge-pending {
+      background: var(--purple-lt);
+      color: var(--purple);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    /* ── Add forms (inline collapsible) ── */
+    .add-form {
+      display: none;
+      padding: 12px 16px;
+      background: #FAFAFF;
+      border-top: 1px solid var(--border);
+    }
+    .add-form.open { display: flex; gap: 8px; align-items: center; }
+    .add-form input[type="text"] {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Rubik', sans-serif;
+      font-size: 14px;
+      background: var(--surface);
+      color: var(--text);
+      outline: none;
+      direction: rtl;
+    }
+    .add-form input[type="text"]:focus { border-color: var(--purple); }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(40,35,70,0.35);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      min-width: 340px;
+      box-shadow: 0 8px 40px rgba(100,90,160,0.18);
+    }
+    .modal h2 { font-size: 18px; font-weight: 600; margin-bottom: 18px; }
+    .modal input[type="text"] {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Rubik', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      outline: none;
+      direction: rtl;
+      margin-bottom: 16px;
+    }
+    .modal input[type="text"]:focus { border-color: var(--purple); }
+    .modal-footer { display: flex; gap: 10px; justify-content: flex-start; }
+
+    /* ── Empty state ── */
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    .empty-icon { font-size: 48px; margin-bottom: 16px; }
+    .empty p { font-size: 15px; }
+
+    /* ── Chevron toggle ── */
+    .chevron {
+      font-size: 13px;
+      color: var(--muted);
+      transition: transform 0.2s;
+      display: inline-block;
+    }
+    .collapsed .chevron { transform: rotate(-90deg); }
+    .collapsible-body { }
+    .collapsed .collapsible-body { display: none; }
+
+    /* ── Workspace ── */
+    .ws-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: opacity 0.2s;
+    }
+    .ws-locked { opacity: 0.45; pointer-events: none; }
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--purple-lt);
+    }
+    .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--purple);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-num.done { background: var(--green); }
+    .step-title {
+      font-weight: 600;
+      font-size: 15px;
+      flex: 1;
+    }
+    .step-body {
+      padding: 18px 20px;
+    }
+    .locked-msg {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .field-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Rubik', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--bg);
+      direction: rtl;
+      resize: vertical;
+      outline: none;
+      line-height: 1.6;
+    }
+    textarea:focus { border-color: var(--purple); background: var(--surface); }
+    .result-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 14px;
+      line-height: 1.8;
+      direction: rtl;
+      white-space: pre-wrap;
+    }
+    .critique-box {
+      border-right: 3px solid var(--purple);
+    }
+
+    /* ── Script table ── */
+    .script-table-wrap {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .script-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      direction: rtl;
+    }
+    .script-table th {
+      background: var(--purple-lt);
+      color: var(--purple-dk);
+      font-weight: 600;
+      padding: 8px 12px;
+      text-align: right;
+      border-bottom: 2px solid var(--border);
+    }
+    .script-table td {
+      padding: 7px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      text-align: right;
+    }
+    .script-table tr:last-child td { border-bottom: none; }
+    .script-table tr:nth-child(even) td { background: #FAFAFF; }
+    .script-table td.speaker { font-weight: 600; color: var(--purple-dk); white-space: nowrap; }
+
+    /* ── Export success ── */
+    .export-success {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--green-lt);
+      border: 1px solid #C3E8CF;
+      border-radius: 10px;
+      padding: 16px 20px;
+    }
+
+    /* ── Loading overlay ── */
+    #loading-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(40,35,70,0.4);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+    }
+    #loading-overlay.active { display: flex; }
+    .loading-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 32px 40px;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(100,90,160,0.2);
+    }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--purple);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #loading-text { font-weight: 500; font-size: 15px; }
+
+    /* ── File upload zone (step 1) ── */
+    .upload-zone {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--purple-lt);
+      border: 1px dashed var(--purple);
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .upload-zone .btn-primary { flex-shrink: 0; }
+
+    /* ── Word count / duration stats ── */
+    .word-stats {
+      background: var(--green-lt);
+      border-right: 3px solid var(--green);
+      padding: 10px 14px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .word-stats strong { color: var(--green); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="logo-dot"></div>
+      L-net Podcast Studio
+    </div>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Modal: Add Cluster -->
+  <div class="modal-overlay" id="modal-cluster">
+    <div class="modal">
+      <h2>אשכול חדש</h2>
+      <form method="POST" action="/cluster/add">
+        <input type="text" name="name" placeholder="שם האשכול (לדוגמה: מנהיגות)" autofocus required>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">הוסף</button>
+          <button type="button" class="btn btn-ghost" onclick="closeModal('modal-cluster')">ביטול</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+      const input = document.querySelector('#' + id + ' input');
+      if (input) setTimeout(() => input.focus(), 50);
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+    // Close modal on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(el => {
+      el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+    });
+    // Toggle inline add-form
+    function toggleForm(id) {
+      const form = document.getElementById(id);
+      form.classList.toggle('open');
+      if (form.classList.contains('open')) {
+        const input = form.querySelector('input');
+        if (input) setTimeout(() => input.focus(), 50);
+      }
+    }
+    // Toggle cluster collapse
+    function toggleCluster(id) {
+      document.getElementById(id).classList.toggle('collapsed');
+    }
+    // Keyboard: Escape closes modals
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(el => el.classList.remove('open'));
+    });
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
