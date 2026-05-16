@@ -337,6 +337,152 @@
     .collapsed .chevron { transform: rotate(-90deg); }
     .collapsible-body { }
     .collapsed .collapsible-body { display: none; }
+
+    /* ── Workspace ── */
+    .ws-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: opacity 0.2s;
+    }
+    .ws-locked { opacity: 0.45; pointer-events: none; }
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--purple-lt);
+    }
+    .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--purple);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-num.done { background: var(--green); }
+    .step-title {
+      font-weight: 600;
+      font-size: 15px;
+      flex: 1;
+    }
+    .step-body {
+      padding: 18px 20px;
+    }
+    .locked-msg {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .field-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Rubik', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--bg);
+      direction: rtl;
+      resize: vertical;
+      outline: none;
+      line-height: 1.6;
+    }
+    textarea:focus { border-color: var(--purple); background: var(--surface); }
+    .result-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 14px;
+      line-height: 1.8;
+      direction: rtl;
+      white-space: pre-wrap;
+    }
+    .critique-box {
+      border-right: 3px solid var(--purple);
+    }
+
+    /* ── Script table ── */
+    .script-table-wrap {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .script-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      direction: rtl;
+    }
+    .script-table th {
+      background: var(--purple-lt);
+      color: var(--purple-dk);
+      font-weight: 600;
+      padding: 8px 12px;
+      text-align: right;
+      border-bottom: 2px solid var(--border);
+    }
+    .script-table td {
+      padding: 7px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      text-align: right;
+    }
+    .script-table tr:last-child td { border-bottom: none; }
+    .script-table tr:nth-child(even) td { background: #FAFAFF; }
+    .script-table td.speaker { font-weight: 600; color: var(--purple-dk); white-space: nowrap; }
+
+    /* ── Export success ── */
+    .export-success {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--green-lt);
+      border: 1px solid #C3E8CF;
+      border-radius: 10px;
+      padding: 16px 20px;
+    }
+
+    /* ── Loading overlay ── */
+    #loading-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(40,35,70,0.4);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+    }
+    #loading-overlay.active { display: flex; }
+    .loading-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 32px 40px;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(100,90,160,0.2);
+    }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--purple);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #loading-text { font-weight: 500; font-size: 15px; }
   </style>
 </head>
 <body>

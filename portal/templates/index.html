@@ -93,6 +93,11 @@
               {{ 'נכתב' if ep.status == 'written' else 'ממתין' }}
             </span>
             <div class="ep-actions">
+              <a href="/episode/{{ ep.id }}/workspace"
+                 class="btn btn-sm {% if ep.status == 'written' %}btn-ghost{% else %}btn-primary{% endif %}"
+                 onclick="event.stopPropagation()">
+                {{ '📄 פתח' if ep.status == 'written' else '✍️ כתוב' }}
+              </a>
               <form method="POST" action="/episode/{{ ep.id }}/delete"
                     onsubmit="return confirm('למחוק את הפרק \'{{ ep.title }}\'?')">
                 <button type="submit" class="btn btn-sm btn-danger">×</button>
