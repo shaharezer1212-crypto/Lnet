@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+  <h1>מפת הפודקאסטים</h1>
+  <button class="btn btn-primary" onclick="openModal('modal-cluster')">+ אשכול חדש</button>
+</div>
+
+{% if not data %}
+<div class="empty">
+  <div class="empty-icon">🎙️</div>
+  <p>עדיין אין אשכולות. לחצי על <strong>+ אשכול חדש</strong> כדי להתחיל.</p>
+</div>
+{% endif %}
+
+{% for item in data %}
+{% set cl = item.cluster %}
+{% set total = item.total %}
+{% set written = item.written %}
+{% set pct = ((written / total * 100) | int) if total > 0 else 0 %}
+
+<div class="cluster-card" id="cluster-{{ cl.id }}">
+
+  <!-- Cluster header -->
+  <div class="cluster-header" onclick="toggleCluster('cluster-inner-{{ cl.id }}')">
+    <div class="cluster-header-left">
+      <span class="cluster-icon">📁</span>
+      <span class="cluster-name">{{ cl.name }}</span>
+      <span class="cluster-stats">
+        {{ item.courses | length }} קורסים · {{ written }}/{{ total }} פרקים נכתבו
+      </span>
+    </div>
+    <div class="cluster-actions">
+      <form method="POST" action="/cluster/{{ cl.id }}/delete"
+            onsubmit="return confirm('למחוק את האשכול \'{{ cl.name }}\' וכל תכולתו?')">
+        <button type="submit" class="btn btn-sm btn-danger" onclick="event.stopPropagation()">מחק</button>
+      </form>
+      <span class="chevron">▼</span>
+    </div>
+  </div>
+
+  <div id="cluster-inner-{{ cl.id }}" class="collapsible-body">
+
+    <!-- Progress bar -->
+    {% if total > 0 %}
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span>התקדמות</span>
+        <span>{{ pct }}%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: {{ pct }}%"></div>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="courses-body">
+
+      {% for cd in item.courses %}
+      {% set co = cd.course %}
+      {% set eps = cd.episodes %}
+
+      <div class="course-block">
+        <!-- Course header -->
+        <div class="course-header">
+          <span class="course-name">
+            <span class="course-icon">📚</span>
+            {{ co.name }}
+            <span class="cluster-stats">({{ eps | selectattr('status','eq','written') | list | length }}/{{ eps | length }})</span>
+          </span>
+          <div class="course-actions">
+            <button class="btn btn-sm btn-ghost" onclick="toggleForm('ep-form-{{ co.id }}')">+ פרק</button>
+            <form method="POST" action="/course/{{ co.id }}/delete"
+                  onsubmit="return confirm('למחוק את הקורס \'{{ co.name }}\' וכל פרקיו?')">
+              <button type="submit" class="btn btn-sm btn-danger">מחק</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Episode list -->
+        {% if eps %}
+        <div class="episode-list">
+          {% for ep in eps %}
+          <div class="episode-row">
+            <form method="POST" action="/episode/{{ ep.id }}/toggle" style="margin:0">
+              <button type="submit" class="ep-status {% if ep.status == 'written' %}written{% endif %}"
+                      title="{% if ep.status == 'written' %}סמן כלא נכתב{% else %}סמן כנכתב{% endif %}">
+                {% if ep.status == 'written' %}✓{% endif %}
+              </button>
+            </form>
+            <span class="ep-title {% if ep.status == 'written' %}written{% endif %}">{{ ep.title }}</span>
+            <span class="{% if ep.status == 'written' %}badge-written{% else %}badge-pending{% endif %}">
+              {{ 'נכתב' if ep.status == 'written' else 'ממתין' }}
+            </span>
+            <div class="ep-actions">
+              <form method="POST" action="/episode/{{ ep.id }}/delete"
+                    onsubmit="return confirm('למחוק את הפרק \'{{ ep.title }}\'?')">
+                <button type="submit" class="btn btn-sm btn-danger">×</button>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Inline add-episode form -->
+        <form method="POST" action="/course/{{ co.id }}/episode/add"
+              class="add-form" id="ep-form-{{ co.id }}">
+          <input type="text" name="title" placeholder="שם הפרק (לדוגמה: פרק 2 — למה אנחנו בלופ?)" required>
+          <button type="submit" class="btn btn-primary btn-sm">הוסף</button>
+          <button type="button" class="btn btn-ghost btn-sm" onclick="toggleForm('ep-form-{{ co.id }}')">ביטול</button>
+        </form>
+      </div>
+
+      {% else %}
+      <p style="color:var(--muted);font-size:14px;padding:8px 0">עדיין אין קורסים באשכול זה.</p>
+      {% endfor %}
+
+      <!-- Add course form -->
+      <button class="btn btn-ghost btn-sm" style="margin-top:4px"
+              onclick="toggleForm('co-form-{{ cl.id }}')">+ קורס חדש לאשכול זה</button>
+      <form method="POST" action="/cluster/{{ cl.id }}/course/add"
+            class="add-form" id="co-form-{{ cl.id }}">
+        <input type="text" name="name" placeholder="שם הקורס (לדוגמה: מנהיגות תודעתית)" required>
+        <button type="submit" class="btn btn-primary btn-sm">הוסף</button>
+        <button type="button" class="btn btn-ghost btn-sm" onclick="toggleForm('co-form-{{ cl.id }}')">ביטול</button>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+{% endfor %}
+{% endblock %}
