@@ -483,6 +483,31 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
     #loading-text { font-weight: 500; font-size: 15px; }
+
+    /* ── File upload zone (step 1) ── */
+    .upload-zone {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: var(--purple-lt);
+      border: 1px dashed var(--purple);
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .upload-zone .btn-primary { flex-shrink: 0; }
+
+    /* ── Word count / duration stats ── */
+    .word-stats {
+      background: var(--green-lt);
+      border-right: 3px solid var(--green);
+      padding: 10px 14px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .word-stats strong { color: var(--green); font-weight: 600; }
   </style>
 </head>
 <body>

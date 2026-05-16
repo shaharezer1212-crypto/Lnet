@@ -70,7 +70,16 @@
   <div id="s1-body" {% if ws.step >= 2 %}style="display:none"{% endif %}>
     <div class="step-body">
       <label class="field-label">תוכן הפרק הגולמי <span style="color:#c00">*</span></label>
-      <textarea id="raw_content" rows="10" placeholder="הדבק כאן את חומר יחידת הלמידה — טקסט, נקודות, כל מה שיש...">{{ ws.raw_content or '' }}</textarea>
+
+      <div class="upload-zone">
+        <input type="file" id="content-file" accept=".docx" style="display:none" onchange="uploadContent()">
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('content-file').click()">
+          📎 העלה קובץ Word (.docx)
+        </button>
+        <span id="upload-status" style="color:var(--muted);font-size:13px">או הדבק תוכן ידנית בשדה למטה</span>
+      </div>
+
+      <textarea id="raw_content" rows="10" placeholder="הדבק כאן את חומר יחידת הלמידה, או העלה קובץ Word למעלה...">{{ ws.raw_content or '' }}</textarea>
 
       <label class="field-label" style="margin-top:16px">פרשות / מקורות תורניים לשילוב <span style="color:var(--muted)">(אופציונלי)</span></label>
       <textarea id="parashiyot" rows="3" placeholder="לדוגמה: פרשת בחוקותי, מסילת ישרים פרק א'...">{{ ws.parashiyot or '' }}</textarea>
@@ -131,6 +140,12 @@
 
   {% if ws.step >= 3 %}
   <div class="step-body">
+    {% if draft_wc %}
+    <div class="word-stats" id="draft-stats">
+      <strong>{{ draft_wc }}</strong> מילים · זמן האזנה משוער: <strong>{{ draft_duration }}</strong>
+      <span style="color:var(--muted)">({{ words_per_minute }} מילים לדקה)</span>
+    </div>
+    {% endif %}
     <div id="draft-display">
       {{ ws.draft | render_table | safe }}
     </div>
@@ -189,6 +204,12 @@
 
   {% if ws.step >= 5 %}
   <div class="step-body">
+    {% if revised_wc %}
+    <div class="word-stats" id="revised-stats">
+      <strong>{{ revised_wc }}</strong> מילים · זמן האזנה משוער: <strong>{{ revised_duration }}</strong>
+      <span style="color:var(--muted)">({{ words_per_minute }} מילים לדקה)</span>
+    </div>
+    {% endif %}
     <div id="revised-display">
       {{ ws.revised | render_table | safe }}
     </div>
@@ -319,6 +340,7 @@ async function runStep(action) {
     }
     if (action === 'draft') {
       document.getElementById('draft-display').innerHTML = mdToTable(data.result);
+      updateStats('draft', data);
       document.getElementById('step-3').classList.remove('ws-locked');
       document.getElementById('step-3').scrollIntoView({behavior:'smooth', block:'start'});
     }
@@ -333,6 +355,7 @@ async function runStep(action) {
       let html = mdToTable(table);
       if (report) html += `<div class="result-box" style="margin-top:16px;font-size:13px">${report.replace(/\n/g,'<br>')}</div>`;
       document.getElementById('revised-display').innerHTML = html;
+      updateStats('revise', data);
       document.getElementById('step-5').classList.remove('ws-locked');
       document.getElementById('step-5').scrollIntoView({behavior:'smooth', block:'start'});
     }
@@ -354,6 +377,57 @@ async function runStep(action) {
 function toggleSection(id) {
   const el = document.getElementById(id);
   el.style.display = el.style.display === 'none' ? '' : 'none';
+}
+
+async function uploadContent() {
+  const fileInput = document.getElementById('content-file');
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  const statusEl = document.getElementById('upload-status');
+  statusEl.textContent = `מעלה את ${file.name}...`;
+  statusEl.style.color = 'var(--purple)';
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    const resp = await fetch(`/episode/${EPISODE_ID}/api/upload-content`, {
+      method: 'POST',
+      body: formData,
+    });
+    const data = await resp.json();
+    if (!data.ok) {
+      statusEl.textContent = 'שגיאה: ' + data.error;
+      statusEl.style.color = '#c00';
+      return;
+    }
+    document.getElementById('raw_content').value = data.text;
+    statusEl.textContent = `✓ נטען: ${data.filename} (${data.char_count.toLocaleString('he-IL')} תווים)`;
+    statusEl.style.color = 'var(--green)';
+  } catch (err) {
+    statusEl.textContent = 'שגיאת רשת: ' + err.message;
+    statusEl.style.color = '#c00';
+  }
+}
+
+function updateStats(action, data) {
+  if (!data.word_count) return;
+  const statsHtml = `<strong>${data.word_count}</strong> מילים · זמן האזנה משוער: <strong>${data.duration}</strong> <span style="color:var(--muted)">(120 מילים לדקה)</span>`;
+  const config = {
+    draft:  { container: 'step-3', statsId: 'draft-stats'   },
+    revise: { container: 'step-5', statsId: 'revised-stats' },
+  }[action];
+  if (!config) return;
+  const stepBody = document.querySelector(`#${config.container} .step-body`);
+  let statsEl = document.getElementById(config.statsId);
+  if (!statsEl) {
+    statsEl = document.createElement('div');
+    statsEl.id = config.statsId;
+    statsEl.className = 'word-stats';
+    stepBody.insertBefore(statsEl, stepBody.firstChild);
+  }
+  statsEl.innerHTML = statsHtml;
 }
 </script>
 {% endblock %}

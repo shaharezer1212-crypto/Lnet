@@ -1,6 +1,8 @@
 """L-net Podcast Studio — local web portal."""
 
+import io
 import json
+import re
 import sqlite3
 import sys
 from pathlib import Path
@@ -12,7 +14,56 @@ BASE_DIR = Path(__file__).parent
 DB_PATH = BASE_DIR / "podcast_studio.db"
 OUTPUT_DIR = BASE_DIR.parent / "output"
 
+WORDS_PER_MINUTE = 120
+
 app = Flask(__name__)
+
+
+# ---------------------------------------------------------------------------
+# Script analysis helpers
+# ---------------------------------------------------------------------------
+
+def count_script_words(md_table: str) -> int:
+    """Sum word count of the 'תוכן' column (column 3) across all rows."""
+    if not md_table:
+        return 0
+    total = 0
+    for line in md_table.split("\n"):
+        line = line.strip()
+        if not line.startswith("|"):
+            continue
+        if re.match(r"^\|[-| ]+\|$", line):
+            continue
+        cells = [c.strip() for c in line.strip("|").split("|")]
+        if len(cells) < 3:
+            continue
+        # Skip header row (first cell is non-numeric and non-empty)
+        if cells[0] and not cells[0].isdigit():
+            continue
+        total += len(cells[2].split())
+    return total
+
+
+def estimate_duration(word_count: int) -> str:
+    minutes = max(1, round(word_count / WORDS_PER_MINUTE))
+    return f"כ-{minutes} דקות"
+
+
+def extract_docx_text(file_bytes: bytes) -> str:
+    """Extract plain text from a .docx file (paragraphs + table cells)."""
+    from docx import Document
+    doc = Document(io.BytesIO(file_bytes))
+    parts = []
+    for p in doc.paragraphs:
+        if p.text.strip():
+            parts.append(p.text.strip())
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                t = cell.text.strip()
+                if t:
+                    parts.append(t)
+    return "\n".join(parts)
 
 
 @app.template_filter("safe_nl")
@@ -268,12 +319,23 @@ def workspace(episode_id):
         "SELECT * FROM cluster WHERE id = ?", (co["cluster_id"],)
     ).fetchone()
     ws = get_or_create_workspace(db, episode_id, co["name"] if co else "")
+
+    # Compute word counts + durations for any populated draft/revised
+    draft_wc = count_script_words(ws["draft"]) if ws["draft"] else 0
+    revised_table = (ws["revised"] or "").split("---")[0] if ws["revised"] else ""
+    revised_wc = count_script_words(revised_table) if revised_table else 0
+
     return render_template(
         "workspace.html",
         episode=ep,
         course=co,
         cluster=cl,
         ws=ws,
+        draft_wc=draft_wc,
+        draft_duration=estimate_duration(draft_wc) if draft_wc else "",
+        revised_wc=revised_wc,
+        revised_duration=estimate_duration(revised_wc) if revised_wc else "",
+        words_per_minute=WORDS_PER_MINUTE,
     )
 
 
@@ -283,6 +345,41 @@ def workspace(episode_id):
 
 def _ws_error(msg: str):
     return jsonify({"ok": False, "error": msg}), 500
+
+
+@app.post("/episode/<int:episode_id>/api/upload-content")
+def api_upload_content(episode_id):
+    """Receive a .docx file, extract text, return it (and save to workspace)."""
+    if "file" not in request.files:
+        return _ws_error("לא נשלח קובץ")
+    file = request.files["file"]
+    if not file.filename:
+        return _ws_error("שם קובץ ריק")
+    if not file.filename.lower().endswith(".docx"):
+        return _ws_error("רק קבצי .docx נתמכים")
+
+    try:
+        text = extract_docx_text(file.read())
+    except Exception as e:
+        return _ws_error(f"שגיאה בקריאת הקובץ: {e}")
+
+    if not text.strip():
+        return _ws_error("הקובץ ריק או שאין בו טקסט קריא")
+
+    # Save extracted text to the workspace
+    with get_db() as db:
+        db.execute(
+            """INSERT INTO workspace (episode_id, raw_content) VALUES (?, ?)
+               ON CONFLICT(episode_id) DO UPDATE SET raw_content=excluded.raw_content""",
+            (episode_id, text),
+        )
+
+    return jsonify({
+        "ok": True,
+        "text": text,
+        "filename": file.filename,
+        "char_count": len(text),
+    })
 
 
 @app.post("/episode/<int:episode_id>/api/analyze")
@@ -354,7 +451,13 @@ def api_draft(episode_id):
             "UPDATE workspace SET draft=?, step=MAX(step,3) WHERE episode_id=?",
             (result, episode_id),
         )
-    return jsonify({"ok": True, "result": result})
+    wc = count_script_words(result)
+    return jsonify({
+        "ok": True,
+        "result": result,
+        "word_count": wc,
+        "duration": estimate_duration(wc),
+    })
 
 
 @app.post("/episode/<int:episode_id>/api/critique")
@@ -411,7 +514,14 @@ def api_revise(episode_id):
             "UPDATE workspace SET revised=?, step=MAX(step,5) WHERE episode_id=?",
             (result, episode_id),
         )
-    return jsonify({"ok": True, "result": result})
+    table_part = result.split("---")[0] if "---" in result else result
+    wc = count_script_words(table_part)
+    return jsonify({
+        "ok": True,
+        "result": result,
+        "word_count": wc,
+        "duration": estimate_duration(wc),
+    })
 
 
 @app.post("/episode/<int:episode_id>/api/export")
@@ -448,10 +558,14 @@ def api_export(episode_id):
     co = db.execute(
         "SELECT * FROM course WHERE id = ?", (ep["course_id"],)
     ).fetchone() if ep else None
+    word_count = count_script_words(script)
+    duration = estimate_duration(word_count)
+
     header = f"# פודקאסט {episode_id}: {ep['title'] if ep else ''}\n\n"
     if co:
         header += f"**קורס:** {co['name']}\n"
-    header += f"**זמן האזנה משוער:** כ-10 דקות\n"
+    header += f"**זמן האזנה משוער:** {duration}\n"
+    header += f"**מספר מילים:** {word_count} (לפי {WORDS_PER_MINUTE} מילים לדקה)\n"
     header += f"**שחקנים:** יצחק לוי / חיים מנחם\n\n---\n\n"
     md_path.write_text(header + script, encoding="utf-8")
 
