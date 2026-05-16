@@ -1,0 +1,13 @@
+# Generated preview/demo artifacts (not source)
+portal-*-preview.html
+portal_preview.html
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.Python
+*.egg-info/
+
+# Local env
+.env
