@@ -3,13 +3,6 @@ import {COLORS, FONT} from '../theme';
 import {StickerBurst} from './StickerBurst';
 import {LOGO_URL} from '../clips';
 
-const CORNER_SPOTS = [
-  {x: 13, y: 24, size: 240},
-  {x: 87, y: 22, size: 240},
-  {x: 15, y: 80, size: 230},
-  {x: 85, y: 80, size: 240},
-];
-
 // Cinematic close-up reveal of the gold KudoZ medal on a deep brand stage:
 // it pushes in from an oversized close-up, settles with a gentle swing and a
 // golden glow, while stickers pop in the corners.
@@ -86,7 +79,7 @@ export const LogoReveal: React.FC = () => {
         ZIM’s new employee recognition system
       </div>
 
-      <StickerBurst frames={120} spots={CORNER_SPOTS} startAt={14} />
+      <StickerBurst frames={120} startAt={10} />
     </AbsoluteFill>
   );
 };

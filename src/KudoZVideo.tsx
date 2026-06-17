@@ -2,6 +2,7 @@ import {AbsoluteFill, Audio, interpolate, useCurrentFrame} from 'remotion';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
 import type {TransitionPresentation} from '@remotion/transitions';
 import {slide} from '@remotion/transitions/slide';
+import {fade} from '@remotion/transitions/fade';
 import {
   TIMELINE,
   TRANSITION,
@@ -22,10 +23,14 @@ const MG = {logo: LogoReveal, criteria: Criteria, outro: Outro} as const;
 // Playful directional pushes — each cut comes from a different side so the
 // edit keeps moving (one from the bottom, the next from the side, ...).
 const SLIDE_DIRS = ['from-bottom', 'from-right', 'from-left', 'from-top'] as const;
-const presentationFor = (cut: number): TransitionPresentation<Record<string, unknown>> =>
-  slide({direction: SLIDE_DIRS[cut % SLIDE_DIRS.length]}) as TransitionPresentation<
+const presentationFor = (cut: number): TransitionPresentation<Record<string, unknown>> => {
+  // The opening (man → reveal woman → her close-up) flows as one whole scene
+  // with soft dissolves, not split-screen slides.
+  if (cut <= 1) return fade() as TransitionPresentation<Record<string, unknown>>;
+  return slide({direction: SLIDE_DIRS[cut % SLIDE_DIRS.length]}) as TransitionPresentation<
     Record<string, unknown>
   >;
+};
 
 const Music: React.FC = () => {
   const frame = useCurrentFrame();

@@ -3,13 +3,6 @@ import {COLORS, FONT} from '../theme';
 import {StickerBurst} from './StickerBurst';
 import {LOGO_URL} from '../clips';
 
-const CORNER_SPOTS = [
-  {x: 14, y: 26, size: 230},
-  {x: 86, y: 24, size: 230},
-  {x: 16, y: 80, size: 220},
-  {x: 84, y: 80, size: 230},
-];
-
 // Closing logo + tagline on a deep brand stage, stickers popping in the corners.
 export const Outro: React.FC = () => {
   const frame = useCurrentFrame();
@@ -59,7 +52,7 @@ export const Outro: React.FC = () => {
         </div>
       </div>
 
-      <StickerBurst frames={120} spots={CORNER_SPOTS} startAt={12} />
+      <StickerBurst frames={120} startAt={10} />
     </AbsoluteFill>
   );
 };

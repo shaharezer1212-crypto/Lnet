@@ -19,14 +19,16 @@ const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZm
 // full 68s render.
 export const MUSIC_URL = `${CDN}/hf_20260617_112051_5f73edae-9eca-4e92-b330-9c4e07fd54ee.m4a`;
 // Music sits under the voice-over but stays present.
-export const MUSIC_VOLUME = 0.18;
+export const MUSIC_VOLUME = 0.15;
 // Diegetic clip audio is ducked under the narration (per-clip override via beat.volume).
-export const CLIP_VOLUME = 0.28;
+export const CLIP_VOLUME = 0.26;
 
 // Single continuous narration (Ashley) — one take, no per-line overlap.
 export const NARRATION_URL = `${CDN}/hf_20260617_130038_d1487192-cf5f-4e19-843e-ab21785fa213.wav`;
 // Small lead-in so the voice doesn't start on the very first frame.
 export const NARRATION_START = 8;
+// Narration amplified a touch so it leads the mix.
+export const NARRATION_VOLUME = 1.4;
 
 // ── Brand assets (fill when provided) ───────────────────────────────────────
 // Official KudoZ logo, background removed (transparent) — for clean close-ups.
