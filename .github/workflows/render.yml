@@ -1,6 +1,9 @@
 name: Render KudoZ
 
 on:
+  push:
+    branches:
+      - claude/kind-hopper-hnf487
   workflow_dispatch:
 
 jobs:
