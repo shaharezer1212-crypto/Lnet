@@ -46,24 +46,20 @@ export const sec = (s: number) => Math.round(s * FPS);
 
 export const TIMELINE: Beat[] = [
   // ── Scene 1 — both employees get recognized ────────────────────────────
-  {
-    kind: 'clip',
-    id: 's1a',
-    label: 'S1 · calm → BREAKING NEWS',
-    seconds: 4,
-    jobId: 'dc437cc7-52f4-456b-9cf7-8683823f758d',
-    url: `${CDN}/hf_20260617_092819_dc437cc7-52f4-456b-9cf7-8683823f758d.mp4`,
-    vo: `${CDN}/hf_20260617_111107_11a6c341-e8bd-45d9-8748-cbe90222006c.wav`,
-    narration:
-      'In times of uncertainty, most people focus on the bigger picture. But this is the perfect time to acknowledge the people who keep us moving forward — because even a small compliment can give someone the boost they need.',
-  },
+  // Opens on the APPROVED reveal clip (man already has the alert → camera
+  // pulls back to reveal the woman). The old "calm → alert" clip was removed
+  // because it repeated the BREAKING NEWS beat. This clip ends on the wide
+  // two-shot and the next clip starts on the same two-shot → seamless join.
   {
     kind: 'clip',
     id: 's1b',
-    label: 'S1 · reveal the woman',
+    label: 'S1 · reveal the woman (approved)',
     seconds: 5,
     jobId: '13fb478f-ac39-4d84-b54a-0887a4e9ed04',
     url: `${CDN}/hf_20260617_090730_13fb478f-ac39-4d84-b54a-0887a4e9ed04.mp4`,
+    vo: `${CDN}/hf_20260617_111107_11a6c341-e8bd-45d9-8748-cbe90222006c.wav`,
+    narration:
+      'In times of uncertainty, most people focus on the bigger picture. But this is the perfect time to acknowledge the people who keep us moving forward — because even a small compliment can give someone the boost they need.',
   },
   {
     kind: 'clip',
