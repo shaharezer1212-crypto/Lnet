@@ -3,3 +3,8 @@ out/
 .remotion/
 *.log
 .DS_Store
+
+# Tooling / installed agent skills (not part of the video project)
+.agents/
+.claude/
+skills-lock.json
