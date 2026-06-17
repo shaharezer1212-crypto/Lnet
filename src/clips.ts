@@ -18,8 +18,8 @@ const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZm
 // Background music — "bold modern urban pop beat with attitude" (option 2),
 // full 68s render.
 export const MUSIC_URL = `${CDN}/hf_20260617_112051_5f73edae-9eca-4e92-b330-9c4e07fd54ee.m4a`;
-// Music sits well under the voice-over.
-export const MUSIC_VOLUME = 0.1;
+// Music sits under the voice-over but stays present.
+export const MUSIC_VOLUME = 0.18;
 // Diegetic clip audio is ducked under the narration (per-clip override via beat.volume).
 export const CLIP_VOLUME = 0.28;
 

@@ -58,7 +58,7 @@ const FlashCuts: React.FC = () => {
 
 const BlackFades: React.FC = () => {
   const frame = useCurrentFrame();
-  const fadeIn = interpolate(frame, [0, 16], [1, 0], {extrapolateRight: 'clamp'});
+  const fadeIn = interpolate(frame, [0, 30], [1, 0], {extrapolateRight: 'clamp'});
   const fadeOut = interpolate(frame, [TOTAL_FRAMES - 16, TOTAL_FRAMES], [0, 1], {
     extrapolateLeft: 'clamp',
   });

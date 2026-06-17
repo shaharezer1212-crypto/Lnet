@@ -1,10 +1,15 @@
-import {loadFont} from '@remotion/google-fonts/Poppins';
+import {staticFile} from 'remotion';
+import {loadFont} from '@remotion/fonts';
 
-// Clean modern interim font. Swap to the official ZIM font once provided
-// (drop the .ttf/.otf in public/fonts and load it via @font-face here).
-const {fontFamily} = loadFont('normal', {weights: ['400', '600', '700', '800', '900']});
+// Official ZIM font — Magistral.
+const FAMILY = 'Magistral';
+loadFont({
+  family: FAMILY,
+  url: staticFile('fonts/Magistral-Medium.otf'),
+  weight: '500',
+}).catch(() => {});
 
-export const FONT = fontFamily;
+export const FONT = `"${FAMILY}", Arial, sans-serif`;
 
 // KudoZ / ZIM brand palette used across the motion-graphics beats.
 export const COLORS = {
