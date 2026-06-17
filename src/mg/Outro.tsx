@@ -75,7 +75,7 @@ export const Outro: React.FC = () => {
           </div>
         </div>
 
-        <StickerBurst frames={120} startAt={10} />
+        <StickerBurst frames={120} startAt={30} count={3} size={250} />
       </AbsoluteFill>
     </Stage>
   );

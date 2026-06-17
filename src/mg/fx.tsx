@@ -37,7 +37,7 @@ export const Spotlight: React.FC<{color?: string}> = ({color = 'rgba(46,143,230,
 
 // Floating gold-dust / bokeh — adds depth and a luxe, "particle ad" feel.
 export const Bokeh: React.FC<{count?: number; colors?: string[]; seed?: string}> = ({
-  count = 26,
+  count = 16,
   colors = ['rgba(255,196,46,0.9)', 'rgba(255,255,255,0.8)', 'rgba(46,143,230,0.7)'],
   seed = 'kudoz',
 }) => {
@@ -183,7 +183,7 @@ export const ShineText: React.FC<{
 // Confetti burst from the centre — celebratory punch for the outro.
 export const Confetti: React.FC<{at?: number; count?: number; colors?: string[]; seed?: string}> = ({
   at = 0,
-  count = 70,
+  count = 48,
   colors = ['#FFC42E', '#E5267E', '#23B26D', '#7A4FE0', '#2E8FE6', '#FF7A1A'],
   seed = 'conf',
 }) => {

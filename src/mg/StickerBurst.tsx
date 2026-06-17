@@ -2,57 +2,65 @@ import {interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {Img} from 'remotion';
 import {STICKERS} from '../clips';
 
-type Spot = {x: number; y: number; size: number; drift?: number};
+type Spot = {x: number; y: number};
 
-// 8 positions ringing the frame — every sticker gets used, big, and they
-// stay clear of the centered logo / criteria cards.
-const DEFAULT_SPOTS: Spot[] = [
-  {x: 13, y: 22, size: 440, drift: 8},
-  {x: 50, y: 14, size: 430, drift: -6},
-  {x: 87, y: 22, size: 450, drift: -9},
-  {x: 92, y: 52, size: 420, drift: 7},
-  {x: 86, y: 82, size: 450, drift: -8},
-  {x: 50, y: 90, size: 430, drift: 6},
-  {x: 14, y: 82, size: 440, drift: 9},
-  {x: 8, y: 52, size: 420, drift: 10},
+// Resting spots, all hugging the edges/corners of the frame — a sticker never
+// travels toward the centre where the logo / cards live.
+const EDGE_SPOTS: Spot[] = [
+  {x: 12, y: 24},
+  {x: 88, y: 22},
+  {x: 91, y: 72},
+  {x: 10, y: 76},
+  {x: 50, y: 12},
+  {x: 91, y: 46},
+  {x: 50, y: 90},
+  {x: 9, y: 50},
 ];
 
-export const StickerBurst: React.FC<{frames: number; spots?: Spot[]; startAt?: number}> = ({
-  frames,
-  spots = DEFAULT_SPOTS,
-  startAt = 4,
-}) => {
+// Gentle, natural mascots: they ease in "from a distance" (small + soft focus),
+// hold near an edge with a tiny breathing bob, then fade away — one at a time,
+// with clear gaps between them. Calm, premium, never busy.
+export const StickerBurst: React.FC<{
+  frames: number;
+  startAt?: number;
+  count?: number;
+  size?: number;
+  spots?: Spot[];
+}> = ({frames, startAt = 8, count, size = 300, spots = EDGE_SPOTS}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
-  const n = spots.length;
-  const span = Math.max(1, frames - startAt);
-  const step = span / n;
-  const life = step * 1.6;
+
+  const n = Math.min(count ?? spots.length, spots.length);
+  const tail = 8;
+  const span = Math.max(1, frames - startAt - tail);
+  const step = span / n; // even cadence
+  const life = step; // each lives one slot → roughly one on screen at a time
 
   return (
     <>
-      {spots.map((s, i) => {
+      {spots.slice(0, n).map((s, i) => {
         const local = frame - (startAt + i * step);
         if (local < 0 || local > life) return null;
-        const lt = local / fps;
-        const ph = i * 1.7;
 
-        const inAmt = spring({frame: local, fps, config: {damping: 8, mass: 0.5}});
-        const out = interpolate(local, [life - 12, life], [1, 0], {
+        const enter = spring({frame: local, fps, config: {damping: 16, mass: 0.8}});
+        const fadeIn = interpolate(local, [0, 12], [0, 1], {
           extrapolateLeft: 'clamp',
           extrapolateRight: 'clamp',
         });
-        const base = interpolate(inAmt, [0, 1], [0.05, 1]) * interpolate(out, [0, 1], [0.5, 1]);
-        const opacity = Math.min(interpolate(local, [0, 5], [0, 1], {extrapolateRight: 'clamp'}), out);
+        const fadeOut = interpolate(local, [life - 16, life], [1, 0], {
+          extrapolateLeft: 'clamp',
+          extrapolateRight: 'clamp',
+        });
+        const opacity = Math.min(fadeIn, fadeOut);
 
-        // alive: squash/stretch + wiggle + bob
-        const breathe = Math.sin(lt * 6 + ph);
-        const sx = base * (1 + breathe * 0.07);
-        const sy = base * (1 - breathe * 0.07);
-        const wiggle = Math.sin(lt * 5 + ph) * 7 + Math.sin(lt * 2.3 + ph) * 4;
-        const bob = Math.sin(lt * 3.1 + ph) * 22;
-        const driftX = (s.drift ?? 8) * lt * 5;
-        const exitFly = interpolate(out, [0, 1], [-70, 0]);
+        const t = local / fps;
+        // arrive "from a distance": small + softly out of focus, then resolves
+        const scaleIn = interpolate(enter, [0, 1], [0.7, 1]);
+        const blurIn = interpolate(local, [0, 12], [7, 0], {extrapolateRight: 'clamp'});
+        // tiny in-place life — no travel, no drift to centre
+        const bob = Math.sin(t * 1.5 + i) * 5;
+        const sway = Math.sin(t * 1.0 + i) * 3;
+        const breathe = 1 + Math.sin(t * 2 + i) * 0.02;
 
         return (
           <div
@@ -61,21 +69,22 @@ export const StickerBurst: React.FC<{frames: number; spots?: Spot[]; startAt?: n
               position: 'absolute',
               left: `${s.x}%`,
               top: `${s.y}%`,
-              width: s.size,
-              height: s.size,
-              transform: `translate(-50%,-50%) translate(${driftX}px, ${bob + exitFly}px) rotate(${wiggle}deg) scale(${sx}, ${sy})`,
+              width: size,
+              height: size,
+              transform: `translate(-50%,-50%) translateY(${bob}px) scale(${scaleIn * breathe}) rotate(${sway}deg)`,
               opacity,
+              filter: `blur(${blurIn}px)`,
             }}
           >
-            {/* soft halo so a sticker (e.g. the blue sneaker) stays visible on a blue stage */}
+            {/* subtle soft glow so a sticker stays readable on the navy stage */}
             <div
               style={{
                 position: 'absolute',
-                inset: '-8%',
+                inset: '4%',
                 borderRadius: '50%',
                 background:
-                  'radial-gradient(circle, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.22) 38%, rgba(255,255,255,0) 66%)',
-                filter: 'blur(8px)',
+                  'radial-gradient(circle, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.10) 42%, rgba(255,255,255,0) 64%)',
+                filter: 'blur(6px)',
               }}
             />
             <Img
@@ -85,7 +94,7 @@ export const StickerBurst: React.FC<{frames: number; spots?: Spot[]; startAt?: n
                 width: '100%',
                 height: '100%',
                 objectFit: 'contain',
-                filter: 'drop-shadow(0 18px 40px rgba(0,0,0,0.4))',
+                filter: 'drop-shadow(0 14px 30px rgba(0,0,0,0.38))',
               }}
             />
           </div>

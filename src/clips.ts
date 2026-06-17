@@ -78,29 +78,22 @@ export type Beat =
 export const sec = (s: number) => Math.round(s * FPS);
 
 export const TIMELINE: Beat[] = [
-  // ── Scene 1 — both employees get recognized ────────────────────────────
-  // Opens on the APPROVED reveal clip (man already has the alert → camera
-  // pulls back to reveal the woman). The old "calm → alert" clip was removed
-  // because it repeated the BREAKING NEWS beat. This clip ends on the wide
-  // two-shot and the next clip starts on the same two-shot → seamless join.
+  // ── Scene 1 — both employees get recognized (ONE continuous take) ───────
+  // The whole scene is now a single 10s Seedance take built from the four
+  // approved storyboard frames (man calm → BREAKING NEWS card → wide two-shot
+  // → woman close-up), so there is no cut anywhere in the opening. Trimmed to
+  // 284 frames so the merged opening keeps the exact length of the old two
+  // clips and the continuous narration stays perfectly in sync.
   {
     kind: 'clip',
-    id: 's1b',
-    label: 'S1 · reveal the woman (approved)',
-    seconds: 5,
-    jobId: '13fb478f-ac39-4d84-b54a-0887a4e9ed04',
-    url: `${CDN}/hf_20260617_090730_13fb478f-ac39-4d84-b54a-0887a4e9ed04.mp4`,
+    id: 's1',
+    label: 'S1 · full scene · calm → alert → reveal → woman (one take)',
+    seconds: 9.467, // 284 frames @30fps — preserves downstream narration sync
+    jobId: 'd6e4aeab-e6a1-464f-9294-01b1e928fc05',
+    url: `${CDN}/hf_20260617_191155_d6e4aeab-e6a1-464f-9294-01b1e928fc05.mp4`,
     vo: `${CDN}/hf_20260617_111107_11a6c341-e8bd-45d9-8748-cbe90222006c.wav`,
     narration:
       'In times of uncertainty, most people focus on the bigger picture. But this is the perfect time to acknowledge the people who keep us moving forward — because even a small compliment can give someone the boost they need.',
-  },
-  {
-    kind: 'clip',
-    id: 's1c',
-    label: 'S1 · woman · AN UPDATE',
-    seconds: 5,
-    jobId: 'd2787728-7c6e-4492-8296-84a63da8c4fe',
-    url: `${CDN}/hf_20260617_092830_d2787728-7c6e-4492-8296-84a63da8c4fe.mp4`,
   },
   // ── Scene 2 — coffee toast ──────────────────────────────────────────────
   {

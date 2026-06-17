@@ -169,7 +169,7 @@ export const Criteria: React.FC = () => {
           ))}
         </div>
 
-        <StickerBurst frames={300} startAt={20} />
+        <StickerBurst frames={300} startAt={24} count={8} size={300} />
       </AbsoluteFill>
     </Stage>
   );
