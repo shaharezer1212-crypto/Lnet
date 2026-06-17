@@ -141,7 +141,7 @@ export const TIMELINE: Beat[] = [
     label: 'END · woman + gift',
     seconds: 4,
     jobId: '3eba2d5a-c69e-41fa-a71c-7a34aae3b4f4',
-    url: '', // TODO: rerun in progress (NSFW false-positive) — fill when ready
+    url: `${CDN}/hf_20260617_102730_3eba2d5a-c69e-41fa-a71c-7a34aae3b4f4.mp4`,
     narration: 'Employees can view, congratulate and CheerZ one another.',
   },
   {

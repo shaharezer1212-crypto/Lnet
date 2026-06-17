@@ -37,8 +37,9 @@ npm run render     # render to out/kudoz.mp4 (1080p, 30fps)
 8. Ending — woman + gift → man + logo → walk away together
 9. **MG** — outro tagline
 
-## Pending
+## Status
 
-Two ending clips (`end-woman`, `end-man`) were re-rendered after an NSFW
-false-positive. When their jobs finish, drop the final MP4 URLs into the two
-`url: ''` fields in `src/clips.ts`.
+All 11 clips are wired in `src/clips.ts` (the two ending shots were
+re-rendered after an NSFW false-positive and are now filled in). The project
+typechecks and Remotion resolves the `KudoZ` composition (1920×1080, 30fps,
+67.5s).
