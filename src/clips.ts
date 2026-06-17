@@ -144,10 +144,10 @@ export const TIMELINE: Beat[] = [
   {
     kind: 'clip',
     id: 's4b',
-    label: 'S4 · woman recognized (Jen Moore)',
-    seconds: 5,
-    jobId: 'e4b07837-5454-4aaf-bc5b-6938570d7143',
-    url: `${CDN}/hf_20260617_092905_e4b07837-5454-4aaf-bc5b-6938570d7143.mp4`,
+    label: 'S4 · she enters → sits beside him → her recognition',
+    seconds: 6,
+    jobId: '0c83f018-bb18-41c7-9d16-ce837aa055f6',
+    url: `${CDN}/hf_20260617_160342_0c83f018-bb18-41c7-9d16-ce837aa055f6.mp4`,
     vo: `${CDN}/hf_20260617_111111_7a90eb3e-fe0c-47d9-b5a3-ab0ad92b07fe.wav`,
     narration:
       'These are the kinds of things that create the flourishing work environment we build at ZIM.',
