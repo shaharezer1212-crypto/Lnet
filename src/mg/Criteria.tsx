@@ -1,46 +1,100 @@
 import {AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {COLORS, FONT} from '../theme';
+import {FloatingMascots} from './FloatingMascots';
 
-const ITEMS = [
-  {icon: '🧭', title: 'Core Values', tint: COLORS.sky},
-  {icon: '💡', title: 'Initiative & Innovation', tint: COLORS.yellow},
-  {icon: '⭐', title: 'Special Contribution', tint: COLORS.pink},
-  {icon: '🤝', title: 'Collaboration', tint: COLORS.green},
+// Official ZIM recognition criteria — exact labels, colours and icons.
+const CARDS = [
+  {title: 'Living ZIM’s Core Values', color: '#243A77', icon: '⭐'},
+  {title: 'Collaboration', color: '#F39A20', icon: '🤝'},
+  {title: 'Innovation and initiative', color: '#8E44AD', icon: '🧠'},
+  {title: 'Special Contribution', color: '#74B843', icon: '🎯'},
 ];
 
-const Card: React.FC<{index: number; icon: string; title: string; tint: string}> = ({
+const WHITE_ICON: React.CSSProperties = {
+  // turn any emoji into a clean white silhouette to match the brand icons
+  filter: 'brightness(0) invert(1)',
+  fontSize: 64,
+  lineHeight: 1,
+};
+
+const Card: React.FC<{index: number; title: string; color: string; icon: string}> = ({
   index,
-  icon,
   title,
-  tint,
+  color,
+  icon,
 }) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
-  const delay = 24 + index * 18;
-  const enter = spring({frame: frame - delay, fps, config: {damping: 13, mass: 0.7}});
-  const y = interpolate(enter, [0, 1], [60, 0]);
+  const enter = spring({frame: frame - 18 - index * 12, fps, config: {damping: 14, mass: 0.7}});
+  const y = interpolate(enter, [0, 1], [70, 0]);
 
   return (
     <div
       style={{
-        flex: 1,
+        position: 'relative',
         background: '#fff',
-        borderRadius: 28,
-        padding: '40px 28px',
-        textAlign: 'center',
-        boxShadow: '0 24px 60px rgba(6,36,90,0.25)',
+        borderRadius: 22,
+        overflow: 'hidden',
+        boxShadow: '0 22px 55px rgba(6,36,90,0.18)',
         transform: `translateY(${y}px)`,
         opacity: enter,
-        borderTop: `10px solid ${tint}`,
+        height: 300,
       }}
     >
-      <div style={{fontSize: 96, lineHeight: 1}}>{icon}</div>
-      <div style={{fontSize: 34, fontWeight: 800, color: COLORS.ink, marginTop: 18}}>{title}</div>
+      {/* coloured header with a convex bottom curve */}
+      <svg
+        width="100%"
+        height="62%"
+        viewBox="0 0 100 62"
+        preserveAspectRatio="none"
+        style={{position: 'absolute', top: 0, left: 0}}
+      >
+        <path d="M0,0 H100 V40 Q50,68 0,40 Z" fill={color} />
+      </svg>
+
+      {/* icon badge straddling the header / white boundary */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '34%',
+          left: '50%',
+          transform: 'translate(-50%,-50%)',
+          width: 124,
+          height: 124,
+          borderRadius: '50%',
+          background: color,
+          border: '6px solid #fff',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <span style={WHITE_ICON}>{icon}</span>
+      </div>
+
+      {/* title */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 40,
+          left: 0,
+          right: 0,
+          textAlign: 'center',
+          fontFamily: FONT,
+          fontSize: 30,
+          fontWeight: 800,
+          color: '#243A77',
+          padding: '0 16px',
+        }}
+      >
+        {title}
+      </div>
     </div>
   );
 };
 
-// The four reward criteria animating in one-by-one, synced to the narration.
+// The four reward criteria, in the official ZIM card design, with playful
+// KudoZ mascots floating around them.
 export const Criteria: React.FC = () => {
   const frame = useCurrentFrame();
   const titleFade = interpolate(frame, [0, 16], [0, 1], {extrapolateRight: 'clamp'});
@@ -52,17 +106,36 @@ export const Criteria: React.FC = () => {
         fontFamily: FONT,
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 90,
+        padding: '70px 110px',
       }}
     >
-      <div style={{opacity: titleFade, fontSize: 56, fontWeight: 900, color: COLORS.zimBlue, marginBottom: 56}}>
-        Reward across <span style={{color: COLORS.pink}}>four</span> values
+      <div
+        style={{
+          opacity: titleFade,
+          fontSize: 46,
+          fontWeight: 900,
+          color: COLORS.zimBlue,
+          marginBottom: 34,
+        }}
+      >
+        Recognize across <span style={{color: COLORS.pink}}>four</span> values
       </div>
-      <div style={{display: 'flex', gap: 28, width: '100%', alignItems: 'stretch'}}>
-        {ITEMS.map((it, i) => (
-          <Card key={it.title} index={i} {...it} />
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gridTemplateRows: '1fr 1fr',
+          gap: 30,
+          width: '100%',
+          maxWidth: 1180,
+        }}
+      >
+        {CARDS.map((c, i) => (
+          <Card key={c.title} index={i} {...c} />
         ))}
       </div>
+
+      <FloatingMascots />
     </AbsoluteFill>
   );
 };

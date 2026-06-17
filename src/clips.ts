@@ -27,6 +27,13 @@ export const NARRATION_URL = `${CDN}/hf_20260617_130038_d1487192-cf5f-4e19-843e-
 // Small lead-in so the voice doesn't start on the very first frame.
 export const NARRATION_START = 8;
 
+// ── Brand assets (fill when provided) ───────────────────────────────────────
+// Official KudoZ logo (centered in the logo-reveal / outro). Empty → text logo.
+export const LOGO_URL = '';
+// B-roll of the work environment, shown in the system/values section.
+// Empty → a labelled placeholder panel is shown instead.
+export const FOOTAGE_URL = '';
+
 export type Beat =
   | {
       kind: 'clip';
@@ -166,10 +173,10 @@ export const TIMELINE: Beat[] = [
   {
     kind: 'clip',
     id: 'end-man',
-    label: 'END · man + KudoZ logo',
-    seconds: 5,
-    jobId: '542fd502-afd4-493d-b629-66772bc0d48a',
-    url: `${CDN}/hf_20260617_102744_542fd502-afd4-493d-b629-66772bc0d48a.mp4`,
+    label: 'END · man + floating mascots (push-in)',
+    seconds: 6,
+    jobId: 'bf0b155d-4994-4306-b3c8-d9933f8e3122',
+    url: `${CDN}/hf_20260617_145326_bf0b155d-4994-4306-b3c8-d9933f8e3122.mp4`,
   },
   {
     kind: 'clip',
