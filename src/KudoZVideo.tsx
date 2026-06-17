@@ -8,6 +8,7 @@ import {
   TIMELINE,
   TRANSITION,
   TOTAL_FRAMES,
+  START_FRAMES,
   sec,
   MUSIC_URL,
   MUSIC_VOLUME,
@@ -40,6 +41,19 @@ const Music: React.FC = () => {
     {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'},
   );
   return <Audio src={MUSIC_URL} volume={vol} />;
+};
+
+// Quick white flash at every scene boundary — a trailer-style "flash cut".
+const FlashCuts: React.FC = () => {
+  const frame = useCurrentFrame();
+  let o = 0;
+  for (let i = 1; i < START_FRAMES.length; i++) {
+    const d = Math.abs(frame - START_FRAMES[i]);
+    if (d < 6) o = Math.max(o, interpolate(d, [0, 6], [0.6, 0], {extrapolateRight: 'clamp'}));
+  }
+  return (
+    <AbsoluteFill style={{background: '#fff', opacity: o, mixBlendMode: 'screen', pointerEvents: 'none'}} />
+  );
 };
 
 const BlackFades: React.FC = () => {
@@ -91,6 +105,7 @@ export const KudoZVideo: React.FC = () => {
 
       <Music />
       <Narration />
+      <FlashCuts />
       <BlackFades />
     </AbsoluteFill>
   );

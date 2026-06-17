@@ -102,7 +102,7 @@ export const Criteria: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        background: 'radial-gradient(circle at 50% 35%, #FFFFFF 0%, #F2F7FF 100%)',
+        background: `radial-gradient(circle at 50% 40%, ${COLORS.zimBlue} 0%, ${COLORS.zimBlueDeep} 62%, #03132E 100%)`,
         fontFamily: FONT,
         alignItems: 'center',
         justifyContent: 'center',
@@ -112,13 +112,13 @@ export const Criteria: React.FC = () => {
       <div
         style={{
           opacity: titleFade,
-          fontSize: 46,
+          fontSize: 48,
           fontWeight: 900,
-          color: COLORS.zimBlue,
+          color: '#fff',
           marginBottom: 34,
         }}
       >
-        Recognize across <span style={{color: COLORS.pink}}>four</span> values
+        Recognize across <span style={{color: COLORS.yellow}}>four</span> values
       </div>
       <div
         style={{

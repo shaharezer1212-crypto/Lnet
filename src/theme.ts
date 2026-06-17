@@ -1,3 +1,11 @@
+import {loadFont} from '@remotion/google-fonts/Poppins';
+
+// Clean modern interim font. Swap to the official ZIM font once provided
+// (drop the .ttf/.otf in public/fonts and load it via @font-face here).
+const {fontFamily} = loadFont('normal', {weights: ['400', '600', '700', '800', '900']});
+
+export const FONT = fontFamily;
+
 // KudoZ / ZIM brand palette used across the motion-graphics beats.
 export const COLORS = {
   zimBlue: '#0A3D91',
@@ -12,6 +20,3 @@ export const COLORS = {
   purple: '#7A4FE0',
   orange: '#FF7A1A',
 };
-
-export const FONT =
-  '"Arial", "Helvetica Neue", Helvetica, system-ui, -apple-system, sans-serif';
