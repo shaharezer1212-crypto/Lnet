@@ -39,17 +39,15 @@ export const LOGO_URL =
 export const FOOTAGE_URL = '';
 
 // Real KudoZ sticker artwork — background removed (transparent) — that
-// floats/pops around the MG scenes.
+// floats/pops around the MG scenes. Stickers #1, #4 and #8 were dropped
+// because their artwork was badly cropped; these five are the clean ones.
 const OUT = 'https://d8j0ntlcm91z4.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC';
 export const STICKERS: string[] = [
-  `${OUT}/hf_20260617_174951_08706f6c-0a0a-43db-8207-eb48d6f363e9.png`,
   `${OUT}/hf_20260617_174953_fead458d-b018-4e73-9756-39f4c6172612.png`,
   `${OUT}/hf_20260617_174954_bcfe0fe2-e6b4-40b5-8970-ff07a5a83e46.png`,
-  `${OUT}/hf_20260617_174956_09e9f320-edb7-4d9a-a60d-ae33517c9858.png`,
   `${OUT}/hf_20260617_174957_31f3a8e5-5175-4b1b-875d-5a1aaf653bcc.png`,
   `${OUT}/hf_20260617_174958_889f0cd6-7170-4ea4-ab1f-834db29eae05.png`,
   `${OUT}/hf_20260617_175000_ec23dc44-d0c2-4725-9033-b4f2fbb541eb.png`,
-  `${OUT}/hf_20260617_175001_f161f303-b07f-4779-bf18-3f71d7cf1aae.png`,
 ];
 
 export type Beat =
