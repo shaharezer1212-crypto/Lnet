@@ -1,6 +1,6 @@
 import {AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {COLORS, FONT} from '../theme';
-import {FloatingMascots} from './FloatingMascots';
+import {StickerBurst} from './StickerBurst';
 
 // Official ZIM recognition criteria — exact labels, colours and icons.
 const CARDS = [
@@ -135,7 +135,16 @@ export const Criteria: React.FC = () => {
         ))}
       </div>
 
-      <FloatingMascots />
+      <StickerBurst
+        frames={300}
+        startAt={24}
+        spots={[
+          {x: 50, y: 8, size: 170},
+          {x: 6, y: 50, size: 185},
+          {x: 94, y: 50, size: 185},
+          {x: 50, y: 94, size: 170},
+        ]}
+      />
     </AbsoluteFill>
   );
 };

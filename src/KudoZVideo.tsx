@@ -1,6 +1,9 @@
 import {AbsoluteFill, Audio, interpolate, useCurrentFrame} from 'remotion';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
+import type {TransitionPresentation} from '@remotion/transitions';
+import {fade} from '@remotion/transitions/fade';
 import {slide} from '@remotion/transitions/slide';
+import {wipe} from '@remotion/transitions/wipe';
 import {
   TIMELINE,
   TRANSITION,
@@ -18,10 +21,15 @@ import {Outro} from './mg/Outro';
 
 const MG = {logo: LogoReveal, criteria: Criteria, outro: Outro} as const;
 
-// Snappy directional slides between segments for an energetic, "popping" cut.
-const SLIDE_DIRS = ['from-right', 'from-left', 'from-bottom', 'from-top'] as const;
+// Cinematic, mostly-fade cuts that keep scenes connected, with a wipe/slide
+// to punctuate the section changes (into the logo, back to live action, and
+// into the outro). Same duration everywhere so the timeline stays exact.
+const presentationFor = (cut: number): TransitionPresentation<Record<string, unknown>> => {
+  if (cut === 5 || cut === 11) return wipe() as TransitionPresentation<Record<string, unknown>>;
+  if (cut === 7) return slide({direction: 'from-right'}) as TransitionPresentation<Record<string, unknown>>;
+  return fade() as TransitionPresentation<Record<string, unknown>>;
+};
 
-// Background music, ducked under the narration, with a short fade in/out.
 const Music: React.FC = () => {
   const frame = useCurrentFrame();
   if (!MUSIC_URL) return null;
@@ -34,11 +42,10 @@ const Music: React.FC = () => {
   return <Audio src={MUSIC_URL} volume={vol} />;
 };
 
-// Black fade-in at the very start and fade-out at the very end.
 const BlackFades: React.FC = () => {
   const frame = useCurrentFrame();
-  const fadeIn = interpolate(frame, [0, 14], [1, 0], {extrapolateRight: 'clamp'});
-  const fadeOut = interpolate(frame, [TOTAL_FRAMES - 14, TOTAL_FRAMES], [0, 1], {
+  const fadeIn = interpolate(frame, [0, 16], [1, 0], {extrapolateRight: 'clamp'});
+  const fadeOut = interpolate(frame, [TOTAL_FRAMES - 16, TOTAL_FRAMES], [0, 1], {
     extrapolateLeft: 'clamp',
   });
   return (
@@ -48,8 +55,6 @@ const BlackFades: React.FC = () => {
   );
 };
 
-// Assembles every beat into one continuous piece with snappy slide cuts, plus
-// the music bed and the single continuous voice-over.
 export const KudoZVideo: React.FC = () => {
   return (
     <AbsoluteFill style={{background: '#000'}}>
@@ -75,7 +80,7 @@ export const KudoZVideo: React.FC = () => {
             nodes.push(
               <TransitionSeries.Transition
                 key={`${beat.id}-t`}
-                presentation={slide({direction: SLIDE_DIRS[i % SLIDE_DIRS.length]})}
+                presentation={presentationFor(i)}
                 timing={linearTiming({durationInFrames: TRANSITION})}
               />,
             );

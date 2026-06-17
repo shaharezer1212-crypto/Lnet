@@ -9,8 +9,9 @@ export const FPS = 30;
 export const WIDTH = 1920;
 export const HEIGHT = 1080;
 
-// Cross-fade length between every segment (frames). Short = snappy.
-export const TRANSITION = 10;
+// Transition length between every segment (frames) — kept constant so the
+// timeline math stays exact; the *style* of each cut varies in KudoZVideo.
+export const TRANSITION = 16;
 
 const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC';
 
@@ -28,8 +29,9 @@ export const NARRATION_URL = `${CDN}/hf_20260617_130038_d1487192-cf5f-4e19-843e-
 export const NARRATION_START = 8;
 
 // ── Brand assets (fill when provided) ───────────────────────────────────────
-// Official KudoZ logo (centered in the logo-reveal / outro). Empty → text logo.
-export const LOGO_URL = `https://d2ol7oe51mr4n9.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC/c85c1fba-ef4b-4b7f-a5f9-827fb8a3379f.png`;
+// Official KudoZ logo, background removed (transparent) — for clean close-ups.
+export const LOGO_URL =
+  'https://d8j0ntlcm91z4.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC/hf_20260617_153217_99b4c052-332b-4f3a-89ed-78799f70718b.png';
 // B-roll of the work environment, shown in the system/values section.
 // Empty → a labelled placeholder panel is shown instead.
 export const FOOTAGE_URL = '';
@@ -155,7 +157,7 @@ export const TIMELINE: Beat[] = [
     kind: 'mg',
     id: 'mg-logo',
     label: 'MG · KudoZ logo reveal',
-    seconds: 3,
+    seconds: 4,
     mg: 'logo',
     vo: `${CDN}/hf_20260617_111112_cf1c387b-80e1-4aef-a6b2-d27ccee0d16f.wav`,
     narration: 'Introducing KudoZ — ZIM’s new employee recognition system.',

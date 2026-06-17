@@ -1,109 +1,92 @@
-import {
-  AbsoluteFill,
-  Img,
-  OffthreadVideo,
-  interpolate,
-  spring,
-  useCurrentFrame,
-  useVideoConfig,
-} from 'remotion';
+import {AbsoluteFill, Img, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {COLORS, FONT} from '../theme';
-import {FloatingMascots} from './FloatingMascots';
-import {LOGO_URL, FOOTAGE_URL} from '../clips';
+import {StickerBurst} from './StickerBurst';
+import {LOGO_URL} from '../clips';
 
-// "Introducing: KudoZ" on a clean white stage — the logo springs in with a
-// shine sweep, the work-environment footage placeholder fades in, and the
-// KudoZ stickers pop around it.
+const CORNER_SPOTS = [
+  {x: 13, y: 24, size: 240},
+  {x: 87, y: 22, size: 240},
+  {x: 15, y: 80, size: 230},
+  {x: 85, y: 80, size: 240},
+];
+
+// Cinematic close-up reveal of the gold KudoZ medal on a deep brand stage:
+// it pushes in from an oversized close-up, settles with a gentle swing and a
+// golden glow, while stickers pop in the corners.
 export const LogoReveal: React.FC = () => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
 
-  const pop = spring({frame, fps, config: {damping: 10, mass: 0.6}});
-  const scale = interpolate(pop, [0, 1], [0.6, 1]);
-  const float = Math.sin(frame / fps * 1.4) * 8;
-  const subFade = interpolate(frame, [16, 30], [0, 1], {extrapolateRight: 'clamp'});
-  const panelFade = interpolate(frame, [26, 42], [0, 1], {extrapolateRight: 'clamp'});
-  // shine sweep across the logo
-  const shine = interpolate(frame, [10, 34], [-140, 260], {extrapolateRight: 'clamp'});
+  const pop = spring({frame, fps, config: {damping: 14, mass: 0.9}});
+  const scale = interpolate(pop, [0, 1], [1.7, 1]); // close-up → settle
+  const swing = Math.sin((frame / fps) * 1.5) * 2;
+  const glow = 0.5 + Math.sin((frame / fps) * 2) * 0.18;
+  const kicker = interpolate(frame, [10, 26], [0, 1], {extrapolateRight: 'clamp'});
+  const sub = interpolate(frame, [30, 46], [0, 1], {extrapolateRight: 'clamp'});
 
   return (
     <AbsoluteFill
       style={{
-        background: 'radial-gradient(circle at 50% 40%, #FFFFFF 0%, #F2F7FF 100%)',
+        background: `radial-gradient(circle at 50% 42%, ${COLORS.zimBlue} 0%, ${COLORS.zimBlueDeep} 60%, #03132E 100%)`,
         fontFamily: FONT,
         alignItems: 'center',
         justifyContent: 'center',
+        overflow: 'hidden',
       }}
     >
-      <div style={{textAlign: 'center', transform: `translateY(${float}px) scale(${scale})`, zIndex: 2}}>
-        <div
-          style={{
-            color: COLORS.sky,
-            fontSize: 30,
-            letterSpacing: 10,
-            textTransform: 'uppercase',
-            marginBottom: 18,
-            opacity: subFade,
-            fontWeight: 700,
-          }}
-        >
-          Introducing
-        </div>
-
-        <div style={{position: 'relative', display: 'inline-block', overflow: 'hidden', borderRadius: 18}}>
-          <Img src={LOGO_URL} style={{height: 260, objectFit: 'contain', display: 'block'}} />
-          {/* glossy shine sweep */}
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              bottom: 0,
-              left: shine,
-              width: 90,
-              transform: 'skewX(-18deg)',
-              background:
-                'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.65) 50%, rgba(255,255,255,0) 100%)',
-              mixBlendMode: 'screen',
-            }}
-          />
-        </div>
-
-        <div style={{color: COLORS.ink, fontSize: 34, marginTop: 22, opacity: subFade, fontWeight: 600}}>
-          ZIM’s new employee recognition system
-        </div>
-      </div>
-
-      {/* Work-environment footage placeholder (replaced when FOOTAGE_URL is set) */}
       <div
         style={{
           position: 'absolute',
-          bottom: 64,
-          width: 460,
-          height: 150,
-          borderRadius: 16,
-          overflow: 'hidden',
-          opacity: panelFade,
-          border: `3px dashed ${COLORS.sky}`,
-          background: 'rgba(46,143,230,0.06)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: COLORS.sky,
-          fontSize: 22,
-          letterSpacing: 2,
-          textAlign: 'center',
-          zIndex: 2,
-          fontWeight: 700,
+          top: 120,
+          color: COLORS.yellow,
+          fontSize: 30,
+          letterSpacing: 12,
+          textTransform: 'uppercase',
+          fontWeight: 800,
+          opacity: kicker,
         }}
       >
-        {FOOTAGE_URL ? (
-          <OffthreadVideo src={FOOTAGE_URL} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-        ) : (
-          <span>▶ WORK-ENVIRONMENT FOOTAGE<br />(placeholder)</span>
-        )}
+        Introducing
       </div>
 
-      <FloatingMascots />
+      {/* golden glow behind the medal */}
+      <div
+        style={{
+          position: 'absolute',
+          width: 720,
+          height: 720,
+          borderRadius: '50%',
+          background: `radial-gradient(circle, rgba(255,196,46,${glow}) 0%, rgba(255,196,46,0) 60%)`,
+          filter: 'blur(20px)',
+        }}
+      />
+
+      <Img
+        src={LOGO_URL}
+        style={{
+          height: 620,
+          objectFit: 'contain',
+          transform: `scale(${scale}) rotate(${swing}deg)`,
+          filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.45))',
+          zIndex: 2,
+        }}
+      />
+
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 120,
+          color: '#fff',
+          fontSize: 36,
+          fontWeight: 600,
+          opacity: sub,
+          letterSpacing: 1,
+        }}
+      >
+        ZIM’s new employee recognition system
+      </div>
+
+      <StickerBurst frames={120} spots={CORNER_SPOTS} startAt={14} />
     </AbsoluteFill>
   );
 };
