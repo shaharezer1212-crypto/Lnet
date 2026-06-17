@@ -146,8 +146,8 @@ export const TIMELINE: Beat[] = [
     id: 's4b',
     label: 'S4 · she enters → sits beside him → her recognition',
     seconds: 6,
-    jobId: 'cf4730fd-a7a4-4041-82b5-5b70d3ac4d57',
-    url: `${CDN}/hf_20260617_161117_cf4730fd-a7a4-4041-82b5-5b70d3ac4d57.mp4`,
+    jobId: '8ff62f8e-e305-481b-9a86-ae954ea01065',
+    url: `${CDN}/hf_20260617_170736_8ff62f8e-e305-481b-9a86-ae954ea01065.mp4`,
     vo: `${CDN}/hf_20260617_111111_7a90eb3e-fe0c-47d9-b5a3-ab0ad92b07fe.wav`,
     narration:
       'These are the kinds of things that create the flourishing work environment we build at ZIM.',
