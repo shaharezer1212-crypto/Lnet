@@ -165,10 +165,10 @@ export const TIMELINE: Beat[] = [
   {
     kind: 'clip',
     id: 'end-walk',
-    label: 'END · walk away together',
+    label: 'END · walk away from behind (clean corridor)',
     seconds: 6,
-    jobId: '470a41be-45e9-4359-b25f-b22f274cd0a8',
-    url: `${CDN}/hf_20260617_120020_470a41be-45e9-4359-b25f-b22f274cd0a8.mp4`,
+    jobId: '5e4992a7-3e4c-47ec-841f-ec5b3359aa7f',
+    url: `${CDN}/hf_20260617_121248_5e4992a7-3e4c-47ec-841f-ec5b3359aa7f.mp4`,
     vo: `${CDN}/hf_20260617_111123_0b821fa2-77cb-4890-9057-6a8434a1d484.wav`,
     narration:
       'Together, we’ll create a positive work environment built on trust, recognition and mutual support.',
