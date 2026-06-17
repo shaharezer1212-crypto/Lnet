@@ -4,17 +4,16 @@ import {STICKERS} from '../clips';
 
 type Spot = {x: number; y: number};
 
-// Resting spots, all hugging the edges/corners of the frame — a sticker never
-// travels toward the centre where the logo / cards live.
+// Resting spots, all hugging the corners / side margins of the frame — never
+// the horizontal centre (where titles, subtitles and cards live) and never
+// drifting toward the middle.
 const EDGE_SPOTS: Spot[] = [
-  {x: 12, y: 24},
-  {x: 88, y: 22},
-  {x: 91, y: 72},
+  {x: 11, y: 24},
+  {x: 89, y: 22},
+  {x: 90, y: 74},
   {x: 10, y: 76},
-  {x: 50, y: 12},
-  {x: 91, y: 46},
-  {x: 50, y: 90},
-  {x: 9, y: 50},
+  {x: 7, y: 50},
+  {x: 93, y: 50},
 ];
 
 // Gentle, natural mascots: they ease in "from a distance" (small + soft focus),

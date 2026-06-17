@@ -1,6 +1,5 @@
 import {AbsoluteFill, Img, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {COLORS, FONT} from '../theme';
-import {StickerBurst} from './StickerBurst';
 import {Confetti, LightSweep, ShineText, ShockwaveRing, Stage} from './fx';
 import {LOGO_URL} from '../clips';
 
@@ -10,13 +9,17 @@ export const Outro: React.FC = () => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
 
-  const pop = spring({frame, fps, config: {damping: 10, mass: 0.7}});
-  const scale = interpolate(pop, [0, 1], [0.55, 1]);
+  // gentle landing — low overshoot so the lockup doesn't visibly bounce/jump
+  const pop = spring({frame, fps, config: {damping: 16, mass: 0.8}});
+  const scale = interpolate(pop, [0, 1], [0.7, 1]);
   const swing = Math.sin((frame / fps) * 1.4) * 2;
   const float = Math.sin((frame / fps) * 1.1) * 7;
   const glow = 0.5 + Math.sin((frame / fps) * 2) * 0.2;
-  const lineFade = interpolate(frame, [24, 40], [0, 1], {extrapolateRight: 'clamp'});
-  const lineWidth = interpolate(frame, [24, 46], [0, 560], {extrapolateRight: 'clamp'});
+  // the underline grows on an eased spring (no abrupt snap) and the tagline
+  // fades in with it — fully decoupled from layout so nothing shifts vertically
+  const lineGrow = spring({frame: frame - 20, fps, config: {damping: 20, mass: 0.9}});
+  const lineWidth = lineGrow * 560;
+  const lineFade = lineGrow;
 
   const logoH = 420;
 
@@ -74,8 +77,6 @@ export const Outro: React.FC = () => {
             </ShineText>
           </div>
         </div>
-
-        <StickerBurst frames={120} startAt={30} count={3} size={250} />
       </AbsoluteFill>
     </Stage>
   );

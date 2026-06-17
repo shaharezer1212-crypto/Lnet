@@ -2,7 +2,6 @@ import {AbsoluteFill, Audio, interpolate, useCurrentFrame} from 'remotion';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
 import type {TransitionPresentation} from '@remotion/transitions';
 import {slide} from '@remotion/transitions/slide';
-import {fade} from '@remotion/transitions/fade';
 import {
   TIMELINE,
   TRANSITION,
@@ -20,14 +19,25 @@ import {Outro} from './mg/Outro';
 
 const MG = {logo: LogoReveal, criteria: Criteria, outro: Outro} as const;
 
+// A true cinematic hard cut that still occupies the constant TRANSITION slot
+// (so the timeline math stays exact): the outgoing shot plays to the slot's
+// midpoint, then we snap straight to the incoming shot — no dissolve, no dim.
+const cut = (): TransitionPresentation<Record<string, unknown>> => ({
+  component: ({presentationProgress, presentationDirection, children}) => {
+    const show =
+      presentationDirection === 'exiting' ? presentationProgress < 0.5 : presentationProgress >= 0.5;
+    return <AbsoluteFill style={{opacity: show ? 1 : 0}}>{children}</AbsoluteFill>;
+  },
+  props: {},
+});
+
 // Playful directional pushes — each cut comes from a different side so the
 // edit keeps moving (one from the bottom, the next from the side, ...).
 const SLIDE_DIRS = ['from-bottom', 'from-right', 'from-left', 'from-top'] as const;
-const presentationFor = (cut: number): TransitionPresentation<Record<string, unknown>> => {
-  // The opening (man → reveal woman → her close-up) flows as one whole scene
-  // with soft dissolves, not split-screen slides.
-  if (cut <= 1) return fade() as TransitionPresentation<Record<string, unknown>>;
-  return slide({direction: SLIDE_DIRS[cut % SLIDE_DIRS.length]}) as TransitionPresentation<
+const presentationFor = (i: number): TransitionPresentation<Record<string, unknown>> => {
+  // The opening lands on a clean cinematic CUT into scene 2 (no fade/dim).
+  if (i === 0) return cut();
+  return slide({direction: SLIDE_DIRS[i % SLIDE_DIRS.length]}) as TransitionPresentation<
     Record<string, unknown>
   >;
 };
