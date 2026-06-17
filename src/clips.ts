@@ -9,17 +9,18 @@ export const FPS = 30;
 export const WIDTH = 1920;
 export const HEIGHT = 1080;
 
-// Cross-fade length between every segment (frames).
-export const TRANSITION = 15;
+// Cross-fade length between every segment (frames). Short = snappy.
+export const TRANSITION = 10;
 
 const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC';
 
 // Background music — "bold modern urban pop beat with attitude" (option 2),
 // full 68s render.
 export const MUSIC_URL = `${CDN}/hf_20260617_112051_5f73edae-9eca-4e92-b330-9c4e07fd54ee.m4a`;
-export const MUSIC_VOLUME = 0.2;
-// Diegetic clip audio is ducked under the narration.
-export const CLIP_VOLUME = 0.35;
+// Music sits well under the voice-over.
+export const MUSIC_VOLUME = 0.1;
+// Diegetic clip audio is ducked under the narration (per-clip override via beat.volume).
+export const CLIP_VOLUME = 0.28;
 
 // Single continuous narration (Ashley) — one take, no per-line overlap.
 export const NARRATION_URL = `${CDN}/hf_20260617_130038_d1487192-cf5f-4e19-843e-ab21785fa213.wav`;
@@ -36,6 +37,8 @@ export type Beat =
       url: string;
       vo?: string;
       narration?: string;
+      // Per-clip diegetic audio volume override (defaults to CLIP_VOLUME).
+      volume?: number;
     }
   | {
       kind: 'mg';
@@ -93,6 +96,7 @@ export const TIMELINE: Beat[] = [
     seconds: 6,
     jobId: '24e25606-3a4a-4c73-87f2-4a0159876fb3',
     url: `${CDN}/hf_20260617_121627_24e25606-3a4a-4c73-87f2-4a0159876fb3.mp4`,
+    volume: 0, // mute the colleague's diegetic SFX in the corridor
     vo: `${CDN}/hf_20260617_111109_5c314ca9-56ad-451f-8ce4-a32f0df2cc86.wav`,
     narration: 'Putting in a good word whenever we can.',
   },
