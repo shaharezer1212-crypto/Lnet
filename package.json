@@ -1,0 +1,22 @@
+{
+  "name": "kudoz-zim-video",
+  "version": "1.0.0",
+  "description": "ZIM KudoZ launch video — assembled in Remotion from Higgsfield (Seedance 2.0) clips + motion graphics",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "remotion studio",
+    "render": "remotion render KudoZ out/kudoz.mp4 --concurrency=2",
+    "upgrade": "remotion upgrade"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.290",
+    "@remotion/transitions": "4.0.290",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "remotion": "4.0.290"
+  },
+  "devDependencies": {
+    "@types/react": "19.0.0",
+    "typescript": "5.5.4"
+  }
+}
