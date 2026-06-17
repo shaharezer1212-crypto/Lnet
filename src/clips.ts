@@ -21,6 +21,11 @@ export const MUSIC_VOLUME = 0.2;
 // Diegetic clip audio is ducked under the narration.
 export const CLIP_VOLUME = 0.35;
 
+// Single continuous narration (Ashley) — one take, no per-line overlap.
+export const NARRATION_URL = `${CDN}/hf_20260617_130038_d1487192-cf5f-4e19-843e-ab21785fa213.wav`;
+// Small lead-in so the voice doesn't start on the very first frame.
+export const NARRATION_START = 8;
+
 export type Beat =
   | {
       kind: 'clip';

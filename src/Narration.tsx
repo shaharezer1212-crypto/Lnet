@@ -1,19 +1,14 @@
 import {Audio, Sequence} from 'remotion';
-import {TIMELINE, START_FRAMES} from './clips';
+import {NARRATION_URL, NARRATION_START} from './clips';
 
-// Lays each beat's Ashley (en) voice-over at that beat's absolute start frame.
-// Each line plays its full natural length (it may breathe slightly past the
-// cut, which reads naturally over the next shot).
+// A SINGLE continuous Ashley voice-over track for the whole film.
+// One file → the lines can never overlap or "run over" each other, and the
+// narration flows naturally over the montage (per-beat placement is gone).
 export const Narration: React.FC = () => {
+  if (!NARRATION_URL) return null;
   return (
-    <>
-      {TIMELINE.map((beat, i) =>
-        beat.vo ? (
-          <Sequence key={beat.id} from={START_FRAMES[i]} name={`VO · ${beat.label}`}>
-            <Audio src={beat.vo} />
-          </Sequence>
-        ) : null,
-      )}
-    </>
+    <Sequence from={NARRATION_START} name="Narration (continuous)">
+      <Audio src={NARRATION_URL} />
+    </Sequence>
   );
 };
