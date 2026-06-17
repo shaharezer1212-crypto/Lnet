@@ -29,7 +29,7 @@ export const NARRATION_START = 8;
 
 // ── Brand assets (fill when provided) ───────────────────────────────────────
 // Official KudoZ logo (centered in the logo-reveal / outro). Empty → text logo.
-export const LOGO_URL = '';
+export const LOGO_URL = `https://d2ol7oe51mr4n9.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC/c85c1fba-ef4b-4b7f-a5f9-827fb8a3379f.png`;
 // B-roll of the work environment, shown in the system/values section.
 // Empty → a labelled placeholder panel is shown instead.
 export const FOOTAGE_URL = '';

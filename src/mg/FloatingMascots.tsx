@@ -22,13 +22,14 @@ const Sticker: React.FC<{url: string; x: number; y: number; size: number; phase:
 }) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
-  const enter = spring({frame: frame - 4 - phase * 4, fps, config: {damping: 12, mass: 0.6}});
+  // poppy entrance with a little overshoot, staggered per sticker
+  const enter = spring({frame: frame - 4 - phase * 5, fps, config: {damping: 9, mass: 0.5}});
   const t = frame / fps + phase;
   const bob = Math.sin(t * 1.7) * 16;
   const sway = Math.cos(t * 1.15) * 10;
   const rot = Math.sin(t * 1.4) * 6;
   const pulse = 1 + Math.sin(t * 2.2) * 0.04;
-  const appear = interpolate(enter, [0, 1], [0.3, 1]);
+  const appear = interpolate(enter, [0, 1], [0, 1]);
 
   return (
     <Img

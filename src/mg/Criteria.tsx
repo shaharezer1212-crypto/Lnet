@@ -102,7 +102,7 @@ export const Criteria: React.FC = () => {
   return (
     <AbsoluteFill
       style={{
-        background: `linear-gradient(160deg, ${COLORS.paper} 0%, #DCEBFF 100%)`,
+        background: 'radial-gradient(circle at 50% 35%, #FFFFFF 0%, #F2F7FF 100%)',
         fontFamily: FONT,
         alignItems: 'center',
         justifyContent: 'center',

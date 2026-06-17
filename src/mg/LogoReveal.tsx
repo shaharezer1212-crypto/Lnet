@@ -11,48 +11,64 @@ import {COLORS, FONT} from '../theme';
 import {FloatingMascots} from './FloatingMascots';
 import {LOGO_URL, FOOTAGE_URL} from '../clips';
 
-// "Introducing: KudoZ" — centered logo reveal, a placeholder screen for the
-// work-environment footage, and playful KudoZ mascots floating around.
+// "Introducing: KudoZ" on a clean white stage — the logo springs in with a
+// shine sweep, the work-environment footage placeholder fades in, and the
+// KudoZ stickers pop around it.
 export const LogoReveal: React.FC = () => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
 
-  const pop = spring({frame, fps, config: {damping: 12, mass: 0.6}});
-  const scale = interpolate(pop, [0, 1], [0.7, 1]);
-  const blur = interpolate(frame, [0, 18], [22, 0], {extrapolateRight: 'clamp'});
+  const pop = spring({frame, fps, config: {damping: 10, mass: 0.6}});
+  const scale = interpolate(pop, [0, 1], [0.6, 1]);
+  const float = Math.sin(frame / fps * 1.4) * 8;
   const subFade = interpolate(frame, [16, 30], [0, 1], {extrapolateRight: 'clamp'});
-  const panelFade = interpolate(frame, [24, 40], [0, 1], {extrapolateRight: 'clamp'});
+  const panelFade = interpolate(frame, [26, 42], [0, 1], {extrapolateRight: 'clamp'});
+  // shine sweep across the logo
+  const shine = interpolate(frame, [10, 34], [-140, 260], {extrapolateRight: 'clamp'});
 
   return (
     <AbsoluteFill
       style={{
-        background: `radial-gradient(circle at 50% 35%, ${COLORS.sky} 0%, ${COLORS.zimBlue} 45%, ${COLORS.zimBlueDeep} 100%)`,
+        background: 'radial-gradient(circle at 50% 40%, #FFFFFF 0%, #F2F7FF 100%)',
         fontFamily: FONT,
         alignItems: 'center',
         justifyContent: 'center',
       }}
     >
-      <div style={{textAlign: 'center', transform: `scale(${scale})`, filter: `blur(${blur}px)`, zIndex: 2}}>
+      <div style={{textAlign: 'center', transform: `translateY(${float}px) scale(${scale})`, zIndex: 2}}>
         <div
           style={{
-            color: 'rgba(255,255,255,0.85)',
-            fontSize: 34,
-            letterSpacing: 8,
+            color: COLORS.sky,
+            fontSize: 30,
+            letterSpacing: 10,
             textTransform: 'uppercase',
-            marginBottom: 14,
+            marginBottom: 18,
             opacity: subFade,
+            fontWeight: 700,
           }}
         >
           Introducing
         </div>
-        {LOGO_URL ? (
-          <Img src={LOGO_URL} style={{height: 200, objectFit: 'contain'}} />
-        ) : (
-          <div style={{fontSize: 190, fontWeight: 900, lineHeight: 1, color: '#fff'}}>
-            Kudo<span style={{color: COLORS.yellow}}>Z</span>
-          </div>
-        )}
-        <div style={{color: 'rgba(255,255,255,0.92)', fontSize: 34, marginTop: 18, opacity: subFade}}>
+
+        <div style={{position: 'relative', display: 'inline-block', overflow: 'hidden', borderRadius: 18}}>
+          <Img src={LOGO_URL} style={{height: 260, objectFit: 'contain', display: 'block'}} />
+          {/* glossy shine sweep */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              bottom: 0,
+              left: shine,
+              width: 90,
+              transform: 'skewX(-18deg)',
+              background:
+                'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.65) 50%, rgba(255,255,255,0) 100%)',
+              mixBlendMode: 'screen',
+            }}
+          />
+        </div>
+
+        <div style={{color: COLORS.ink, fontSize: 34, marginTop: 22, opacity: subFade, fontWeight: 600}}>
           ZIM’s new employee recognition system
         </div>
       </div>
@@ -61,22 +77,23 @@ export const LogoReveal: React.FC = () => {
       <div
         style={{
           position: 'absolute',
-          bottom: 70,
+          bottom: 64,
           width: 460,
           height: 150,
           borderRadius: 16,
           overflow: 'hidden',
           opacity: panelFade,
-          border: '3px dashed rgba(255,255,255,0.55)',
-          background: 'rgba(255,255,255,0.08)',
+          border: `3px dashed ${COLORS.sky}`,
+          background: 'rgba(46,143,230,0.06)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: 'rgba(255,255,255,0.85)',
+          color: COLORS.sky,
           fontSize: 22,
           letterSpacing: 2,
           textAlign: 'center',
           zIndex: 2,
+          fontWeight: 700,
         }}
       >
         {FOOTAGE_URL ? (
