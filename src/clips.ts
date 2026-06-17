@@ -40,16 +40,14 @@ export const FOOTAGE_URL = '';
 // floats/pops around the MG scenes.
 const OUT = 'https://d8j0ntlcm91z4.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC';
 export const STICKERS: string[] = [
-  `${OUT}/hf_20260617_174409_47d6b77f-01c1-4cf4-abc1-79d085d1243b.png`,
-  `${OUT}/hf_20260617_174426_a6a4ccf8-6088-45cf-b6f1-8f468dfa1fef.png`,
-  `${OUT}/hf_20260617_174428_01e27052-1257-48a6-9964-cc7108d9cc19.png`,
-  `${OUT}/hf_20260617_174430_e79876ae-6ee9-4f8d-af3a-2d0894905171.png`,
-  `${OUT}/hf_20260617_174432_c8ec7aec-cbf3-4244-8c90-31a17542d785.png`,
-  `${OUT}/hf_20260617_174434_ce8f8c80-67e9-4743-870d-7ba8e0aa3597.png`,
-  `${OUT}/hf_20260617_174435_815acea9-e56a-4aaf-a06b-6a3eb8a62da1.png`,
-  `${OUT}/hf_20260617_174437_bd82c00d-31cf-4508-999c-06fccca2a74f.png`,
-  `${OUT}/hf_20260617_174438_f9789543-c7a6-4f67-94a0-b79cda6a819b.png`,
-  `${OUT}/hf_20260617_174451_8b39daed-2971-4d47-b9cf-61cd687ffdcf.png`,
+  `${OUT}/hf_20260617_174951_08706f6c-0a0a-43db-8207-eb48d6f363e9.png`,
+  `${OUT}/hf_20260617_174953_fead458d-b018-4e73-9756-39f4c6172612.png`,
+  `${OUT}/hf_20260617_174954_bcfe0fe2-e6b4-40b5-8970-ff07a5a83e46.png`,
+  `${OUT}/hf_20260617_174956_09e9f320-edb7-4d9a-a60d-ae33517c9858.png`,
+  `${OUT}/hf_20260617_174957_31f3a8e5-5175-4b1b-875d-5a1aaf653bcc.png`,
+  `${OUT}/hf_20260617_174958_889f0cd6-7170-4ea4-ab1f-834db29eae05.png`,
+  `${OUT}/hf_20260617_175000_ec23dc44-d0c2-4725-9033-b4f2fbb541eb.png`,
+  `${OUT}/hf_20260617_175001_f161f303-b07f-4779-bf18-3f71d7cf1aae.png`,
 ];
 
 export type Beat =
