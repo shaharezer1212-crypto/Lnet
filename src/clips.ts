@@ -36,25 +36,20 @@ export const LOGO_URL =
 // Empty → a labelled placeholder panel is shown instead.
 export const FOOTAGE_URL = '';
 
-// Real KudoZ sticker artwork (uploaded PNGs) that float around the MG scenes.
-const MEDIA = 'https://d2ol7oe51mr4n9.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC';
+// Real KudoZ sticker artwork — background removed (transparent) — that
+// floats/pops around the MG scenes.
+const OUT = 'https://d8j0ntlcm91z4.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC';
 export const STICKERS: string[] = [
-  `${MEDIA}/4939041e-e7b2-491b-b152-6185d3391841.png`, // KudoZ
-  `${MEDIA}/d9c07c1d-72fe-4cd2-ad8d-b326257b6ea1.png`, // on fire
-  `${MEDIA}/3b610f11-c207-47c0-97c0-c4d77e4da25e.png`, // up
-  `${MEDIA}/d3727143-ba93-4aef-95cd-2f45155f5747.png`, // awesome
-  `${MEDIA}/a111bfb1-814a-4db5-bbb2-ff14822c2d89.png`, // legend
-  `${MEDIA}/89b712ad-421d-4b3e-9cf8-72710177e80d.png`, // superb
-  `${MEDIA}/33086d9f-f05b-4a15-89b3-041d392cafaa.png`, // amazing
-  `${MEDIA}/0136e207-46d3-4a37-863c-c8d0c117d377.png`, // 10/10
-  `${MEDIA}/9a509856-4c12-4f8b-9b6d-6a936ccb8edf.png`, // brilliant
-  `${MEDIA}/a92170ca-2b22-493d-ac47-a295bc664733.png`, // bravo
-  `${MEDIA}/a9b9ef78-5141-4d33-ae46-2d3db5134338.png`, // fantastic
-  `${MEDIA}/9b018dd5-01bc-49bf-8688-41df736fce49.png`, // impressive
-  `${MEDIA}/e589e8e4-c051-4f3c-8cc2-631f6c18ef19.png`, // outstanding
-  `${MEDIA}/04eb2d78-7561-41ae-ad9c-fe08b9df9cf8.png`, // rock R you
-  `${MEDIA}/5d24c806-0349-4134-b001-ecfd512e7d90.png`, // Zimply the best
-  `${MEDIA}/2d5b4500-73c5-450c-bd21-04882ce9c028.png`, // fabulous
+  `${OUT}/hf_20260617_174409_47d6b77f-01c1-4cf4-abc1-79d085d1243b.png`,
+  `${OUT}/hf_20260617_174426_a6a4ccf8-6088-45cf-b6f1-8f468dfa1fef.png`,
+  `${OUT}/hf_20260617_174428_01e27052-1257-48a6-9964-cc7108d9cc19.png`,
+  `${OUT}/hf_20260617_174430_e79876ae-6ee9-4f8d-af3a-2d0894905171.png`,
+  `${OUT}/hf_20260617_174432_c8ec7aec-cbf3-4244-8c90-31a17542d785.png`,
+  `${OUT}/hf_20260617_174434_ce8f8c80-67e9-4743-870d-7ba8e0aa3597.png`,
+  `${OUT}/hf_20260617_174435_815acea9-e56a-4aaf-a06b-6a3eb8a62da1.png`,
+  `${OUT}/hf_20260617_174437_bd82c00d-31cf-4508-999c-06fccca2a74f.png`,
+  `${OUT}/hf_20260617_174438_f9789543-c7a6-4f67-94a0-b79cda6a819b.png`,
+  `${OUT}/hf_20260617_174451_8b39daed-2971-4d47-b9cf-61cd687ffdcf.png`,
 ];
 
 export type Beat =
