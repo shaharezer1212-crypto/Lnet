@@ -1,14 +1,11 @@
 import {AbsoluteFill, Audio, interpolate, useCurrentFrame} from 'remotion';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
 import type {TransitionPresentation} from '@remotion/transitions';
-import {fade} from '@remotion/transitions/fade';
 import {slide} from '@remotion/transitions/slide';
-import {wipe} from '@remotion/transitions/wipe';
 import {
   TIMELINE,
   TRANSITION,
   TOTAL_FRAMES,
-  START_FRAMES,
   sec,
   MUSIC_URL,
   MUSIC_VOLUME,
@@ -22,14 +19,13 @@ import {Outro} from './mg/Outro';
 
 const MG = {logo: LogoReveal, criteria: Criteria, outro: Outro} as const;
 
-// Cinematic, mostly-fade cuts that keep scenes connected, with a wipe/slide
-// to punctuate the section changes (into the logo, back to live action, and
-// into the outro). Same duration everywhere so the timeline stays exact.
-const presentationFor = (cut: number): TransitionPresentation<Record<string, unknown>> => {
-  if (cut === 5 || cut === 11) return wipe() as TransitionPresentation<Record<string, unknown>>;
-  if (cut === 7) return slide({direction: 'from-right'}) as TransitionPresentation<Record<string, unknown>>;
-  return fade() as TransitionPresentation<Record<string, unknown>>;
-};
+// Playful directional pushes — each cut comes from a different side so the
+// edit keeps moving (one from the bottom, the next from the side, ...).
+const SLIDE_DIRS = ['from-bottom', 'from-right', 'from-left', 'from-top'] as const;
+const presentationFor = (cut: number): TransitionPresentation<Record<string, unknown>> =>
+  slide({direction: SLIDE_DIRS[cut % SLIDE_DIRS.length]}) as TransitionPresentation<
+    Record<string, unknown>
+  >;
 
 const Music: React.FC = () => {
   const frame = useCurrentFrame();
@@ -43,19 +39,7 @@ const Music: React.FC = () => {
   return <Audio src={MUSIC_URL} volume={vol} />;
 };
 
-// Quick white flash at every scene boundary — a trailer-style "flash cut".
-const FlashCuts: React.FC = () => {
-  const frame = useCurrentFrame();
-  let o = 0;
-  for (let i = 1; i < START_FRAMES.length; i++) {
-    const d = Math.abs(frame - START_FRAMES[i]);
-    if (d < 6) o = Math.max(o, interpolate(d, [0, 6], [0.6, 0], {extrapolateRight: 'clamp'}));
-  }
-  return (
-    <AbsoluteFill style={{background: '#fff', opacity: o, mixBlendMode: 'screen', pointerEvents: 'none'}} />
-  );
-};
-
+// Gentle fade-in from black at the very start and fade-out at the very end.
 const BlackFades: React.FC = () => {
   const frame = useCurrentFrame();
   const fadeIn = interpolate(frame, [0, 30], [1, 0], {extrapolateRight: 'clamp'});
@@ -105,7 +89,6 @@ export const KudoZVideo: React.FC = () => {
 
       <Music />
       <Narration />
-      <FlashCuts />
       <BlackFades />
     </AbsoluteFill>
   );
