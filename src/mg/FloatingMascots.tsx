@@ -1,80 +1,59 @@
-import {interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
-import {COLORS, FONT} from '../theme';
+import {Img, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {STICKERS} from '../clips';
 
-type Mascot = {
-  emoji: string;
-  label: string;
-  bg: string;
-  // position in %
-  x: number;
-  y: number;
-  size: number;
-  phase: number;
-};
-
-// The KudoZ mascot family (placeholder chips until the real PNGs are provided).
-const MASCOTS: Mascot[] = [
-  {emoji: '👍', label: 'Nice', bg: COLORS.yellow, x: 8, y: 22, size: 1, phase: 0},
-  {emoji: '⭐', label: 'Drop', bg: COLORS.purple, x: 84, y: 16, size: 1.1, phase: 1.1},
-  {emoji: '👟', label: 'On Fire', bg: COLORS.sky, x: 14, y: 70, size: 0.95, phase: 2.2},
-  {emoji: '🙌', label: 'Awesome', bg: COLORS.pink, x: 86, y: 66, size: 1.05, phase: 3.3},
-  {emoji: '🎯', label: 'KudoZ', bg: COLORS.green, x: 50, y: 84, size: 0.9, phase: 4.4},
+// Layout positions around the frame edges (so the center content stays clear).
+const SPOTS = [
+  {x: 9, y: 20, size: 150, phase: 0.0},
+  {x: 91, y: 15, size: 135, phase: 1.1},
+  {x: 15, y: 76, size: 140, phase: 2.0},
+  {x: 87, y: 72, size: 150, phase: 3.1},
+  {x: 6, y: 49, size: 120, phase: 4.0},
+  {x: 94, y: 47, size: 120, phase: 0.7},
+  {x: 36, y: 90, size: 120, phase: 2.6},
+  {x: 66, y: 91, size: 130, phase: 3.7},
 ];
 
-const Chip: React.FC<{m: Mascot}> = ({m}) => {
+const Sticker: React.FC<{url: string; x: number; y: number; size: number; phase: number}> = ({
+  url,
+  x,
+  y,
+  size,
+  phase,
+}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
-  const enter = spring({frame: frame - 6 - m.phase * 4, fps, config: {damping: 12, mass: 0.6}});
-  // gentle floating bob + sway
-  const t = frame / fps + m.phase;
-  const bob = Math.sin(t * 1.6) * 14;
-  const sway = Math.cos(t * 1.1) * 8;
-  const rot = Math.sin(t * 1.3) * 5;
-  const scale = interpolate(enter, [0, 1], [0.4, m.size]);
+  const enter = spring({frame: frame - 4 - phase * 4, fps, config: {damping: 12, mass: 0.6}});
+  const t = frame / fps + phase;
+  const bob = Math.sin(t * 1.7) * 16;
+  const sway = Math.cos(t * 1.15) * 10;
+  const rot = Math.sin(t * 1.4) * 6;
+  const pulse = 1 + Math.sin(t * 2.2) * 0.04;
+  const appear = interpolate(enter, [0, 1], [0.3, 1]);
 
   return (
-    <div
+    <Img
+      src={url}
       style={{
         position: 'absolute',
-        left: `${m.x}%`,
-        top: `${m.y}%`,
-        transform: `translate(-50%,-50%) translate(${sway}px, ${bob}px) scale(${scale}) rotate(${rot}deg)`,
+        left: `${x}%`,
+        top: `${y}%`,
+        width: size,
+        height: size,
+        objectFit: 'contain',
+        transform: `translate(-50%,-50%) translate(${sway}px, ${bob}px) scale(${appear * pulse}) rotate(${rot}deg)`,
         opacity: enter,
-        display: 'flex',
-        alignItems: 'center',
-        gap: 12,
-        padding: '12px 22px 12px 14px',
-        borderRadius: 999,
-        background: '#fff',
-        boxShadow: `0 14px 34px rgba(6,36,90,0.22)`,
-        fontFamily: FONT,
+        filter: 'drop-shadow(0 12px 24px rgba(6,36,90,0.28))',
       }}
-    >
-      <div
-        style={{
-          width: 56,
-          height: 56,
-          borderRadius: '50%',
-          background: m.bg,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: 30,
-        }}
-      >
-        {m.emoji}
-      </div>
-      <div style={{fontSize: 26, fontWeight: 800, color: COLORS.ink, paddingRight: 6}}>{m.label}</div>
-    </div>
+    />
   );
 };
 
-// Playful KudoZ mascots drifting around the frame.
+// The real KudoZ stickers drifting playfully around the frame.
 export const FloatingMascots: React.FC = () => {
   return (
     <>
-      {MASCOTS.map((m) => (
-        <Chip key={m.label} m={m} />
+      {SPOTS.map((s, i) => (
+        <Sticker key={i} url={STICKERS[i % STICKERS.length]} {...s} />
       ))}
     </>
   );

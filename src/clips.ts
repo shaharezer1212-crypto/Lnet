@@ -34,6 +34,27 @@ export const LOGO_URL = '';
 // Empty → a labelled placeholder panel is shown instead.
 export const FOOTAGE_URL = '';
 
+// Real KudoZ sticker artwork (uploaded PNGs) that float around the MG scenes.
+const MEDIA = 'https://d2ol7oe51mr4n9.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC';
+export const STICKERS: string[] = [
+  `${MEDIA}/4939041e-e7b2-491b-b152-6185d3391841.png`, // KudoZ
+  `${MEDIA}/d9c07c1d-72fe-4cd2-ad8d-b326257b6ea1.png`, // on fire
+  `${MEDIA}/3b610f11-c207-47c0-97c0-c4d77e4da25e.png`, // up
+  `${MEDIA}/d3727143-ba93-4aef-95cd-2f45155f5747.png`, // awesome
+  `${MEDIA}/a111bfb1-814a-4db5-bbb2-ff14822c2d89.png`, // legend
+  `${MEDIA}/89b712ad-421d-4b3e-9cf8-72710177e80d.png`, // superb
+  `${MEDIA}/33086d9f-f05b-4a15-89b3-041d392cafaa.png`, // amazing
+  `${MEDIA}/0136e207-46d3-4a37-863c-c8d0c117d377.png`, // 10/10
+  `${MEDIA}/9a509856-4c12-4f8b-9b6d-6a936ccb8edf.png`, // brilliant
+  `${MEDIA}/a92170ca-2b22-493d-ac47-a295bc664733.png`, // bravo
+  `${MEDIA}/a9b9ef78-5141-4d33-ae46-2d3db5134338.png`, // fantastic
+  `${MEDIA}/9b018dd5-01bc-49bf-8688-41df736fce49.png`, // impressive
+  `${MEDIA}/e589e8e4-c051-4f3c-8cc2-631f6c18ef19.png`, // outstanding
+  `${MEDIA}/04eb2d78-7561-41ae-ad9c-fe08b9df9cf8.png`, // rock R you
+  `${MEDIA}/5d24c806-0349-4134-b001-ecfd512e7d90.png`, // Zimply the best
+  `${MEDIA}/2d5b4500-73c5-450c-bd21-04882ce9c028.png`, // fabulous
+];
+
 export type Beat =
   | {
       kind: 'clip';
