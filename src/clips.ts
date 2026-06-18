@@ -31,10 +31,12 @@ export const NARRATION_START = 8;
 export const NARRATION_VOLUME = 1.0;
 
 // ── Brand assets (fill when provided) ───────────────────────────────────────
-// Official KudoZ wordmark logo (navy "Kudo" + gold "Z"), shown on the navy
-// stage inside a soft glowing halo so it reads cleanly without any white box.
+// KudoZ logo shown on the navy stage inside a soft glowing halo.
+// NOTE: the new wordmark upload sits on the blocked upload CDN (d2ol) which the
+// renderer can't fetch, so we temporarily use the previous servable logo until
+// the new PNG is committed to public/. Swap to staticFile('logo.png') then.
 export const LOGO_URL =
-  'https://d2ol7oe51mr4n9.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC/141d7948-ef8d-4a82-b4e3-0386133ed1d8.png';
+  'https://d8j0ntlcm91z4.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC/hf_20260617_153217_99b4c052-332b-4f3a-89ed-78799f70718b.png';
 // B-roll of the work environment, shown in the system/values section.
 // Empty → a labelled placeholder panel is shown instead.
 export const FOOTAGE_URL = '';
@@ -177,20 +179,12 @@ export const TIMELINE: Beat[] = [
     narr: 'narration/6.mp3',
     narration: 'Introducing KudoZ — ZIM’s new employee recognition system.',
   },
-  // ── Motion graphics 1b — the actual KudoZ store (screenshot + click) ─────
-  {
-    kind: 'mg',
-    id: 'mg-store',
-    label: 'MG · KudoZ store screenshot + cursor click',
-    seconds: 6,
-    mg: 'store',
-  },
   // ── Motion graphics 2 — the four criteria ───────────────────────────────
   {
     kind: 'mg',
     id: 'mg-criteria',
     label: 'MG · four criteria',
-    seconds: 16, // infographic VO (logo+store+criteria) lands across these
+    seconds: 22, // infographic VO (logo + criteria) lands across these
     mg: 'criteria',
     vo: `${CDN}/hf_20260617_111113_e3b7a421-cc8e-449c-9eed-2b30eabb32c8.wav`,
     narration:
