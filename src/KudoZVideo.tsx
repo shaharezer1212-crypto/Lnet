@@ -44,13 +44,22 @@ const cut = (): TransitionPresentation<Record<string, unknown>> => ({
   props: {},
 });
 
-// A seamless blend: the outgoing shot stays fully opaque while the incoming
-// fades in on top — a clean dissolve with NO black dim. Used for the in-scene
-// continuation between the two opening shots (the man matches across the join).
-const dissolve = (): TransitionPresentation<Record<string, unknown>> => ({
+// A cinematic dip-to-black: the outgoing shot fades down to black, a beat of
+// black, then the incoming shot rises from black. Used between the two opening
+// shots for a deliberate, filmic beat.
+const dipToBlack = (): TransitionPresentation<Record<string, unknown>> => ({
   component: ({presentationProgress, presentationDirection, children}) => {
-    const opacity = presentationDirection === 'entering' ? presentationProgress : 1;
-    return <AbsoluteFill style={{opacity}}>{children}</AbsoluteFill>;
+    const opacity =
+      presentationDirection === 'entering'
+        ? interpolate(presentationProgress, [0.5, 1], [0, 1], {
+            extrapolateLeft: 'clamp',
+            extrapolateRight: 'clamp',
+          })
+        : interpolate(presentationProgress, [0, 0.5], [1, 0], {
+            extrapolateLeft: 'clamp',
+            extrapolateRight: 'clamp',
+          });
+    return <AbsoluteFill style={{backgroundColor: '#000'}}><AbsoluteFill style={{opacity}}>{children}</AbsoluteFill></AbsoluteFill>;
   },
   props: {},
 });
@@ -59,9 +68,8 @@ const dissolve = (): TransitionPresentation<Record<string, unknown>> => ({
 // edit keeps moving (one from the bottom, the next from the side, ...).
 const SLIDE_DIRS = ['from-bottom', 'from-right', 'from-left', 'from-top'] as const;
 const presentationFor = (i: number): TransitionPresentation<Record<string, unknown>> => {
-  // s1a → s1b: seamless dissolve so the opening flows continuously into the
-  // close reaction (both on the man) with no jump.
-  if (i === 0) return dissolve();
+  // s1a → s1b: a cinematic dip-to-black beat between the two opening shots.
+  if (i === 0) return dipToBlack();
   // opening → scene 2: the cinematic zoom-punch CUT (no fade/dim).
   if (i === 1) return cut();
   return slide({direction: SLIDE_DIRS[i % SLIDE_DIRS.length]}) as TransitionPresentation<
