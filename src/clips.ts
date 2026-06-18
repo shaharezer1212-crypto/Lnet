@@ -15,9 +15,9 @@ export const TRANSITION = 16;
 
 const CDN = 'https://d8j0ntlcm91z4.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC';
 
-// Background music — "bold modern urban pop beat with attitude" (option 2),
-// full 68s render.
-export const MUSIC_URL = `${CDN}/hf_20260617_112051_5f73edae-9eca-4e92-b330-9c4e07fd54ee.m4a`;
+// Background music — bouncy modern urban groove with handclaps + snaps and
+// 808 bass (option C), 120s so it covers the full extended edit.
+export const MUSIC_URL = `${CDN}/hf_20260618_073734_ab535d97-c8a5-4a92-a397-b558551d91f3.m4a`;
 // Music sits under the voice-over but stays present.
 export const MUSIC_VOLUME = 0.15;
 // Diegetic clip audio is ducked under the narration (per-clip override via beat.volume).
