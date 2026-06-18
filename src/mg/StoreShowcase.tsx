@@ -1,20 +1,18 @@
 import {
   AbsoluteFill,
-  Audio,
   Img,
   interpolate,
-  Sequence,
   spring,
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
 import {FONT} from '../theme';
 import {Stage} from './fx';
-import {STORE_URL, CLICK_SFX_URL} from '../clips';
+import {STORE_URL} from '../clips';
 
 // Shows the real KudoZ store inside a clean browser window on the navy stage,
-// with an animated mouse cursor that glides in and clicks a category — a crisp
-// click SFX fires on the click — before the edit cuts to the four values.
+// with an animated mouse cursor that glides in and clicks a category (visual
+// click only), before the edit cuts to the four values.
 export const StoreShowcase: React.FC = () => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
@@ -117,10 +115,6 @@ export const StoreShowcase: React.FC = () => {
             <path d="M5 3l14 7-6 1.5L11 18 5 3z" fill="#fff" stroke="#0B1B3A" strokeWidth="1.6" strokeLinejoin="round" />
           </svg>
         </div>
-
-        <Sequence from={clickFrame} name="click-sfx">
-          <Audio src={CLICK_SFX_URL} volume={0.75} />
-        </Sequence>
       </AbsoluteFill>
     </Stage>
   );
