@@ -96,11 +96,9 @@ export const TIMELINE: Beat[] = [
     id: 's1',
     label: 'S1 · full scene · calm → alert → reveal → woman (one 15s take)',
     seconds: 21, // holds the 20.4s opening VO with clearance before scene 2
-    // INTERIM: 15s take (job 31a8b2b0) still rendering — temporarily using the
-    // 10s take slowed to fill 21s so the edit is valid; swap URL when ready.
-    playbackRate: 0.476, // 10s interim take over 21s (final 15s take → 0.714)
-    jobId: 'd6e4aeab-e6a1-464f-9294-01b1e928fc05',
-    url: `${CDN}/hf_20260617_191155_d6e4aeab-e6a1-464f-9294-01b1e928fc05.mp4`,
+    playbackRate: 0.714, // 15s take gently slowed to fill ~21s
+    jobId: '31a8b2b0-a915-4999-a8a1-5dac36b78765',
+    url: `${CDN}/hf_20260618_063952_31a8b2b0-a915-4999-a8a1-5dac36b78765.mp4`,
     narr: 'narration/1.mp3',
     narration:
       'In times of uncertainty, most people focus on the bigger picture. But this is the perfect time to acknowledge the people who keep us moving forward — because even a small compliment can give someone the boost they need.',

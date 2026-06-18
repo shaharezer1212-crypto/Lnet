@@ -20,14 +20,25 @@ import {Outro} from './mg/Outro';
 
 const MG = {logo: LogoReveal, criteria: Criteria, outro: Outro} as const;
 
-// A true cinematic hard cut that still occupies the constant TRANSITION slot
-// (so the timeline math stays exact): the outgoing shot plays to the slot's
-// midpoint, then we snap straight to the incoming shot — no dissolve, no dim.
+// A cinematic hard cut with a little energy: the outgoing shot plays to the
+// slot's midpoint, then we snap to the incoming shot which "punches in" with a
+// quick zoom-settle — no dissolve, no dim, no flash. Still occupies the
+// constant TRANSITION slot so the timeline math stays exact.
 const cut = (): TransitionPresentation<Record<string, unknown>> => ({
   component: ({presentationProgress, presentationDirection, children}) => {
-    const show =
-      presentationDirection === 'exiting' ? presentationProgress < 0.5 : presentationProgress >= 0.5;
-    return <AbsoluteFill style={{opacity: show ? 1 : 0}}>{children}</AbsoluteFill>;
+    const entering = presentationDirection === 'entering';
+    const show = entering ? presentationProgress >= 0.5 : presentationProgress < 0.5;
+    const punch = entering
+      ? interpolate(presentationProgress, [0.5, 0.74], [1.08, 1], {
+          extrapolateLeft: 'clamp',
+          extrapolateRight: 'clamp',
+        })
+      : 1;
+    return (
+      <AbsoluteFill style={{opacity: show ? 1 : 0, transform: `scale(${punch})`}}>
+        {children}
+      </AbsoluteFill>
+    );
   },
   props: {},
 });
