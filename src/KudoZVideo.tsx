@@ -44,13 +44,13 @@ const cut = (): TransitionPresentation<Record<string, unknown>> => ({
   props: {},
 });
 
-// A plain, seamless hard cut (no zoom-punch) — used for the in-scene match cut
-// between the two opening shots.
-const cutPlain = (): TransitionPresentation<Record<string, unknown>> => ({
+// A seamless blend: the outgoing shot stays fully opaque while the incoming
+// fades in on top — a clean dissolve with NO black dim. Used for the in-scene
+// continuation between the two opening shots (the man matches across the join).
+const dissolve = (): TransitionPresentation<Record<string, unknown>> => ({
   component: ({presentationProgress, presentationDirection, children}) => {
-    const show =
-      presentationDirection === 'exiting' ? presentationProgress < 0.5 : presentationProgress >= 0.5;
-    return <AbsoluteFill style={{opacity: show ? 1 : 0}}>{children}</AbsoluteFill>;
+    const opacity = presentationDirection === 'entering' ? presentationProgress : 1;
+    return <AbsoluteFill style={{opacity}}>{children}</AbsoluteFill>;
   },
   props: {},
 });
@@ -59,8 +59,9 @@ const cutPlain = (): TransitionPresentation<Record<string, unknown>> => ({
 // edit keeps moving (one from the bottom, the next from the side, ...).
 const SLIDE_DIRS = ['from-bottom', 'from-right', 'from-left', 'from-top'] as const;
 const presentationFor = (i: number): TransitionPresentation<Record<string, unknown>> => {
-  // s1a → s1b: seamless match cut (still inside the opening scene).
-  if (i === 0) return cutPlain();
+  // s1a → s1b: seamless dissolve so the opening flows continuously into the
+  // close reaction (both on the man) with no jump.
+  if (i === 0) return dissolve();
   // opening → scene 2: the cinematic zoom-punch CUT (no fade/dim).
   if (i === 1) return cut();
   return slide({direction: SLIDE_DIRS[i % SLIDE_DIRS.length]}) as TransitionPresentation<
@@ -114,7 +115,12 @@ export const KudoZVideo: React.FC = () => {
                   playbackRate={beat.playbackRate}
                 />
                 {beat.title ? (
-                  <SceneTitle text={beat.title} frames={sec(beat.seconds)} position={beat.titlePos} />
+                  <SceneTitle
+                    text={beat.title}
+                    frames={sec(beat.seconds)}
+                    position={beat.titlePos}
+                    startAt={beat.titleStart}
+                  />
                 ) : null}
               </>
             );

@@ -73,6 +73,8 @@ export type Beat =
       title?: string;
       // Where the title sits: 'bottom' (default) or 'left' (left-centre).
       titlePos?: 'bottom' | 'left';
+      // Frame at which the title animates in (defaults to 8).
+      titleStart?: number;
       // Optional slow-motion: <1 plays the clip slower, stretching it to fill
       // a longer beat (e.g. a 15s take played over ~20s).
       playbackRate?: number;
@@ -151,6 +153,7 @@ export const TIMELINE: Beat[] = [
     narr: 'narration/3.mp3',
     title: 'Putting in a good word',
     titlePos: 'left',
+    titleStart: 84, // appears later in the scene so it doesn't sit over the seated woman
   },
   // ── Scene 4 — recognitions at the desk ──────────────────────────────────
   {
