@@ -1,5 +1,7 @@
 // ──────────────────────────────────────────────────────────────────────────
 // KudoZ — final clip set (Higgsfield / Seedance 2.0, dynamic style).
+import {staticFile} from 'remotion';
+
 // ONE clip per beat. No duplicates, no abandoned "gentle" takes.
 // Live-action clips stream from the Higgsfield CDN; motion-graphics beats are
 // rendered natively in Remotion. Each beat may carry an Ashley (en) voice-over.
@@ -31,22 +33,17 @@ export const NARRATION_START = 8;
 export const NARRATION_VOLUME = 1.0;
 
 // ── Brand assets (fill when provided) ───────────────────────────────────────
-// KudoZ logo shown on the navy stage inside a soft glowing halo.
-// NOTE: the new wordmark upload sits on the blocked upload CDN (d2ol) which the
-// renderer can't fetch, so we temporarily use the previous servable logo until
-// the new PNG is committed to public/. Swap to staticFile('logo.png') then.
-export const LOGO_URL =
-  'https://d8j0ntlcm91z4.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC/hf_20260617_153217_99b4c052-332b-4f3a-89ed-78799f70718b.png';
+// Official KudoZ wordmark (navy "Kudo" + gold "Z"), transparent PNG committed
+// to the repo so the renderer can always load it; shown on the navy stage
+// inside a soft glowing halo so it reads cleanly without any white box.
+export const LOGO_URL = staticFile('logo.png');
 // B-roll of the work environment, shown in the system/values section.
 // Empty → a labelled placeholder panel is shown instead.
 export const FOOTAGE_URL = '';
 
-// Real screenshot of the KudoZ store, shown in a browser frame in the
-// infographic section with an animated cursor click.
-export const STORE_URL =
-  'https://d2ol7oe51mr4n9.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC/fe8d82c9-f9e4-4273-bb89-2710194fbbad.png';
-// Crisp UI mouse-click sound effect for the cursor click.
-export const CLICK_SFX_URL = `${CDN}/hf_20260618_083251_efe175ff-17eb-4621-a57b-420b9d356df9.mp3`;
+// Real screenshot of the KudoZ store (committed to the repo), shown in a
+// browser frame in the infographic section with an animated cursor click.
+export const STORE_URL = staticFile('store.jpg');
 
 // Real KudoZ sticker artwork — background removed (transparent) — that
 // floats/pops around the MG scenes. Stickers #1, #4 and #8 were dropped
@@ -179,12 +176,20 @@ export const TIMELINE: Beat[] = [
     narr: 'narration/6.mp3',
     narration: 'Introducing KudoZ — ZIM’s new employee recognition system.',
   },
+  // ── Motion graphics 1b — the actual KudoZ store (screenshot + click) ─────
+  {
+    kind: 'mg',
+    id: 'mg-store',
+    label: 'MG · KudoZ store screenshot + cursor click',
+    seconds: 6,
+    mg: 'store',
+  },
   // ── Motion graphics 2 — the four criteria ───────────────────────────────
   {
     kind: 'mg',
     id: 'mg-criteria',
     label: 'MG · four criteria',
-    seconds: 22, // infographic VO (logo + criteria) lands across these
+    seconds: 16, // infographic VO (logo+store+criteria) lands across these
     mg: 'criteria',
     vo: `${CDN}/hf_20260617_111113_e3b7a421-cc8e-449c-9eed-2b30eabb32c8.wav`,
     narration:
