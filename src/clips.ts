@@ -122,7 +122,8 @@ export const TIMELINE: Beat[] = [
     kind: 'clip',
     id: 's1b',
     label: 'S1 · calm → alert → reveal → woman (15s take)',
-    seconds: 15,
+    seconds: 15.7, // slightly extended so the longer dip keeps the opening VO clear of scene 2
+    playbackRate: 0.955, // 15s take over 15.7s — imperceptible, avoids any freeze
     jobId: '31a8b2b0-a915-4999-a8a1-5dac36b78765',
     url: `${CDN}/hf_20260618_063952_31a8b2b0-a915-4999-a8a1-5dac36b78765.mp4`,
   },
@@ -153,7 +154,7 @@ export const TIMELINE: Beat[] = [
     narr: 'narration/3.mp3',
     title: 'Putting in a good word',
     titlePos: 'left',
-    titleStart: 84, // appears later in the scene so it doesn't sit over the seated woman
+    titleStart: 6, // synced to the spoken line (no lead silence in the VO)
   },
   // ── Scene 4 — recognitions at the desk ──────────────────────────────────
   {
@@ -266,13 +267,18 @@ export const TIMELINE: Beat[] = [
   },
 ];
 
-// Total composition length, accounting for the cross-fade overlaps.
+// Transition length (frames) after beat i. Default is TRANSITION; the opening
+// s1a→s1b uses a longer, gradual dip-to-black, so it gets a longer slot.
+export const transAt = (i: number): number => (i === 0 ? 46 : TRANSITION);
+
+// Total composition length, accounting for the (variable) cross-fade overlaps.
 export const TOTAL_FRAMES =
   TIMELINE.reduce((sum, b) => sum + sec(b.seconds), 0) -
-  (TIMELINE.length - 1) * TRANSITION;
+  TIMELINE.slice(0, -1).reduce((sum, _b, i) => sum + transAt(i), 0);
 
 // Absolute start frame of each beat inside the TransitionSeries
-// (each transition pulls subsequent content earlier by TRANSITION frames).
+// (each transition pulls subsequent content earlier by its own length).
 export const START_FRAMES: number[] = TIMELINE.map((_, i) =>
-  TIMELINE.slice(0, i).reduce((sum, b) => sum + sec(b.seconds), 0) - i * TRANSITION,
+  TIMELINE.slice(0, i).reduce((sum, b) => sum + sec(b.seconds), 0) -
+  Array.from({length: i}, (_v, j) => transAt(j)).reduce((a, b) => a + b, 0),
 );

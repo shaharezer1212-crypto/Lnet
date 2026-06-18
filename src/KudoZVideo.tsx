@@ -4,8 +4,8 @@ import type {TransitionPresentation} from '@remotion/transitions';
 import {slide} from '@remotion/transitions/slide';
 import {
   TIMELINE,
-  TRANSITION,
   TOTAL_FRAMES,
+  transAt,
   sec,
   MUSIC_URL,
   MUSIC_VOLUME,
@@ -49,13 +49,14 @@ const cut = (): TransitionPresentation<Record<string, unknown>> => ({
 // shots for a deliberate, filmic beat.
 const dipToBlack = (): TransitionPresentation<Record<string, unknown>> => ({
   component: ({presentationProgress, presentationDirection, children}) => {
+    // gradual fade DOWN to black, a short hold on black, then a gradual fade UP
     const opacity =
       presentationDirection === 'entering'
-        ? interpolate(presentationProgress, [0.5, 1], [0, 1], {
+        ? interpolate(presentationProgress, [0.58, 1], [0, 1], {
             extrapolateLeft: 'clamp',
             extrapolateRight: 'clamp',
           })
-        : interpolate(presentationProgress, [0, 0.5], [1, 0], {
+        : interpolate(presentationProgress, [0, 0.42], [1, 0], {
             extrapolateLeft: 'clamp',
             extrapolateRight: 'clamp',
           });
@@ -144,7 +145,7 @@ export const KudoZVideo: React.FC = () => {
               <TransitionSeries.Transition
                 key={`${beat.id}-t`}
                 presentation={presentationFor(i)}
-                timing={linearTiming({durationInFrames: TRANSITION})}
+                timing={linearTiming({durationInFrames: transAt(i)})}
               />,
             );
           }
