@@ -44,12 +44,25 @@ const cut = (): TransitionPresentation<Record<string, unknown>> => ({
   props: {},
 });
 
+// A plain, seamless hard cut (no zoom-punch) — used for the in-scene match cut
+// between the two opening shots.
+const cutPlain = (): TransitionPresentation<Record<string, unknown>> => ({
+  component: ({presentationProgress, presentationDirection, children}) => {
+    const show =
+      presentationDirection === 'exiting' ? presentationProgress < 0.5 : presentationProgress >= 0.5;
+    return <AbsoluteFill style={{opacity: show ? 1 : 0}}>{children}</AbsoluteFill>;
+  },
+  props: {},
+});
+
 // Playful directional pushes — each cut comes from a different side so the
 // edit keeps moving (one from the bottom, the next from the side, ...).
 const SLIDE_DIRS = ['from-bottom', 'from-right', 'from-left', 'from-top'] as const;
 const presentationFor = (i: number): TransitionPresentation<Record<string, unknown>> => {
-  // The opening lands on a clean cinematic CUT into scene 2 (no fade/dim).
-  if (i === 0) return cut();
+  // s1a → s1b: seamless match cut (still inside the opening scene).
+  if (i === 0) return cutPlain();
+  // opening → scene 2: the cinematic zoom-punch CUT (no fade/dim).
+  if (i === 1) return cut();
   return slide({direction: SLIDE_DIRS[i % SLIDE_DIRS.length]}) as TransitionPresentation<
     Record<string, unknown>
   >;

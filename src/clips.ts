@@ -100,17 +100,29 @@ export const TIMELINE: Beat[] = [
   // → woman close-up), so there is no cut anywhere in the opening. Trimmed to
   // 284 frames so the merged opening keeps the exact length of the old two
   // clips and the continuous narration stays perfectly in sync.
+  // ── Scene 1 — approach + reaction (two clips at normal speed, no slow-mo) ─
+  // The camera glides in from the side toward the man (s1a), then the reaction
+  // take plays out (s1b): calm → BREAKING NEWS → reveal the woman → her
+  // close-up. Together ~22s of real motion, so the 20.4s opening VO fits with
+  // no heavy slow-motion. The VO starts on s1a and plays across both.
   {
     kind: 'clip',
-    id: 's1',
-    label: 'S1 · full scene · calm → alert → reveal → woman (one 15s take)',
-    seconds: 21, // holds the 20.4s opening VO with clearance before scene 2
-    playbackRate: 0.714, // 15s take gently slowed to fill ~21s
-    jobId: '31a8b2b0-a915-4999-a8a1-5dac36b78765',
-    url: `${CDN}/hf_20260618_063952_31a8b2b0-a915-4999-a8a1-5dac36b78765.mp4`,
+    id: 's1a',
+    label: 'S1 · camera approaches the man (side)',
+    seconds: 7,
+    jobId: '95d77df0-1dda-4bba-917e-e76a24ee188c',
+    url: `${CDN}/hf_20260618_134111_95d77df0-1dda-4bba-917e-e76a24ee188c.mp4`,
     narr: 'narration/1.mp3',
     narration:
       'In times of uncertainty, most people focus on the bigger picture. But this is the perfect time to acknowledge the people who keep us moving forward — because even a small compliment can give someone the boost they need.',
+  },
+  {
+    kind: 'clip',
+    id: 's1b',
+    label: 'S1 · calm → alert → reveal → woman (15s take)',
+    seconds: 15,
+    jobId: '31a8b2b0-a915-4999-a8a1-5dac36b78765',
+    url: `${CDN}/hf_20260618_063952_31a8b2b0-a915-4999-a8a1-5dac36b78765.mp4`,
   },
   // ── Scene 2 — coffee toast ──────────────────────────────────────────────
   {
