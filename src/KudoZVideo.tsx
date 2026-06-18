@@ -44,44 +44,12 @@ const cut = (): TransitionPresentation<Record<string, unknown>> => ({
   props: {},
 });
 
-// A motivated "zoom-through": the outgoing shot keeps pushing in while the
-// incoming shot resolves out of that same continued push — one continuous
-// camera move that carries through the cut so it reads as natural (no black,
-// no dim). Both opening shots are on the man, so the push feels seamless.
-const zoomThrough = (): TransitionPresentation<Record<string, unknown>> => ({
-  component: ({presentationProgress, presentationDirection, children}) => {
-    const entering = presentationDirection === 'entering';
-    const scale = entering
-      ? interpolate(presentationProgress, [0, 1], [1.12, 1], {
-          extrapolateLeft: 'clamp',
-          extrapolateRight: 'clamp',
-        })
-      : interpolate(presentationProgress, [0, 1], [1, 1.12], {
-          extrapolateLeft: 'clamp',
-          extrapolateRight: 'clamp',
-        });
-    // exiting stays fully opaque underneath; incoming eases in on top → no dim
-    const opacity = entering
-      ? interpolate(presentationProgress, [0, 0.6], [0, 1], {
-          extrapolateLeft: 'clamp',
-          extrapolateRight: 'clamp',
-        })
-      : 1;
-    return (
-      <AbsoluteFill style={{opacity, transform: `scale(${scale})`}}>{children}</AbsoluteFill>
-    );
-  },
-  props: {},
-});
-
 // Playful directional pushes — each cut comes from a different side so the
 // edit keeps moving (one from the bottom, the next from the side, ...).
 const SLIDE_DIRS = ['from-bottom', 'from-right', 'from-left', 'from-top'] as const;
 const presentationFor = (i: number): TransitionPresentation<Record<string, unknown>> => {
-  // s1a → s1b: a continuous camera zoom-through so the cut reads as natural.
-  if (i === 0) return zoomThrough();
   // opening → scene 2: the cinematic zoom-punch CUT (no fade/dim).
-  if (i === 1) return cut();
+  if (i === 0) return cut();
   return slide({direction: SLIDE_DIRS[i % SLIDE_DIRS.length]}) as TransitionPresentation<
     Record<string, unknown>
   >;
