@@ -269,7 +269,7 @@ export const TIMELINE: Beat[] = [
 
 // Transition length (frames) after beat i. Default is TRANSITION; the opening
 // s1a→s1b uses a longer, gradual dip-to-black, so it gets a longer slot.
-export const transAt = (i: number): number => (i === 0 ? 46 : TRANSITION);
+export const transAt = (i: number): number => (i === 0 ? 36 : TRANSITION);
 
 // Total composition length, accounting for the (variable) cross-fade overlaps.
 export const TOTAL_FRAMES =
