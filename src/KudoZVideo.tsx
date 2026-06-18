@@ -15,10 +15,11 @@ import {Clip} from './Clip';
 import {Narration} from './Narration';
 import {SceneTitle} from './mg/SceneTitle';
 import {LogoReveal} from './mg/LogoReveal';
+import {StoreShowcase} from './mg/StoreShowcase';
 import {Criteria} from './mg/Criteria';
 import {Outro} from './mg/Outro';
 
-const MG = {logo: LogoReveal, criteria: Criteria, outro: Outro} as const;
+const MG = {logo: LogoReveal, store: StoreShowcase, criteria: Criteria, outro: Outro} as const;
 
 // A cinematic hard cut with a little energy: the outgoing shot plays to the
 // slot's midpoint, then we snap to the incoming shot which "punches in" with a
@@ -99,7 +100,9 @@ export const KudoZVideo: React.FC = () => {
                   volume={beat.volume ?? CLIP_VOLUME}
                   playbackRate={beat.playbackRate}
                 />
-                {beat.title ? <SceneTitle text={beat.title} frames={sec(beat.seconds)} /> : null}
+                {beat.title ? (
+                  <SceneTitle text={beat.title} frames={sec(beat.seconds)} position={beat.titlePos} />
+                ) : null}
               </>
             );
 

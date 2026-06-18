@@ -1,27 +1,28 @@
 import {AbsoluteFill, Img, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {COLORS, FONT} from '../theme';
-import {Confetti, LightSweep, ShineText, ShockwaveRing, Stage} from './fx';
+import {Confetti, ShineText, ShockwaveRing, Stage} from './fx';
 import {LOGO_URL} from '../clips';
 
-// Closing logo + tagline on the brand stage: the medal pops with a confetti
-// burst + glint, the tagline shimmers in behind a wiped gold underline.
+// Closing KudoZ wordmark + tagline on the navy stage: the logo lands gently
+// inside a soft glowing halo (emphasis, no white box), with a confetti burst
+// and a shimmering tagline behind a wiped gold underline.
 export const Outro: React.FC = () => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
 
-  // gentle landing — low overshoot so the lockup doesn't visibly bounce/jump
   const pop = spring({frame, fps, config: {damping: 16, mass: 0.8}});
-  const scale = interpolate(pop, [0, 1], [0.7, 1]);
-  const swing = Math.sin((frame / fps) * 1.4) * 2;
-  const float = Math.sin((frame / fps) * 1.1) * 7;
-  const glow = 0.5 + Math.sin((frame / fps) * 2) * 0.2;
-  // the underline grows on an eased spring (no abrupt snap) and the tagline
-  // fades in with it — fully decoupled from layout so nothing shifts vertically
-  const lineGrow = spring({frame: frame - 20, fps, config: {damping: 20, mass: 0.9}});
+  const scale = interpolate(pop, [0, 1], [0.75, 1]);
+  const swing = Math.sin((frame / fps) * 1.4) * 1.2;
+  const float = Math.sin((frame / fps) * 1.1) * 6;
+
+  const haloIn = spring({frame: frame - 2, fps, config: {damping: 18, mass: 0.9}});
+  const haloPulse = 0.85 + Math.sin((frame / fps) * 1.8) * 0.15;
+
+  const lineGrow = spring({frame: frame - 22, fps, config: {damping: 20, mass: 0.9}});
   const lineWidth = lineGrow * 560;
   const lineFade = lineGrow;
 
-  const logoH = 420;
+  const logoW = 980;
 
   return (
     <Stage bokehSeed="outro">
@@ -29,14 +30,18 @@ export const Outro: React.FC = () => {
         <ShockwaveRing at={6} max={1100} />
         <Confetti at={6} />
 
+        {/* soft white→gold HALO behind the logo */}
         <div
           style={{
             position: 'absolute',
-            width: 660,
-            height: 660,
+            top: '40%',
+            width: 1320,
+            height: 720,
             borderRadius: '50%',
-            background: `radial-gradient(circle, rgba(255,196,46,${glow}) 0%, rgba(255,196,46,0) 60%)`,
-            filter: 'blur(20px)',
+            transform: `translateY(-50%) scale(${interpolate(haloIn, [0, 1], [0.6, 1])})`,
+            background: `radial-gradient(ellipse at center, rgba(255,255,255,${0.92 * haloIn}) 0%, rgba(255,238,188,${0.6 * haloIn}) 26%, rgba(255,196,46,${0.3 * haloIn}) 46%, rgba(255,196,46,0) 70%)`,
+            filter: 'blur(34px)',
+            opacity: haloPulse,
           }}
         />
 
@@ -51,22 +56,19 @@ export const Outro: React.FC = () => {
             <Img
               src={LOGO_URL}
               style={{
-                height: logoH,
+                width: logoW,
                 objectFit: 'contain',
-                filter: 'drop-shadow(0 26px 54px rgba(0,0,0,0.5))',
                 display: 'block',
+                filter: 'drop-shadow(0 18px 40px rgba(0,0,0,0.3))',
               }}
             />
-            <AbsoluteFill style={{alignItems: 'center', justifyContent: 'center'}}>
-              <LightSweep size={logoH} at={14} duration={26} />
-            </AbsoluteFill>
           </div>
           <div
             style={{
               height: 4,
               width: lineWidth,
               background: COLORS.yellow,
-              margin: '26px auto 0',
+              margin: '30px auto 0',
               borderRadius: 4,
               boxShadow: `0 0 16px ${COLORS.yellow}`,
             }}

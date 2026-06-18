@@ -31,12 +31,20 @@ export const NARRATION_START = 8;
 export const NARRATION_VOLUME = 1.0;
 
 // ── Brand assets (fill when provided) ───────────────────────────────────────
-// Official KudoZ logo, background removed (transparent) — for clean close-ups.
+// Official KudoZ wordmark logo (navy "Kudo" + gold "Z"), shown on the navy
+// stage inside a soft glowing halo so it reads cleanly without any white box.
 export const LOGO_URL =
-  'https://d8j0ntlcm91z4.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC/hf_20260617_153217_99b4c052-332b-4f3a-89ed-78799f70718b.png';
+  'https://d2ol7oe51mr4n9.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC/141d7948-ef8d-4a82-b4e3-0386133ed1d8.png';
 // B-roll of the work environment, shown in the system/values section.
 // Empty → a labelled placeholder panel is shown instead.
 export const FOOTAGE_URL = '';
+
+// Real screenshot of the KudoZ store, shown in a browser frame in the
+// infographic section with an animated cursor click.
+export const STORE_URL =
+  'https://d2ol7oe51mr4n9.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC/fe8d82c9-f9e4-4273-bb89-2710194fbbad.png';
+// Crisp UI mouse-click sound effect for the cursor click.
+export const CLICK_SFX_URL = `${CDN}/hf_20260618_083251_efe175ff-17eb-4621-a57b-420b9d356df9.mp3`;
 
 // Real KudoZ sticker artwork — background removed (transparent) — that
 // floats/pops around the MG scenes. Stickers #1, #4 and #8 were dropped
@@ -64,6 +72,8 @@ export type Beat =
       volume?: number;
       // Optional animated on-screen title (Magistral) overlaid on the clip.
       title?: string;
+      // Where the title sits: 'bottom' (default) or 'left' (left-centre).
+      titlePos?: 'bottom' | 'left';
       // Optional slow-motion: <1 plays the clip slower, stretching it to fill
       // a longer beat (e.g. a 15s take played over ~20s).
       playbackRate?: number;
@@ -75,7 +85,7 @@ export type Beat =
       id: string;
       label: string;
       seconds: number;
-      mg: 'logo' | 'criteria' | 'outro';
+      mg: 'logo' | 'store' | 'criteria' | 'outro';
       vo?: string;
       narration?: string;
       // Phased narration: staticFile path of the VO segment that STARTS here.
@@ -129,6 +139,7 @@ export const TIMELINE: Beat[] = [
     narration: 'Putting in a good word whenever we can.',
     narr: 'narration/3.mp3',
     title: 'Putting in a good word',
+    titlePos: 'left',
   },
   // ── Scene 4 — recognitions at the desk ──────────────────────────────────
   {
@@ -166,12 +177,20 @@ export const TIMELINE: Beat[] = [
     narr: 'narration/6.mp3',
     narration: 'Introducing KudoZ — ZIM’s new employee recognition system.',
   },
+  // ── Motion graphics 1b — the actual KudoZ store (screenshot + click) ─────
+  {
+    kind: 'mg',
+    id: 'mg-store',
+    label: 'MG · KudoZ store screenshot + cursor click',
+    seconds: 6,
+    mg: 'store',
+  },
   // ── Motion graphics 2 — the four criteria ───────────────────────────────
   {
     kind: 'mg',
     id: 'mg-criteria',
     label: 'MG · four criteria',
-    seconds: 22, // holds while the infographic VO describes all four criteria
+    seconds: 16, // infographic VO (logo+store+criteria) lands across these
     mg: 'criteria',
     vo: `${CDN}/hf_20260617_111113_e3b7a421-cc8e-449c-9eed-2b30eabb32c8.wav`,
     narration:

@@ -1,31 +1,36 @@
 import {AbsoluteFill, Img, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {COLORS, FONT} from '../theme';
 import {StickerBurst} from './StickerBurst';
-import {LightSweep, ShineText, ShockwaveRing, Stage} from './fx';
+import {ShineText, ShockwaveRing, Stage} from './fx';
 import {LOGO_URL} from '../clips';
 
-// Cinematic close-up reveal of the gold KudoZ medal: it punches in from an
-// oversized close-up, lands with a shockwave + glint, settles into a gentle
-// swing inside a golden glow — premium "ad" energy, not a slide.
+// Cinematic reveal of the KudoZ wordmark on the deep-navy stage. Because the
+// "Kudo" lettering is navy, the logo sits inside a soft glowing white/gold HALO
+// that lifts and emphasises it (no white box) — it punches in, lands on a
+// shockwave, a glint sweeps across, and it settles with a gentle float.
 export const LogoReveal: React.FC = () => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
 
-  // overshoot landing
-  const pop = spring({frame, fps, config: {damping: 11, mass: 0.9}});
-  const scale = interpolate(pop, [0, 1], [2.1, 1]); // bold close-up → settle
-  const settle = spring({frame: frame - 16, fps, config: {damping: 9, mass: 0.6}});
-  const swing = Math.sin((frame / fps) * 1.5) * 2 * (1 - settle * 0.4);
-  const glow = 0.5 + Math.sin((frame / fps) * 2) * 0.2;
-  const float = Math.sin((frame / fps) * 1.1) * 8; // subtle bob once settled
+  const pop = spring({frame, fps, config: {damping: 12, mass: 0.9}});
+  const scale = interpolate(pop, [0, 1], [1.5, 1]); // wide wordmark → settle
+  const float = Math.sin((frame / fps) * 1.1) * 6;
+  const swing = Math.sin((frame / fps) * 1.4) * 1.2;
+
+  const haloIn = spring({frame: frame - 4, fps, config: {damping: 18, mass: 0.9}});
+  const haloPulse = 0.85 + Math.sin((frame / fps) * 1.8) * 0.15;
 
   const kicker = interpolate(frame, [8, 22], [0, 1], {extrapolateRight: 'clamp'});
   const kickerY = interpolate(frame, [8, 22], [24, 0], {extrapolateRight: 'clamp'});
-  const sub = interpolate(frame, [30, 46], [0, 1], {extrapolateRight: 'clamp'});
-  const subY = interpolate(frame, [30, 46], [22, 0], {extrapolateRight: 'clamp'});
+  const sub = interpolate(frame, [34, 50], [0, 1], {extrapolateRight: 'clamp'});
+  const subY = interpolate(frame, [34, 50], [22, 0], {extrapolateRight: 'clamp'});
   const lineW = interpolate(frame, [22, 44], [0, 360], {extrapolateRight: 'clamp'});
 
-  const logoH = 620;
+  const logoW = 1100;
+  const shineX = interpolate(frame, [24, 54], [-40, 140], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
 
   return (
     <Stage bokehSeed="logo">
@@ -34,7 +39,7 @@ export const LogoReveal: React.FC = () => {
         <div
           style={{
             position: 'absolute',
-            top: 120,
+            top: 110,
             textAlign: 'center',
             opacity: kicker,
             transform: `translateY(${kickerY}px)`,
@@ -44,12 +49,7 @@ export const LogoReveal: React.FC = () => {
             base={COLORS.yellow}
             highlight="#fff"
             period={70}
-            style={{
-              fontSize: 30,
-              letterSpacing: 14,
-              textTransform: 'uppercase',
-              fontWeight: 800,
-            }}
+            style={{fontSize: 30, letterSpacing: 14, textTransform: 'uppercase', fontWeight: 800}}
           >
             Introducing
           </ShineText>
@@ -65,22 +65,23 @@ export const LogoReveal: React.FC = () => {
           />
         </div>
 
-        {/* shockwave fired as the medal lands */}
-        <ShockwaveRing at={10} />
+        <ShockwaveRing at={8} />
 
-        {/* golden glow behind the medal */}
+        {/* soft white→gold HALO that emphasises the logo (no hard box) */}
         <div
           style={{
             position: 'absolute',
-            width: 760,
-            height: 760,
+            width: 1480,
+            height: 860,
             borderRadius: '50%',
-            background: `radial-gradient(circle, rgba(255,196,46,${glow}) 0%, rgba(255,196,46,0) 60%)`,
-            filter: 'blur(22px)',
+            background: `radial-gradient(ellipse at center, rgba(255,255,255,${0.92 * haloIn}) 0%, rgba(255,238,188,${0.6 * haloIn}) 26%, rgba(255,196,46,${0.3 * haloIn}) 46%, rgba(255,196,46,0) 70%)`,
+            filter: 'blur(36px)',
+            opacity: haloPulse,
+            transform: `scale(${interpolate(haloIn, [0, 1], [0.6, 1])})`,
           }}
         />
 
-        {/* the hero medal + a glint sweeping across it */}
+        {/* the wordmark + a glint sweeping across it */}
         <div
           style={{
             position: 'relative',
@@ -91,14 +92,27 @@ export const LogoReveal: React.FC = () => {
           <Img
             src={LOGO_URL}
             style={{
-              height: logoH,
+              width: logoW,
               objectFit: 'contain',
-              filter: 'drop-shadow(0 30px 60px rgba(0,0,0,0.5))',
               display: 'block',
+              filter: 'drop-shadow(0 18px 40px rgba(0,0,0,0.3))',
             }}
           />
-          <AbsoluteFill style={{alignItems: 'center', justifyContent: 'center'}}>
-            <LightSweep size={logoH} at={20} duration={28} />
+          <AbsoluteFill style={{overflow: 'hidden'}}>
+            <div
+              style={{
+                position: 'absolute',
+                top: '-30%',
+                left: `${shineX}%`,
+                width: '22%',
+                height: '160%',
+                transform: 'rotate(16deg)',
+                background:
+                  'linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%)',
+                filter: 'blur(8px)',
+                mixBlendMode: 'screen',
+              }}
+            />
           </AbsoluteFill>
         </div>
 
@@ -106,7 +120,7 @@ export const LogoReveal: React.FC = () => {
         <div
           style={{
             position: 'absolute',
-            bottom: 120,
+            bottom: 110,
             color: '#fff',
             fontSize: 36,
             fontWeight: 600,

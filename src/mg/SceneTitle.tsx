@@ -5,11 +5,13 @@ import {FONT} from '../theme';
 // rise in gradually with a soft staggered spring, hold in the lower third, then
 // lift away before the scene ends. No underline bar — just clean, bold type.
 // `frames` is the length of the host scene (for the exit timing).
-export const SceneTitle: React.FC<{text: string; frames: number; startAt?: number}> = ({
-  text,
-  frames,
-  startAt = 8,
-}) => {
+export const SceneTitle: React.FC<{
+  text: string;
+  frames: number;
+  startAt?: number;
+  position?: 'bottom' | 'left';
+}> = ({text, frames, startAt = 8, position = 'bottom'}) => {
+  const left = position === 'left';
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const words = text.split(' ');
@@ -26,9 +28,10 @@ export const SceneTitle: React.FC<{text: string; frames: number; startAt?: numbe
     <AbsoluteFill
       style={{
         fontFamily: FONT,
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        paddingBottom: 120,
+        alignItems: left ? 'flex-start' : 'center',
+        justifyContent: left ? 'center' : 'flex-end',
+        paddingBottom: left ? 0 : 120,
+        paddingLeft: left ? 110 : 0,
         pointerEvents: 'none',
       }}
     >
@@ -36,12 +39,15 @@ export const SceneTitle: React.FC<{text: string; frames: number; startAt?: numbe
         style={{
           transform: `translateY(${groupY}px)`,
           opacity: groupFade,
-          textAlign: 'center',
+          textAlign: left ? 'left' : 'center',
           display: 'flex',
-          gap: 24,
-          justifyContent: 'center',
+          flexDirection: left ? 'column' : 'row',
+          gap: left ? 6 : 24,
+          alignItems: left ? 'flex-start' : 'center',
+          justifyContent: left ? 'center' : 'center',
           flexWrap: 'wrap',
-          padding: '0 80px',
+          padding: left ? 0 : '0 80px',
+          maxWidth: left ? '46%' : undefined,
         }}
       >
         {words.map((w, i) => {
