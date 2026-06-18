@@ -41,13 +41,13 @@ export const SceneTitle: React.FC<{
           opacity: groupFade,
           textAlign: left ? 'left' : 'center',
           display: 'flex',
-          flexDirection: left ? 'column' : 'row',
-          gap: left ? 6 : 24,
-          alignItems: left ? 'flex-start' : 'center',
-          justifyContent: left ? 'center' : 'center',
+          flexDirection: 'row',
+          gap: left ? 18 : 24,
+          alignItems: 'baseline',
+          justifyContent: left ? 'flex-start' : 'center',
           flexWrap: 'wrap',
           padding: left ? 0 : '0 80px',
-          maxWidth: left ? '46%' : undefined,
+          maxWidth: left ? 640 : undefined,
         }}
       >
         {words.map((w, i) => {
@@ -65,7 +65,7 @@ export const SceneTitle: React.FC<{
                 display: 'inline-block',
                 transform: `translateY(${y}px)`,
                 opacity: enter,
-                fontSize: 92,
+                fontSize: left ? 76 : 92,
                 fontWeight: 800,
                 color: '#fff',
                 textShadow: '0 8px 34px rgba(0,0,0,0.6)',
