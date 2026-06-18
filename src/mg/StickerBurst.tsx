@@ -41,21 +41,25 @@ export const StickerBurst: React.FC<{
         const local = frame - (startAt + i * step);
         if (local < 0 || local > life) return null;
 
-        const enter = spring({frame: local, fps, config: {damping: 16, mass: 0.8}});
-        const fadeIn = interpolate(local, [0, 12], [0, 1], {
+        // POP-UP entrance: a bouncy spring scale (with a little overshoot)
+        // instead of a soft fade — reads like a sticker popping onto screen.
+        const pop = spring({frame: local, fps, config: {damping: 9, mass: 0.6}});
+        const fadeIn = interpolate(local, [0, 4], [0, 1], {
           extrapolateLeft: 'clamp',
           extrapolateRight: 'clamp',
         });
-        const fadeOut = interpolate(local, [life - 16, life], [1, 0], {
+        const fadeOut = interpolate(local, [life - 12, life], [1, 0], {
           extrapolateLeft: 'clamp',
           extrapolateRight: 'clamp',
         });
         const opacity = Math.min(fadeIn, fadeOut);
+        // quick pop-down on the way out
+        const exitScale = interpolate(local, [life - 12, life], [1, 0.7], {
+          extrapolateLeft: 'clamp',
+          extrapolateRight: 'clamp',
+        });
 
         const t = local / fps;
-        // arrive "from a distance": small + softly out of focus, then resolves
-        const scaleIn = interpolate(enter, [0, 1], [0.7, 1]);
-        const blurIn = interpolate(local, [0, 12], [7, 0], {extrapolateRight: 'clamp'});
         // tiny in-place life — no travel, no drift to centre
         const bob = Math.sin(t * 1.5 + i) * 5;
         const sway = Math.sin(t * 1.0 + i) * 3;
@@ -70,9 +74,8 @@ export const StickerBurst: React.FC<{
               top: `${s.y}%`,
               width: size,
               height: size,
-              transform: `translate(-50%,-50%) translateY(${bob}px) scale(${scaleIn * breathe}) rotate(${sway}deg)`,
+              transform: `translate(-50%,-50%) translateY(${bob}px) scale(${pop * exitScale * breathe}) rotate(${sway}deg)`,
               opacity,
-              filter: `blur(${blurIn}px)`,
             }}
           >
             {/* subtle soft glow so a sticker stays readable on the navy stage */}

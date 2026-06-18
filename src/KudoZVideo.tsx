@@ -13,6 +13,7 @@ import {
 } from './clips';
 import {Clip} from './Clip';
 import {Narration} from './Narration';
+import {SceneTitle} from './mg/SceneTitle';
 import {LogoReveal} from './mg/LogoReveal';
 import {Criteria} from './mg/Criteria';
 import {Outro} from './mg/Outro';
@@ -80,7 +81,10 @@ export const KudoZVideo: React.FC = () => {
                 return <Comp />;
               })()
             ) : (
-              <Clip url={beat.url} label={beat.label} volume={beat.volume ?? CLIP_VOLUME} />
+              <>
+                <Clip url={beat.url} label={beat.label} volume={beat.volume ?? CLIP_VOLUME} />
+                {beat.title ? <SceneTitle text={beat.title} frames={sec(beat.seconds)} /> : null}
+              </>
             );
 
           const nodes = [

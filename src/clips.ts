@@ -62,6 +62,8 @@ export type Beat =
       narration?: string;
       // Per-clip diegetic audio volume override (defaults to CLIP_VOLUME).
       volume?: number;
+      // Optional animated on-screen title (Magistral) overlaid on the clip.
+      title?: string;
     }
   | {
       kind: 'mg';
@@ -103,6 +105,7 @@ export const TIMELINE: Beat[] = [
     url: `${CDN}/hf_20260617_092838_5a5829e7-252f-4754-a43c-76d6fb17d26b.mp4`,
     vo: `${CDN}/hf_20260617_111108_fe0f5456-4f00-4250-b1b7-8fd2311add5b.wav`,
     narration: 'Here at ZIM, we love showing our appreciation.',
+    title: 'showing our appreciation',
   },
   // ── Scene 3 — corridor cheer ────────────────────────────────────────────
   {
@@ -115,6 +118,7 @@ export const TIMELINE: Beat[] = [
     volume: 0, // mute the colleague's diegetic SFX in the corridor
     vo: `${CDN}/hf_20260617_111109_5c314ca9-56ad-451f-8ce4-a32f0df2cc86.wav`,
     narration: 'Putting in a good word whenever we can.',
+    title: 'Putting in a good word',
   },
   // ── Scene 4 — recognitions at the desk ──────────────────────────────────
   {
