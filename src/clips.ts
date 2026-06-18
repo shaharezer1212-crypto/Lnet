@@ -108,10 +108,10 @@ export const TIMELINE: Beat[] = [
   {
     kind: 'clip',
     id: 's1a',
-    label: 'S1 · camera approaches the man (side)',
+    label: 'S1 · top-down on both → camera descends to the man',
     seconds: 7,
-    jobId: '95d77df0-1dda-4bba-917e-e76a24ee188c',
-    url: `${CDN}/hf_20260618_134111_95d77df0-1dda-4bba-917e-e76a24ee188c.mp4`,
+    jobId: '81a34567-d142-4178-b27b-587016ff127d',
+    url: `${CDN}/hf_20260618_153941_81a34567-d142-4178-b27b-587016ff127d.mp4`,
     narr: 'narration/1.mp3',
     narration:
       'In times of uncertainty, most people focus on the bigger picture. But this is the perfect time to acknowledge the people who keep us moving forward — because even a small compliment can give someone the boost they need.',
