@@ -82,7 +82,12 @@ export const KudoZVideo: React.FC = () => {
               })()
             ) : (
               <>
-                <Clip url={beat.url} label={beat.label} volume={beat.volume ?? CLIP_VOLUME} />
+                <Clip
+                  url={beat.url}
+                  label={beat.label}
+                  volume={beat.volume ?? CLIP_VOLUME}
+                  playbackRate={beat.playbackRate}
+                />
                 {beat.title ? <SceneTitle text={beat.title} frames={sec(beat.seconds)} /> : null}
               </>
             );

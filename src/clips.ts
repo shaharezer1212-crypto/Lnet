@@ -27,8 +27,8 @@ export const CLIP_VOLUME = 0.26;
 export const NARRATION_URL = `${CDN}/hf_20260617_130038_d1487192-cf5f-4e19-843e-ab21785fa213.wav`;
 // Small lead-in so the voice doesn't start on the very first frame.
 export const NARRATION_START = 8;
-// Narration amplified a touch so it leads the mix.
-export const NARRATION_VOLUME = 1.4;
+// Client-recorded narration — already well levelled, so play it at unity.
+export const NARRATION_VOLUME = 1.0;
 
 // ── Brand assets (fill when provided) ───────────────────────────────────────
 // Official KudoZ logo, background removed (transparent) — for clean close-ups.
@@ -64,6 +64,11 @@ export type Beat =
       volume?: number;
       // Optional animated on-screen title (Magistral) overlaid on the clip.
       title?: string;
+      // Optional slow-motion: <1 plays the clip slower, stretching it to fill
+      // a longer beat (e.g. a 15s take played over ~20s).
+      playbackRate?: number;
+      // Phased narration: staticFile path of the VO segment that STARTS here.
+      narr?: string;
     }
   | {
       kind: 'mg';
@@ -73,6 +78,8 @@ export type Beat =
       mg: 'logo' | 'criteria' | 'outro';
       vo?: string;
       narration?: string;
+      // Phased narration: staticFile path of the VO segment that STARTS here.
+      narr?: string;
     };
 
 export const sec = (s: number) => Math.round(s * FPS);
@@ -87,11 +94,14 @@ export const TIMELINE: Beat[] = [
   {
     kind: 'clip',
     id: 's1',
-    label: 'S1 · full scene · calm → alert → reveal → woman (one take)',
-    seconds: 9.467, // 284 frames @30fps — preserves downstream narration sync
+    label: 'S1 · full scene · calm → alert → reveal → woman (one 15s take)',
+    seconds: 21, // holds the 20.4s opening VO with clearance before scene 2
+    // INTERIM: 15s take (job 31a8b2b0) still rendering — temporarily using the
+    // 10s take slowed to fill 21s so the edit is valid; swap URL when ready.
+    playbackRate: 0.476, // 10s interim take over 21s (final 15s take → 0.714)
     jobId: 'd6e4aeab-e6a1-464f-9294-01b1e928fc05',
     url: `${CDN}/hf_20260617_191155_d6e4aeab-e6a1-464f-9294-01b1e928fc05.mp4`,
-    vo: `${CDN}/hf_20260617_111107_11a6c341-e8bd-45d9-8748-cbe90222006c.wav`,
+    narr: 'narration/1.mp3',
     narration:
       'In times of uncertainty, most people focus on the bigger picture. But this is the perfect time to acknowledge the people who keep us moving forward — because even a small compliment can give someone the boost they need.',
   },
@@ -105,6 +115,7 @@ export const TIMELINE: Beat[] = [
     url: `${CDN}/hf_20260617_092838_5a5829e7-252f-4754-a43c-76d6fb17d26b.mp4`,
     vo: `${CDN}/hf_20260617_111108_fe0f5456-4f00-4250-b1b7-8fd2311add5b.wav`,
     narration: 'Here at ZIM, we love showing our appreciation.',
+    narr: 'narration/2.mp3',
     title: 'showing our appreciation',
   },
   // ── Scene 3 — corridor cheer ────────────────────────────────────────────
@@ -118,6 +129,7 @@ export const TIMELINE: Beat[] = [
     volume: 0, // mute the colleague's diegetic SFX in the corridor
     vo: `${CDN}/hf_20260617_111109_5c314ca9-56ad-451f-8ce4-a32f0df2cc86.wav`,
     narration: 'Putting in a good word whenever we can.',
+    narr: 'narration/3.mp3',
     title: 'Putting in a good word',
   },
   // ── Scene 4 — recognitions at the desk ──────────────────────────────────
@@ -130,26 +142,30 @@ export const TIMELINE: Beat[] = [
     url: `${CDN}/hf_20260617_092856_fb181f32-c01d-42c1-b38e-8eefc1d04f3d.mp4`,
     vo: `${CDN}/hf_20260617_111110_e1d8f75e-075b-459c-b4c9-08666908e7f2.wav`,
     narration: 'A small compliment here, a little gesture there.',
+    narr: 'narration/4.mp3',
   },
   {
     kind: 'clip',
     id: 's4b',
     label: 'S4 · she enters → sits beside him → her recognition',
-    seconds: 6,
+    seconds: 6.5,
     jobId: '8ff62f8e-e305-481b-9a86-ae954ea01065',
     url: `${CDN}/hf_20260617_170736_8ff62f8e-e305-481b-9a86-ae954ea01065.mp4`,
     vo: `${CDN}/hf_20260617_111111_7a90eb3e-fe0c-47d9-b5a3-ab0ad92b07fe.wav`,
     narration:
       'These are the kinds of things that create the flourishing work environment we build at ZIM.',
+    narr: 'narration/5.mp3',
   },
   // ── Motion graphics 1 — logo reveal ─────────────────────────────────────
   {
     kind: 'mg',
     id: 'mg-logo',
     label: 'MG · KudoZ logo reveal',
-    seconds: 4,
+    seconds: 6,
     mg: 'logo',
-    vo: `${CDN}/hf_20260617_111112_cf1c387b-80e1-4aef-a6b2-d27ccee0d16f.wav`,
+    // The whole infographic VO (logo + criteria, ~25.6s) starts here and plays
+    // on across the criteria beat.
+    narr: 'narration/6.mp3',
     narration: 'Introducing KudoZ — ZIM’s new employee recognition system.',
   },
   // ── Motion graphics 2 — the four criteria ───────────────────────────────
@@ -157,7 +173,7 @@ export const TIMELINE: Beat[] = [
     kind: 'mg',
     id: 'mg-criteria',
     label: 'MG · four criteria',
-    seconds: 10,
+    seconds: 22, // holds while the infographic VO describes all four criteria
     mg: 'criteria',
     vo: `${CDN}/hf_20260617_111113_e3b7a421-cc8e-449c-9eed-2b30eabb32c8.wav`,
     narration:
@@ -173,6 +189,7 @@ export const TIMELINE: Beat[] = [
     url: `${CDN}/hf_20260617_120010_edbb3073-9e4d-44d5-9686-947ff4aa1ad9.mp4`,
     vo: `${CDN}/hf_20260617_111115_448f9c75-8221-4876-b2b0-ba1755c2cc65.wav`,
     narration: 'Receiving recognition awards points that can be redeemed for amazing gifts.',
+    narr: 'narration/7.mp3',
   },
   // ── Ending ──────────────────────────────────────────────────────────────
   {
@@ -182,12 +199,15 @@ export const TIMELINE: Beat[] = [
     seconds: 4,
     jobId: '3eba2d5a-c69e-41fa-a71c-7a34aae3b4f4',
     url: `${CDN}/hf_20260617_102730_3eba2d5a-c69e-41fa-a71c-7a34aae3b4f4.mp4`,
+    // The ending VO (~18s) starts here and plays across woman + man + walk.
+    narr: 'narration/8.mp3',
   },
   {
     kind: 'clip',
     id: 'end-man',
     label: 'END · man + floating mascots (push-in)',
-    seconds: 6,
+    seconds: 8, // gently slowed to give the ending VO room
+    playbackRate: 0.75, // 6s take over 8s
     jobId: 'bf0b155d-4994-4306-b3c8-d9933f8e3122',
     url: `${CDN}/hf_20260617_145326_bf0b155d-4994-4306-b3c8-d9933f8e3122.mp4`,
   },
@@ -195,7 +215,8 @@ export const TIMELINE: Beat[] = [
     kind: 'clip',
     id: 'end-walk',
     label: 'END · walk away into the distance (identity-locked, correct direction)',
-    seconds: 6,
+    seconds: 8, // gently slowed to extend the closing walk under the ending VO
+    playbackRate: 0.75, // 6s take over 8s
     jobId: 'f0f654ff-2481-4ee7-8b28-61ce3ae16dce',
     url: `${CDN}/hf_20260617_194946_f0f654ff-2481-4ee7-8b28-61ce3ae16dce.mp4`,
     vo: `${CDN}/hf_20260617_111123_0b821fa2-77cb-4890-9057-6a8434a1d484.wav`,
@@ -207,9 +228,9 @@ export const TIMELINE: Beat[] = [
     kind: 'mg',
     id: 'mg-outro',
     label: 'MG · outro tagline',
-    seconds: 4,
+    seconds: 7.5,
     mg: 'outro',
-    vo: `${CDN}/hf_20260617_111124_cec86c87-f540-4869-89c9-8756dd0790ae.wav`,
+    narr: 'narration/9.mp3',
     narration: 'KudoZ — where appreciation becomes culture.',
   },
 ];

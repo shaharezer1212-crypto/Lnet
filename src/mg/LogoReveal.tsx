@@ -119,7 +119,7 @@ export const LogoReveal: React.FC = () => {
           ZIM’s new employee recognition system
         </div>
 
-        <StickerBurst frames={120} startAt={16} count={3} size={250} />
+        <StickerBurst frames={180} startAt={16} count={3} size={250} />
       </AbsoluteFill>
     </Stage>
   );

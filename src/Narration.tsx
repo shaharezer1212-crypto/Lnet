@@ -1,14 +1,22 @@
-import {Audio, Sequence} from 'remotion';
-import {NARRATION_URL, NARRATION_START, NARRATION_VOLUME} from './clips';
+import {Audio, Sequence, staticFile} from 'remotion';
+import {TIMELINE, START_FRAMES, NARRATION_VOLUME} from './clips';
 
-// A SINGLE continuous Ashley voice-over track for the whole film.
-// One file → the lines can never overlap or "run over" each other, and the
-// narration flows naturally over the montage (per-beat placement is gone).
+// Phased narration (the client's chosen voice): one audio file per scene,
+// each starting exactly when its scene begins. A segment that is longer than
+// its own scene simply plays on across the following scenes until the next
+// segment starts (e.g. the infographic line spans logo + criteria, and the
+// ending line spans the three closing shots) — they are spaced so they never
+// overlap.
 export const Narration: React.FC = () => {
-  if (!NARRATION_URL) return null;
   return (
-    <Sequence from={NARRATION_START} name="Narration (continuous)">
-      <Audio src={NARRATION_URL} volume={NARRATION_VOLUME} />
-    </Sequence>
+    <>
+      {TIMELINE.map((beat, i) =>
+        beat.narr ? (
+          <Sequence key={beat.id} from={START_FRAMES[i]} name={`VO · ${beat.id}`}>
+            <Audio src={staticFile(beat.narr)} volume={NARRATION_VOLUME} />
+          </Sequence>
+        ) : null,
+      )}
+    </>
   );
 };

@@ -4,10 +4,11 @@ import {COLORS, FONT} from './theme';
 // Renders a Higgsfield live-action clip. If the url is not yet filled in
 // (a clip still re-rendering), shows a labelled placeholder card so the
 // timeline still previews/renders end-to-end.
-export const Clip: React.FC<{url: string; label: string; volume?: number}> = ({
+export const Clip: React.FC<{url: string; label: string; volume?: number; playbackRate?: number}> = ({
   url,
   label,
   volume = 1,
+  playbackRate = 1,
 }) => {
   if (!url) {
     return (
@@ -32,6 +33,7 @@ export const Clip: React.FC<{url: string; label: string; volume?: number}> = ({
       <OffthreadVideo
         src={url}
         volume={volume}
+        playbackRate={playbackRate}
         style={{width: '100%', height: '100%', objectFit: 'cover'}}
       />
     </AbsoluteFill>
