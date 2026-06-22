@@ -2,19 +2,19 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  interpolate,
   OffthreadVideo,
   staticFile,
   useVideoConfig,
 } from "remotion";
-import {
-  TransitionSeries,
-  linearTiming,
-} from "@remotion/transitions";
+import { TransitionSeries, linearTiming } from "@remotion/transitions";
 import { fade } from "@remotion/transitions/fade";
 import {
   clips,
   narration,
   music,
+  duckRanges,
+  totalFrames,
   TRANSITION_SECONDS,
   type Clip,
 } from "./clips";
@@ -25,6 +25,8 @@ const ClipContent: React.FC<{ clip: Clip }> = ({ clip }) => {
       <AbsoluteFill style={{ backgroundColor: "black" }}>
         <OffthreadVideo
           src={staticFile(clip.src)}
+          // Keep audio only for clips that carry their own narration.
+          muted={!clip.hasOwnAudio}
           startFrom={
             clip.startFromSeconds
               ? Math.round(clip.startFromSeconds * 30)
@@ -65,6 +67,23 @@ export const MainVideo: React.FC = () => {
   const { fps } = useVideoConfig();
   const transitionFrames = Math.round(TRANSITION_SECONDS * fps);
 
+  // Duck the global narration to silence while a baked-in-narration clip plays.
+  const narrationVolume = (frame: number): number => {
+    const inDuck = duckRanges.some(([s, e]) => frame >= s && frame < e);
+    return inDuck ? 0 : (narration?.volume ?? 1);
+  };
+
+  // Background music: fade in at the start, fade out at the end, low baseline.
+  const musicBaseline = music?.volume ?? 0.18;
+  const musicFade = Math.round((music?.fadeSeconds ?? 1.5) * fps);
+  const musicVolume = (frame: number): number =>
+    interpolate(
+      frame,
+      [0, musicFade, totalFrames - musicFade, totalFrames],
+      [0, musicBaseline, musicBaseline, 0],
+      { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+    );
+
   return (
     <AbsoluteFill style={{ backgroundColor: "black" }}>
       <TransitionSeries>
@@ -86,10 +105,10 @@ export const MainVideo: React.FC = () => {
       </TransitionSeries>
 
       {narration ? (
-        <Audio src={staticFile(narration.src)} volume={narration.volume ?? 1} />
+        <Audio src={staticFile(narration.src)} volume={narrationVolume} />
       ) : null}
       {music ? (
-        <Audio src={staticFile(music.src)} volume={music.volume ?? 0.2} />
+        <Audio src={staticFile(music.src)} volume={musicVolume} />
       ) : null}
     </AbsoluteFill>
   );

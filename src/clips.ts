@@ -26,6 +26,10 @@ export type Clip = {
   label?: string;
   // Optional: trim the source — start playing the clip from this second.
   startFromSeconds?: number;
+  // Set true for a clip that has its OWN narration/voice baked into it.
+  // Its audio is kept, and the global narration track is ducked (silenced)
+  // for the duration of this clip so the two voices never collide.
+  hasOwnAudio?: boolean;
 };
 
 // The narration that plays across the whole edit. Set to null if none yet.
@@ -33,8 +37,12 @@ export const narration: { src: string; volume?: number } | null = null;
 // Example once you have it:
 // export const narration = { src: "audio/voiceover.mp3", volume: 1 };
 
-// Optional background music under the narration.
-export const music: { src: string; volume?: number } | null = null;
+// Background music under everything. Plays low, fades in/out automatically.
+export const music: {
+  src: string;
+  volume?: number; // baseline level under narration (default 0.18)
+  fadeSeconds?: number; // fade in/out length (default 1.5)
+} | null = null;
 
 // The edit timeline, top-to-bottom = first-to-last.
 export const clips: Clip[] = [
@@ -42,3 +50,40 @@ export const clips: Clip[] = [
   { color: "#13315C", label: "CLIP 2", durationSeconds: 5 },
   { color: "#1B4965", label: "CLIP 3", durationSeconds: 5 },
 ];
+
+// ── Derived timeline math (used for total duration + ducking) ───────────────
+// In a TransitionSeries each cross-fade overlaps the two clips it joins, so the
+// absolute timeline is shorter than the naive sum of clip durations.
+const transFrames = Math.round(TRANSITION_SECONDS * FPS);
+
+export const clipFrames = clips.map((c) =>
+  Math.round(c.durationSeconds * FPS)
+);
+
+// Absolute start frame of each clip on the final timeline.
+export const clipStarts: number[] = (() => {
+  const starts: number[] = [];
+  let cursor = 0;
+  for (let i = 0; i < clips.length; i++) {
+    starts.push(cursor);
+    // advance by this clip, then pull back by the transition it shares with next
+    cursor += clipFrames[i];
+    if (i < clips.length - 1) cursor -= transFrames;
+  }
+  return starts;
+})();
+
+export const totalFrames = Math.max(
+  1,
+  clipStarts[clips.length - 1] + clipFrames[clips.length - 1]
+);
+
+// Frame ranges where a clip carries its own baked-in narration — the global
+// narration track is ducked to silence across these ranges.
+export const duckRanges: Array<[number, number]> = clips
+  .map((c, i) =>
+    c.hasOwnAudio
+      ? ([clipStarts[i], clipStarts[i] + clipFrames[i]] as [number, number])
+      : null
+  )
+  .filter((r): r is [number, number] => r !== null);
