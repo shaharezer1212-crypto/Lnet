@@ -1,0 +1,22 @@
+{
+  "name": "lnet-video",
+  "version": "1.0.0",
+  "description": "Remotion video editing project for Lnet — assembling clips + narration with transitions",
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "remotion render MainVideo out/video.mp4",
+    "upgrade": "remotion upgrade"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.286",
+    "@remotion/transitions": "4.0.286",
+    "@remotion/media-utils": "4.0.286",
+    "remotion": "4.0.286",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.0.0",
+    "typescript": "5.7.2"
+  }
+}
