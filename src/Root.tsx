@@ -3,23 +3,43 @@ import { Composition } from "remotion";
 import "./fonts";
 import { MainVideo } from "./MainVideo";
 import { Opening } from "./Opening";
-import { FPS, WIDTH, HEIGHT, totalFrames } from "./clips";
+import {
+  FPS,
+  WIDTH,
+  HEIGHT,
+  segments,
+  OPENING_SECONDS,
+  TRANSITION_SECONDS,
+} from "./edit";
+
+const transitionFrames = Math.round(TRANSITION_SECONDS * FPS);
+const openingFrames = Math.round(OPENING_SECONDS * FPS);
+const segmentFrames = segments.reduce(
+  (s, seg) => s + Math.round(seg.durationSeconds * FPS),
+  0
+);
+// opening + N segments = (N+1) sequences => N transitions, each overlaps once
+const numTransitions = segments.length;
+const totalFrames = Math.max(
+  1,
+  openingFrames + segmentFrames - numTransitions * transitionFrames
+);
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
       <Composition
-        id="Opening"
-        component={Opening}
-        durationInFrames={4 * FPS}
+        id="MainVideo"
+        component={MainVideo}
+        durationInFrames={totalFrames}
         fps={FPS}
         width={WIDTH}
         height={HEIGHT}
       />
       <Composition
-        id="MainVideo"
-        component={MainVideo}
-        durationInFrames={totalFrames}
+        id="Opening"
+        component={Opening}
+        durationInFrames={openingFrames}
         fps={FPS}
         width={WIDTH}
         height={HEIGHT}
