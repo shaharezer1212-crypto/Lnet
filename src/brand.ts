@@ -1,21 +1,19 @@
 // ── Tadhar brand tokens ──────────────────────────────────────────────────────
-// Colors sampled from the Tadhar logo (deep green wordmark + the multi-color
-// "building" mark). Exact hex values will be refined once the official logo
-// file arrives; these are close matches for now.
+// Colors sampled directly from the official Tadhar logo (public/logo/).
 
 export const BRAND = {
-  green: "#0F4C3A", // primary deep green (the wordmark)
-  greenDark: "#0A3328", // darker shade for backgrounds
-  // The colored building blocks — used for icons, accents, kinetic titles:
-  red: "#D63A4A",
-  orange: "#F4A93C",
-  pink: "#F2A9BC",
-  leaf: "#4FA47C",
-  teal: "#14534A",
-  blue: "#8FC3E8",
+  green: "#0A4438", // primary deep green (the wordmark)
+  greenDark: "#06302A", // darker shade for backgrounds
+  teal: "#0F514D", // dark teal building face
+  // The colored "building" blocks — used for icons, accents, kinetic titles:
+  red: "#E53E52",
+  orange: "#F2A93C",
+  pink: "#F7A3B3",
+  leaf: "#459361",
+  blue: "#89B7E8",
   // Neutrals
   cream: "#F5F3EC",
-  ink: "#10221C",
+  ink: "#0A201B",
   white: "#FFFFFF",
 } as const;
 
