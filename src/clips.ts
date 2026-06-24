@@ -86,7 +86,7 @@ export type Beat =
       id: string;
       label: string;
       seconds: number;
-      mg: 'logo' | 'store' | 'criteria' | 'outro';
+      mg: 'intro' | 'logo' | 'store' | 'criteria' | 'outro';
       vo?: string;
       narration?: string;
       // Phased narration: staticFile path of the VO segment that STARTS here.
@@ -96,6 +96,14 @@ export type Beat =
 export const sec = (s: number) => Math.round(s * FPS);
 
 export const TIMELINE: Beat[] = [
+  // ── Intro — KudoZ logo sting before the film begins ─────────────────────
+  {
+    kind: 'mg',
+    id: 'intro',
+    label: 'Intro · KudoZ logo sting',
+    seconds: 3.5,
+    mg: 'intro',
+  },
   // ── Scene 1 — the opening, edited by the client (committed to the repo) ──
   // A single 21.1s edited take (top-down → the man → reaction → reveal), used
   // as-is. Its own audio is muted (volume 0); the phased narration + music play

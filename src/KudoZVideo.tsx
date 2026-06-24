@@ -14,12 +14,13 @@ import {
 import {Clip} from './Clip';
 import {Narration} from './Narration';
 import {SceneTitle} from './mg/SceneTitle';
+import {Intro} from './mg/Intro';
 import {LogoReveal} from './mg/LogoReveal';
 import {StoreShowcase} from './mg/StoreShowcase';
 import {Criteria} from './mg/Criteria';
 import {Outro} from './mg/Outro';
 
-const MG = {logo: LogoReveal, store: StoreShowcase, criteria: Criteria, outro: Outro} as const;
+const MG = {intro: Intro, logo: LogoReveal, store: StoreShowcase, criteria: Criteria, outro: Outro} as const;
 
 // A cinematic hard cut with a little energy: the outgoing shot plays to the
 // slot's midpoint, then we snap to the incoming shot which "punches in" with a
