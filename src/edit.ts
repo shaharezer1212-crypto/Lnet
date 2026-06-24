@@ -51,7 +51,7 @@ const A = BRAND;
 export const segments: Segment[] = [
   { scene: 1, clip: "clips/scenes/scene_01.mp4", durationSeconds: 15.07, note: "כניסה מלמעלה + עובדים" },
   { scene: 2, clip: "clips/scenes/scene_02.mp4", durationSeconds: 7.06, freeze: true, note: "מחסן — נתקעים, פריז+SFX" },
-  { scene: 3, clip: "clips/presenter/presenter_1.mp4", durationSeconds: 17.33, presenter: true, note: "דר 1 מקריין" },
+  { scene: 3, clip: "clips/presenter/presenter_1.mp4", durationSeconds: 15.0, presenter: true, note: "דר 1 מקריין (נחתך זנב ג'יבריש)" },
   { scene: 4, clip: "clips/scenes/scene_03.mp4", durationSeconds: 15.07, title: { lines: ["בלב העשייה"], accent: A.leaf }, note: "מתהלך ומצטרף לקבוצה על הגג" },
   { scene: 5, clip: "clips/scenes/scene_04.mp4", durationSeconds: 15.07, note: "יום-יום בסרטון אחד (מסתיים בדר)" },
   { scene: 6, clip: "clips/scenes/scene_05.mp4", durationSeconds: 8.06, title: { lines: ["הנפקת ציוד"], accent: A.red }, note: "פותח מחסן" },
@@ -71,4 +71,4 @@ export const segments: Segment[] = [
 ];
 
 export const OPENING_SECONDS = 4;
-export const CLOSING_SECONDS = 6;
+export const CLOSING_SECONDS = 8;

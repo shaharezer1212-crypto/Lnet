@@ -77,19 +77,6 @@ export const MainVideo: React.FC = () => {
       { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
     );
 
-  // Presenter (דר) windows: there we hear the CLIP's own audio, so the master
-  // narration is muted across those absolute-frame ranges.
-  const presenterWindows: Array<[number, number]> = segments
-    .map((s, i) => (s.presenter ? ([starts[i + 1], starts[i + 1] + children[i + 1].dur] as [number, number]) : null))
-    .filter((w): w is [number, number] => w !== null);
-
-  // narration volume — receives frame relative to its Sequence (narrationStart)
-  const narrationVol = (f: number): number => {
-    const abs = f + narrationStart;
-    const inPresenter = presenterWindows.some(([s, e]) => abs >= s - 3 && abs < e + 3);
-    return inPresenter ? 0 : 1;
-  };
-
   return (
     <AbsoluteFill style={{ backgroundColor: "black" }}>
       <TransitionSeries>
@@ -117,8 +104,8 @@ export const MainVideo: React.FC = () => {
                   ) : (
                     <OffthreadVideo
                       src={staticFile(seg.clip)}
-                      // presenter clips keep their own audio (lip-sync); B-roll muted
-                      muted={MUTE_CLIPS && !seg.presenter}
+                      // Option B: all clips muted; master narration is the only voice
+                      muted={MUTE_CLIPS}
                       style={{ width: "100%", height: "100%", objectFit: "cover" }}
                     />
                   )}
@@ -144,10 +131,10 @@ export const MainVideo: React.FC = () => {
         </TransitionSeries.Sequence>
       </TransitionSeries>
 
-      {/* Master narration — continuous, but muted under presenter (דר) clips
-          so we hear the presenter's own lip-synced audio there */}
+      {/* Master narration — one continuous voice track (Option B): always on,
+          perfectly in sync with itself; clips are silent visuals over it */}
       <Sequence from={narrationStart}>
-        <Audio src={staticFile(NARRATION)} volume={narrationVol} />
+        <Audio src={staticFile(NARRATION)} />
       </Sequence>
 
       {/* Background music: First Date (intro) cuts at the freeze, Up takes over */}
