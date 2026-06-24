@@ -53,12 +53,37 @@ const cut = (): TransitionPresentation<Record<string, unknown>> => ({
   props: {},
 });
 
+// A screen dim: the logo intro fades down to black, a brief black beat, then
+// the film fades up — a soft cinematic open into the movie.
+const dipToBlack = (): TransitionPresentation<Record<string, unknown>> => ({
+  component: ({presentationProgress, presentationDirection, children}) => {
+    const opacity =
+      presentationDirection === 'entering'
+        ? interpolate(presentationProgress, [0.55, 1], [0, 1], {
+            extrapolateLeft: 'clamp',
+            extrapolateRight: 'clamp',
+          })
+        : interpolate(presentationProgress, [0, 0.45], [1, 0], {
+            extrapolateLeft: 'clamp',
+            extrapolateRight: 'clamp',
+          });
+    return (
+      <AbsoluteFill style={{backgroundColor: '#000'}}>
+        <AbsoluteFill style={{opacity}}>{children}</AbsoluteFill>
+      </AbsoluteFill>
+    );
+  },
+  props: {},
+});
+
 // Playful directional pushes — each cut comes from a different side so the
 // edit keeps moving (one from the bottom, the next from the side, ...).
 const SLIDE_DIRS = ['from-bottom', 'from-right', 'from-left', 'from-top'] as const;
 const presentationFor = (i: number): TransitionPresentation<Record<string, unknown>> => {
+  // intro → opening: a soft screen dim (not a cut).
+  if (i === 0) return dipToBlack();
   // opening → scene 2: the cinematic zoom-punch CUT (no fade/dim).
-  if (i === 0) return cut();
+  if (i === 1) return cut();
   return slide({direction: SLIDE_DIRS[i % SLIDE_DIRS.length]}) as TransitionPresentation<
     Record<string, unknown>
   >;

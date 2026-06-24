@@ -7,12 +7,14 @@ import {StickerBurst} from './StickerBurst';
 // component inside a Sequence can't read its own length from useVideoConfig.
 const FRAMES = 21 * 30;
 
-// The four reward values, kept as an elegant title beside the screens.
+// The four reward values, kept as an elegant title beside the screens. Each
+// appears in sync with the narration that names it (mg-screens local frames;
+// seg6 names them roughly at 11.5 / 14.3 / 18.4 / 20.9s → these local frames).
 const VALUES = [
-  {label: 'Living ZIM’s Core Values', color: '#3E6BD6'},
-  {label: 'Innovation and initiative', color: '#A56BE0'},
-  {label: 'Special Contribution', color: '#74B843'},
-  {label: 'Collaboration', color: '#F39A20'},
+  {label: 'Living ZIM’s Core Values', color: '#3E6BD6', at: 180},
+  {label: 'Innovation and initiative', color: '#A56BE0', at: 265},
+  {label: 'Special Contribution', color: '#74B843', at: 388},
+  {label: 'Collaboration', color: '#F39A20', at: 462},
 ];
 
 // On the VB-BG-1 brand background: the real KudoZ system screenshots play in a
@@ -36,10 +38,12 @@ export const ScreensShowcase: React.FC = () => {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
-  const ringD = interpolate(since, [0, 18], [14, 104], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const ringOp = interpolate(since, [0, 18], [0.7, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const cx = 64 + ((idx % 3) - 1) * 7; // %
-  const cy = 50 + (idx % 2 === 0 ? -7 : 7);
+  const ringD = interpolate(since, [0, 20], [12, 62], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const ringOp = interpolate(since, [0, 20], [0.4, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  // cursor rests over the frame and clicks gently on each change — subtle, in
+  // the background, never wandering to the middle of the screen
+  const cx = 66 + ((idx % 3) - 1) * 6; // %
+  const cy = 30 + (idx % 2 === 0 ? -5 : 5);
 
   const titleIn = spring({frame: frame - 6, fps, config: {damping: 16, mass: 0.9}});
   const frameIn = spring({frame: frame - 10, fps, config: {damping: 15, mass: 0.8}});
@@ -75,7 +79,7 @@ export const ScreensShowcase: React.FC = () => {
         </div>
         <div style={{marginTop: 34, display: 'flex', flexDirection: 'column', gap: 18}}>
           {VALUES.map((v, i) => {
-            const en = spring({frame: frame - 20 - i * 7, fps, config: {damping: 16, mass: 0.8}});
+            const en = spring({frame: frame - v.at, fps, config: {damping: 16, mass: 0.8}});
             return (
               <div
                 key={i}
@@ -104,14 +108,16 @@ export const ScreensShowcase: React.FC = () => {
         </div>
       </div>
 
-      {/* browser frame with the cycling screenshots */}
+      {/* browser frame with the cycling screenshots — kept high so it never
+          covers the gold KudoZ medal/Z in the lower-right of the background */}
       <div
         style={{
           position: 'absolute',
-          right: 80,
-          top: '50%',
-          width: 1060,
-          transform: `translateY(-50%) scale(${interpolate(frameIn, [0, 1], [0.92, 1])})`,
+          right: 88,
+          top: 64,
+          width: 1040,
+          transform: `scale(${interpolate(frameIn, [0, 1], [0.94, 1])})`,
+          transformOrigin: 'top right',
           opacity: frameIn,
           borderRadius: 16,
           overflow: 'hidden',
@@ -179,7 +185,7 @@ export const ScreensShowcase: React.FC = () => {
           width: ringD,
           height: ringD,
           borderRadius: '50%',
-          border: '4px solid rgba(255,196,46,0.95)',
+          border: '3px solid rgba(255,255,255,0.8)',
           transform: 'translate(-50%,-50%)',
           opacity: ringOp,
         }}
@@ -190,10 +196,11 @@ export const ScreensShowcase: React.FC = () => {
           left: `${cx}%`,
           top: `${cy}%`,
           transform: `translate(-8%,-6%) scale(${press})`,
-          filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.5))',
+          opacity: 0.85,
+          filter: 'drop-shadow(0 3px 6px rgba(0,0,0,0.4))',
         }}
       >
-        <svg width="44" height="44" viewBox="0 0 24 24">
+        <svg width="32" height="32" viewBox="0 0 24 24">
           <path d="M5 3l14 7-6 1.5L11 18 5 3z" fill="#fff" stroke="#0B1B3A" strokeWidth="1.6" strokeLinejoin="round" />
         </svg>
       </div>
