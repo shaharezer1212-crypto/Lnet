@@ -45,6 +45,13 @@ export const FOOTAGE_URL = '';
 // browser frame in the infographic section with an animated cursor click.
 export const STORE_URL = staticFile('store.jpg');
 
+// Infographic "screens showcase": the branded background + the nine system
+// screenshots, shown in the video in order 9 → 1.
+export const SCREENS_BG = staticFile('screens/VB-BG-1.jpg');
+export const SCREENS: string[] = [9, 8, 7, 6, 5, 4, 3, 2, 1].map((nnn) =>
+  staticFile(`screens/${nnn}screenshots.png`),
+);
+
 // Real KudoZ sticker artwork — background removed (transparent) — that
 // floats/pops around the MG scenes. Stickers #1, #4 and #8 were dropped
 // because their artwork was badly cropped; these five are the clean ones.
@@ -86,7 +93,7 @@ export type Beat =
       id: string;
       label: string;
       seconds: number;
-      mg: 'intro' | 'logo' | 'store' | 'criteria' | 'outro';
+      mg: 'intro' | 'logo' | 'store' | 'screens' | 'criteria' | 'outro';
       vo?: string;
       narration?: string;
       // Phased narration: staticFile path of the VO segment that STARTS here.
@@ -185,24 +192,16 @@ export const TIMELINE: Beat[] = [
     narr: 'narration/6.mp3',
     narration: 'Introducing KudoZ — ZIM’s new employee recognition system.',
   },
-  // ── Motion graphics 1b — the actual KudoZ store (screenshot + click) ─────
+  // ── Motion graphics 1b — the KudoZ system in action (screens showcase) ───
+  // On the VB-BG-1 brand background: the nine real system screenshots play in a
+  // designed browser frame with a clicking cursor (shown 9 → 1), with the four
+  // values kept as an elegant title alongside. Replaces the old criteria cards.
   {
     kind: 'mg',
-    id: 'mg-store',
-    label: 'MG · KudoZ store screenshot + cursor click',
-    seconds: 6,
-    mg: 'store',
-  },
-  // ── Motion graphics 2 — the four criteria ───────────────────────────────
-  {
-    kind: 'mg',
-    id: 'mg-criteria',
-    label: 'MG · four criteria',
-    seconds: 16, // infographic VO (logo+store+criteria) lands across these
-    mg: 'criteria',
-    vo: `${CDN}/hf_20260617_111113_e3b7a421-cc8e-449c-9eed-2b30eabb32c8.wav`,
-    narration:
-      'Managers can reward employees on four criteria: Core Values, Initiative and Innovation, Special Contribution, and Collaboration.',
+    id: 'mg-screens',
+    label: 'MG · KudoZ system screens (9→1) on VB-BG-1',
+    seconds: 21, // infographic VO (logo + screens) lands across these
+    mg: 'screens',
   },
   // ── Scene 5 — stickers swirl → gift boxes (single cinematic take) ────────
   {

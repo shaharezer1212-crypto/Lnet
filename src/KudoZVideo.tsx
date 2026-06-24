@@ -17,10 +17,18 @@ import {SceneTitle} from './mg/SceneTitle';
 import {Intro} from './mg/Intro';
 import {LogoReveal} from './mg/LogoReveal';
 import {StoreShowcase} from './mg/StoreShowcase';
+import {ScreensShowcase} from './mg/ScreensShowcase';
 import {Criteria} from './mg/Criteria';
 import {Outro} from './mg/Outro';
 
-const MG = {intro: Intro, logo: LogoReveal, store: StoreShowcase, criteria: Criteria, outro: Outro} as const;
+const MG = {
+  intro: Intro,
+  logo: LogoReveal,
+  store: StoreShowcase,
+  screens: ScreensShowcase,
+  criteria: Criteria,
+  outro: Outro,
+} as const;
 
 // A cinematic hard cut with a little energy: the outgoing shot plays to the
 // slot's midpoint, then we snap to the incoming shot which "punches in" with a
