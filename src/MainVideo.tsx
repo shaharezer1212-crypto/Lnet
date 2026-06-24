@@ -20,6 +20,7 @@ import {
 import { Opening } from "./Opening";
 import { Closing } from "./Closing";
 import { Title } from "./Title";
+import { FreezeScene } from "./FreezeScene";
 
 export const MainVideo: React.FC = () => {
   const { fps } = useVideoConfig();
@@ -47,20 +48,31 @@ export const MainVideo: React.FC = () => {
             <React.Fragment key={i}>
               <TransitionSeries.Sequence durationInFrames={dur}>
                 <AbsoluteFill style={{ backgroundColor: "black" }}>
-                  <OffthreadVideo
-                    src={staticFile(seg.clip)}
-                    muted={MUTE_CLIPS}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
+                  {seg.freeze ? (
+                    <FreezeScene
+                      src={staticFile(seg.clip)}
+                      durationInFrames={dur}
+                      muted={MUTE_CLIPS}
+                    />
+                  ) : (
+                    <OffthreadVideo
+                      src={staticFile(seg.clip)}
+                      muted={MUTE_CLIPS}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                  )}
                   {seg.title ? (
                     <Title data={seg.title} sceneDurationFrames={dur} />
                   ) : null}
                 </AbsoluteFill>
               </TransitionSeries.Sequence>
-              <TransitionSeries.Transition
-                presentation={fade()}
-                timing={linearTiming({ durationInFrames: transitionFrames })}
-              />
+              {/* hard cut right after the freeze ("TV unsticks"); else cross-fade */}
+              {seg.freeze ? null : (
+                <TransitionSeries.Transition
+                  presentation={fade()}
+                  timing={linearTiming({ durationInFrames: transitionFrames })}
+                />
+              )}
             </React.Fragment>
           );
         })}
