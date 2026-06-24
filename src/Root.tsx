@@ -9,20 +9,22 @@ import {
   HEIGHT,
   segments,
   OPENING_SECONDS,
+  CLOSING_SECONDS,
   TRANSITION_SECONDS,
 } from "./edit";
 
 const transitionFrames = Math.round(TRANSITION_SECONDS * FPS);
 const openingFrames = Math.round(OPENING_SECONDS * FPS);
+const closingFrames = Math.round(CLOSING_SECONDS * FPS);
 const segmentFrames = segments.reduce(
   (s, seg) => s + Math.round(seg.durationSeconds * FPS),
   0
 );
-// opening + N segments = (N+1) sequences => N transitions, each overlaps once
-const numTransitions = segments.length;
+// opening + N segments + closing = (N+2) sequences => (N+1) transitions
+const numTransitions = segments.length + 1;
 const totalFrames = Math.max(
   1,
-  openingFrames + segmentFrames - numTransitions * transitionFrames
+  openingFrames + segmentFrames + closingFrames - numTransitions * transitionFrames
 );
 
 export const RemotionRoot: React.FC = () => {

@@ -12,6 +12,14 @@ export const WIDTH = 1920;
 export const HEIGHT = 1080;
 export const TRANSITION_SECONDS = 0.5;
 
+// Clip audio is gibberish/ambient — mute every clip and use the master
+// narration as the single voice track.
+export const MUTE_CLIPS = true;
+
+// The continuous master voiceover (narration_1+2+3 concatenated, ~180s).
+// It starts when scene 1 begins (right after the opening logo card).
+export const NARRATION = "audio/narration_full.mp3";
+
 export type Title = {
   lines: string[]; // one or more lines (RTL Hebrew)
   accent?: string; // bar / accent color
@@ -40,7 +48,7 @@ export const segments: Segment[] = [
   { scene: 6, clip: "clips/presenter/presenter_2.mp4", durationSeconds: 3.73, title: { lines: ["בחיי אחראי לוגיסטי"], accent: A.orange } },
   { scene: 7, clip: "clips/scenes/scene_05.mp4", durationSeconds: 8.06, title: { lines: ["הנפקת ציוד"], accent: A.red } },
   { scene: 8, clip: "clips/scenes/scene_04.mp4", durationSeconds: 15.07, title: { lines: ["מעקב אחר הזמנות"], accent: A.blue } },
-  { scene: 9, clip: "clips/scenes/scene_09.mp4", durationSeconds: 6.06, title: { lines: ["קבלת סחורות"], accent: A.leaf } },
+  { scene: 9, clip: "clips/scenes/scene_03.mp4", durationSeconds: 15.07, title: { lines: ["קבלת סחורות"], accent: A.leaf } },
   { scene: 10, clip: "clips/presenter/presenter_3.mp4", durationSeconds: 9.33, note: "דר 3" },
   { scene: 11, clip: "clips/scenes/scene_08.mp4", durationSeconds: 15.07, title: { lines: ["סיור באתר", "טבלאות מעקב"], accent: A.orange } },
   { scene: 12, clip: "clips/scenes/scene_10.mp4", durationSeconds: 7.04, title: { lines: ["ההתארגנות"], accent: A.pink } },
@@ -49,7 +57,8 @@ export const segments: Segment[] = [
   { scene: 15, clip: "clips/presenter/presenter_6.mp4", durationSeconds: 7.2, title: { lines: ["מענה מהיר", "פתרון בעיות", "קור רוח"], accent: A.red, rotate: true } },
   { scene: 16, clip: "clips/presenter/presenter_7.mp4", durationSeconds: 3.73, note: "דר 7 — משקפת" },
   { scene: 17, clip: "clips/scenes/scene_11.mp4", durationSeconds: 10.05, title: { lines: ["תראו את הנולד"], accent: A.blue } },
-  { scene: 18, clip: "clips/scenes/scene_03.mp4", durationSeconds: 15.07, title: { lines: ["ברוכים הבאים", "ובהצלחה"], accent: A.leaf }, note: "סיום" },
+  { scene: 18, clip: "clips/scenes/scene_09.mp4", durationSeconds: 6.06, note: "סיום — מכולה/ציוד עולה במנוף" },
 ];
 
 export const OPENING_SECONDS = 4;
+export const CLOSING_SECONDS = 6;

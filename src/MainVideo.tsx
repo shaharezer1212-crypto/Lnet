@@ -1,20 +1,33 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
   OffthreadVideo,
+  Sequence,
   staticFile,
   useVideoConfig,
 } from "remotion";
 import { TransitionSeries, linearTiming } from "@remotion/transitions";
 import { fade } from "@remotion/transitions/fade";
-import { segments, OPENING_SECONDS, TRANSITION_SECONDS } from "./edit";
+import {
+  segments,
+  OPENING_SECONDS,
+  CLOSING_SECONDS,
+  TRANSITION_SECONDS,
+  MUTE_CLIPS,
+  NARRATION,
+} from "./edit";
 import { Opening } from "./Opening";
+import { Closing } from "./Closing";
 import { Title } from "./Title";
 
 export const MainVideo: React.FC = () => {
   const { fps } = useVideoConfig();
   const transitionFrames = Math.round(TRANSITION_SECONDS * fps);
   const openingFrames = Math.round(OPENING_SECONDS * fps);
+
+  // Scene 1 begins right after the opening card (the transition overlaps it).
+  const narrationStart = Math.max(0, openingFrames - transitionFrames);
 
   return (
     <AbsoluteFill style={{ backgroundColor: "black" }}>
@@ -36,6 +49,7 @@ export const MainVideo: React.FC = () => {
                 <AbsoluteFill style={{ backgroundColor: "black" }}>
                   <OffthreadVideo
                     src={staticFile(seg.clip)}
+                    muted={MUTE_CLIPS}
                     style={{ width: "100%", height: "100%", objectFit: "cover" }}
                   />
                   {seg.title ? (
@@ -43,16 +57,24 @@ export const MainVideo: React.FC = () => {
                   ) : null}
                 </AbsoluteFill>
               </TransitionSeries.Sequence>
-              {i < segments.length - 1 ? (
-                <TransitionSeries.Transition
-                  presentation={fade()}
-                  timing={linearTiming({ durationInFrames: transitionFrames })}
-                />
-              ) : null}
+              <TransitionSeries.Transition
+                presentation={fade()}
+                timing={linearTiming({ durationInFrames: transitionFrames })}
+              />
             </React.Fragment>
           );
         })}
+
+        {/* Closing logo card */}
+        <TransitionSeries.Sequence durationInFrames={Math.round(CLOSING_SECONDS * fps)}>
+          <Closing />
+        </TransitionSeries.Sequence>
       </TransitionSeries>
+
+      {/* Master narration — the single continuous voice track */}
+      <Sequence from={narrationStart}>
+        <Audio src={staticFile(NARRATION)} />
+      </Sequence>
     </AbsoluteFill>
   );
 };
