@@ -1,7 +1,7 @@
 import {AbsoluteFill, Img, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {COLORS, FONT} from '../theme';
 import {BrandStage, Confetti, ShineText, ShockwaveRing} from './fx';
-import {LOGO_URL, SCREENS_BG} from '../clips';
+import {LOGO_WHITE_URL, SCREENS_BG} from '../clips';
 
 // Closing KudoZ wordmark + tagline on the navy stage: the logo lands gently
 // inside a soft glowing halo (emphasis, no white box), with a confetti burst
@@ -30,7 +30,7 @@ export const Outro: React.FC = () => {
         <ShockwaveRing at={6} max={1100} />
         <Confetti at={6} />
 
-        {/* soft white→gold HALO behind the logo */}
+        {/* soft gold bloom (no white core) so the white wordmark reads on top */}
         <div
           style={{
             position: 'absolute',
@@ -39,8 +39,8 @@ export const Outro: React.FC = () => {
             height: 720,
             borderRadius: '50%',
             transform: `translateY(-50%) scale(${interpolate(haloIn, [0, 1], [0.6, 1])})`,
-            background: `radial-gradient(ellipse at center, rgba(255,255,255,${0.92 * haloIn}) 0%, rgba(255,238,188,${0.6 * haloIn}) 26%, rgba(255,196,46,${0.3 * haloIn}) 46%, rgba(255,196,46,0) 70%)`,
-            filter: 'blur(34px)',
+            background: `radial-gradient(ellipse at center, rgba(255,200,70,${0.5 * haloIn}) 0%, rgba(255,168,38,${0.4 * haloIn}) 32%, rgba(255,140,20,${0.16 * haloIn}) 52%, rgba(255,140,20,0) 72%)`,
+            filter: 'blur(38px)',
             opacity: haloPulse,
           }}
         />
@@ -54,13 +54,13 @@ export const Outro: React.FC = () => {
             }}
           >
             <Img
-              src={LOGO_URL}
+              src={LOGO_WHITE_URL}
               style={{
                 width: logoW,
                 maxHeight: 420,
                 objectFit: 'contain',
                 display: 'block',
-                filter: 'drop-shadow(0 18px 40px rgba(0,0,0,0.3))',
+                filter: 'drop-shadow(0 16px 38px rgba(0,0,0,0.55))',
               }}
             />
           </div>

@@ -18,6 +18,7 @@ import {Intro} from './mg/Intro';
 import {LogoReveal} from './mg/LogoReveal';
 import {StoreShowcase} from './mg/StoreShowcase';
 import {ScreensShowcase} from './mg/ScreensShowcase';
+import {StoreScreens} from './mg/StoreScreens';
 import {Criteria} from './mg/Criteria';
 import {Outro} from './mg/Outro';
 
@@ -26,6 +27,7 @@ const MG = {
   logo: LogoReveal,
   store: StoreShowcase,
   screens: ScreensShowcase,
+  storescreens: StoreScreens,
   criteria: Criteria,
   outro: Outro,
 } as const;
@@ -76,6 +78,17 @@ const dipToBlack = (): TransitionPresentation<Record<string, unknown>> => ({
   props: {},
 });
 
+// A simple cross-dissolve — used between the two blue brand screens (the system
+// screens → the online-store pause) where a directional slide would look odd.
+const dissolve = (): TransitionPresentation<Record<string, unknown>> => ({
+  component: ({presentationProgress, presentationDirection, children}) => {
+    const opacity =
+      presentationDirection === 'entering' ? presentationProgress : 1 - presentationProgress;
+    return <AbsoluteFill style={{opacity}}>{children}</AbsoluteFill>;
+  },
+  props: {},
+});
+
 // Playful directional pushes — each cut comes from a different side so the
 // edit keeps moving (one from the bottom, the next from the side, ...).
 const SLIDE_DIRS = ['from-bottom', 'from-right', 'from-left', 'from-top'] as const;
@@ -84,6 +97,8 @@ const presentationFor = (i: number): TransitionPresentation<Record<string, unkno
   if (i === 0) return dipToBlack();
   // opening → scene 2: the cinematic zoom-punch CUT (no fade/dim).
   if (i === 1) return cut();
+  // the system screens → online-store pause: both blue, so cross-dissolve.
+  if (TIMELINE[i].id === 'mg-screens') return dissolve();
   return slide({direction: SLIDE_DIRS[i % SLIDE_DIRS.length]}) as TransitionPresentation<
     Record<string, unknown>
   >;
@@ -140,6 +155,8 @@ export const KudoZVideo: React.FC = () => {
                     frames={sec(beat.seconds)}
                     position={beat.titlePos}
                     startAt={beat.titleStart}
+                    emphasize={beat.titleEmphasis}
+                    angled={beat.titleAngled}
                   />
                 ) : null}
               </>

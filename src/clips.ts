@@ -37,6 +37,9 @@ export const NARRATION_VOLUME = 1.0;
 // to the repo so the renderer can always load it; shown on the navy stage
 // inside a soft glowing halo so it reads cleanly without any white box.
 export const LOGO_URL = staticFile('logo.png');
+// All-white KudoZ wordmark — used on the blue brand background in the logo
+// moments (reads cleanly on the image without relying on a bright halo).
+export const LOGO_WHITE_URL = staticFile('logo-white.png');
 // B-roll of the work environment, shown in the system/values section.
 // Empty → a labelled placeholder panel is shown instead.
 export const FOOTAGE_URL = '';
@@ -82,6 +85,10 @@ export type Beat =
       titlePos?: 'bottom' | 'left';
       // Frame at which the title animates in (defaults to 8).
       titleStart?: number;
+      // Number of trailing words rendered large + coloured (the hero phrase).
+      titleEmphasis?: number;
+      // Project the title onto the scene's wall in perspective (angled).
+      titleAngled?: boolean;
       // Optional slow-motion: <1 plays the clip slower, stretching it to fill
       // a longer beat (e.g. a 15s take played over ~20s).
       playbackRate?: number;
@@ -93,7 +100,7 @@ export type Beat =
       id: string;
       label: string;
       seconds: number;
-      mg: 'intro' | 'logo' | 'store' | 'screens' | 'criteria' | 'outro';
+      mg: 'intro' | 'logo' | 'store' | 'screens' | 'storescreens' | 'criteria' | 'outro';
       vo?: string;
       narration?: string;
       // Phased narration: staticFile path of the VO segment that STARTS here.
@@ -139,13 +146,14 @@ export const TIMELINE: Beat[] = [
     narration: 'Here at ZIM, we love showing our appreciation.',
     narr: 'narration/2.mp3',
     title: 'showing our appreciation',
+    titleEmphasis: 1,
   },
   // ── Scene 3 — corridor cheer ────────────────────────────────────────────
   {
     kind: 'clip',
     id: 's3',
     label: 'S3 · corridor · colleague "like" → close-up smile (chosen take)',
-    seconds: 6,
+    seconds: 4.5, // trimmed — the walk + close-up was running long
     jobId: '24e25606-3a4a-4c73-87f2-4a0159876fb3',
     url: `${CDN}/hf_20260617_121627_24e25606-3a4a-4c73-87f2-4a0159876fb3.mp4`,
     volume: 0, // mute the colleague's diegetic SFX in the corridor
@@ -155,6 +163,8 @@ export const TIMELINE: Beat[] = [
     title: 'Putting in a good word',
     titlePos: 'left',
     titleStart: 6, // synced to the spoken line (no lead silence in the VO)
+    titleEmphasis: 2, // "good word" rendered large
+    titleAngled: true, // projected on the corridor wall in perspective
   },
   // ── Scene 4 — recognitions at the desk ──────────────────────────────────
   {
@@ -202,6 +212,15 @@ export const TIMELINE: Beat[] = [
     label: 'MG · KudoZ system screens (9→1) on VB-BG-1',
     seconds: 21, // infographic VO (logo + screens) lands across these
     mg: 'screens',
+  },
+  // ── Online-store pause — a breath on the blue screen showing the virtual
+  // mall (store screenshots) with music only, before the gifts scene ───────
+  {
+    kind: 'mg',
+    id: 'mg-store',
+    label: 'MG · online store pause (virtual mall, music only)',
+    seconds: 4.5,
+    mg: 'storescreens',
   },
   // ── Scene 5 — stickers swirl → gift boxes (single cinematic take) ────────
   {
