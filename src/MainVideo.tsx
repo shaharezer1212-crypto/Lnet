@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  interpolate,
   OffthreadVideo,
   Sequence,
   staticFile,
@@ -16,6 +17,10 @@ import {
   TRANSITION_SECONDS,
   MUTE_CLIPS,
   NARRATION,
+  MUSIC_INTRO,
+  MUSIC_BODY,
+  MUSIC_DUCK,
+  MUSIC_OPEN,
 } from "./edit";
 import { Opening } from "./Opening";
 import { Closing } from "./Closing";
@@ -29,6 +34,48 @@ export const MainVideo: React.FC = () => {
 
   // Scene 1 begins right after the opening card (the transition overlaps it).
   const narrationStart = Math.max(0, openingFrames - transitionFrames);
+  const freezeFrames = Math.round(0.85 * fps);
+
+  // Walk the timeline (opening + segments + closing) to find absolute frames.
+  // A cross-fade overlaps consecutive items, except after a freeze (hard cut).
+  const children = [
+    { dur: openingFrames, freeze: false },
+    ...segments.map((s) => ({ dur: Math.round(s.durationSeconds * fps), freeze: !!s.freeze })),
+    { dur: Math.round(CLOSING_SECONDS * fps), freeze: false },
+  ];
+  const starts: number[] = [];
+  let cur = 0;
+  for (let i = 0; i < children.length; i++) {
+    starts.push(cur);
+    const hasTransitionAfter = i < children.length - 1 && !children[i].freeze;
+    cur += children[i].dur - (hasTransitionAfter ? transitionFrames : 0);
+  }
+  const totalFrames = starts[children.length - 1] + children[children.length - 1].dur;
+
+  // The freeze segment's end = where the music switches (First Date → Up).
+  const freezeIdx = segments.findIndex((s) => s.freeze);
+  const freezeChild = freezeIdx >= 0 ? freezeIdx + 1 : 1;
+  const freezeEnd = starts[freezeChild] + children[freezeChild].dur;
+  const freezeStart = freezeEnd - freezeFrames;
+
+  // First Date: loud intro → duck under narration → cut at the freeze.
+  const introVol = (f: number) =>
+    interpolate(
+      f,
+      [0, narrationStart - 8, narrationStart + 12, freezeStart - 16, freezeStart],
+      [MUSIC_OPEN, MUSIC_OPEN, MUSIC_DUCK, MUSIC_DUCK, 0],
+      { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+    );
+
+  // Up: fade in after the freeze, ducked, fade out at the very end.
+  const upLen = totalFrames - freezeEnd;
+  const bodyVol = (f: number) =>
+    interpolate(
+      f,
+      [0, 14, upLen - 40, upLen],
+      [0, MUSIC_DUCK, MUSIC_DUCK, 0],
+      { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+    );
 
   return (
     <AbsoluteFill style={{ backgroundColor: "black" }}>
@@ -86,6 +133,12 @@ export const MainVideo: React.FC = () => {
       {/* Master narration — the single continuous voice track */}
       <Sequence from={narrationStart}>
         <Audio src={staticFile(NARRATION)} />
+      </Sequence>
+
+      {/* Background music: First Date (intro) cuts at the freeze, Up takes over */}
+      <Audio src={staticFile(MUSIC_INTRO)} volume={introVol} />
+      <Sequence from={freezeEnd}>
+        <Audio src={staticFile(MUSIC_BODY)} volume={bodyVol} />
       </Sequence>
     </AbsoluteFill>
   );

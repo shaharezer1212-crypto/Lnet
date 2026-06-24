@@ -20,6 +20,13 @@ export const MUTE_CLIPS = true;
 // It starts when scene 1 begins (right after the opening logo card).
 export const NARRATION = "audio/narration_full.mp3";
 
+// Background music: "First Date" plays the calm intro and cuts out at the
+// freeze; "Up" takes over (rhythmic) for the rest. Both duck under narration.
+export const MUSIC_INTRO = "audio/music/first_date.mp3";
+export const MUSIC_BODY = "audio/music/up.mp3";
+export const MUSIC_DUCK = 0.16; // level under narration
+export const MUSIC_OPEN = 0.42; // level during the opening (no narration yet)
+
 export type Title = {
   lines: string[]; // one or more lines (RTL Hebrew)
   accent?: string; // bar / accent color
