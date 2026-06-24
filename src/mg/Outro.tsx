@@ -1,7 +1,7 @@
 import {AbsoluteFill, Img, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {COLORS, FONT} from '../theme';
-import {Confetti, ShineText, ShockwaveRing, Stage} from './fx';
-import {LOGO_URL} from '../clips';
+import {BrandStage, Confetti, ShineText, ShockwaveRing} from './fx';
+import {LOGO_URL, SCREENS_BG} from '../clips';
 
 // Closing KudoZ wordmark + tagline on the navy stage: the logo lands gently
 // inside a soft glowing halo (emphasis, no white box), with a confetti burst
@@ -25,7 +25,7 @@ export const Outro: React.FC = () => {
   const logoW = 980;
 
   return (
-    <Stage bokehSeed="outro">
+    <BrandStage bg={SCREENS_BG} bokehSeed="outro">
       <AbsoluteFill style={{fontFamily: FONT, alignItems: 'center', justifyContent: 'center'}}>
         <ShockwaveRing at={6} max={1100} />
         <Confetti at={6} />
@@ -81,6 +81,6 @@ export const Outro: React.FC = () => {
           </div>
         </div>
       </AbsoluteFill>
-    </Stage>
+    </BrandStage>
   );
 };

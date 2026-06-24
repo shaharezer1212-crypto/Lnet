@@ -1,7 +1,7 @@
 import {AbsoluteFill, Img, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {FONT} from '../theme';
-import {ShockwaveRing, Stage} from './fx';
-import {LOGO_URL} from '../clips';
+import {BrandStage, ShockwaveRing} from './fx';
+import {LOGO_URL, SCREENS_BG} from '../clips';
 
 // Opening brand sting: the KudoZ logo lands on the navy stage inside a soft
 // glowing halo, a glint sweeps across, then it settles — a clean intro before
@@ -24,7 +24,7 @@ export const Intro: React.FC = () => {
   });
 
   return (
-    <Stage bokehSeed="intro">
+    <BrandStage bg={SCREENS_BG} bokehSeed="intro">
       <AbsoluteFill style={{fontFamily: FONT, alignItems: 'center', justifyContent: 'center'}}>
         <ShockwaveRing at={10} />
 
@@ -78,6 +78,6 @@ export const Intro: React.FC = () => {
           </AbsoluteFill>
         </div>
       </AbsoluteFill>
-    </Stage>
+    </BrandStage>
   );
 };

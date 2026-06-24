@@ -1,4 +1,4 @@
-import {AbsoluteFill, interpolate, random, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Img, interpolate, random, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 
 // ──────────────────────────────────────────────────────────────────────────
 // Shared cinematic FX primitives for the Motion-Graphics beats.
@@ -253,6 +253,37 @@ export const Stage: React.FC<{children: React.ReactNode; bokehSeed?: string}> = 
         <Bokeh seed={bokehSeed} />
         {children}
         <Vignette />
+      </AbsoluteFill>
+    </AbsoluteFill>
+  );
+};
+
+// Brand-image stage: the same drifting, breathing treatment as `Stage`, but the
+// backdrop is the real KudoZ brand background (VB-BG-1) instead of the flat navy
+// gradient — used behind the logo in the intro / logo-reveal / outro. A soft
+// dark scrim keeps the bright halo + wordmark popping over the busy image.
+export const BrandStage: React.FC<{children: React.ReactNode; bg: string; bokehSeed?: string}> = ({
+  children,
+  bg,
+  bokehSeed = 'kudoz',
+}) => {
+  const frame = useCurrentFrame();
+  const {fps} = useVideoConfig();
+  const drift = spring({frame, fps, config: {damping: 200, mass: 3}, durationInFrames: 120});
+  const scale = interpolate(drift, [0, 1], [1.07, 1]);
+  return (
+    <AbsoluteFill style={{background: '#06245A', overflow: 'hidden'}}>
+      <AbsoluteFill style={{transform: `scale(${scale})`}}>
+        <Img src={bg} style={{position: 'absolute', width: '100%', height: '100%', objectFit: 'cover'}} />
+        <AbsoluteFill
+          style={{
+            background:
+              'radial-gradient(circle at 50% 46%, rgba(3,19,46,0.22) 0%, rgba(3,19,46,0.6) 100%)',
+          }}
+        />
+        <Bokeh seed={bokehSeed} count={12} />
+        {children}
+        <Vignette strength={0.5} />
       </AbsoluteFill>
     </AbsoluteFill>
   );
