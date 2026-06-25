@@ -26,8 +26,22 @@ jobs:
       - name: Render video
         run: npm run render
 
+      - name: Render clean plate (no added text, white screenshots)
+        run: npm run render:clean
+
+      - name: Download background music (separate file)
+        run: |
+          mkdir -p out
+          curl -sS -L --retry 4 --retry-delay 2 \
+            -o out/kudoz-music.m4a \
+            "https://d8j0ntlcm91z4.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC/hf_20260618_073734_ab535d97-c8a5-4a92-a397-b558551d91f3.m4a"
+          ls -la out/
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: kudoz-video
-          path: out/kudoz.mp4
+          path: |
+            out/kudoz.mp4
+            out/kudoz-clean.mp4
+            out/kudoz-music.m4a

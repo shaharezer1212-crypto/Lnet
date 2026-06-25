@@ -12,6 +12,7 @@ import {
   CLIP_VOLUME,
 } from './clips';
 import {Clip} from './Clip';
+import {CleanContext} from './clean';
 import {Narration} from './Narration';
 import {SceneTitle} from './mg/SceneTitle';
 import {Intro} from './mg/Intro';
@@ -130,14 +131,20 @@ const BlackFades: React.FC = () => {
   );
 };
 
-export const KudoZVideo: React.FC = () => {
+export const KudoZVideo: React.FC<{clean?: boolean}> = ({clean = false}) => {
   return (
+    <CleanContext.Provider value={clean}>
     <AbsoluteFill style={{background: '#000'}}>
       <TransitionSeries>
         {TIMELINE.flatMap((beat, i) => {
           const Segment =
             beat.kind === 'mg' ? (
               (() => {
+                // Clean plate: the screenshots sections (system screens + the
+                // online-store pause) become a plain white screen.
+                if (clean && (beat.mg === 'screens' || beat.mg === 'storescreens')) {
+                  return <AbsoluteFill style={{background: '#fff'}} />;
+                }
                 const Comp = MG[beat.mg];
                 return <Comp />;
               })()
@@ -149,7 +156,7 @@ export const KudoZVideo: React.FC = () => {
                   volume={beat.volume ?? CLIP_VOLUME}
                   playbackRate={beat.playbackRate}
                 />
-                {beat.title ? (
+                {beat.title && !clean ? (
                   <SceneTitle
                     text={beat.title}
                     frames={sec(beat.seconds)}
@@ -185,5 +192,6 @@ export const KudoZVideo: React.FC = () => {
       <Narration />
       <BlackFades />
     </AbsoluteFill>
+    </CleanContext.Provider>
   );
 };

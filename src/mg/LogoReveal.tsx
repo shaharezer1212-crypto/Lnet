@@ -3,6 +3,7 @@ import {COLORS, FONT} from '../theme';
 import {StickerBurst} from './StickerBurst';
 import {BrandStage, ShineText, ShockwaveRing} from './fx';
 import {LOGO_WHITE_URL, SCREENS_BG} from '../clips';
+import {useClean} from '../clean';
 
 // Cinematic reveal of the KudoZ wordmark on the deep-navy stage. Because the
 // "Kudo" lettering is navy, the logo sits inside a soft glowing white/gold HALO
@@ -11,6 +12,7 @@ import {LOGO_WHITE_URL, SCREENS_BG} from '../clips';
 export const LogoReveal: React.FC = () => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
+  const clean = useClean();
 
   const pop = spring({frame, fps, config: {damping: 12, mass: 0.9}});
   const scale = interpolate(pop, [0, 1], [1.5, 1]); // wide wordmark → settle
@@ -36,6 +38,7 @@ export const LogoReveal: React.FC = () => {
     <BrandStage bg={SCREENS_BG} bokehSeed="logo">
       <AbsoluteFill style={{fontFamily: FONT, alignItems: 'center', justifyContent: 'center'}}>
         {/* INTRODUCING kicker with animated underline */}
+        {!clean ? (
         <div
           style={{
             position: 'absolute',
@@ -64,6 +67,7 @@ export const LogoReveal: React.FC = () => {
             }}
           />
         </div>
+        ) : null}
 
         <ShockwaveRing at={8} />
 
@@ -118,6 +122,7 @@ export const LogoReveal: React.FC = () => {
         </div>
 
         {/* subtitle — enlarged and lifted higher */}
+        {!clean ? (
         <div
           style={{
             position: 'absolute',
@@ -134,6 +139,7 @@ export const LogoReveal: React.FC = () => {
         >
           ZIM’s new employee recognition system
         </div>
+        ) : null}
 
         <StickerBurst frames={180} startAt={16} count={3} size={250} />
       </AbsoluteFill>

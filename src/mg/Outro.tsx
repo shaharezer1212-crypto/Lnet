@@ -2,6 +2,7 @@ import {AbsoluteFill, Img, interpolate, spring, useCurrentFrame, useVideoConfig}
 import {COLORS, FONT} from '../theme';
 import {BrandStage, Confetti, ShineText, ShockwaveRing} from './fx';
 import {LOGO_WHITE_URL, SCREENS_BG} from '../clips';
+import {useClean} from '../clean';
 
 // Closing KudoZ wordmark + tagline on the navy stage: the logo lands gently
 // inside a soft glowing halo (emphasis, no white box), with a confetti burst
@@ -10,6 +11,7 @@ export const Outro: React.FC = () => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
 
+  const clean = useClean();
   const pop = spring({frame, fps, config: {damping: 16, mass: 0.8}});
   const scale = interpolate(pop, [0, 1], [0.75, 1]);
   const swing = Math.sin((frame / fps) * 1.4) * 1.2;
@@ -64,21 +66,25 @@ export const Outro: React.FC = () => {
               }}
             />
           </div>
-          <div
-            style={{
-              height: 4,
-              width: lineWidth,
-              background: COLORS.yellow,
-              margin: '30px auto 0',
-              borderRadius: 4,
-              boxShadow: `0 0 16px ${COLORS.yellow}`,
-            }}
-          />
-          <div style={{fontSize: 44, marginTop: 24, opacity: lineFade, fontWeight: 700}}>
-            <ShineText base="#fff" highlight="rgba(255,196,46,0.95)" period={100}>
-              Where appreciation becomes culture
-            </ShineText>
-          </div>
+          {!clean ? (
+            <>
+              <div
+                style={{
+                  height: 4,
+                  width: lineWidth,
+                  background: COLORS.yellow,
+                  margin: '30px auto 0',
+                  borderRadius: 4,
+                  boxShadow: `0 0 16px ${COLORS.yellow}`,
+                }}
+              />
+              <div style={{fontSize: 44, marginTop: 24, opacity: lineFade, fontWeight: 700}}>
+                <ShineText base="#fff" highlight="rgba(255,196,46,0.95)" period={100}>
+                  Where appreciation becomes culture
+                </ShineText>
+              </div>
+            </>
+          ) : null}
         </div>
       </AbsoluteFill>
     </BrandStage>
