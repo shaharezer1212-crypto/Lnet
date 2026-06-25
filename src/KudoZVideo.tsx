@@ -141,9 +141,10 @@ export const KudoZVideo: React.FC<{clean?: boolean}> = ({clean = false}) => {
           const Segment =
             beat.kind === 'mg' ? (
               (() => {
-                // Clean plate: the screenshots sections (system screens + the
-                // online-store pause) become a plain white screen.
-                if (clean && (beat.mg === 'screens' || beat.mg === 'storescreens')) {
+                // Clean plate: every motion-graphics beat (logo intro, system
+                // screens, store pause, logo reveal, outro) becomes a plain
+                // white screen — only the AI scenes, narration and music remain.
+                if (clean) {
                   return <AbsoluteFill style={{background: '#fff'}} />;
                 }
                 const Comp = MG[beat.mg];
