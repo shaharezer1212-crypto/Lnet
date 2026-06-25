@@ -12,6 +12,7 @@ import {
   CLIP_VOLUME,
 } from './clips';
 import {Clip} from './Clip';
+import {Opening} from './mg/Opening';
 import {CleanContext} from './clean';
 import {Narration} from './Narration';
 import {SceneTitle} from './mg/SceneTitle';
@@ -148,6 +149,8 @@ export const KudoZVideo: React.FC<{clean?: boolean}> = ({clean = false}) => {
                 const Comp = MG[beat.mg];
                 return <Comp />;
               })()
+            ) : beat.id === 'opening' ? (
+              <Opening />
             ) : (
               <>
                 <Clip

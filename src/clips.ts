@@ -44,6 +44,12 @@ export const LOGO_WHITE_URL = staticFile('logo-white.png');
 // Empty → a labelled placeholder panel is shown instead.
 export const FOOTAGE_URL = '';
 
+// Client's new opening clip (top-down → man's alert → reveal → woman's alert),
+// 15s. Its final frame is held with a gentle push-in so the ~20s opening VO
+// finishes over it — no slow-motion, no narration overlap.
+export const OPENING_URL = staticFile('opening.mp4');
+export const OPENING_HOLD = staticFile('opening-hold.jpg');
+
 // Real screenshot of the KudoZ store (committed to the repo), shown in a
 // browser frame in the infographic section with an animated cursor click.
 export const STORE_URL = staticFile('store.jpg');
@@ -125,8 +131,8 @@ export const TIMELINE: Beat[] = [
   {
     kind: 'clip',
     id: 'opening',
-    label: 'S1 · client-edited opening (21.1s)',
-    seconds: 21.1,
+    label: 'S1 · client new opening (15s clip + held final frame)',
+    seconds: 21,
     volume: 0,
     jobId: 'client-edit',
     url: staticFile('opening.mp4'),
