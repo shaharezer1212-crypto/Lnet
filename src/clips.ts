@@ -214,12 +214,14 @@ export const TIMELINE: Beat[] = [
     mg: 'screens',
   },
   // ── Online-store pause — a breath on the blue screen showing the virtual
-  // mall (store screenshots) with music only, before the gifts scene ───────
+  // mall (store screenshots) with music only, before the gifts scene. In the
+  // clean plate this is a white screen, giving ~5s of music-only white after
+  // the narration's closing "…by sending e-thanks to each other" line ───────
   {
     kind: 'mg',
     id: 'mg-store',
     label: 'MG · online store pause (virtual mall, music only)',
-    seconds: 4.5,
+    seconds: 5.5,
     mg: 'storescreens',
   },
   // ── Scene 5 — stickers swirl → gift boxes (single cinematic take) ────────

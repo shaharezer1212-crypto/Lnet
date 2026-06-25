@@ -7,7 +7,7 @@ import {StickerBurst} from './StickerBurst';
 // virtual mall) shown big in the browser frame, music only, no narration —
 // a beat to take in the shop before the gifts scene. SCREENS indices:
 // 8 = store home / categories, 7 = sale products, 6 = points dashboard.
-const FRAMES = Math.round(4.5 * 30);
+const FRAMES = Math.round(5.5 * 30);
 
 const SHOTS = [
   {idx: 6, at: 8}, // "explore, shop, redeem" points dashboard
