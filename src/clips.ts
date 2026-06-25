@@ -159,7 +159,7 @@ export const TIMELINE: Beat[] = [
     kind: 'clip',
     id: 's3',
     label: 'S3 · corridor · colleague "like" → close-up smile (chosen take)',
-    seconds: 4.5, // trimmed — the walk + close-up was running long
+    seconds: 3, // trimmed again — the slow close-up on her at the end was cut
     jobId: '24e25606-3a4a-4c73-87f2-4a0159876fb3',
     url: `${CDN}/hf_20260617_121627_24e25606-3a4a-4c73-87f2-4a0159876fb3.mp4`,
     volume: 0, // mute the colleague's diegetic SFX in the corridor
