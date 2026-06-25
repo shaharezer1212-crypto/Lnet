@@ -2,11 +2,12 @@ import {AbsoluteFill, Img, OffthreadVideo, Sequence, interpolate, useCurrentFram
 import {OPENING_URL, OPENING_HOLD} from '../clips';
 
 // The client's new opening: a 15s clip (top-down → the man's alert → reveal →
-// the woman's alert). The footage is only 15s but the opening narration runs
-// ~20.3s, and slow-motion is unwanted — so the footage plays at 1x and its
-// final frame is held with a gentle cinematic push-in that begins just before
-// the cut, masking the freeze while the voice-over finishes.
-const VIDEO_FRAMES = 447; // ~14.9s @ 30fps — matches the extracted hold frame
+// the woman's alert). Played slightly fast (1.4x) for a punchier pace so the
+// woman's recognition lands earlier — by the time the VO reaches "recognition"
+// she is already being recognised. Its final frame is then held with a gentle
+// cinematic push-in while the ~20s opening narration finishes (no slow-motion).
+const PLAYBACK = 1.4;
+const VIDEO_FRAMES = Math.round((15.069 / PLAYBACK) * 30); // sped clip end (~323f)
 
 export const Opening: React.FC = () => {
   const frame = useCurrentFrame();
@@ -32,6 +33,7 @@ export const Opening: React.FC = () => {
           <OffthreadVideo
             src={OPENING_URL}
             muted
+            playbackRate={PLAYBACK}
             style={{position: 'absolute', width: '100%', height: '100%', objectFit: 'cover'}}
           />
         </Sequence>
