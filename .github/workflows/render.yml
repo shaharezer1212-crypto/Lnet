@@ -6,29 +6,52 @@ on:
       - claude/kind-hopper-hnf487
   workflow_dispatch:
 
+# A new push cancels any render still in progress for this branch, so the
+# latest commit gets a runner immediately instead of queueing behind stale runs.
+concurrency:
+  group: render-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  render:
+  # Full edit and the clean plate render in parallel on separate runners, so the
+  # wall-clock is ~one 4K render instead of two back-to-back.
+  main:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: claude/kind-hopper-hnf487
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Render video
+      - run: npm install
+      - name: Render full video
         run: npm run render
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kudoz-main
+          path: out/kudoz.mp4
 
-      - name: Render clean plate (no added text, white screenshots)
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/kind-hopper-hnf487
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - name: Render clean plate (no added text, white graphics beats)
         run: npm run render:clean
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kudoz-clean
+          path: out/kudoz-clean.mp4
 
+  music:
+    runs-on: ubuntu-latest
+    steps:
       - name: Download background music (separate file)
         run: |
           mkdir -p out
@@ -36,12 +59,7 @@ jobs:
             -o out/kudoz-music.m4a \
             "https://d8j0ntlcm91z4.cloudfront.net/user_2was4m5nNqvV4UXqUb4RJpsZmoC/hf_20260618_073734_ab535d97-c8a5-4a92-a397-b558551d91f3.m4a"
           ls -la out/
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
-          name: kudoz-video
-          path: |
-            out/kudoz.mp4
-            out/kudoz-clean.mp4
-            out/kudoz-music.m4a
+          name: kudoz-music
+          path: out/kudoz-music.m4a
