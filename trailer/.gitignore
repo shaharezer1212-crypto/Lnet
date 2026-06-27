@@ -3,3 +3,5 @@ audio/_work/
 clips/_thumbs/
 render/frames/
 render/webm/
+render/mp4/*_check.png
+_shot.mjs
