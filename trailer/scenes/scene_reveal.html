@@ -1,0 +1,47 @@
+<!doctype html><html lang="he"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../frames/base.css">
+<style>
+  body{background:var(--pink)}
+  .pop{opacity:0;transform:scale(.2) rotate(var(--r,0deg));
+    animation:pop .6s cubic-bezier(.2,1.5,.4,1) forwards;animation-delay:var(--d,0s)}
+  @keyframes pop{to{opacity:1;transform:scale(1) rotate(var(--r,0deg))}}
+  .floaty{animation:float 3s ease-in-out infinite;animation-delay:var(--fd,0s)}
+  @keyframes float{0%,100%{translate:0 0}50%{translate:0 -14px}}
+
+  .kicker{position:absolute;left:0;right:0;top:230px;text-align:center;
+    font-size:104px;font-weight:900;color:var(--paper);
+    text-shadow:6px 6px 0 var(--ink);
+    opacity:0;transform:translateY(-80px);
+    animation:drop .7s cubic-bezier(.2,1.4,.4,1) .15s forwards}
+  @keyframes drop{to{opacity:1;transform:translateY(0)}}
+
+  .figwrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin-top:30px}
+  .figmabox{background:var(--lav);border:7px solid var(--ink);
+    box-shadow:16px 16px 0 var(--lime);padding:.02em .22em;
+    font-size:270px;font-weight:900;color:var(--ink);line-height:.92;
+    opacity:0;transform:scale(.3) rotate(-2deg);
+    animation:figpop .7s cubic-bezier(.2,1.6,.35,1) .55s forwards}
+  @keyframes figpop{to{opacity:1;transform:scale(1) rotate(-2deg)}}
+
+  .sub{position:absolute;left:0;right:0;bottom:235px;text-align:center}
+  .sub span{display:inline-block;font-size:60px;font-weight:800;color:var(--ink);
+    background:var(--paper);border:6px solid var(--ink);border-radius:999px;
+    padding:.18em .85em;box-shadow:9px 9px 0 var(--ink);
+    opacity:0;transform:translateY(60px);
+    animation:rise .6s cubic-bezier(.2,1.4,.4,1) 1.15s forwards}
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+</style></head>
+<body><div class="stage">
+  <div class="kicker">הכירו את קורס</div>
+  <div class="figwrap"><div class="figmabox latin">FIGMA</div></div>
+
+  <!-- topic tags pop staggered -->
+  <div class="tag pop floaty" style="--r:-9deg;--d:1.2s;left:120px;top:150px;background:var(--lime)"><span class="latin">Wireframes</span></div>
+  <div class="tag dash pop floaty" style="--r:8deg;--d:1.35s;--fd:.4s;left:1430px;top:140px;background:var(--cyan)"><span class="latin">Components</span></div>
+  <div class="tag pop floaty" style="--r:6deg;--d:1.5s;--fd:.8s;left:90px;top:480px;background:var(--yellow)"><span class="latin">Auto Layout</span></div>
+  <div class="tag pop floaty" style="--r:-7deg;--d:1.4s;--fd:.2s;left:1480px;top:470px;background:var(--orange)"><span class="latin">Prototyping</span></div>
+  <div class="tag dash pop floaty" style="--r:5deg;--d:1.6s;--fd:.6s;left:150px;top:840px;background:var(--lav)"><span class="latin">FigJam</span></div>
+  <div class="tag pop floaty" style="--r:-3deg;--d:1.7s;left:1430px;top:850px;background:var(--blue);color:#fff"><span class="latin">Plugins</span></div>
+
+  <div class="sub"><span>קמפוס IL&nbsp;·&nbsp;האצה להייטק — מסלול <span class="latin" style="all:unset;font-family:'DejaVu Sans';font-weight:900">Design</span></span></div>
+</div></body></html>
