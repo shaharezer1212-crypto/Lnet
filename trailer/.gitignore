@@ -1,3 +1,5 @@
 node_modules/
 audio/_work/
 clips/_thumbs/
+render/frames/
+render/webm/
