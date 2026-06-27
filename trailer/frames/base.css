@@ -1,0 +1,40 @@
+@font-face{
+  font-family:'Almoni';
+  src:url('../fonts/almoni-regular.otf') format('opentype');
+  font-weight:400 900; font-display:block;
+}
+:root{
+  --pink:#F35BF0; --pink2:#FF7BEC;
+  --lav:#C3A4FF; --lav2:#D9C4FF;
+  --lime:#B9F227; --lime2:#CDF85A;
+  --orange:#FF7A2F; --yellow:#FFE000;
+  --blue:#2233E6; --blue2:#3D5BFF;
+  --cyan:#7BEDED; --ink:#111111; --paper:#FFFFFF;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden}
+.stage{
+  position:relative;width:1920px;height:1080px;
+  font-family:'Almoni','DejaVu Sans',sans-serif;
+  direction:rtl;color:var(--ink);
+}
+.fill{position:absolute;inset:0}
+.center{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center}
+/* sticker = flat shape with offset hard shadow, slight rotation */
+.sticker{position:absolute;filter:drop-shadow(8px 8px 0 rgba(0,0,0,.16))}
+.tag{
+  position:absolute;display:inline-flex;align-items:center;gap:.4em;
+  padding:.34em .9em;border-radius:999px;border:4px solid var(--ink);
+  font-weight:800;font-size:34px;white-space:nowrap;
+  box-shadow:7px 7px 0 var(--ink);
+}
+.tag.dash{border-style:dashed}
+.latin{font-family:'DejaVu Sans','Almoni',sans-serif;font-weight:900;letter-spacing:-.01em}
+.hl{ /* highlighter box behind text, Config-style */
+  position:relative;display:inline-block;padding:.02em .28em;
+}
+.hl>span{position:relative;z-index:2}
+.hl::before{content:"";position:absolute;inset:8% -4% 12% -4%;z-index:1;border-radius:6px}
+.grid line{stroke:rgba(0,0,0,.18);stroke-width:2}
+.dashrule{border:0;border-top:5px dashed var(--ink)}

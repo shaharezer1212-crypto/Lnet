@@ -1,0 +1,34 @@
+<!doctype html><html lang="he"><head><meta charset="utf-8">
+<link rel="stylesheet" href="base.css">
+<style>
+  body{background:var(--blue)}
+  .stage{color:var(--paper)}
+  /* perspective grid like the figma ref */
+  .grid{position:absolute;inset:0;opacity:.5}
+  .big{font-size:170px;line-height:.96;font-weight:900;color:var(--paper);
+    text-shadow:6px 6px 0 rgba(0,0,0,.35)}
+  .big em{font-style:normal;background:var(--lime);color:var(--ink);
+    padding:.02em .18em;box-shadow:10px 10px 0 rgba(0,0,0,.3)}
+  .sub{margin-top:40px;font-size:54px;font-weight:800;color:var(--ink);
+    background:var(--yellow);border:5px solid var(--ink);border-radius:18px;
+    padding:.2em .7em;box-shadow:10px 10px 0 var(--ink);transform:rotate(-1.5deg)}
+</style></head>
+<body><div class="stage">
+  <svg class="grid" viewBox="0 0 1920 1080" preserveAspectRatio="none">
+    <g stroke="rgba(255,255,255,.28)" stroke-width="2">
+      <line x1="960" y1="540" x2="-200" y2="-200"/><line x1="960" y1="540" x2="960" y2="-200"/>
+      <line x1="960" y1="540" x2="2120" y2="-200"/><line x1="960" y1="540" x2="2120" y2="540"/>
+      <line x1="960" y1="540" x2="2120" y2="1280"/><line x1="960" y1="540" x2="960" y2="1280"/>
+      <line x1="960" y1="540" x2="-200" y2="1280"/><line x1="960" y1="540" x2="-200" y2="540"/>
+    </g>
+  </svg>
+
+  <svg class="sticker" style="left:150px;top:160px;width:150px" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="var(--lime)" stroke="#111" stroke-width="4"/><rect x="32" y="32" width="36" height="36" fill="var(--pink)" transform="rotate(45 50 50)"/><rect x="44" y="44" width="12" height="12" fill="var(--yellow)"/></svg>
+  <svg class="sticker" style="left:1560px;top:730px;width:150px" viewBox="0 0 100 100"><path d="M50 12 C70 12 88 30 88 50 C88 78 50 92 50 92 C50 92 12 78 12 50 C12 30 30 12 50 12Z" fill="var(--pink)" stroke="#111" stroke-width="4"/></svg>
+  <div class="tag" style="left:1480px;top:150px;background:var(--orange);color:#111;transform:rotate(8deg)"><span class="latin">UI / UX</span></div>
+
+  <div class="center">
+    <div class="big"><span class="latin" style="font-family:'DejaVu Sans'">Figma</span> היא לא בחירה.<br><em>היא הכרח.</em></div>
+    <div class="sub">השפה שכל צוות מוצר בהייטק מדבר בה</div>
+  </div>
+</div></body></html>

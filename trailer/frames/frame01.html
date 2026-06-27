@@ -1,0 +1,53 @@
+<!doctype html><html lang="he"><head><meta charset="utf-8">
+<link rel="stylesheet" href="base.css">
+<style>
+  body{background:var(--pink)}
+  .board{position:absolute;left:560px;top:170px;width:800px;height:560px;
+    background:var(--paper);border:5px solid var(--ink);border-radius:22px;
+    transform:rotate(-3deg);box-shadow:18px 22px 0 rgba(0,0,0,.18);overflow:hidden}
+  .bar{height:74px;background:#f3f3f3;border-bottom:4px solid var(--ink);
+    display:flex;align-items:center;gap:14px;padding:0 22px}
+  .dot{width:20px;height:20px;border-radius:50%;border:3px solid var(--ink)}
+  .canvas{position:relative;height:486px;background:
+     linear-gradient(0deg,rgba(0,0,0,.05) 1px,transparent 1px) 0 0/100% 36px,
+     linear-gradient(90deg,rgba(0,0,0,.05) 1px,transparent 1px) 0 0/36px 100%}
+  .label{position:absolute;font-weight:800;font-size:26px;color:var(--blue);
+    direction:ltr}
+  .cursor{position:absolute;width:46px;height:46px;filter:drop-shadow(3px 4px 0 rgba(0,0,0,.25))}
+  .headline{position:absolute;left:0;right:0;bottom:70px;text-align:center;
+    color:var(--paper);font-weight:900;font-size:62px;
+    text-shadow:5px 5px 0 var(--ink)}
+</style></head>
+<body><div class="stage">
+
+  <!-- scattered config stickers -->
+  <svg class="sticker" style="left:120px;top:120px;width:150px" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#cfd8d4" stroke="#111" stroke-width="3"/><g fill="#111"><rect x="34" y="40" width="10" height="10"/><rect x="58" y="40" width="10" height="10"/><rect x="34" y="60" width="34" height="9"/></g></svg>
+  <svg class="sticker" style="left:300px;top:780px;width:140px" viewBox="0 0 100 100"><polygon points="50,8 92,50 50,92 8,50" fill="var(--blue)" stroke="#111" stroke-width="4"/><polygon points="50,30 70,50 50,70 30,50" fill="var(--yellow)"/></svg>
+  <svg class="sticker" style="left:1530px;top:150px;width:160px" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="var(--lime)" stroke="#111" stroke-width="4"/><rect x="32" y="32" width="36" height="36" fill="var(--blue)" transform="rotate(45 50 50)"/><rect x="44" y="44" width="12" height="12" fill="var(--orange)"/></svg>
+  <svg class="sticker" style="left:1600px;top:760px;width:120px" viewBox="0 0 100 100"><path d="M20 80 L52 16 L72 40 Z" fill="var(--lime)" stroke="#111" stroke-width="4"/><circle cx="52" cy="64" r="6" fill="#111"/></svg>
+  <div class="tag" style="left:150px;top:470px;background:var(--orange);transform:rotate(-8deg)">SHE / THEY</div>
+  <div class="tag dash" style="left:1480px;top:470px;background:var(--lav);transform:rotate(7deg)">IN&#8209;PERSON</div>
+
+  <!-- figma artboard -->
+  <div class="board">
+    <div class="bar"><span class="dot" style="background:var(--pink)"></span><span class="dot" style="background:var(--yellow)"></span><span class="dot" style="background:var(--lime)"></span>
+      <span style="margin-inline-start:auto;font-weight:800;font-size:24px" class="latin">Figma&nbsp;·&nbsp;Untitled</span></div>
+    <div class="canvas">
+      <span class="label" style="left:60px;top:40px">Frame 1</span>
+      <!-- flower vase made of geometric shapes -->
+      <svg style="position:absolute;left:300px;top:70px;width:230px" viewBox="0 0 120 150">
+        <circle cx="40" cy="34" r="20" fill="var(--pink)" stroke="#111" stroke-width="3"/>
+        <circle cx="80" cy="30" r="18" fill="var(--yellow)" stroke="#111" stroke-width="3"/>
+        <circle cx="62" cy="14" r="15" fill="var(--lime)" stroke="#111" stroke-width="3"/>
+        <circle cx="60" cy="40" r="12" fill="var(--orange)" stroke="#111" stroke-width="3"/>
+        <rect x="55" y="50" width="8" height="46" fill="var(--blue)"/>
+        <path d="M30 96 H92 L84 140 H38 Z" fill="var(--cyan)" stroke="#111" stroke-width="3"/>
+      </svg>
+      <!-- selection box -->
+      <div style="position:absolute;left:295px;top:65px;width:240px;height:150px;border:3px solid var(--blue);"></div>
+      <svg class="cursor" style="left:520px;top:200px" viewBox="0 0 24 24"><path d="M3 2 L20 11 L12 13 L9 21 Z" fill="#fff" stroke="#111" stroke-width="1.6"/></svg>
+    </div>
+  </div>
+
+  <div class="headline">תהליך עיצוב אמיתי קורה במקום אחד</div>
+</div></body></html>
