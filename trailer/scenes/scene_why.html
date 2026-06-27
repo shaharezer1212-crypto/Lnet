@@ -1,0 +1,38 @@
+<!doctype html><html lang="he"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../frames/base.css">
+<style>
+  body{background:var(--blue)}
+  .stage{color:var(--paper)}
+  @keyframes rise{0%{opacity:0;transform:translateY(50px)}100%{opacity:1;transform:translateY(0)}}
+  @keyframes stamp{0%{opacity:0;transform:scale(1.8) rotate(-2deg)}60%{opacity:1;transform:scale(.94) rotate(-2deg)}100%{opacity:1;transform:scale(1) rotate(-2deg)}}
+  @keyframes subin{0%{opacity:0;transform:translateY(40px) rotate(-1.5deg)}100%{opacity:1;transform:translateY(0) rotate(-1.5deg)}}
+  @keyframes fl{0%,100%{translate:0 0}50%{translate:0 -12px}}
+  .grid{position:absolute;inset:0;opacity:.5}
+  .wrap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .l1{font-size:170px;line-height:1;font-weight:900;color:var(--paper);text-shadow:6px 6px 0 rgba(0,0,0,.35);
+    opacity:0;animation:rise .6s cubic-bezier(.2,1.3,.4,1) .2s both}
+  .l1 .latin{font-family:'DejaVu Sans'}
+  .l2{margin-top:18px;font-size:200px;line-height:1;font-weight:900;font-style:normal;
+    background:var(--lime);color:var(--ink);padding:.02em .2em;box-shadow:12px 12px 0 rgba(0,0,0,.3);
+    opacity:0;transform:rotate(-2deg);animation:stamp .55s cubic-bezier(.2,1.5,.4,1) 1.5s both}
+  .sub{margin-top:54px;font-size:64px;font-weight:800;color:var(--ink);
+    background:var(--yellow);border:6px solid var(--ink);border-radius:18px;padding:.2em .8em;
+    box-shadow:10px 10px 0 var(--ink);opacity:0;transform:rotate(-1.5deg);
+    animation:subin .5s cubic-bezier(.2,1.4,.4,1) 2.4s both}
+  .st{position:absolute;filter:drop-shadow(8px 8px 0 rgba(0,0,0,.16));animation:fl 3s ease-in-out infinite}
+</style></head>
+<body><div class="stage">
+  <svg class="grid" viewBox="0 0 1920 1080" preserveAspectRatio="none"><g stroke="rgba(255,255,255,.26)" stroke-width="2">
+    <line x1="960" y1="540" x2="-200" y2="-200"/><line x1="960" y1="540" x2="960" y2="-200"/><line x1="960" y1="540" x2="2120" y2="-200"/>
+    <line x1="960" y1="540" x2="2120" y2="540"/><line x1="960" y1="540" x2="2120" y2="1280"/><line x1="960" y1="540" x2="960" y2="1280"/>
+    <line x1="960" y1="540" x2="-200" y2="1280"/><line x1="960" y1="540" x2="-200" y2="540"/></g></svg>
+
+  <svg class="st" style="left:150px;top:170px;width:140px" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="var(--lime)" stroke="#111" stroke-width="4"/><rect x="32" y="32" width="36" height="36" fill="var(--pink)" transform="rotate(45 50 50)"/><rect x="44" y="44" width="12" height="12" fill="var(--yellow)"/></svg>
+  <svg class="st" style="right:160px;bottom:160px;width:140px" viewBox="0 0 100 100"><path d="M50 12 C70 12 88 30 88 50 C88 78 50 92 50 92 C50 92 12 78 12 50 C12 30 30 12 50 12Z" fill="var(--pink)" stroke="#111" stroke-width="4"/></svg>
+
+  <div class="wrap">
+    <div class="l1"><span class="latin">Figma</span> היא לא בחירה.</div>
+    <div class="l2">היא הכרח.</div>
+    <div class="sub">השפה שכל צוות מוצר בהייטק מדבר בה</div>
+  </div>
+</div></body></html>

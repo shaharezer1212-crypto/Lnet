@@ -1,0 +1,84 @@
+<!doctype html><html lang="he"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../frames/base.css">
+<style>
+  body{background:var(--pink)}
+  /* reusable timed keyframes — renderer positions each via currentTime */
+  @keyframes shapeshow{0%{opacity:0;transform:scale(.65)}15%{opacity:1;transform:scale(1)}82%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.12)}}
+  @keyframes capshow{0%{opacity:0;transform:translateY(26px)}12%{opacity:1;transform:translateY(0)}86%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-12px)}}
+  @keyframes popin{0%{opacity:0;transform:scale(.3) rotate(-3deg)}65%{opacity:1;transform:scale(1.05) rotate(-3deg)}100%{opacity:1;transform:scale(1) rotate(-3deg)}}
+  @keyframes boardin{0%{opacity:0;transform:rotate(-3deg) scale(.85)}100%{opacity:1;transform:rotate(-3deg) scale(1)}}
+  @keyframes fl{0%,100%{translate:0 0}50%{translate:0 -12px}}
+
+  .board{position:absolute;left:560px;top:150px;width:800px;height:600px;
+    background:var(--paper);border:6px solid var(--ink);border-radius:24px;
+    box-shadow:18px 22px 0 rgba(0,0,0,.18);overflow:hidden;
+    opacity:0;animation:boardin .6s cubic-bezier(.2,1.3,.4,1) 0s both}
+  .bar{height:78px;background:#f3f3f3;border-bottom:4px solid var(--ink);
+    display:flex;align-items:center;gap:14px;padding:0 24px}
+  .dot{width:20px;height:20px;border-radius:50%;border:3px solid var(--ink)}
+  .canvas{position:relative;height:516px;background:
+     linear-gradient(0deg,rgba(0,0,0,.05) 1px,transparent 1px) 0 0/100% 38px,
+     linear-gradient(90deg,rgba(0,0,0,.05) 1px,transparent 1px) 0 0/38px 100%}
+  .shape{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);
+    width:300px;height:330px;margin-left:-150px;margin-top:-165px;left:50%;top:50%}
+  .shape svg{width:300px;height:330px;display:block}
+  .sel{position:absolute;left:50%;top:50%;width:330px;height:360px;
+    margin-left:-165px;margin-top:-180px;border:3px solid var(--blue)}
+  .cap{position:absolute;left:60px;right:60px;bottom:64px;text-align:center;
+    color:var(--paper);font-weight:900;font-size:78px;line-height:1.04;
+    text-shadow:6px 6px 0 var(--ink);opacity:0}
+
+  /* config corner stickers */
+  .st{position:absolute;filter:drop-shadow(8px 8px 0 rgba(0,0,0,.16));animation:fl 3s ease-in-out infinite}
+</style></head>
+<body><div class="stage">
+
+  <svg class="st" style="left:150px;top:150px;width:140px" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#cfd8d4" stroke="#111" stroke-width="3"/><g fill="#111"><rect x="34" y="42" width="9" height="9"/><rect x="58" y="42" width="9" height="9"/><rect x="34" y="60" width="32" height="9"/></g></svg>
+  <svg class="st" style="right:150px;top:170px;width:150px" viewBox="0 0 100 100"><polygon points="50,8 92,50 50,92 8,50" fill="var(--blue)" stroke="#111" stroke-width="4"/><polygon points="50,30 70,50 50,70 30,50" fill="var(--yellow)"/></svg>
+  <svg class="st" style="left:200px;bottom:230px;width:130px" viewBox="0 0 100 100"><path d="M20 80 L52 16 L72 40 Z" fill="var(--lime)" stroke="#111" stroke-width="4"/><circle cx="52" cy="64" r="6" fill="#111"/></svg>
+
+  <div class="board">
+    <div class="bar"><span class="dot" style="background:var(--pink)"></span><span class="dot" style="background:var(--yellow)"></span><span class="dot" style="background:var(--lime)"></span>
+      <span style="margin-inline-start:auto;font-weight:800;font-size:24px" class="latin">Figma · Untitled</span></div>
+    <div class="canvas">
+      <div class="sel"></div>
+      <!-- vase -->
+      <div class="shape" style="animation:shapeshow 3.4s ease 0s both">
+        <svg viewBox="0 0 120 150">
+          <circle cx="40" cy="40" r="22" fill="var(--pink)" stroke="#111" stroke-width="3"/>
+          <circle cx="82" cy="35" r="19" fill="var(--yellow)" stroke="#111" stroke-width="3"/>
+          <circle cx="62" cy="16" r="16" fill="var(--lime)" stroke="#111" stroke-width="3"/>
+          <circle cx="60" cy="44" r="13" fill="var(--orange)" stroke="#111" stroke-width="3"/>
+          <rect x="55" y="56" width="9" height="48" fill="var(--blue)"/>
+          <path d="M28 104 H94 L85 146 H37 Z" fill="var(--cyan)" stroke="#111" stroke-width="3"/>
+        </svg>
+      </div>
+      <!-- heart -->
+      <div class="shape" style="animation:shapeshow 3.2s ease 3.2s both">
+        <svg viewBox="0 0 120 150"><path d="M60 132 C20 100 14 62 36 46 C52 34 60 50 60 58 C60 50 68 34 84 46 C106 62 100 100 60 132Z" fill="var(--pink)" stroke="#111" stroke-width="4"/></svg>
+      </div>
+      <!-- arrow -->
+      <div class="shape" style="animation:shapeshow 3.0s ease 6.4s both">
+        <svg viewBox="0 0 120 150"><path d="M24 58 H78 V36 L104 75 L78 114 V92 H24 Z" fill="var(--lime)" stroke="#111" stroke-width="4"/></svg>
+      </div>
+      <!-- collage finale -->
+      <div class="shape" style="width:560px;height:360px;margin-left:-280px;margin-top:-180px;animation:popin 1s cubic-bezier(.2,1.5,.4,1) 9.3s both">
+        <svg viewBox="0 0 560 360" style="width:560px;height:360px">
+          <g stroke="#111" stroke-width="3">
+            <rect x="6" y="14" width="170" height="150" rx="10" fill="var(--lav)"/>
+            <rect x="192" y="6" width="170" height="120" rx="10" fill="var(--yellow)"/>
+            <rect x="378" y="20" width="170" height="150" rx="10" fill="var(--cyan)"/>
+            <rect x="40" y="190" width="170" height="150" rx="10" fill="var(--orange)"/>
+            <rect x="226" y="150" width="170" height="180" rx="10" fill="var(--lime)"/>
+            <rect x="412" y="190" width="140" height="150" rx="10" fill="var(--pink2)"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="cap" style="animation:capshow 2.7s ease .3s both">עיצוב מוצר דיגיטלי הוא לא רק <span style="white-space:nowrap">איך שהוא נראה</span></div>
+  <div class="cap" style="animation:capshow 2.9s ease 3.3s both">אלא גם בהרגשה שהוא מעורר</div>
+  <div class="cap" style="animation:capshow 2.5s ease 6.5s both">ובפעולה שהוא מקדם</div>
+  <div class="cap" style="animation:capshow 4.5s ease 9.3s both">מוצר טוב — הופך <span style="color:var(--lime)">למוצר מנצח</span></div>
+</div></body></html>

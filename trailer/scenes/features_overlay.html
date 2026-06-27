@@ -1,0 +1,34 @@
+<!doctype html><html lang="he"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../frames/base.css">
+<style>
+  html,body{background:transparent}
+  /* WEB window — content area is transparent so the video shows through */
+  .window{position:absolute;left:370px;top:200px;width:1180px;height:741px;
+    border:6px solid var(--ink);border-radius:22px;box-shadow:16px 16px 0 rgba(0,0,0,.2);overflow:hidden}
+  .bar{height:72px;background:#f3f3f3;border-bottom:4px solid var(--ink);
+    display:flex;align-items:center;gap:14px;padding:0 24px}
+  .dot{width:20px;height:20px;border-radius:50%;border:3px solid var(--ink)}
+  .hole{height:657px;background:transparent}
+
+  .head{position:absolute;left:0;right:0;top:60px;text-align:center;
+    font-size:60px;font-weight:900;color:var(--ink);text-shadow:4px 4px 0 var(--paper)}
+  .st{position:absolute;filter:drop-shadow(7px 7px 0 rgba(0,0,0,.16))}
+</style></head>
+<body><div class="stage">
+  <div class="head">סרטוני למידה · הדרכות מעשיות · תרגולים</div>
+
+  <!-- feature tags in the side margins -->
+  <div class="tag" style="left:60px;top:300px;background:var(--lime);transform:rotate(-7deg)">בקצב שלכם</div>
+  <div class="tag dash" style="left:70px;top:560px;background:var(--lav);transform:rotate(6deg)">בעברית</div>
+  <div class="tag" style="right:60px;top:300px;background:var(--yellow);transform:rotate(7deg)">מכל מקום</div>
+  <div class="tag" style="right:60px;top:560px;background:var(--orange);transform:rotate(-6deg)">ובחינם</div>
+
+  <svg class="st" style="left:120px;top:820px;width:120px" viewBox="0 0 100 100"><path d="M20 80 L52 16 L72 40 Z" fill="var(--lime)" stroke="#111" stroke-width="4"/><circle cx="52" cy="64" r="6" fill="#111"/></svg>
+  <svg class="st" style="right:120px;top:830px;width:120px" viewBox="0 0 100 100"><polygon points="50,8 92,50 50,92 8,50" fill="var(--blue)" stroke="#111" stroke-width="4"/><polygon points="50,30 70,50 50,70 30,50" fill="var(--yellow)"/></svg>
+
+  <div class="window">
+    <div class="bar"><span class="dot" style="background:var(--pink)"></span><span class="dot" style="background:var(--yellow)"></span><span class="dot" style="background:var(--lime)"></span>
+      <span style="margin-inline-start:auto;font-weight:800;font-size:24px" class="latin">Figma · קמפוס IL</span></div>
+    <div class="hole"></div>
+  </div>
+</div></body></html>
