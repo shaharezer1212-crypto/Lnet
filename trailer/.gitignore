@@ -10,3 +10,5 @@ render/mp4/video_silent.mp4
 render/mp4/*list.txt
 render/mp4/open_test.mp4
 render/*.log
+_chk.mjs
+_shot.mjs
