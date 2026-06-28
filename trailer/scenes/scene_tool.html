@@ -1,15 +1,17 @@
 <!doctype html><html lang="he"><head><meta charset="utf-8">
 <link rel="stylesheet" href="../frames/base.css">
 <style>
-  body{background:#201f1c}
-  /* dark Figma canvas world with a slow cinematic camera push-in */
+  body{background:var(--bg)}
+  /* LIGHT Figma canvas world (the real Figma canvas look) + slow cinematic camera push-in */
   .world{position:absolute;inset:-12%;transform-origin:54% 46%;
-    background:#201f1c;
-    background-image:
-      linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
-    background-size:46px 46px;
+    background:
+      radial-gradient(120% 120% at 30% 10%, var(--bg2), var(--bg) 65%);
     animation:cam 8.4s cubic-bezier(.33,0,.2,1) both}
+  .world::before{content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(17,17,17,.10) 1.5px,transparent 1.5px),
+      linear-gradient(90deg,rgba(17,17,17,.10) 1.5px,transparent 1.5px);
+    background-size:48px 48px}
   @keyframes cam{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.16) translate(-2.5%,-2%)}}
 
   /* the designed website artboard sitting on the canvas */
@@ -44,9 +46,9 @@
 
   /* title overlay (outside the camera move) */
   .title{position:absolute;left:0;right:0;top:78px;text-align:center;z-index:5;
-    font-size:104px;font-weight:900;color:#fff;text-shadow:4px 4px 0 #000;
+    font-size:104px;font-weight:900;color:var(--ink);text-shadow:4px 4px 0 var(--paper);
     opacity:0;transform:translateY(-40px);animation:drop .6s cubic-bezier(.2,1.4,.4,1) .2s both}
-  .title em{font-style:normal;background:var(--lime);color:#111;padding:.02em .14em;box-shadow:8px 8px 0 #000}
+  .title em{font-style:normal;background:var(--lime);color:#111;padding:.02em .14em;box-shadow:8px 8px 0 var(--ink)}
   @keyframes drop{to{opacity:1;transform:translateY(0)}}
 </style></head>
 <body>
