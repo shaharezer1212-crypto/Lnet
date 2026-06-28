@@ -1,0 +1,75 @@
+<!doctype html><html lang="he"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../frames/base.css">
+<style>
+  body{background:#201f1c}
+  /* dark Figma canvas world with a slow cinematic camera push-in */
+  .world{position:absolute;inset:-12%;transform-origin:54% 46%;
+    background:#201f1c;
+    background-image:
+      linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+    background-size:46px 46px;
+    animation:cam 8.4s cubic-bezier(.33,0,.2,1) both}
+  @keyframes cam{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.16) translate(-2.5%,-2%)}}
+
+  /* the designed website artboard sitting on the canvas */
+  .art{position:absolute;left:36%;top:30%;width:760px;background:#fff;border-radius:12px;overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,.5);opacity:0;animation:artin .7s ease .3s both}
+  @keyframes artin{0%{opacity:0;transform:translateY(30px) scale(.97)}100%{opacity:1;transform:none}}
+  .a-bar{height:46px;background:#f3f3f3;display:flex;align-items:center;gap:8px;padding:0 16px;border-bottom:3px solid #111}
+  .a-d{width:13px;height:13px;border-radius:50%;border:2px solid #111}
+  .a-brand{margin-inline-start:auto;font-weight:900;font-size:20px;color:#111}
+  .a-hero{padding:30px}
+  .a-h1{font-weight:900;font-size:50px;color:#111;line-height:.96}
+  .a-btn{display:inline-block;margin-top:14px;background:var(--lime);border:4px solid #111;border-radius:999px;font-weight:800;font-size:22px;padding:.28em 1em;box-shadow:5px 5px 0 #111}
+  .a-cards{display:flex;gap:16px;padding:0 30px 30px}
+  .a-card{flex:1;height:130px;border:4px solid #111;border-radius:12px;box-shadow:6px 6px 0 #111}
+  .selbox{position:absolute;left:34%;top:28%;width:792px;height:80px;border:2px solid #4a7cff;border-radius:4px;
+    animation:pulse 1.5s ease-in-out infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(74,124,255,0)}50%{box-shadow:0 0 0 5px rgba(74,124,255,.3)}}
+
+  /* floating Figma component toolbar (like the reference) */
+  .toolbar{position:absolute;left:60%;top:20%;background:#fff;border-radius:14px;padding:14px 16px;
+    box-shadow:0 18px 50px rgba(0,0,0,.45);opacity:0;animation:artin .7s ease 1.1s both}
+  .tb-row{display:flex;gap:10px;align-items:center;margin:8px 0}
+  .pill{border:2px solid #111;border-radius:999px;font-weight:800;font-size:16px;padding:.2em .8em;background:#111;color:#fff}
+  .sw{width:22px;height:22px;border-radius:50%;border:2px solid #111}
+  .cursor{position:absolute;left:57%;top:40%;width:42px;height:42px;filter:drop-shadow(2px 3px 0 rgba(0,0,0,.5));
+    animation:cmove 4s ease-in-out infinite}
+  @keyframes cmove{0%{left:57%;top:40%}50%{left:46%;top:55%}100%{left:57%;top:40%}}
+
+  /* bright accent vectors on the grid — keeps the colourful brand link */
+  .acc{position:absolute;animation:fl 3.4s ease-in-out infinite}
+  @keyframes fl{0%,100%{translate:0 0}50%{translate:0 -12px}}
+
+  /* title overlay (outside the camera move) */
+  .title{position:absolute;left:0;right:0;top:78px;text-align:center;z-index:5;
+    font-size:104px;font-weight:900;color:#fff;text-shadow:4px 4px 0 #000;
+    opacity:0;transform:translateY(-40px);animation:drop .6s cubic-bezier(.2,1.4,.4,1) .2s both}
+  .title em{font-style:normal;background:var(--lime);color:#111;padding:.02em .14em;box-shadow:8px 8px 0 #000}
+  @keyframes drop{to{opacity:1;transform:translateY(0)}}
+</style></head>
+<body>
+<div class="content">
+  <div class="world">
+    <div class="selbox"></div>
+    <div class="art">
+      <div class="a-bar"><span class="a-d" style="background:var(--pink)"></span><span class="a-d" style="background:var(--yellow)"></span><span class="a-d" style="background:var(--lime)"></span><span class="a-brand latin">STUDIO</span></div>
+      <div class="a-hero"><div class="a-h1">רעיונות שהופכים<br>למוצר.</div><span class="a-btn">בואו נתחיל</span></div>
+      <div class="a-cards"><div class="a-card" style="background:var(--lav)"></div><div class="a-card" style="background:var(--cyan)"></div><div class="a-card" style="background:var(--orange)"></div></div>
+    </div>
+    <div class="toolbar">
+      <div class="tb-row"><span class="pill latin">Frame</span><span class="pill latin" style="background:#fff;color:#111">Text</span></div>
+      <div class="tb-row"><span class="sw" style="background:var(--lime)"></span><span class="sw" style="background:var(--cyan)"></span><span class="sw" style="background:var(--pink)"></span><span class="sw" style="background:var(--yellow)"></span><span class="sw" style="background:var(--blue)"></span><span class="sw" style="background:#111"></span></div>
+    </div>
+    <svg class="cursor" viewBox="0 0 24 24"><path d="M3 2 L20 11 L12 13 L9 21 Z" fill="#fff" stroke="#111" stroke-width="1.6"/></svg>
+
+    <svg class="acc" style="left:14%;top:24%;width:90px" viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="none" stroke="var(--lime)" stroke-width="6"/><circle cx="50" cy="50" r="14" fill="var(--pink)"/></svg>
+    <svg class="acc" style="left:20%;top:66%;width:110px;animation-delay:.6s" viewBox="0 0 120 80"><rect x="6" y="6" width="108" height="68" rx="10" fill="none" stroke="var(--cyan)" stroke-width="5"/><circle cx="34" cy="40" r="12" fill="var(--cyan)"/><path d="M54 56 L74 32 L104 70" fill="none" stroke="var(--cyan)" stroke-width="5"/></svg>
+    <div class="acc latin" style="left:80%;top:70%;font-size:80px;font-weight:900;color:var(--yellow);animation-delay:.3s">Aa</div>
+    <svg class="acc" style="left:84%;top:46%;width:80px;animation-delay:.9s" viewBox="0 0 100 100"><polygon points="50,6 61,38 96,38 67,59 78,93 50,72 22,93 33,59 4,38 39,38" fill="var(--orange)"/></svg>
+  </div>
+
+  <div class="title">הכלי ש<em>כולם</em> משתמשים בו</div>
+</div>
+</body></html>
