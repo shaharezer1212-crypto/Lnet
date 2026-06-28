@@ -1,8 +1,7 @@
 <!doctype html><html lang="he"><head><meta charset="utf-8">
 <link rel="stylesheet" href="../frames/base.css">
 <style>
-  html,body{background:transparent}            /* hole + outside transparent via omitBackground */
-  .livingbg{z-index:0}                          /* opaque living lavender fills everything but the hole */
+  html,body{background:transparent}            /* fully transparent overlay; living bg is a separate ffmpeg layer */
   @keyframes winpop{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}
   @keyframes drop{0%{opacity:0;transform:translateY(-40px)}100%{opacity:1;transform:translateY(0)}}
   @keyframes pop{0%{opacity:0;transform:scale(.2) rotate(var(--r,0deg))}65%{opacity:1;transform:scale(1.08) rotate(var(--r,0deg))}100%{opacity:1;transform:scale(1) rotate(var(--r,0deg))}}
@@ -24,7 +23,6 @@
     animation:pop .5s cubic-bezier(.2,1.6,.4,1) var(--d,0s) both, breathe 2.4s ease-in-out var(--d,0s) infinite}
 </style></head>
 <body>
-<div class="livingbg"><b></b><b></b><b></b><b></b><b></b></div>
 <div class="content"><div class="stage">
   <div class="head">סרטוני למידה · הדרכות מעשיות · תרגולים</div>
 
