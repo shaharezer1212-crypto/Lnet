@@ -1,4 +1,5 @@
 node_modules/
+bin/
 audio/_work/
 clips/_thumbs/
 render/frames/
@@ -6,5 +7,6 @@ render/webm/
 render/_feat/
 render/mp4/*.png
 render/mp4/video_silent.mp4
-render/mp4/final_list.txt
 render/mp4/*list.txt
+render/mp4/open_test.mp4
+render/*.log
