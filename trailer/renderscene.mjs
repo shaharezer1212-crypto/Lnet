@@ -23,7 +23,7 @@ mkdirSync(framesDir, { recursive: true });
 mkdirSync(join(here, 'render', 'mp4'), { recursive: true });
 
 const browser = await chromium.launch({ executablePath: exe,
-  args: ['--no-sandbox','--force-color-profile=srgb','--hide-scrollbars'] });
+  args: ['--no-sandbox','--disable-dev-shm-usage','--disable-gpu','--force-color-profile=srgb','--hide-scrollbars'] });
 const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
 await page.goto('file://' + resolve(here, scene));
 await page.evaluate(() => document.fonts.ready);
