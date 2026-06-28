@@ -12,3 +12,4 @@ render/mp4/open_test.mp4
 render/*.log
 _chk.mjs
 _shot.mjs
+render/ref/
