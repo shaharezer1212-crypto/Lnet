@@ -20,9 +20,9 @@ T=0.5   # cross-dissolve duration
   [a][b]xfade=transition=fade:duration=$T:offset=14[v1]; \
   [v1][c]xfade=transition=fade:duration=$T:offset=21[v2]; \
   [v2][d]xfade=transition=fade:duration=$T:offset=31.3[v3]; \
-  [v3][e]xfade=transition=fade:duration=$T:offset=35.3[v4]; \
-  [v4][f]xfade=transition=fade:duration=$T:offset=39.2[v5]; \
-  [v5][g]xfade=transition=fade:duration=$T:offset=48.6[v]" \
+  [v3][e]xfade=transition=fade:duration=$T:offset=34.75[v4]; \
+  [v4][f]xfade=transition=fade:duration=$T:offset=43.15[v5]; \
+  [v5][g]xfade=transition=fade:duration=$T:offset=48.65[v]" \
  -map "[v]" -c:v libx264 -pix_fmt yuv420p -crf 18 -r 30 $M/video_silent.mp4 -y
 
 # mux narration+music mix

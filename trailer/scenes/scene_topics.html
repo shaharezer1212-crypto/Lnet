@@ -2,13 +2,13 @@
 <link rel="stylesheet" href="../frames/base.css">
 <style>
   body{background:var(--bg)}
-  .kicker{position:absolute;left:0;right:0;top:170px;text-align:center;
-    font-size:90px;font-weight:900;color:var(--ink);text-shadow:5px 5px 0 var(--paper);
-    opacity:0;transform:translateY(-50px);animation:drop .6s cubic-bezier(.2,1.4,.4,1) .15s both}
+  .kicker{position:absolute;left:0;right:0;top:92px;text-align:center;
+    font-size:84px;font-weight:900;color:var(--ink);text-shadow:5px 5px 0 var(--paper);
+    opacity:0;transform:translateY(-50px);animation:drop .6s cubic-bezier(.2,1.4,.4,1) .15s both;z-index:3}
   @keyframes drop{to{opacity:1;transform:translateY(0)}}
-  .cluster{position:absolute;left:50%;top:57%;transform:translate(-50%,-50%);
-    width:1560px;display:flex;flex-wrap:wrap;gap:40px 48px;align-items:center;justify-content:center}
-  .big{position:relative;font-size:78px;padding:.32em 1.05em;box-shadow:11px 11px 0 var(--ink);border-width:6px;
+  .cluster{position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);
+    width:1560px;display:flex;flex-wrap:wrap;gap:26px 32px;align-items:center;justify-content:center}
+  .big{position:relative;font-size:48px;padding:.28em .9em;box-shadow:8px 8px 0 var(--ink);border-width:5px;
     opacity:0;transform:scale(.2) rotate(var(--r,0deg));
     animation:pop .6s cubic-bezier(.2,1.6,.4,1) var(--d,0s) both, fl 3s ease-in-out var(--d,0s) infinite}
   @keyframes pop{to{opacity:1;transform:scale(1) rotate(var(--r,0deg))}}
@@ -27,12 +27,14 @@
 
   <div class="kicker">בקורס תלמדו:</div>
   <div class="cluster">
-    <div class="tag big" style="--r:-4deg;--d:0.6s;background:var(--lime)"><span class="latin">Wireframes</span></div>
+    <div class="tag big" style="--r:-4deg;--d:0.7s;background:var(--lime)"><span class="latin">Wireframes</span></div>
     <div class="tag big" style="--r:3deg;--d:1.9s;background:var(--cyan)"><span class="latin">Components</span></div>
-    <div class="tag big" style="--r:-3deg;--d:2.8s;background:var(--yellow)"><span class="latin">Auto Layout</span></div>
-    <div class="tag big" style="--r:4deg;--d:4.2s;background:var(--orange)"><span class="latin">High-Fidelity</span></div>
-    <div class="tag big" style="--r:-3deg;--d:5.6s;background:var(--lav)"><span class="latin">Prototyping</span></div>
-    <div class="tag big" style="--r:3deg;--d:7.4s;background:var(--blue);color:#fff"><span class="latin">Figma → Web</span></div>
+    <div class="tag big" style="--r:-3deg;--d:3.0s;background:var(--yellow)"><span class="latin">Auto Layout</span></div>
+    <div class="tag big" style="--r:4deg;--d:4.2s;background:var(--orange)"><span class="latin">High-Fidelity Design</span></div>
+    <div class="tag big" style="--r:-3deg;--d:5.4s;background:var(--lav)"><span class="latin">Prototyping</span></div>
+    <div class="tag big" style="--r:3deg;--d:6.5s;background:var(--blue);color:#fff"><span class="latin">Figma to web</span></div>
+    <div class="tag big" style="--r:-4deg;--d:7.6s;background:var(--pink);color:#fff"><span class="latin">FigJam</span></div>
+    <div class="tag big" style="--r:4deg;--d:8.6s;background:var(--lime)"><span class="latin">PLUGINS</span></div>
   </div>
 </div></div>
 </body></html>

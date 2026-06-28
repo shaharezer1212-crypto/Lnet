@@ -44,6 +44,12 @@ html,body{width:1920px;height:1080px;overflow:hidden}
 /* ---------- living background: soft lavender + drifting colour blobs ---------- */
 .livingbg{position:absolute;inset:0;overflow:hidden;z-index:0;
   background:radial-gradient(120% 120% at 20% 10%, var(--bg2), var(--bg) 60%)}
+/* Figma-canvas grid over the lavender — the look the course itself uses */
+.livingbg::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(17,17,17,.07) 1.5px,transparent 1.5px),
+    linear-gradient(90deg,rgba(17,17,17,.07) 1.5px,transparent 1.5px);
+  background-size:50px 50px}
 .livingbg b{position:absolute;border-radius:50%;filter:blur(44px);opacity:.5;mix-blend-mode:multiply;will-change:transform}
 .livingbg b:nth-child(1){width:620px;height:620px;background:var(--lime);left:-120px;top:-80px;animation:drift1 13s ease-in-out infinite}
 .livingbg b:nth-child(2){width:560px;height:560px;background:var(--cyan);right:-100px;top:60px;animation:drift2 16s ease-in-out infinite}
