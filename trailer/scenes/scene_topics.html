@@ -1,32 +1,36 @@
 <!doctype html><html lang="he"><head><meta charset="utf-8">
 <link rel="stylesheet" href="../frames/base.css">
 <style>
-  body{background:var(--pink)}
-  @keyframes wordshow{0%{opacity:0;transform:scale(.5) rotate(-3deg)}
-    14%{opacity:1;transform:scale(1) rotate(-2deg)}82%{opacity:1;transform:scale(1) rotate(-2deg)}
-    100%{opacity:0;transform:scale(1.25) rotate(-2deg)}}
-  @keyframes drop{0%{opacity:0;transform:translateY(-40px)}100%{opacity:1;transform:translateY(0)}}
-  @keyframes fl{0%,100%{translate:0 0}50%{translate:0 -12px}}
-  .kicker{position:absolute;left:0;right:0;top:150px;text-align:center;
-    font-size:72px;font-weight:900;color:var(--paper);text-shadow:5px 5px 0 var(--ink);
-    opacity:0;animation:drop .6s cubic-bezier(.2,1.4,.4,1) .1s both}
-  .word{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);
-    text-align:center;opacity:0}
-  .word b{display:inline-block;font-size:170px;font-weight:900;color:var(--ink);
-    border:7px solid var(--ink);border-radius:24px;padding:.04em .26em;box-shadow:16px 16px 0 var(--ink)}
+  body{background:var(--bg)}
+  .kicker{position:absolute;left:0;right:0;top:170px;text-align:center;
+    font-size:90px;font-weight:900;color:var(--ink);text-shadow:5px 5px 0 var(--paper);
+    opacity:0;transform:translateY(-50px);animation:drop .6s cubic-bezier(.2,1.4,.4,1) .15s both}
+  @keyframes drop{to{opacity:1;transform:translateY(0)}}
+  .cluster{position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);
+    width:1480px;display:flex;flex-wrap:wrap;gap:32px 40px;align-items:center;justify-content:center}
+  .big{font-size:58px;padding:.3em 1em;box-shadow:9px 9px 0 var(--ink);border-width:5px;
+    opacity:0;transform:scale(.2) rotate(var(--r,0deg));
+    animation:pop .6s cubic-bezier(.2,1.6,.4,1) var(--d,0s) both, fl 3s ease-in-out var(--d,0s) infinite}
+  @keyframes pop{to{opacity:1;transform:scale(1) rotate(var(--r,0deg))}}
+  @keyframes fl{0%,100%{translate:0 0}50%{translate:0 -10px}}
   .st{position:absolute;filter:drop-shadow(8px 8px 0 rgba(0,0,0,.16));animation:fl 3s ease-in-out infinite}
 </style></head>
-<body><div class="stage">
-  <svg class="st" style="left:140px;top:160px;width:140px" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="var(--lime)" stroke="#111" stroke-width="4"/><rect x="32" y="32" width="36" height="36" fill="var(--blue)" transform="rotate(45 50 50)"/><rect x="44" y="44" width="12" height="12" fill="var(--yellow)"/></svg>
-  <svg class="st" style="right:150px;bottom:170px;width:140px" viewBox="0 0 100 100"><path d="M50 12 C70 12 88 30 88 50 C88 78 50 92 50 92 C50 92 12 78 12 50 C12 30 30 12 50 12Z" fill="var(--cyan)" stroke="#111" stroke-width="4"/></svg>
+<body>
+<div class="livingbg"><b></b><b></b><b></b><b></b><b></b></div>
+<div class="content"><div class="stage">
+  <svg class="st" style="left:150px;top:200px;width:120px" viewBox="0 0 100 100"><path d="M20 80 L52 16 L72 40 Z" fill="var(--lime)" stroke="#111" stroke-width="4"/><circle cx="52" cy="64" r="6" fill="#111"/></svg>
+  <svg class="st" style="right:160px;bottom:190px;width:120px" viewBox="0 0 100 100"><polygon points="50,8 92,50 50,92 8,50" fill="var(--blue)" stroke="#111" stroke-width="4"/><polygon points="50,30 70,50 50,70 30,50" fill="var(--yellow)"/></svg>
 
-  <div class="kicker">מה לומדים בקורס?</div>
-
-  <!-- kinetic word swap, ~1.6s each across 10.3s -->
-  <div class="word" style="animation:wordshow 1.7s ease 0.3s both"><b class="latin" style="background:var(--lime)">Wireframes</b></div>
-  <div class="word" style="animation:wordshow 1.7s ease 2.0s both"><b class="latin" style="background:var(--cyan)">Components</b></div>
-  <div class="word" style="animation:wordshow 1.7s ease 3.7s both"><b class="latin" style="background:var(--yellow)">Auto Layout</b></div>
-  <div class="word" style="animation:wordshow 1.7s ease 5.4s both"><b class="latin" style="background:var(--orange)">High-Fidelity</b></div>
-  <div class="word" style="animation:wordshow 1.7s ease 7.1s both"><b class="latin" style="background:var(--lav)">Prototyping</b></div>
-  <div class="word" style="animation:wordshow 1.9s ease 8.8s both"><b class="latin" style="background:var(--blue);color:#fff">Figma → Web</b></div>
-</div></body></html>
+  <div class="kicker">בקורס תלמדו:</div>
+  <div class="cluster">
+    <div class="tag big" style="--r:-4deg;--d:0.6s;background:var(--lime)"><span class="latin">Wireframes</span></div>
+    <div class="tag big" style="--r:3deg;--d:1.9s;background:var(--cyan)"><span class="latin">Components</span></div>
+    <div class="tag big" style="--r:-3deg;--d:2.8s;background:var(--yellow)"><span class="latin">Auto Layout</span></div>
+    <div class="tag big" style="--r:4deg;--d:4.2s;background:var(--orange)"><span class="latin">High-Fidelity</span></div>
+    <div class="tag big" style="--r:-3deg;--d:5.6s;background:var(--lav)"><span class="latin">Prototyping</span></div>
+    <div class="tag big" style="--r:3deg;--d:7.4s;background:var(--blue);color:#fff"><span class="latin">Figma → Web</span></div>
+  </div>
+</div></div>
+<div class="trans in"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="trans out" style="--t0:9.8s"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</body></html>

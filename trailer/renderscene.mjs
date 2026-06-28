@@ -34,12 +34,12 @@ for (let i = 0; i < nFrames; i++) {
     for (const a of document.getAnimations()) { try { a.pause(); a.currentTime = t; } catch {} }
   }, tMs);
   const n = String(i).padStart(4, '0');
-  await page.screenshot({ path: join(framesDir, `f${n}.png`) });
+  await page.screenshot({ path: join(framesDir, `f${n}.jpg`), type: 'jpeg', quality: 94 });
 }
 await browser.close();
 
 const out = join(here, 'render', 'mp4', outName + '.mp4');
 const r = spawnSync(FF, ['-hide_banner','-loglevel','error','-y','-framerate', String(fps),
-  '-i', join(framesDir, 'f%04d.png'),
+  '-i', join(framesDir, 'f%04d.jpg'),
   '-c:v','libx264','-pix_fmt','yuv420p','-crf','17','-r', String(fps), out], { stdio: 'inherit' });
 console.log(r.status === 0 ? 'encoded ' + out : 'ffmpeg failed');

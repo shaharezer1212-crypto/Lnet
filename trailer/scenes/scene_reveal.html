@@ -1,47 +1,35 @@
 <!doctype html><html lang="he"><head><meta charset="utf-8">
 <link rel="stylesheet" href="../frames/base.css">
 <style>
-  body{background:var(--pink)}
-  .pop{opacity:0;transform:scale(.2) rotate(var(--r,0deg));
-    animation:pop .6s cubic-bezier(.2,1.5,.4,1) var(--d,0s) forwards,
-              fl 3s ease-in-out var(--fd,0s) infinite}
-  @keyframes pop{to{opacity:1;transform:scale(1) rotate(var(--r,0deg))}}
-  @keyframes fl{0%,100%{translate:0 0}50%{translate:0 -14px}}
-
-  .kicker{position:absolute;left:0;right:0;top:230px;text-align:center;
-    font-size:104px;font-weight:900;color:var(--paper);
-    text-shadow:6px 6px 0 var(--ink);
-    opacity:0;transform:translateY(-80px);
-    animation:drop .7s cubic-bezier(.2,1.4,.4,1) .15s forwards}
+  body{background:var(--bg)}
+  .kicker{position:absolute;left:0;right:0;top:235px;text-align:center;
+    font-size:104px;font-weight:900;color:var(--ink);text-shadow:5px 5px 0 var(--paper);
+    opacity:0;transform:translateY(-80px);animation:drop .7s cubic-bezier(.2,1.4,.4,1) .25s both}
   @keyframes drop{to{opacity:1;transform:translateY(0)}}
-
   .figwrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;margin-top:30px}
-  .figmabox{background:var(--lav);border:7px solid var(--ink);
-    box-shadow:16px 16px 0 var(--lime);padding:.02em .2em;
-    font-size:232px;font-weight:900;color:var(--ink);line-height:.92;
-    opacity:0;transform:scale(.3) rotate(-2deg);
-    animation:figpop .7s cubic-bezier(.2,1.6,.35,1) .55s forwards}
+  .figmabox{background:var(--lav);border:7px solid var(--ink);box-shadow:16px 16px 0 var(--lime);
+    padding:.02em .2em;font-size:300px;font-weight:900;color:var(--ink);line-height:.92;
+    opacity:0;transform:scale(.3) rotate(-2deg);animation:figpop .7s cubic-bezier(.2,1.6,.35,1) .7s both}
   @keyframes figpop{to{opacity:1;transform:scale(1) rotate(-2deg)}}
-
-  .sub{position:absolute;left:0;right:0;bottom:235px;text-align:center}
-  .sub span{display:inline-block;font-size:60px;font-weight:800;color:var(--ink);
-    background:var(--paper);border:6px solid var(--ink);border-radius:999px;
-    padding:.18em .85em;box-shadow:9px 9px 0 var(--ink);
-    opacity:0;transform:translateY(60px);
-    animation:rise .6s cubic-bezier(.2,1.4,.4,1) 1.15s forwards}
+  .sub{position:absolute;left:0;right:0;bottom:230px;text-align:center}
+  .sub span{display:inline-block;font-size:62px;font-weight:800;color:var(--ink);
+    background:var(--paper);border:6px solid var(--ink);border-radius:999px;padding:.18em .9em;
+    box-shadow:9px 9px 0 var(--ink);opacity:0;transform:translateY(60px);
+    animation:rise .6s cubic-bezier(.2,1.4,.4,1) 1.3s both}
   @keyframes rise{to{opacity:1;transform:translateY(0)}}
+  .st{position:absolute;filter:drop-shadow(8px 8px 0 rgba(0,0,0,.16));animation:fl 3s ease-in-out infinite}
+  @keyframes fl{0%,100%{translate:0 0}50%{translate:0 -12px}}
 </style></head>
-<body><div class="stage">
+<body>
+<div class="livingbg"><b></b><b></b><b></b><b></b><b></b></div>
+<div class="content"><div class="stage">
+  <svg class="st" style="left:180px;top:200px;width:130px" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="var(--lime)" stroke="#111" stroke-width="4"/><rect x="32" y="32" width="36" height="36" fill="var(--blue)" transform="rotate(45 50 50)"/><rect x="44" y="44" width="12" height="12" fill="var(--orange)"/></svg>
+  <svg class="st" style="right:190px;bottom:210px;width:130px" viewBox="0 0 100 100"><path d="M50 12 C70 12 88 30 88 50 C88 78 50 92 50 92 C50 92 12 78 12 50 C12 30 30 12 50 12Z" fill="var(--pink)" stroke="#111" stroke-width="4"/></svg>
+
   <div class="kicker">הכירו את קורס</div>
   <div class="figwrap"><div class="figmabox latin">FIGMA</div></div>
-
-  <!-- topic tags pop staggered — kept in the margins, clear of the center column and each other -->
-  <div class="tag pop" style="--r:-8deg;--d:1.2s;left:70px;top:150px;background:var(--lime)"><span class="latin">Wireframes</span></div>
-  <div class="tag dash pop" style="--r:8deg;--d:1.35s;--fd:.4s;right:70px;top:150px;background:var(--cyan)"><span class="latin">Components</span></div>
-  <div class="tag pop" style="--r:6deg;--d:1.5s;--fd:.8s;left:70px;top:485px;background:var(--yellow)"><span class="latin">Auto Layout</span></div>
-  <div class="tag pop" style="--r:-7deg;--d:1.4s;--fd:.2s;right:70px;top:485px;background:var(--orange)"><span class="latin">Prototyping</span></div>
-  <div class="tag dash pop" style="--r:5deg;--d:1.6s;--fd:.6s;left:90px;top:830px;background:var(--lav)"><span class="latin">FigJam</span></div>
-  <div class="tag pop" style="--r:-3deg;--d:1.7s;right:90px;top:830px;background:var(--blue);color:#fff"><span class="latin">Plugins</span></div>
-
   <div class="sub"><span>קמפוס IL&nbsp;·&nbsp;האצה להייטק — מסלול <span class="latin" style="all:unset;font-family:'DejaVu Sans';font-weight:900">Design</span></span></div>
-</div></body></html>
+</div></div>
+<div class="trans in"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="trans out" style="--t0:6.5s"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</body></html>

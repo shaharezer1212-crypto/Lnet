@@ -10,6 +10,8 @@
   --orange:#FF7A2F; --yellow:#FFE000;
   --blue:#2233E6; --blue2:#3D5BFF;
   --cyan:#7BEDED; --ink:#111111; --paper:#FFFFFF;
+  /* course color: light purple (lavender) */
+  --bg:#C8B4F2; --bg2:#D8C9F8;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:1920px;height:1080px;overflow:hidden}
@@ -38,3 +40,34 @@ html,body{width:1920px;height:1080px;overflow:hidden}
 .hl::before{content:"";position:absolute;inset:8% -4% 12% -4%;z-index:1;border-radius:6px}
 .grid line{stroke:rgba(0,0,0,.18);stroke-width:2}
 .dashrule{border:0;border-top:5px dashed var(--ink)}
+
+/* ---------- living background: soft lavender + drifting colour blobs ---------- */
+.livingbg{position:absolute;inset:0;overflow:hidden;z-index:0;
+  background:radial-gradient(120% 120% at 20% 10%, var(--bg2), var(--bg) 60%)}
+.livingbg b{position:absolute;border-radius:50%;filter:blur(44px);opacity:.5;mix-blend-mode:multiply;will-change:transform}
+.livingbg b:nth-child(1){width:620px;height:620px;background:var(--lime);left:-120px;top:-80px;animation:drift1 13s ease-in-out infinite}
+.livingbg b:nth-child(2){width:560px;height:560px;background:var(--cyan);right:-100px;top:60px;animation:drift2 16s ease-in-out infinite}
+.livingbg b:nth-child(3){width:600px;height:600px;background:var(--pink2);right:120px;bottom:-160px;animation:drift3 15s ease-in-out infinite}
+.livingbg b:nth-child(4){width:520px;height:520px;background:var(--yellow);left:120px;bottom:-120px;animation:drift1 18s ease-in-out infinite reverse}
+.livingbg b:nth-child(5){width:460px;height:460px;background:var(--orange);left:46%;top:30%;opacity:.32;animation:drift2 14s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(140px,90px) scale(1.18)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-130px,110px) scale(1.12)}}
+@keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(90px,-120px) scale(1.2)}}
+.content{position:absolute;inset:0;z-index:2}
+
+/* ---------- colourful wipe transitions (seamless across hard cuts) ---------- */
+/* 6 vertical colour bars sweeping upward. IN reveals (0-0.5s); OUT covers (last 0.5s). */
+.trans{position:absolute;inset:0;z-index:60;display:flex;pointer-events:none}
+.trans i{flex:1;height:101%}
+.trans i:nth-child(1){background:var(--lime)}
+.trans i:nth-child(2){background:var(--cyan)}
+.trans i:nth-child(3){background:var(--pink)}
+.trans i:nth-child(4){background:var(--yellow)}
+.trans i:nth-child(5){background:var(--orange)}
+.trans i:nth-child(6){background:var(--blue)}
+/* uniform wipe (all bars together) — exact timing, no seam at the cut */
+.trans.in i{animation:wipeUpOut .5s cubic-bezier(.7,0,.3,1) 0s both}
+.trans.out i{animation:wipeUpIn .5s cubic-bezier(.7,0,.3,1) var(--t0,0s) both}
+.trans i:nth-child(odd){margin-top:-16px}   /* subtle diagonal, no timing risk */
+@keyframes wipeUpOut{from{transform:translateY(0)}to{transform:translateY(-114%)}}
+@keyframes wipeUpIn{from{transform:translateY(114%)}to{transform:translateY(0)}}
