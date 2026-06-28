@@ -6,9 +6,9 @@
     font-size:90px;font-weight:900;color:var(--ink);text-shadow:5px 5px 0 var(--paper);
     opacity:0;transform:translateY(-50px);animation:drop .6s cubic-bezier(.2,1.4,.4,1) .15s both}
   @keyframes drop{to{opacity:1;transform:translateY(0)}}
-  .cluster{position:absolute;left:50%;top:56%;transform:translate(-50%,-50%);
-    width:1480px;display:flex;flex-wrap:wrap;gap:32px 40px;align-items:center;justify-content:center}
-  .big{position:relative;font-size:58px;padding:.3em 1em;box-shadow:9px 9px 0 var(--ink);border-width:5px;
+  .cluster{position:absolute;left:50%;top:57%;transform:translate(-50%,-50%);
+    width:1560px;display:flex;flex-wrap:wrap;gap:40px 48px;align-items:center;justify-content:center}
+  .big{position:relative;font-size:78px;padding:.32em 1.05em;box-shadow:11px 11px 0 var(--ink);border-width:6px;
     opacity:0;transform:scale(.2) rotate(var(--r,0deg));
     animation:pop .6s cubic-bezier(.2,1.6,.4,1) var(--d,0s) both, fl 3s ease-in-out var(--d,0s) infinite}
   @keyframes pop{to{opacity:1;transform:scale(1) rotate(var(--r,0deg))}}
@@ -18,8 +18,12 @@
 <body>
 <div class="livingbg"><b></b><b></b><b></b><b></b><b></b></div>
 <div class="content"><div class="stage">
-  <svg class="st" style="left:150px;top:200px;width:120px" viewBox="0 0 100 100"><path d="M20 80 L52 16 L72 40 Z" fill="var(--lime)" stroke="#111" stroke-width="4"/><circle cx="52" cy="64" r="6" fill="#111"/></svg>
-  <svg class="st" style="right:160px;bottom:190px;width:120px" viewBox="0 0 100 100"><polygon points="50,8 92,50 50,92 8,50" fill="var(--blue)" stroke="#111" stroke-width="4"/><polygon points="50,30 70,50 50,70 30,50" fill="var(--yellow)"/></svg>
+  <svg class="st" style="left:120px;top:300px;width:120px" viewBox="0 0 100 100"><path d="M20 80 L52 16 L72 40 Z" fill="var(--lime)" stroke="#111" stroke-width="4"/><circle cx="52" cy="64" r="6" fill="#111"/></svg>
+  <svg class="st" style="right:130px;bottom:230px;width:120px;animation-delay:.5s" viewBox="0 0 100 100"><polygon points="50,8 92,50 50,92 8,50" fill="var(--blue)" stroke="#111" stroke-width="4"/><polygon points="50,30 70,50 50,70 30,50" fill="var(--yellow)"/></svg>
+  <svg class="st" style="right:150px;top:280px;width:110px;animation-delay:.8s" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#cfd8d4" stroke="#111" stroke-width="3"/><g fill="#111"><rect x="34" y="42" width="9" height="9"/><rect x="58" y="42" width="9" height="9"/><rect x="34" y="60" width="32" height="9"/></g></svg>
+  <svg class="st" style="left:150px;bottom:240px;width:110px;animation-delay:.3s" viewBox="0 0 100 100"><path d="M50 86 C16 62 10 36 30 24 C44 16 50 30 50 36 C50 30 56 16 70 24 C90 36 84 62 50 86Z" fill="var(--pink)" stroke="#111" stroke-width="5"/></svg>
+  <svg class="st" style="left:60px;top:560px;width:90px;animation-delay:1s" viewBox="0 0 100 100"><path d="M50 6 L60 40 L96 50 L60 60 L50 94 L40 60 L4 50 L40 40 Z" fill="var(--orange)" stroke="#111" stroke-width="4"/></svg>
+  <svg class="st" style="right:70px;top:600px;width:96px;animation-delay:.6s" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="var(--cyan)" stroke="#111" stroke-width="5"/></svg>
 
   <div class="kicker">בקורס תלמדו:</div>
   <div class="cluster">
