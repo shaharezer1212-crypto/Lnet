@@ -44,12 +44,6 @@ export const LOGO_WHITE_URL = staticFile('logo-white.png');
 // Empty → a labelled placeholder panel is shown instead.
 export const FOOTAGE_URL = '';
 
-// Client's new opening clip (top-down → man's alert → reveal → woman's alert),
-// 15s. Its final frame is held with a gentle push-in so the ~20s opening VO
-// finishes over it — no slow-motion, no narration overlap.
-export const OPENING_URL = staticFile('opening.mp4');
-export const OPENING_HOLD = staticFile('opening-hold.jpg');
-
 // Real screenshot of the KudoZ store (committed to the repo), shown in a
 // browser frame in the infographic section with an animated cursor click.
 export const STORE_URL = staticFile('store.jpg');
@@ -124,16 +118,17 @@ export const TIMELINE: Beat[] = [
     seconds: 3.5,
     mg: 'intro',
   },
-  // ── Scene 1 — the opening, edited by the client (committed to the repo) ──
-  // A single 21.1s edited take (top-down → the man → reaction → reveal), used
-  // as-is. Its own audio is muted (volume 0); the phased narration + music play
-  // over it. The opening VO (seg 1) starts here.
+  // ── Scene 1 — new opening: lobby→lounge entrance joined with the recognition
+  // footage (man's notification → reveal → woman), all at 1x. Played at a hair
+  // under speed (imperceptible) so the ~20.3s opening VO lands exactly with no
+  // freeze. Its own audio is muted; narration + music play over it.
   {
     kind: 'clip',
     id: 'opening',
-    label: 'S1 · client new opening (15s clip + held final frame)',
-    seconds: 21,
+    label: 'S1 · new opening (lobby→lounge + recognition)',
+    seconds: 20.4,
     volume: 0,
+    playbackRate: 0.96,
     jobId: 'client-edit',
     url: staticFile('opening.mp4'),
     narr: 'narration/1.mp3',
@@ -290,7 +285,7 @@ export const TIMELINE: Beat[] = [
 // s1a→s1b uses a longer, gradual dip-to-black, so it gets a longer slot.
 // Transition length (frames) after beat i. The intro → opening dim gets a
 // slightly longer slot for a smoother screen dim; the rest are uniform.
-export const transAt = (i: number): number => (i === 0 ? 22 : TRANSITION);
+export const transAt = (i: number): number => (i === 0 ? 22 : i === 1 ? 2 : TRANSITION);
 
 // Total composition length, accounting for the (variable) cross-fade overlaps.
 export const TOTAL_FRAMES =
