@@ -1,5 +1,6 @@
 import {Composition} from 'remotion';
 import {KudoZVideo} from './KudoZVideo';
+import {MusicOnly} from './MusicBed';
 import {FPS, WIDTH, HEIGHT, TOTAL_FRAMES} from './clips';
 
 // Clean plate: same edit, but with no added text overlays and the screenshots
@@ -20,6 +21,14 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="KudoZClean"
         component={KudoZClean}
+        durationInFrames={TOTAL_FRAMES}
+        fps={FPS}
+        width={WIDTH}
+        height={HEIGHT}
+      />
+      <Composition
+        id="KudoZMusic"
+        component={MusicOnly}
         durationInFrames={TOTAL_FRAMES}
         fps={FPS}
         width={WIDTH}

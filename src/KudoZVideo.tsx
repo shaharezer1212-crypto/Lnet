@@ -1,18 +1,11 @@
-import {AbsoluteFill, Audio, interpolate, useCurrentFrame} from 'remotion';
+import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
 import type {TransitionPresentation} from '@remotion/transitions';
 import {slide} from '@remotion/transitions/slide';
-import {
-  TIMELINE,
-  TOTAL_FRAMES,
-  transAt,
-  sec,
-  MUSIC_URL,
-  MUSIC_VOLUME,
-  CLIP_VOLUME,
-} from './clips';
+import {TIMELINE, TOTAL_FRAMES, transAt, sec, CLIP_VOLUME} from './clips';
 import {Clip} from './Clip';
 import {CleanContext} from './clean';
+import {MusicBed} from './MusicBed';
 import {Narration} from './Narration';
 import {SceneTitle} from './mg/SceneTitle';
 import {Intro} from './mg/Intro';
@@ -105,17 +98,7 @@ const presentationFor = (i: number): TransitionPresentation<Record<string, unkno
   >;
 };
 
-const Music: React.FC = () => {
-  const frame = useCurrentFrame();
-  if (!MUSIC_URL) return null;
-  const vol = interpolate(
-    frame,
-    [0, 20, TOTAL_FRAMES - 30, TOTAL_FRAMES],
-    [0, MUSIC_VOLUME, MUSIC_VOLUME, 0],
-    {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'},
-  );
-  return <Audio src={MUSIC_URL} volume={vol} />;
-};
+const Music = MusicBed;
 
 // Gentle fade-in from black at the very start and fade-out at the very end.
 const BlackFades: React.FC = () => {
