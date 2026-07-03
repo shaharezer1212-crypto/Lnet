@@ -225,15 +225,15 @@ export const TIMELINE: Beat[] = [
     seconds: 5.5,
     mg: 'storescreens',
   },
-  // ── Scene 5 — stickers swirl → gift boxes (single cinematic take) ────────
+  // ── Scene 5 — both standing together at the Z wall (client take) ─────────
   {
     kind: 'clip',
     id: 's5',
-    label: 'S5 · stand → icons join → gifts (one take)',
+    label: 'S5 · both standing at the Z wall (client take)',
     seconds: 10,
-    jobId: 'edbb3073-9e4d-44d5-9686-947ff4aa1ad9',
-    url: `${CDN}/hf_20260617_120010_edbb3073-9e4d-44d5-9686-947ff4aa1ad9.mp4`,
-    vo: `${CDN}/hf_20260617_111115_448f9c75-8221-4876-b2b0-ba1755c2cc65.wav`,
+    volume: 0,
+    jobId: 'client-edit',
+    url: staticFile('ends7.mp4'),
     narration: 'Receiving recognition awards points that can be redeemed for amazing gifts.',
     narr: 'narration/7.mp3',
   },
@@ -251,21 +251,20 @@ export const TIMELINE: Beat[] = [
   {
     kind: 'clip',
     id: 'end-man',
-    label: 'END · man + floating mascots (push-in)',
-    seconds: 8, // gently slowed to give the ending VO room
-    playbackRate: 0.75, // 6s take over 8s
-    jobId: 'bf0b155d-4994-4306-b3c8-d9933f8e3122',
-    url: `${CDN}/hf_20260617_145326_bf0b155d-4994-4306-b3c8-d9933f8e3122.mp4`,
+    label: 'END · man holding the ZIM gift (client take)',
+    seconds: 9,
+    volume: 0,
+    jobId: 'client-edit',
+    url: staticFile('ends9.mp4'),
   },
   {
     kind: 'clip',
     id: 'end-walk',
-    label: 'END · walk away into the distance (identity-locked, correct direction)',
-    seconds: 8, // gently slowed to extend the closing walk under the ending VO
-    playbackRate: 0.75, // 6s take over 8s
-    jobId: 'f0f654ff-2481-4ee7-8b28-61ce3ae16dce',
-    url: `${CDN}/hf_20260617_194946_f0f654ff-2481-4ee7-8b28-61ce3ae16dce.mp4`,
-    vo: `${CDN}/hf_20260617_111123_0b821fa2-77cb-4890-9057-6a8434a1d484.wav`,
+    label: 'END · both walking away with stickers (client take)',
+    seconds: 9,
+    volume: 0,
+    jobId: 'client-edit',
+    url: staticFile('ends10.mp4'),
     narration:
       'Together, we’ll create a positive work environment built on trust, recognition and mutual support.',
   },

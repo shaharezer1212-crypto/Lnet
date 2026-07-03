@@ -8,6 +8,7 @@
     "render": "remotion render KudoZ out/kudoz.mp4 --concurrency=2 --scale=2 --crf=16",
     "render:clean": "remotion render KudoZClean out/kudoz-clean.mp4 --concurrency=2 --scale=2 --crf=16",
     "render:music": "remotion render KudoZMusic out/kudoz-music-invideo.mp3",
+    "render:ending": "remotion render KudoZ out/kudoz-ending.mp4 --frames=2141-3261 --concurrency=2 --scale=2 --crf=16",
     "upgrade": "remotion upgrade"
   },
   "dependencies": {
