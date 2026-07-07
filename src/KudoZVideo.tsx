@@ -48,6 +48,9 @@ const isWhite = (b: (typeof TIMELINE)[number]) => b.kind === 'mg' && b.mg === 'w
 // of the white placeholders.
 const SLIDE_DIRS = ['from-bottom', 'from-right', 'from-left', 'from-top'] as const;
 const presentationFor = (i: number): TransitionPresentation<Record<string, unknown>> => {
+  // scene 1 → scene 2 is the same lounge (wide → the man): a soft dissolve
+  // connects them instead of an abrupt slide.
+  if (i === 0) return dissolve();
   if (isWhite(TIMELINE[i]) || isWhite(TIMELINE[i + 1])) return dissolve();
   return slide({direction: SLIDE_DIRS[i % SLIDE_DIRS.length]}) as TransitionPresentation<
     Record<string, unknown>

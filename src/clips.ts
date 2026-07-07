@@ -134,7 +134,9 @@ export const TIMELINE: Beat[] = [
 // s1a→s1b uses a longer, gradual dip-to-black, so it gets a longer slot.
 // Transition length (frames) after beat i. The intro → opening dim gets a
 // slightly longer slot for a smoother screen dim; the rest are uniform.
-export const transAt = (_i: number): number => TRANSITION;
+// Uniform transition length, but the scene 1 → scene 2 dissolve gets a slightly
+// longer slot so the blend feels smooth and connected.
+export const transAt = (i: number): number => (i === 0 ? 24 : TRANSITION);
 
 // Total composition length, accounting for the (variable) cross-fade overlaps.
 export const TOTAL_FRAMES =
