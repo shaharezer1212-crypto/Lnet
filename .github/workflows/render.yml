@@ -49,25 +49,6 @@ jobs:
           name: kudoz-clean
           path: out/kudoz-clean.mp4
 
-  # Fast review render of just the ending section (frame range of the full
-  # composition, so narration + music line up exactly).
-  ending:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: claude/kind-hopper-hnf487
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - run: npm install
-      - name: Render ending section only
-        run: npm run render:ending
-      - uses: actions/upload-artifact@v4
-        with:
-          name: kudoz-ending
-          path: out/kudoz-ending.mp4
-
   music:
     runs-on: ubuntu-latest
     steps:

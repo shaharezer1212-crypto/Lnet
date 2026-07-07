@@ -100,7 +100,7 @@ export type Beat =
       id: string;
       label: string;
       seconds: number;
-      mg: 'intro' | 'logo' | 'store' | 'screens' | 'storescreens' | 'criteria' | 'outro';
+      mg: 'intro' | 'logo' | 'store' | 'screens' | 'storescreens' | 'criteria' | 'outro' | 'white';
       vo?: string;
       narration?: string;
       // Phased narration: staticFile path of the VO segment that STARTS here.
@@ -110,181 +110,31 @@ export type Beat =
 export const sec = (s: number) => Math.round(s * FPS);
 
 export const TIMELINE: Beat[] = [
-  // ── Intro — KudoZ logo sting before the film begins ─────────────────────
-  {
-    kind: 'mg',
-    id: 'intro',
-    label: 'Intro · KudoZ logo sting',
-    seconds: 3.5,
-    mg: 'intro',
-  },
-  // ── Scene 1 — new opening: lobby→lounge entrance joined with the recognition
-  // footage (man's notification → reveal → woman), all at 1x. Played at a hair
-  // under speed (imperceptible) so the ~20.3s opening VO lands exactly with no
-  // freeze. Its own audio is muted; narration + music play over it.
-  {
-    kind: 'clip',
-    id: 'opening',
-    label: 'S1 · new opening (lobby→lounge + recognition)',
-    seconds: 20.4,
-    volume: 0,
-    playbackRate: 0.96,
-    jobId: 'client-edit',
-    url: staticFile('opening.mp4'),
-    narr: 'narration/1.mp3',
-    narration:
-      'In times of uncertainty, most people focus on the bigger picture. But this is the perfect time to acknowledge the people who keep us moving forward — because even a small compliment can give someone the boost they need.',
-  },
-  // ── Scene 2 — coffee toast ──────────────────────────────────────────────
-  {
-    kind: 'clip',
-    id: 's2',
-    label: 'S2 · coffee toast',
-    seconds: 5,
-    jobId: '5a5829e7-252f-4754-a43c-76d6fb17d26b',
-    url: `${CDN}/hf_20260617_092838_5a5829e7-252f-4754-a43c-76d6fb17d26b.mp4`,
-    vo: `${CDN}/hf_20260617_111108_fe0f5456-4f00-4250-b1b7-8fd2311add5b.wav`,
-    narration: 'Here at ZIM, we love showing our appreciation.',
-    narr: 'narration/2.mp3',
-    title: 'showing our appreciation',
-    titleEmphasis: 1,
-  },
-  // ── Scene 3 — corridor cheer ────────────────────────────────────────────
-  {
-    kind: 'clip',
-    id: 's3',
-    label: 'S3 · corridor · colleague "like" → close-up smile (chosen take)',
-    seconds: 3, // trimmed again — the slow close-up on her at the end was cut
-    jobId: '24e25606-3a4a-4c73-87f2-4a0159876fb3',
-    url: `${CDN}/hf_20260617_121627_24e25606-3a4a-4c73-87f2-4a0159876fb3.mp4`,
-    volume: 0, // mute the colleague's diegetic SFX in the corridor
-    vo: `${CDN}/hf_20260617_111109_5c314ca9-56ad-451f-8ce4-a32f0df2cc86.wav`,
-    narration: 'Putting in a good word whenever we can.',
-    narr: 'narration/3.mp3',
-    title: 'Putting in a good word',
-    titlePos: 'left',
-    titleStart: 6, // synced to the spoken line (no lead silence in the VO)
-    titleEmphasis: 2, // "good word" rendered large
-    titleAngled: true, // projected on the corridor wall in perspective
-  },
-  // ── Scene 4 — recognitions at the desk ──────────────────────────────────
-  {
-    kind: 'clip',
-    id: 's4a',
-    label: 'S4 · man recognized (Ben Johns)',
-    seconds: 5,
-    jobId: 'fb181f32-c01d-42c1-b38e-8eefc1d04f3d',
-    url: `${CDN}/hf_20260617_092856_fb181f32-c01d-42c1-b38e-8eefc1d04f3d.mp4`,
-    vo: `${CDN}/hf_20260617_111110_e1d8f75e-075b-459c-b4c9-08666908e7f2.wav`,
-    narration: 'A small compliment here, a little gesture there.',
-    narr: 'narration/4.mp3',
-  },
-  {
-    kind: 'clip',
-    id: 's4b',
-    label: 'S4 · she enters → sits beside him → her recognition',
-    seconds: 6.5,
-    jobId: '8ff62f8e-e305-481b-9a86-ae954ea01065',
-    url: `${CDN}/hf_20260617_170736_8ff62f8e-e305-481b-9a86-ae954ea01065.mp4`,
-    vo: `${CDN}/hf_20260617_111111_7a90eb3e-fe0c-47d9-b5a3-ab0ad92b07fe.wav`,
-    narration:
-      'These are the kinds of things that create the flourishing work environment we build at ZIM.',
-    narr: 'narration/5.mp3',
-  },
-  // ── Motion graphics 1 — logo reveal ─────────────────────────────────────
-  {
-    kind: 'mg',
-    id: 'mg-logo',
-    label: 'MG · KudoZ logo reveal',
-    seconds: 6,
-    mg: 'logo',
-    // The whole infographic VO (logo + criteria, ~25.6s) starts here and plays
-    // on across the criteria beat.
-    narr: 'narration/6.mp3',
-    narration: 'Introducing KudoZ — ZIM’s new employee recognition system.',
-  },
-  // ── Motion graphics 1b — the KudoZ system in action (screens showcase) ───
-  // On the VB-BG-1 brand background: the nine real system screenshots play in a
-  // designed browser frame with a clicking cursor (shown 9 → 1), with the four
-  // values kept as an elegant title alongside. Replaces the old criteria cards.
-  {
-    kind: 'mg',
-    id: 'mg-screens',
-    label: 'MG · KudoZ system screens (9→1) on VB-BG-1',
-    seconds: 21, // infographic VO (logo + screens) lands across these
-    mg: 'screens',
-  },
-  // ── Online-store pause — a breath on the blue screen showing the virtual
-  // mall (store screenshots) with music only, before the gifts scene. In the
-  // clean plate this is a white screen, giving ~5s of music-only white after
-  // the narration's closing "…by sending e-thanks to each other" line ───────
-  {
-    kind: 'mg',
-    id: 'mg-store',
-    label: 'MG · online store pause (virtual mall, music only)',
-    seconds: 5.5,
-    mg: 'storescreens',
-  },
-  // ── Scene 5 — both standing together at the Z wall (client take) ─────────
-  {
-    kind: 'clip',
-    id: 's5',
-    label: 'S5 · both standing at the Z wall (client take)',
-    seconds: 10,
-    volume: 0,
-    jobId: 'client-edit',
-    url: staticFile('ends7.mp4'),
-    narration: 'Receiving recognition awards points that can be redeemed for amazing gifts.',
-    narr: 'narration/7.mp3',
-  },
-  // ── Ending ──────────────────────────────────────────────────────────────
-  {
-    kind: 'clip',
-    id: 'end-woman',
-    label: 'END · woman + gift',
-    seconds: 4,
-    jobId: '3eba2d5a-c69e-41fa-a71c-7a34aae3b4f4',
-    url: `${CDN}/hf_20260617_102730_3eba2d5a-c69e-41fa-a71c-7a34aae3b4f4.mp4`,
-    // The ending VO (~18s) starts here and plays across woman + man + walk.
-    narr: 'narration/8.mp3',
-  },
-  {
-    kind: 'clip',
-    id: 'end-man',
-    label: 'END · man holding the ZIM gift (client take)',
-    seconds: 9,
-    volume: 0,
-    jobId: 'client-edit',
-    url: staticFile('ends9.mp4'),
-  },
-  {
-    kind: 'clip',
-    id: 'end-walk',
-    label: 'END · both walking away with stickers (client take)',
-    seconds: 9,
-    volume: 0,
-    jobId: 'client-edit',
-    url: staticFile('ends10.mp4'),
-    narration:
-      'Together, we’ll create a positive work environment built on trust, recognition and mutual support.',
-  },
-  // ── Motion graphics 3 — outro logo + tagline ────────────────────────────
-  {
-    kind: 'mg',
-    id: 'mg-outro',
-    label: 'MG · outro tagline',
-    seconds: 7.5,
-    mg: 'outro',
-    narr: 'narration/9.mp3',
-    narration: 'KudoZ — where appreciation becomes culture.',
-  },
+  // New edit — the client's fresh scenes (new cast). Music only, NO narration.
+  // Live scenes 1-10 in order, with plain white placeholders where the graphics
+  // used to be (middle = logo + screenshots slot, end = outro slot). All clips
+  // are muted; only the background music plays.
+  {kind: 'clip', id: 'sc1', label: 'Scene 1 · lounge two-shot', seconds: 5, volume: 0, jobId: 'client', url: staticFile('sc1.mp4')},
+  {kind: 'clip', id: 'sc2', label: 'Scene 2 · man + notification', seconds: 15, volume: 0, jobId: 'client', url: staticFile('sc2.mp4')},
+  {kind: 'clip', id: 'sc3', label: 'Scene 3 · coffee / kitchenette', seconds: 6, volume: 0, jobId: 'client', url: staticFile('sc3.mp4')},
+  {kind: 'clip', id: 'sc4', label: 'Scene 4 · corridor (woman)', seconds: 6, volume: 0, jobId: 'client', url: staticFile('sc4.mp4')},
+  {kind: 'clip', id: 'sc5', label: 'Scene 5 · desk / ZIMonitor', seconds: 6, volume: 0, jobId: 'client', url: staticFile('sc5.mp4')},
+  {kind: 'clip', id: 'sc6', label: 'Scene 6 · office walk (woman)', seconds: 6, volume: 0, jobId: 'client', url: staticFile('sc6.mp4')},
+  // ── White placeholder — the middle graphics slot (logo + screenshots) ──
+  {kind: 'mg', id: 'mid-white', label: 'White placeholder · graphics slot', seconds: 32.5, mg: 'white'},
+  {kind: 'clip', id: 'sc7', label: 'Scene 7 · both standing at the Z wall', seconds: 10, volume: 0, jobId: 'client', url: staticFile('sc7.mp4')},
+  {kind: 'clip', id: 'sc8', label: 'Scene 8 · woman + gift', seconds: 4, volume: 0, jobId: 'client', url: staticFile('sc8.mp4')},
+  {kind: 'clip', id: 'sc9', label: 'Scene 9 · man + gift', seconds: 10, volume: 0, jobId: 'client', url: staticFile('sc9.mp4')},
+  {kind: 'clip', id: 'sc10', label: 'Scene 10 · walking away + stickers', seconds: 9, volume: 0, jobId: 'client', url: staticFile('sc10.mp4')},
+  // ── White placeholder — the end (outro) slot ──
+  {kind: 'mg', id: 'end-white', label: 'White placeholder · outro slot', seconds: 7.5, mg: 'white'},
 ];
 
 // Transition length (frames) after beat i. Default is TRANSITION; the opening
 // s1a→s1b uses a longer, gradual dip-to-black, so it gets a longer slot.
 // Transition length (frames) after beat i. The intro → opening dim gets a
 // slightly longer slot for a smoother screen dim; the rest are uniform.
-export const transAt = (i: number): number => (i === 0 ? 22 : i === 1 ? 2 : TRANSITION);
+export const transAt = (_i: number): number => TRANSITION;
 
 // Total composition length, accounting for the (variable) cross-fade overlaps.
 export const TOTAL_FRAMES =
