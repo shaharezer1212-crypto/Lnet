@@ -1,0 +1,29 @@
+<!doctype html><html lang="he"><head><meta charset="utf-8">
+<style>
+  @font-face{font-family:'Almoni';src:url('../fonts/almoni-regular.otf') format('opentype');font-weight:400 900}
+  :root{--navy:#282331;--teal:#1BA88A;--coral:#F65E5E;--peach:#F5C07A;--olive:#C8CD6B;--paper:#fff}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:var(--paper);font-family:'Almoni','DejaVu Sans',sans-serif}
+  .stage{position:relative;width:1080px;height:1920px}
+  .corner{position:absolute;width:420px;height:420px}
+  .tl{top:0;left:0}.tr{top:0;right:0}.bl{bottom:0;left:0}.br{bottom:0;right:0}
+
+  .titlewrap{position:absolute;left:0;right:0;top:360px;text-align:center}
+  .kick{font-weight:800;font-size:64px;color:var(--navy);opacity:.85}
+  .free{display:inline-block;margin-top:14px;font-weight:900;font-size:190px;color:var(--paper);
+    background:var(--coral);padding:.05em .3em;border-radius:34px;transform:rotate(-2deg);
+    box-shadow:16px 16px 0 var(--navy)}
+  .sub{position:absolute;left:0;right:0;bottom:250px;text-align:center;font-weight:800;font-size:56px;color:var(--navy)}
+</style></head>
+<body><div class="stage">
+  <svg class="corner tl" viewBox="0 0 420 420"><path d="M0 0 H420 L0 420 Z" fill="var(--navy)"/><path d="M0 0 H230 L0 230 Z" fill="var(--peach)"/><circle cx="95" cy="95" r="52" fill="var(--teal)"/></svg>
+  <svg class="corner tr" viewBox="0 0 420 420"><path d="M420 0 H120 L420 320 Z" fill="var(--peach)"/><circle cx="320" cy="110" r="62" fill="none" stroke="var(--coral)" stroke-width="20"/></svg>
+  <svg class="corner bl" viewBox="0 0 420 420"><circle cx="110" cy="320" r="58" fill="none" stroke="var(--coral)" stroke-width="20"/><path d="M0 420 H180 L0 260 Z" fill="var(--olive)"/></svg>
+  <svg class="corner br" viewBox="0 0 420 420"><path d="M420 420 H40 L420 90 Z" fill="var(--teal)"/><circle cx="300" cy="170" r="46" fill="var(--navy)"/></svg>
+
+  <div class="titlewrap">
+    <div class="kick">כל הקורס</div>
+    <div class="free">בחינם!</div>
+  </div>
+  <div class="sub">צפו בקטעים מתוך הקורס</div>
+</div></body></html>

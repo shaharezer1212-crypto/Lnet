@@ -1,0 +1,45 @@
+<!doctype html><html lang="he"><head><meta charset="utf-8">
+<style>
+  @font-face{font-family:'Almoni';src:url('../fonts/almoni-regular.otf') format('opentype');font-weight:400 900}
+  :root{--navy:#282331;--teal:#1BA88A;--coral:#F65E5E;--peach:#F5C07A;--olive:#C8CD6B;--gray:#D6DBE0;--paper:#fff}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:var(--paper);
+    font-family:'Almoni','DejaVu Sans',sans-serif}
+  .stage{position:relative;width:1080px;height:1920px}
+  .corner{position:absolute;width:560px;height:560px}
+  .tl{top:0;left:0;animation:inTL .6s cubic-bezier(.2,1.3,.4,1) both}
+  .tr{top:0;right:0;animation:inTR .6s cubic-bezier(.2,1.3,.4,1) .08s both}
+  .bl{bottom:0;left:0;animation:inBL .6s cubic-bezier(.2,1.3,.4,1) .12s both}
+  .br{bottom:0;right:0;animation:inBR .6s cubic-bezier(.2,1.3,.4,1) .16s both}
+  @keyframes inTL{from{transform:translate(-60px,-60px);opacity:0}to{transform:none;opacity:1}}
+  @keyframes inTR{from{transform:translate(60px,-60px);opacity:0}to{transform:none;opacity:1}}
+  @keyframes inBL{from{transform:translate(-60px,60px);opacity:0}to{transform:none;opacity:1}}
+  @keyframes inBR{from{transform:translate(60px,60px);opacity:0}to{transform:none;opacity:1}}
+
+  .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .p1{font-weight:900;font-size:180px;color:var(--navy);line-height:.9;letter-spacing:-2px;
+    opacity:0;transform:scale(.6);animation:pop .55s cubic-bezier(.2,1.6,.4,1) .45s both}
+  .p2{font-weight:500;font-size:120px;color:var(--navy);line-height:.95;letter-spacing:-1px;
+    opacity:0;transform:scale(.6);animation:pop .55s cubic-bezier(.2,1.6,.4,1) .58s both}
+  .heb{margin-top:26px;font-weight:800;font-size:82px;color:var(--navy);
+    opacity:0;transform:translateY(24px);animation:rise .5s ease .78s both}
+  @keyframes pop{to{opacity:1;transform:scale(1)}}
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+  .latin{font-family:'DejaVu Sans',sans-serif}
+</style></head>
+<body><div class="stage">
+  <!-- TOP-LEFT cluster -->
+  <svg class="corner tl" viewBox="0 0 560 560"><path d="M0 0 H560 L0 560 Z" fill="var(--navy)"/><path d="M0 0 H300 L0 300 Z" fill="var(--peach)"/><circle cx="120" cy="120" r="70" fill="var(--teal)"/><path d="M0 300 A150 150 0 0 1 150 450 L0 450 Z" fill="var(--coral)"/></svg>
+  <!-- TOP-RIGHT cluster -->
+  <svg class="corner tr" viewBox="0 0 560 560"><path d="M560 0 H120 L560 440 Z" fill="var(--peach)"/><circle cx="430" cy="150" r="86" fill="var(--paper)"/><circle cx="430" cy="150" r="86" fill="none" stroke="var(--coral)" stroke-width="26"/><path d="M560 300 H440 L560 420 Z" fill="var(--coral)"/></svg>
+  <!-- BOTTOM-LEFT cluster -->
+  <svg class="corner bl" viewBox="0 0 560 560"><circle cx="150" cy="420" r="80" fill="none" stroke="var(--coral)" stroke-width="26"/><path d="M0 560 H240 L0 360 Z" fill="var(--peach)"/></svg>
+  <!-- BOTTOM-RIGHT cluster -->
+  <svg class="corner br" viewBox="0 0 560 560"><path d="M560 560 H0 L560 120 Z" fill="var(--teal)"/><path d="M560 560 H280 L560 320 Z" fill="var(--navy)"/><circle cx="420" cy="200" r="60" fill="var(--olive)"/></svg>
+
+  <div class="center">
+    <div class="p1 latin">Product</div>
+    <div class="p2 latin">management</div>
+    <div class="heb">ניהול מוצר</div>
+  </div>
+</div></body></html>
