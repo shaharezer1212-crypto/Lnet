@@ -14,11 +14,11 @@ const CSS = `
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{width:1080px;height:1920px;background:transparent;font-family:'Almoni','DejaVu Sans',sans-serif}
   .stage{position:relative;width:1080px;height:1920px}
-  /* opening hook — white on green, top */
-  .hook{position:absolute;left:50%;top:150px;transform:translateX(-50%) rotate(-1.5deg);
-    background:var(--teal);color:var(--paper);font-weight:900;font-size:96px;line-height:1.05;
-    padding:.3em .55em;border-radius:26px;text-align:center;max-width:940px;
-    box-shadow:14px 14px 0 var(--navy)}
+  /* opening hook — white on green, small, top */
+  .hook{position:absolute;left:50%;top:96px;transform:translateX(-50%);
+    background:var(--teal);color:var(--paper);font-weight:900;font-size:62px;line-height:1.12;
+    padding:.26em .55em;border-radius:20px;text-align:center;white-space:nowrap;
+    box-shadow:9px 9px 0 var(--navy)}
   /* keyword — simple white, bottom */
   .kwb{position:absolute;left:0;right:0;bottom:210px;text-align:center;
     font-weight:900;font-size:104px;color:var(--paper);white-space:nowrap;

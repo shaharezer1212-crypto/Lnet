@@ -7,9 +7,12 @@ PUNCH="scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,fps=3
 FILL916="scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,setsar=1,fps=30,format=yuv420p"
 VENC="-c:v libx264 -pix_fmt yuv420p -crf 19 -r 30"; AENC="-c:a aac -ar 44100 -ac 2 -b:a 192k"
 
-# seg1: pres1 + green hook title (top), fade 0.4-4.6
-"$FF" -hide_banner -loglevel error -i clips/pres1.mp4 -loop 1 -i $T/hook.png -filter_complex \
- "[0:v]$PUNCH[v];[1:v]format=rgba,fade=t=in:st=0.4:d=0.4:alpha=1,fade=t=out:st=4.3:d=0.4:alpha=1[h];[v][h]overlay=0:0[vo]" \
+# seg1: pres1 + green hook (top, 0.4-4.6) + logo lower-third (6.0-9.8)
+"$FF" -hide_banner -loglevel error -i clips/pres1.mp4 -loop 1 -i $T/hook.png -loop 1 -i $T/logo.png -filter_complex \
+ "[0:v]$PUNCH[v]; \
+  [1:v]format=rgba,fade=t=in:st=0.4:d=0.4:alpha=1,fade=t=out:st=4.3:d=0.4:alpha=1[h]; \
+  [2:v]format=rgba,fade=t=in:st=6.0:d=0.4:alpha=1,fade=t=out:st=9.6:d=0.4:alpha=1[lg]; \
+  [v][h]overlay=0:0[o1];[o1][lg]overlay=0:0[vo]" \
  -map "[vo]" -map 0:a -t 11.28 $VENC $AENC $R/seg1.mp4 -y
 
 # seg3: pres2 + 6 white bottom keywords, synced to speech onsets (local times)
@@ -17,12 +20,12 @@ VENC="-c:v libx264 -pix_fmt yuv420p -crf 19 -r 30"; AENC="-c:a aac -ar 44100 -ac
  -loop 1 -i $T/kw1.png -loop 1 -i $T/kw2.png -loop 1 -i $T/kw3.png -loop 1 -i $T/kw4.png -loop 1 -i $T/kw5.png -loop 1 -i $T/kw6.png \
  -filter_complex \
  "[0:v]$PUNCH[v]; \
-  [1:v]format=rgba,fade=t=in:st=4.67:d=0.25:alpha=1,fade=t=out:st=7.0:d=0.25:alpha=1[k1]; \
-  [2:v]format=rgba,fade=t=in:st=7.41:d=0.25:alpha=1,fade=t=out:st=9.6:d=0.25:alpha=1[k2]; \
-  [3:v]format=rgba,fade=t=in:st=9.92:d=0.25:alpha=1,fade=t=out:st=12.7:d=0.25:alpha=1[k3]; \
-  [4:v]format=rgba,fade=t=in:st=13.00:d=0.25:alpha=1,fade=t=out:st=14.8:d=0.25:alpha=1[k4]; \
-  [5:v]format=rgba,fade=t=in:st=15.10:d=0.25:alpha=1,fade=t=out:st=18.7:d=0.25:alpha=1[k5]; \
-  [6:v]format=rgba,fade=t=in:st=18.99:d=0.25:alpha=1,fade=t=out:st=21.1:d=0.25:alpha=1[k6]; \
+  [1:v]format=rgba,fade=t=in:st=13.72:d=0.2:alpha=1,fade=t=out:st=17.5:d=0.2:alpha=1[k1]; \
+  [2:v]format=rgba,fade=t=in:st=6.72:d=0.2:alpha=1,fade=t=out:st=8.55:d=0.2:alpha=1[k2]; \
+  [3:v]format=rgba,fade=t=in:st=8.72:d=0.2:alpha=1,fade=t=out:st=9.55:d=0.2:alpha=1[k3]; \
+  [4:v]format=rgba,fade=t=in:st=9.72:d=0.2:alpha=1,fade=t=out:st=11.55:d=0.2:alpha=1[k4]; \
+  [5:v]format=rgba,fade=t=in:st=11.72:d=0.2:alpha=1,fade=t=out:st=13.55:d=0.2:alpha=1[k5]; \
+  [6:v]format=rgba,fade=t=in:st=17.72:d=0.2:alpha=1,fade=t=out:st=20.5:d=0.2:alpha=1[k6]; \
   [v][k1]overlay=0:0[o1];[o1][k2]overlay=0:0[o2];[o2][k3]overlay=0:0[o3];[o3][k4]overlay=0:0[o4];[o4][k5]overlay=0:0[o5];[o5][k6]overlay=0:0[vo]" \
  -map "[vo]" -map 0:a -t 21.32 $VENC $AENC $R/seg3.mp4 -y
 
