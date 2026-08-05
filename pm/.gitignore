@@ -1,9 +1,10 @@
 node_modules
 bin/
 render/frames/
+render/titles/
 _thumbs/
 render/seg*.mp4
 render/_*.mp4
-render/_*.txt
-render/reellist.txt
+render/reel_speech.mp4
+render/*.txt
 render/*.png
