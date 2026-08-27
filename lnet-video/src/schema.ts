@@ -27,6 +27,20 @@ export const titledVideoSchema = z.object({
 
 export type TitledVideoProps = z.infer<typeof titledVideoSchema>;
 
+const anchorSchema = z.enum([
+  "top-right",
+  "top-center",
+  "top-left",
+  "center-right",
+  "center",
+  "center-left",
+  "bottom-right",
+  "bottom-center",
+  "bottom-left",
+]);
+
+export type Anchor = z.infer<typeof anchorSchema>;
+
 export const titleCardSchema = z.object({
   /** File name inside `public/` (e.g. "beach.png") or a full URL. */
   imageSrc: z.string(),
@@ -36,16 +50,18 @@ export const titleCardSchema = z.object({
   subtitle: z.string(),
   /** The sign-off line, e.g. the team name. */
   signature: z.string(),
-  /** Which edge the text band sits on. */
-  layout: z.enum(["bottom", "top"]),
-  /** How much of the image the band's shading covers, from that edge. */
-  bandHeightRatio: z.number().min(0.15).max(0.7).step(0.01),
-  /** How opaque the band is over the image. */
-  bandOpacity: z.number().min(0).max(1).step(0.02),
-  /** Colour of the band the text sits on. */
-  bandColor: zColor(),
-  accentColor: zColor(),
+  /** Where the text block sits in the frame. */
+  anchor: anchorSchema,
+  /** Where the logo sits in the frame. */
+  logoAnchor: anchorSchema,
   textColor: zColor(),
+  accentColor: zColor(),
+  /** Colour of the outline drawn around every letter. */
+  outlineColor: zColor(),
+  /** Outline thickness for a 1080p-tall image, at the title's size. */
+  outlineWidth: z.number().min(0).max(24).step(0.5),
+  /** How dark the drop shadow under the text is. */
+  shadowStrength: z.number().min(0).max(1).step(0.05),
   /** Title size for a 1080p-tall image. Other sizes scale automatically. */
   titleFontSize: z.number().min(20).max(300).step(2),
   /** Height of the logo, as a share of the image height. */

@@ -107,14 +107,15 @@ export const RemotionRoot: React.FC = () => {
           title: "פתיחת שנת לימודים מוצלחת",
           subtitle: "מלאה בחוויות טובות וחדשנות",
           signature: "צוות כלים שלובים",
-          layout: "bottom" as const,
-          bandHeightRatio: 0.4,
-          bandOpacity: 0.88,
-          bandColor: "#0b2a41",
-          accentColor: "#f8b93f",
+          anchor: "top-center" as const,
+          logoAnchor: "bottom-left" as const,
           textColor: "#ffffff",
-          titleFontSize: 104,
-          logoHeightRatio: 0.16,
+          accentColor: "#ffd66b",
+          outlineColor: "#0d3552",
+          outlineWidth: 9,
+          shadowStrength: 0.5,
+          titleFontSize: 108,
+          logoHeightRatio: 0.13,
         }}
       />
     </>
