@@ -3,6 +3,7 @@ import { CalculateMetadataFunction, Composition } from "remotion";
 import "./index.css";
 import { getImageDimensions } from "./imageDimensions";
 import { resolveVideoSrc } from "./resolveVideoSrc";
+import { Outro } from "./Outro";
 import { TitleCard } from "./TitleCard";
 import { TitledVideo } from "./TitledVideo";
 import {
@@ -55,15 +56,39 @@ const calculateMetadata: CalculateMetadataFunction<TitledVideoProps> = async ({
 const calculateCardMetadata: CalculateMetadataFunction<
   TitleCardProps
 > = async ({ props }) => {
+  const durationInFrames = Math.round(props.durationInSeconds * FALLBACK_FPS);
+
   try {
     const { width, height } = await getImageDimensions(
       resolveVideoSrc(props.imageSrc),
     );
 
-    return { width: makeEven(width), height: makeEven(height) };
+    return {
+      width: makeEven(width),
+      height: makeEven(height),
+      durationInFrames,
+    };
   } catch {
-    return {};
+    return { durationInFrames };
   }
+};
+
+const titleCardDefaults = {
+  imageSrc: "beach.png",
+  logoSrc: "logo.png",
+  title: "פתיחת שנת לימודים מוצלחת",
+  subtitle: "מלאה בחוויות טובות וחדשנות",
+  signature: "צוות כלים שלובים",
+  anchor: "top-center" as const,
+  logoAnchor: "bottom-left" as const,
+  textColor: "#ffffff",
+  accentColor: "#ffd66b",
+  outlineColor: "#0d3552",
+  outlineWidth: 9,
+  shadowStrength: 0.5,
+  titleFontSize: 108,
+  logoHeightRatio: 0.13,
+  durationInSeconds: 6,
 };
 
 export const RemotionRoot: React.FC = () => {
@@ -93,6 +118,17 @@ export const RemotionRoot: React.FC = () => {
         }}
       />
       <Composition
+        id="Outro"
+        component={Outro}
+        schema={titleCardSchema}
+        calculateMetadata={calculateCardMetadata}
+        fps={FALLBACK_FPS}
+        width={FALLBACK_WIDTH}
+        height={FALLBACK_HEIGHT}
+        durationInFrames={FALLBACK_DURATION_IN_FRAMES}
+        defaultProps={titleCardDefaults}
+      />
+      <Composition
         id="TitleCard"
         component={TitleCard}
         schema={titleCardSchema}
@@ -100,23 +136,8 @@ export const RemotionRoot: React.FC = () => {
         fps={FALLBACK_FPS}
         width={FALLBACK_WIDTH}
         height={FALLBACK_HEIGHT}
-        durationInFrames={1}
-        defaultProps={{
-          imageSrc: "beach.png",
-          logoSrc: "logo.png",
-          title: "פתיחת שנת לימודים מוצלחת",
-          subtitle: "מלאה בחוויות טובות וחדשנות",
-          signature: "צוות כלים שלובים",
-          anchor: "top-center" as const,
-          logoAnchor: "bottom-left" as const,
-          textColor: "#ffffff",
-          accentColor: "#ffd66b",
-          outlineColor: "#0d3552",
-          outlineWidth: 9,
-          shadowStrength: 0.5,
-          titleFontSize: 108,
-          logoHeightRatio: 0.13,
-        }}
+        durationInFrames={FALLBACK_DURATION_IN_FRAMES}
+        defaultProps={titleCardDefaults}
       />
     </>
   );

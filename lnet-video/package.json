@@ -32,7 +32,8 @@
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc",
     "render": "remotion render TitledVideo out/video.mp4",
-    "render:card": "remotion still TitleCard out/card.png"
+    "render:card": "remotion still TitleCard out/card.png",
+    "render:outro": "remotion render Outro out/outro.mp4"
   },
   "sideEffects": [
     "*.css"

@@ -66,6 +66,8 @@ export const titleCardSchema = z.object({
   titleFontSize: z.number().min(20).max(300).step(2),
   /** Height of the logo, as a share of the image height. */
   logoHeightRatio: z.number().min(0.02).max(0.4).step(0.01),
+  /** Length of the animated outro. Ignored by the still version. */
+  durationInSeconds: z.number().min(2).max(30).step(0.5),
 });
 
 export type TitleCardProps = z.infer<typeof titleCardSchema>;
