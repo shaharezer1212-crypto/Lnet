@@ -64,3 +64,37 @@ npx remotion render TitledVideo out/video.mp4 --props='{"videoSrc":"my-video.mp4
 - `src/TitledVideo.tsx` — הווידאו עם שכבת הכותרת מעליו
 - `src/TitleOverlay.tsx` — עיצוב והנפשה של הכותרת
 - `src/schema.ts` — סכמת ה-Props (zod) שמייצרת את חלונית העריכה בסטודיו
+
+## TitleCard — כותרת על גבי תמונה
+
+קומפוזיציה שנייה, `TitleCard`, מניחה כותרת בפונט **FB Gazoz** ולוגו על גבי תמונה סטטית.
+גודל הקומפוזיציה נקרא אוטומטית מהתמונה, כך שהפלט יוצא באותה רזולוציה בדיוק.
+
+1. שימו את התמונה ואת הלוגו ב-`public/` (למשל `public/beach.png` ו-`public/logo.png`).
+   הלוגו צריך להיות PNG עם רקע שקוף.
+2. `npm run dev`, בחרו את `TitleCard` ברשימת הקומפוזיציות וערכו את הפרופס.
+3. רנדרו לתמונה:
+
+   ```bash
+   npm run render:card
+   ```
+
+   הפלט נשמר ב-`out/card.png`.
+
+### הפרופס של TitleCard
+
+| פרופ                                      | תיאור                                               |
+| ----------------------------------------- | --------------------------------------------------- |
+| `imageSrc`                                | תמונת הרקע — שם קובץ ב-`public/` או URL             |
+| `logoSrc`                                 | קובץ הלוגו. מחרוזת ריקה = בלי לוגו                  |
+| `title` / `subtitle`                      | שתי שורות הכותרת                                    |
+| `signature`                               | שורת החתימה, למשל שם הצוות                          |
+| `layout`                                  | `bottom` או `top` — באיזה צד של התמונה יושבת הכותרת |
+| `bandHeightRatio`                         | איזה חלק מגובה התמונה הרצועה מכסה                   |
+| `bandOpacity`                             | כמה הרצועה אטומה מעל התמונה                         |
+| `bandColor` / `accentColor` / `textColor` | צבעי הרצועה, ההדגשה והטקסט                          |
+| `titleFontSize`                           | גודל הכותרת ביחס לתמונה בגובה 1080                  |
+| `logoHeightRatio`                         | גובה הלוגו כחלק מגובה התמונה                        |
+
+הפונט נטען מ-`public/fonts/FbGazozRegular.otf` (ראו `src/gazoz.ts`).
+FB Gazoz הוא פונט עברי בלבד — טקסט בלטינית ייפול חזרה ל-Heebo.

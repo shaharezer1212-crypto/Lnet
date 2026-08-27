@@ -7,6 +7,7 @@
   "private": true,
   "dependencies": {
     "@remotion/cli": "4.0.518",
+    "@remotion/fonts": "4.0.518",
     "@remotion/google-fonts": "4.0.518",
     "@remotion/media-parser": "4.0.518",
     "@remotion/tailwind-v4": "4.0.518",
@@ -30,7 +31,8 @@
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc",
-    "render": "remotion render TitledVideo out/video.mp4"
+    "render": "remotion render TitledVideo out/video.mp4",
+    "render:card": "remotion still TitleCard out/card.png"
   },
   "sideEffects": [
     "*.css"

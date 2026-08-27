@@ -1,9 +1,16 @@
 import { parseMedia } from "@remotion/media-parser";
 import { CalculateMetadataFunction, Composition } from "remotion";
 import "./index.css";
+import { getImageDimensions } from "./imageDimensions";
 import { resolveVideoSrc } from "./resolveVideoSrc";
+import { TitleCard } from "./TitleCard";
 import { TitledVideo } from "./TitledVideo";
-import { titledVideoSchema, type TitledVideoProps } from "./schema";
+import {
+  titleCardSchema,
+  titledVideoSchema,
+  type TitleCardProps,
+  type TitledVideoProps,
+} from "./schema";
 
 // Used until the real video is readable, so the Studio still opens
 // when `public/video.mp4` is missing.
@@ -44,30 +51,72 @@ const calculateMetadata: CalculateMetadataFunction<TitledVideoProps> = async ({
   }
 };
 
+/** Sizes the card to the image it is drawn on. */
+const calculateCardMetadata: CalculateMetadataFunction<
+  TitleCardProps
+> = async ({ props }) => {
+  try {
+    const { width, height } = await getImageDimensions(
+      resolveVideoSrc(props.imageSrc),
+    );
+
+    return { width: makeEven(width), height: makeEven(height) };
+  } catch {
+    return {};
+  }
+};
+
 export const RemotionRoot: React.FC = () => {
   return (
-    <Composition
-      id="TitledVideo"
-      component={TitledVideo}
-      schema={titledVideoSchema}
-      calculateMetadata={calculateMetadata}
-      fps={FALLBACK_FPS}
-      width={FALLBACK_WIDTH}
-      height={FALLBACK_HEIGHT}
-      durationInFrames={FALLBACK_DURATION_IN_FRAMES}
-      defaultProps={{
-        videoSrc: "sample.mp4",
-        title: "הכותרת שלי",
-        subtitle: "",
-        position: "bottom" as const,
-        direction: "auto" as const,
-        fontSize: 84,
-        textColor: "#ffffff",
-        accentColor: "#38bdf8",
-        backdropOpacity: 0.45,
-        appearAtInSeconds: 0.3,
-        visibleForInSeconds: 0,
-      }}
-    />
+    <>
+      <Composition
+        id="TitledVideo"
+        component={TitledVideo}
+        schema={titledVideoSchema}
+        calculateMetadata={calculateMetadata}
+        fps={FALLBACK_FPS}
+        width={FALLBACK_WIDTH}
+        height={FALLBACK_HEIGHT}
+        durationInFrames={FALLBACK_DURATION_IN_FRAMES}
+        defaultProps={{
+          videoSrc: "sample.mp4",
+          title: "הכותרת שלי",
+          subtitle: "",
+          position: "bottom" as const,
+          direction: "auto" as const,
+          fontSize: 84,
+          textColor: "#ffffff",
+          accentColor: "#38bdf8",
+          backdropOpacity: 0.45,
+          appearAtInSeconds: 0.3,
+          visibleForInSeconds: 0,
+        }}
+      />
+      <Composition
+        id="TitleCard"
+        component={TitleCard}
+        schema={titleCardSchema}
+        calculateMetadata={calculateCardMetadata}
+        fps={FALLBACK_FPS}
+        width={FALLBACK_WIDTH}
+        height={FALLBACK_HEIGHT}
+        durationInFrames={1}
+        defaultProps={{
+          imageSrc: "beach.png",
+          logoSrc: "logo.png",
+          title: "פתיחת שנת לימודים מוצלחת",
+          subtitle: "מלאה בחוויות טובות וחדשנות",
+          signature: "צוות כלים שלובים",
+          layout: "bottom" as const,
+          bandHeightRatio: 0.4,
+          bandOpacity: 0.88,
+          bandColor: "#0b2a41",
+          accentColor: "#f8b93f",
+          textColor: "#ffffff",
+          titleFontSize: 104,
+          logoHeightRatio: 0.16,
+        }}
+      />
+    </>
   );
 };
