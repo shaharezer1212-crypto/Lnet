@@ -225,8 +225,6 @@ p { margin: 0; }
 
 /* ---------------- what you'll get (from page 1 of the flyer) ---------------- */
 .promise { display: grid; gap: clamp(2rem, 5vw, 5rem); grid-template-columns: 1.1fr 1fr; align-items: center; }
-.promise__art { position: relative; }
-.promise__art img { border-radius: 0; mix-blend-mode: multiply; }
 .promise__quote { font-size: var(--step-2); line-height: 1.1; font-weight: 700; }
 .promise__quote + p { margin-top: 1.2rem; max-width: 46ch; }
 @media (max-width: 860px) { .promise { grid-template-columns: 1fr; } }
@@ -251,13 +249,16 @@ p { margin: 0; }
   stroke-width: 2.4; stroke: var(--wing);
 }
 .timeline__butterfly {
-  position: absolute; inset-inline-start: 13px; top: 0; width: 50px; height: 34px;
-  color: var(--wing); transition: opacity .3s;
-  pointer-events: none; z-index: 2;
+  position: absolute; inset-inline-start: -14px; top: 0; width: 92px;
+  transition: opacity .3s; pointer-events: none; z-index: 3;
+  filter: drop-shadow(0 10px 8px rgb(60 30 90 / .18));
 }
-.timeline__butterfly svg { width: 100%; height: 100%; overflow: visible; }
-.timeline__butterfly .wing { transform-origin: 50% 60%; animation: flap 1.4s ease-in-out infinite; }
-@keyframes flap { 50% { transform: scaleX(.78); } }
+.timeline__butterfly img { width: 100%; height: auto; transform-origin: 50% 70%; animation: flutter .42s ease-in-out infinite alternate; }
+@keyframes flutter { from { transform: rotate(-3deg) scaleX(1); } to { transform: rotate(3deg) scaleX(.9); } }
+.session__num { transition: background-color .3s, color .3s; }
+.session.is-reached .session__num { background: var(--wing); color: #fff; animation: pop .45s cubic-bezier(.3,1.6,.5,1); }
+.session.is-next .session__num { box-shadow: 0 0 0 5px var(--leaf); }
+@keyframes pop { 40% { transform: scale(1.22); } }
 
 .session {
   position: relative;
@@ -274,7 +275,6 @@ p { margin: 0; }
   display: grid; place-items: center;
   font-size: var(--step-1); font-weight: 700; padding-top: .15em;
 }
-.session.is-next .session__num { background: var(--leaf); color: var(--ink); }
 .session__when { grid-column: 2; grid-row: 1; text-align: end; white-space: nowrap; color: var(--graphite); font-size: var(--step--1); }
 .session__when b { display: block; color: var(--ink); font-size: var(--step-1); line-height: 1; }
 .session h3 { grid-column: 1; grid-row: 1; font-size: var(--step-1); line-height: 1.1; align-self: center; }
@@ -290,18 +290,19 @@ p { margin: 0; }
   .session__when { grid-column: 1; grid-row: auto; text-align: start; }
   .session h3 { grid-row: auto; }
   .timeline__track { inset-inline-start: 4px; }
-  .timeline__butterfly { inset-inline-start: -1px; }
+  .timeline__butterfly { inset-inline-start: -6px; width: 54px; }
   .hero__text { margin-top: -1.5rem; }
 }
 
 /* ---------------- facilitator ---------------- */
 .host { display: grid; grid-template-columns: auto 1fr; gap: clamp(1.5rem, 5vw, 4rem); align-items: center; }
 .host__portrait { position: relative; width: clamp(180px, 26vw, 300px); aspect-ratio: 1; }
+.host__portrait { isolation: isolate; margin-top: 3rem; }
 .host__portrait::before {
-  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  content: ""; position: absolute; inset: 0; border-radius: 50%; z-index: 0;
   background: var(--leaf); transform: translate(-7%, 6%);
 }
-.host__portrait img { position: relative; border-radius: 50%; border: var(--line); width: 100%; height: 100%; object-fit: cover; }
+.host__photo { position: relative; z-index: 2; border-radius: 50%; border: var(--line); width: 100%; height: 100%; object-fit: cover; }
 .host h2 { font-size: var(--step-3); }
 .host__role { margin-top: .8rem; font-weight: 700; font-size: var(--step-1); line-height: 1.25; }
 .host__bio { margin-top: .8rem; max-width: var(--measure); }
@@ -349,9 +350,7 @@ p { margin: 0; }
 .cta__actions { display: grid; gap: .7rem; min-width: min(360px, 100%); }
 @media (max-width: 760px) { .offer, .cta { grid-template-columns: 1fr; } }
 
-/* ---------------- contact ---------------- */
-.contact { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
-.contact h2 { font-size: var(--step-2); }
+/* ---------------- form fields (admin page) ---------------- */
 .form { display: grid; gap: 1rem; }
 .field { display: grid; gap: .35rem; }
 .field label { font-weight: 700; font-size: var(--step--1); }
@@ -363,14 +362,82 @@ p { margin: 0; }
 .field textarea { min-height: 7rem; resize: vertical; }
 .field input:focus-visible, .field textarea:focus-visible { outline-offset: 1px; }
 .form__status { min-height: 1.5em; font-weight: 700; }
-@media (max-width: 760px) { .contact { grid-template-columns: 1fr; } }
 
 /* ---------------- footer ---------------- */
-.site-foot { padding-block: 3rem 2.5rem; border-top: 1.5px solid var(--ink); margin-top: 2rem; }
+.site-foot { position: relative; padding-block: 3rem 2.5rem; border-top: 1.5px solid var(--ink); margin-top: clamp(7rem, 12vw, 9rem); }
 .site-foot .wrap { display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; align-items: center; }
-.site-foot img { height: 22px; width: auto; }
+.site-foot .wrap img { height: 22px; width: auto; }
 .site-foot small { color: var(--graphite); font-size: var(--step--1); }
 .slogan { font-family: "Josefin"; font-weight: 700; color: var(--leaf); -webkit-text-stroke: 1px #2c8c18; font-size: var(--step-2); direction: ltr; }
+
+/* ======================= THE CHARACTERS =======================
+   Claude and the butterfly appear as cut-outs. Each scene ([data-scene]) gets
+   --p (0..1, linear) and --e (0..1, eased) from main.js as it scrolls through
+   the viewport; the actors are positioned from those two numbers only. */
+main { overflow-x: clip; }
+.scene { --p: 0; --e: 0; }
+.actor { position: absolute; height: auto; pointer-events: none; user-select: none; will-change: transform; }
+
+/* the new employee: Claude walks in and waves, the butterfly circles him */
+.promise__stage { position: relative; height: clamp(300px, 36vw, 440px); }
+.scene__floor { position: absolute; inset: auto 0 6% 0; width: 100%; height: 40px; overflow: visible; }
+.scene__floor path { fill: none; stroke: var(--graphite); stroke-width: 1.6; stroke-linecap: round; }
+.promise__claude {
+  width: clamp(170px, 22vw, 270px); bottom: 7%; inset-inline-start: 22%;
+  transform-origin: 50% 100%;
+  transform: translateX(calc((1 - var(--e)) * 70%)) rotate(calc(sin(var(--p) * 2400deg) * (1 - var(--e)) * 7deg));
+}
+.promise__fly {
+  width: clamp(90px, 10vw, 130px); top: 4%; inset-inline-start: 42%;
+  transform: translate(calc(cos(var(--p) * 600deg) * 120px), calc(sin(var(--p) * 600deg) * 36px)) rotate(calc(sin(var(--p) * 600deg) * 12deg));
+}
+.promise__tag {
+  position: absolute; top: 34%; inset-inline-start: 6%;
+  border: 1.5px solid var(--ink); border-radius: 10px; background: #fff;
+  padding: .35rem .8rem .2rem; font-weight: 700; font-size: var(--step-0);
+  transform: rotate(8deg) scale(calc(.6 + var(--e) * .4)); opacity: clamp(0, (var(--e) - .55) * 3, 1);
+}
+.promise__tag::before { /* the string it hangs from */
+  content: ""; position: absolute; bottom: 100%; inset-inline-start: 50%; width: 1.5px; height: 40px; background: var(--ink);
+}
+
+/* the host: the butterfly lands on the portrait, Claude peeks out from behind it */
+.host__peek {
+  z-index: 1; width: 62%; bottom: -2%; inset-inline-start: -34%;
+  transform: translateX(calc((1 - var(--e)) * -55%)) rotate(-8deg);
+}
+.host__fly {
+  z-index: 3; width: 30%; top: -26%; inset-inline-end: 10%;
+  transform: translate(calc((1 - var(--e)) * -160px), calc((1 - var(--e)) * -120px)) rotate(calc((1 - var(--e)) * -25deg));
+}
+
+/* the call to action: Claude jumps up out of the green card, beside the button */
+.cta { position: relative; overflow: hidden; }
+.cta > :not(.actor) { position: relative; z-index: 1; }
+.cta__jump {
+  width: clamp(110px, 11vw, 150px); bottom: 0; inset-inline-end: 34%; z-index: 0;
+  transform-origin: 50% 100%;
+  transform: translateY(calc(18% + (1 - var(--e)) * 90%)) rotate(calc(sin(var(--p) * 1800deg) * 5deg));
+}
+@media (max-width: 760px) { .cta__jump { display: none; } }
+
+/* the footer: Claude walks home along the line */
+.foot-walk { position: absolute; inset: auto 0 100% 0; height: 0; width: min(1180px, 100% - 2 * var(--gutter)); margin-inline: auto; }
+.foot-walk .actor {
+  width: clamp(80px, 8vw, 110px); bottom: -6px; left: 0;
+  transform: translateX(calc((1 - var(--p)) * (min(100vw, 1180px) - 9rem))) translateY(calc(sin(var(--p) * 3600deg) * sin(var(--p) * 3600deg) * -10px)) scaleX(-1);
+}
+
+@media (max-width: 860px) {
+  .promise__stage { height: 300px; }
+  .promise__claude { inset-inline-start: 30%; }
+  .host__portrait { margin-inline: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene { --p: 1 !important; --e: 1 !important; }
+  .timeline__butterfly img { animation: none; }
+  .session.is-reached .session__num { animation: none; }
+}
 
 /* ======================= PORTAL ======================= */
 .portal-body { min-height: 100vh; display: flex; flex-direction: column; }

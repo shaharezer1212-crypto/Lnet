@@ -83,10 +83,11 @@
 
     <section class="section" aria-labelledby="promise-title">
       <div class="wrap promise">
-        <div class="promise__art">
-          <img src="assets/img/studio-board.webp" width="1508" height="2000" loading="lazy"
-               style="width: 100%; height: auto; aspect-ratio: 1508 / 1080; object-fit: cover; object-position: top;"
-               alt="שחר מציג על לוח מחיק תרשים של רעיונות, הילוכים וצוות, בזמן ש־Claude והפרפר יושבים ליד מחשב נייד">
+        <div class="promise__stage scene" data-scene aria-hidden="true">
+          <svg class="scene__floor" viewBox="0 0 600 40" preserveAspectRatio="none"><path d="M6 24 Q150 18 300 22 T594 20"/></svg>
+          <img class="actor promise__claude" src="assets/img/claude-wave.webp" width="591" height="640" alt="" loading="lazy">
+          <span class="promise__tag">עובד חדש</span>
+          <img class="actor promise__fly" src="assets/img/fly-wide.webp" width="640" height="576" alt="" loading="lazy">
         </div>
         <div>
           <h2 id="promise-title" class="promise__quote">נכשיר את Claude ממש כמו עובד חדש שנכנס לארגון שלכם.</h2>
@@ -107,10 +108,7 @@
 
         <ol class="timeline" id="timeline" role="list">
           <svg class="timeline__track" aria-hidden="true" preserveAspectRatio="none"><path class="base"/><path class="ink"/></svg>
-          <div class="timeline__butterfly" aria-hidden="true">
-            <!-- the Lnet mark: one continuous line butterfly -->
-            <svg viewBox="0 0 60 40"><g class="wing" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M30 20 C22 6 8 2 5 9 C2 16 12 21 30 20 C14 22 6 30 10 36 C15 41 26 32 30 20 C34 32 45 41 50 36 C54 30 46 22 30 20 C48 21 58 16 55 9 C52 2 38 6 30 20 Z"/></g></svg>
-          </div>
+          <div class="timeline__butterfly" aria-hidden="true"><img src="assets/img/fly-wide.webp" width="640" height="576" alt=""></div>
 
           <li class="session" data-date="2026-12-06T18:00:00+02:00">
             <span class="session__num" aria-hidden="true">1</span>
@@ -160,8 +158,10 @@
 
     <section class="section" id="host" aria-labelledby="host-title">
       <div class="wrap host">
-        <div class="host__portrait">
-          <img src="assets/img/shahar.webp" width="1024" height="1024" loading="lazy" alt="דיוקן מאויר של שחר עזר">
+        <div class="host__portrait scene" data-scene>
+          <img class="actor host__peek" src="assets/img/claude-peek.webp" width="640" height="503" alt="" aria-hidden="true" loading="lazy">
+          <img class="host__photo" src="assets/img/shahar.webp" width="1024" height="1024" loading="lazy" alt="דיוקן מאויר של שחר עזר">
+          <img class="actor host__fly" src="assets/img/fly-sit.webp" width="404" height="640" alt="" aria-hidden="true" loading="lazy">
         </div>
         <div>
           <h2 id="host-title">שחר עזר</h2>
@@ -190,47 +190,24 @@
             <li><span class="check" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M2 7.5 5.5 11 12 3.5" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>סט Skills מותאם למפתחי למידה</li>
           </ul>
           <p class="offer__note"><span class="i" aria-hidden="true">i</span>ההשתתפות מחייבת חשבון Claude Pro בתשלום (20 דולר לחודש), שאינו כלול במחיר הסדנה.</p>
-          <div class="cta">
+          <div class="cta scene" data-scene>
+            <img class="actor cta__jump" src="assets/img/claude-jump.webp" width="635" height="640" alt="" aria-hidden="true" loading="lazy">
             <div>
               <h3>מספר המקומות מוגבל</h3>
               <p>המחזור נפתח ביום א׳, 06.12, בשעה 18:00</p>
             </div>
             <div class="cta__actions">
-              <a class="btn" href="#contact" data-register>להרשמה</a>
-              <a class="btn btn--small btn--ghost" href="#contact">יש שאלות? השאירו פרטים ונחזור אליכם</a>
+              <a class="btn" href="#price" data-register>להרשמה</a>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="contact" aria-labelledby="contact-title">
-      <div class="wrap contact">
-        <div>
-          <h2 id="contact-title">רוצים לשאול משהו לפני שנרשמים?</h2>
-          <p class="section__intro">השאירו שם ודרך ליצור קשר. שחר חוזר לכל פנייה באופן אישי.</p>
-        </div>
-        <form class="form" id="contact-form" novalidate>
-          <div class="field">
-            <label for="cf-name">שם מלא</label>
-            <input id="cf-name" name="name" autocomplete="name" required>
-          </div>
-          <div class="field">
-            <label for="cf-phone">טלפון או מייל</label>
-            <input id="cf-phone" name="contact" autocomplete="email" required>
-          </div>
-          <div class="field">
-            <label for="cf-msg">מה תרצו לדעת? (לא חובה)</label>
-            <textarea id="cf-msg" name="message"></textarea>
-          </div>
-          <button class="btn" type="submit">שליחת הפרטים</button>
-          <p class="form__status" id="cf-status" role="status" aria-live="polite"></p>
-        </form>
-      </div>
-    </section>
   </main>
 
-  <footer class="site-foot">
+  <footer class="site-foot scene" data-scene>
+    <div class="foot-walk" aria-hidden="true"><img class="actor" src="assets/img/claude-walk.webp" width="640" height="638" alt="" loading="lazy"></div>
     <div class="wrap">
       <img src="assets/img/logo-black.png" alt="Gada | Lnet" width="1233" height="225">
       <p class="slogan">TIME TO LEVEL-UP!</p>

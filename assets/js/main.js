@@ -1,4 +1,4 @@
-/* Landing page behaviour: intro, scroll drawing, register links, contact form. */
+/* Landing page behaviour: intro, scroll drawing, the characters, register links. */
 (function () {
   "use strict";
   var SITE = window.SITE || {};
@@ -96,6 +96,7 @@
   var track = timeline && $(".timeline__track", timeline);
   var bfly = timeline && $(".timeline__butterfly", timeline);
   var trackPath = null, trackLen = 0;
+  var sessions = timeline ? $$(".session", timeline) : [];
 
   function buildTrack() {
     if (!track) return;
@@ -130,12 +131,38 @@
     track.style.setProperty("--p", p.toFixed(4));
     if (bfly) {
       var pt = trackPath.getPointAtLength(trackLen * p);
-      var by = pt.y - 17;
+      var by = pt.y - bfly.offsetHeight * 0.55;
       var tilt = Math.max(-14, Math.min(14, (by - lastBy) * 0.8));
       lastBy = by;
       bfly.style.transform = "translateY(" + by.toFixed(1) + "px) rotate(" + (reduced ? 0 : tilt).toFixed(1) + "deg)";
-      bfly.style.opacity = p <= 0 ? "0.35" : "1";
+      bfly.style.opacity = p <= 0 ? "0.5" : "1";
+      // a session lights up once the butterfly has flown past its number
+      sessions.forEach(function (li) {
+        var num = li.firstElementChild;
+        var cy = li.offsetTop + num.offsetTop + num.offsetHeight / 2;
+        li.classList.toggle("is-reached", pt.y >= cy);
+      });
     }
+  }
+
+  /* ---------------- the characters ---------------- */
+  // Each [data-scene] gets --p (linear) and --e (eased) as it travels from the
+  // bottom of the viewport (0) to 40% from the top (1); the footer runs while
+  // the last screen scrolls by. CSS moves the cut-outs from these two numbers.
+  var scenes = $$("[data-scene]");
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+  function updateScenes() {
+    var vh = window.innerHeight;
+    var maxY = document.documentElement.scrollHeight - vh;
+    scenes.forEach(function (el) {
+      var p;
+      if (reduced) p = 1;
+      else if (el.tagName === "FOOTER") p = 1 - (maxY - window.scrollY) / (vh * 0.9);
+      else p = (vh - el.getBoundingClientRect().top) / (vh * 0.6);
+      p = Math.max(0, Math.min(1, p));
+      el.style.setProperty("--p", p.toFixed(4));
+      el.style.setProperty("--e", easeOut(p).toFixed(4));
+    });
   }
 
   /* ---------------- next session ---------------- */
@@ -163,6 +190,7 @@
         heroImg.style.setProperty("--parallax", Math.min(40, y * 0.08).toFixed(1) + "px");
       }
       updateTrack();
+      updateScenes();
     });
   }
 
@@ -171,7 +199,7 @@
     if (SITE.registerUrl) {
       $$("[data-register]").forEach(function (a) { a.href = SITE.registerUrl; });
     } else {
-      $$("[data-register]").forEach(function (a) { a.href = "#contact"; });
+      $$("[data-register]").forEach(function (a) { a.href = "#price"; });
     }
     var li = $("#linkedin-link");
     if (li) {
@@ -179,78 +207,12 @@
     }
   }
 
-  /* ---------------- contact form ---------------- */
-  function setupForm() {
-    var form = $("#contact-form");
-    if (!form) return;
-    var status = $("#cf-status");
-    var messages = { name: "צריך למלא שם.", contact: "צריך למלא טלפון או מייל כדי שנוכל לחזור אליכם." };
-
-    function setError(input, msg) {
-      var id = input.id + "-err";
-      var el = document.getElementById(id);
-      if (!msg) { if (el) el.remove(); input.removeAttribute("aria-invalid"); input.removeAttribute("aria-describedby"); return; }
-      if (!el) {
-        el = document.createElement("p");
-        el.id = id; el.className = "field__error";
-        el.style.cssText = "color:#b3261e;font-weight:700;font-size:var(--step--1);margin:0";
-        input.insertAdjacentElement("afterend", el);
-      }
-      el.textContent = msg;
-      input.setAttribute("aria-invalid", "true");
-      input.setAttribute("aria-describedby", id);
-    }
-
-    form.addEventListener("input", function (e) { if (e.target.value.trim()) setError(e.target, ""); });
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var firstBad = null;
-      ["name", "contact"].forEach(function (n) {
-        var input = form.elements[n];
-        if (!input.value.trim()) { setError(input, messages[n]); firstBad = firstBad || input; }
-        else setError(input, "");
-      });
-      if (firstBad) { firstBad.focus(); status.textContent = ""; return; }
-
-      var data = {
-        name: form.elements.name.value.trim(),
-        contact: form.elements.contact.value.trim(),
-        message: form.elements.message.value.trim(),
-        source: "Claude workshop landing page"
-      };
-      var btn = form.querySelector("button[type=submit]");
-
-      if (SITE.contactEndpoint) {
-        btn.disabled = true;
-        status.textContent = "שולחים...";
-        fetch(SITE.contactEndpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "Accept": "application/json" },
-          body: JSON.stringify(data)
-        }).then(function (r) {
-          if (!r.ok) throw new Error(r.status);
-          form.reset();
-          status.textContent = "הפרטים נשלחו. שחר יחזור אליכם בקרוב.";
-        }).catch(function () {
-          status.textContent = "השליחה לא עברה. נסו שוב בעוד רגע, או כתבו לנו ישירות במייל.";
-        }).then(function () { btn.disabled = false; });
-      } else {
-        var body = "שם: " + data.name + "\nטלפון או מייל: " + data.contact + (data.message ? "\n\n" + data.message : "");
-        window.location.href = "mailto:" + (SITE.contactEmail || "") +
-          "?subject=" + encodeURIComponent("שאלה על סדנת Claude") + "&body=" + encodeURIComponent(body);
-        status.textContent = "נפתח חלון מייל עם הפרטים. שלחו אותו ושחר יחזור אליכם.";
-      }
-    });
-  }
-
   /* ---------------- boot ---------------- */
   setupIntro();
   setupLinks();
-  setupForm();
   markNext();
 
-  function relayout() { buildTrack(); updateTrack(); }
+  function relayout() { buildTrack(); updateTrack(); updateScenes(); }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
   window.addEventListener("load", relayout);
   var rt;
