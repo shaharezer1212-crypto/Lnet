@@ -161,6 +161,7 @@ p { margin: 0; }
   clip-path: circle(0% at 50% 60%);
 }
 .intro.is-drawing .intro__photo { animation: reveal 1.1s cubic-bezier(.7,0,.2,1) 2.1s forwards; }
+.intro.is-revealed .intro__photo { opacity: 1; clip-path: none; transition: opacity .9s ease; }
 .intro__skip {
   position: absolute; bottom: clamp(1rem, 4vh, 2.5rem); inset-inline-end: var(--gutter);
   background: none; border: 0; cursor: pointer; color: var(--graphite);

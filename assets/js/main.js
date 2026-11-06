@@ -57,7 +57,7 @@
     video.muted = true; video.playsInline = true; video.autoplay = true;
     video.setAttribute("muted", ""); video.setAttribute("playsinline", "");
     video.preload = "auto";
-    video.poster = "assets/img/hero-trio.webp";
+    video.poster = "assets/video/intro-first.jpg";
     var fellBack = false;
     function fallback() {
       if (fellBack || done) return;
@@ -68,16 +68,25 @@
     video.addEventListener("error", fallback);
     video.addEventListener("loadeddata", function () {
       if (fellBack) return;
-      $$(".intro__sketch, .intro__photo", intro).forEach(function (el) { el.remove(); });
+      $$(".intro__sketch", intro).forEach(function (el) { el.remove(); });
       var p = video.play();
       if (p && p.catch) p.catch(fallback);
       // Safety net: never hold the page longer than the film plus a beat.
-      var ms = isFinite(video.duration) ? video.duration * 1000 + 1500 : 15000;
+      var ms = isFinite(video.duration) ? video.duration * 1000 + 3000 : 15000;
       timer = setTimeout(finish, Math.min(ms, 20000));
     });
-    video.addEventListener("ended", finish);
-    video.src = src;
-    stage.appendChild(video);
+    // The film ends on the drawn room, laid out exactly like the hero art:
+    // dissolve into the colour picture, hold a beat, then open the page.
+    video.addEventListener("ended", function () {
+      intro.classList.add("is-revealed");
+      clearTimeout(timer);
+      timer = setTimeout(finish, 1500);
+    });
+    // WebM (VP9) is smaller and plays in browsers without H.264; MP4 covers Safari.
+    var webm = src.replace(/\.mp4$/, ".webm");
+    video.src = (webm !== src && video.canPlayType('video/webm; codecs="vp9"')) ? webm : src;
+    // the photo stays above the film, invisible until the reveal
+    stage.insertBefore(video, stage.firstChild);
     // Network too slow: draw the sketch instead of staring at blank paper.
     setTimeout(function () { if (video.readyState < 2) fallback(); }, 1800);
   }
