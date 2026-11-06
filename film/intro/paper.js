@@ -48,7 +48,7 @@ export function makePaper() {
 export function drawPaper(ctx, paper, cam, W, H) {
   ctx.save();
   ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.fillStyle = 'rgb(244,242,236)'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = 'rgb(248,248,246)'; ctx.fillRect(0, 0, W, H);
   const layer = (img, worldSize, alpha) => {
     if (alpha <= 0.01) return;
     const pat = ctx.createPattern(img, 'repeat');

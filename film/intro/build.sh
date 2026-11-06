@@ -12,4 +12,3 @@ cp "$HERE/out/video.mp4" "$HERE/intro.mp4"
 ffmpeg -y -loglevel error -i "$HERE/out/video.mp4" -c:v libx264 -preset slow -crf 24 -pix_fmt yuv420p -movflags +faststart -an "$HERE/../../assets/video/intro.mp4"
 ffmpeg -y -loglevel error -sseof -0.05 -i "$HERE/out/video.mp4" -frames:v 1 "$HERE/poster.jpg"
 ffmpeg -y -loglevel error -i "$HERE/out/video.mp4" -c:v libvpx-vp9 -b:v 0 -crf 36 -row-mt 1 -an "$HERE/../../assets/video/intro.webm"
-sh "$HERE/stitch.sh" "$HERE/alive.mp4"   # adds the Higgsfield "coming alive" clip and rewrites the web copies

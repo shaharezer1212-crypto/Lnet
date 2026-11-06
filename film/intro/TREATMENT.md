@@ -47,9 +47,10 @@ the pen-on-paper layer described in STYLE.md §7 is the first thing to add.
 ## Titles
 None. The site's own headline ("Claude, השותף החדש שלך") follows the film.
 
-## Version 2: the room comes alive (added after review)
+## Tried and dropped: the room comes alive
 After the pull-back the drawing dissolves (0.8 s, from 8.6 s) into a 5-second clip made in
 Higgsfield (Kling 3.0) from the hero illustration, with the same image as its first and last
 frame: Shahar laughs, Claude winks, the butterfly flaps its wings, and everyone settles back
 into the hero pose. The site then hands over to the still hero image without a visible cut.
-Total length 13.6 s. `stitch.sh` joins the two parts; `alive.mp4` is the generated clip.
+Total length 13.6 s. Shahar preferred the drawn film on its own: the clip felt static after the
+moving line. `stitch.sh` and `alive.mp4` stay here in case it comes back.

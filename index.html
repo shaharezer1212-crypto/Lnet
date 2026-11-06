@@ -85,13 +85,14 @@
       <div class="wrap promise">
         <div class="promise__stage scene" data-scene aria-hidden="true">
           <svg class="scene__floor" viewBox="0 0 600 40" preserveAspectRatio="none"><path d="M6 24 Q150 18 300 22 T594 20"/></svg>
+          <img class="promise__desk" src="assets/img/sketch-desk.webp" width="523" height="736" alt="" loading="lazy">
           <img class="actor promise__claude" src="assets/img/claude-wave.webp" width="591" height="640" alt="" loading="lazy">
           <span class="promise__tag">עובד חדש</span>
           <img class="actor promise__fly" src="assets/img/fly-wide.webp" width="640" height="576" alt="" loading="lazy">
         </div>
         <div>
           <h2 id="promise-title" class="promise__quote">נכשיר את Claude ממש כמו עובד חדש שנכנס לארגון שלכם.</h2>
-          <p>ארבעה מפגשים של שעה וחצי. בכל מפגש עובדים על משימות אמיתיות של מפתחי למידה: מטרות למידה, מסמכי פיצוח, תסריטי לומדה, הפקת וידאו. יוצאים עם סט Skills מוכן לעבודה ועם הרגלי עבודה שחוסכים זמן.</p>
+          <p>בכל מפגש עובדים על משימות אמיתיות של מפתחי למידה: מטרות למידה, מסמכי פיצוח, תסריטי לומדה, הפקת וידאו. יוצאים עם סט Skills מוכן לעבודה ועם הרגלי עבודה שחוסכים זמן.</p>
         </div>
       </div>
     </section>
@@ -101,16 +102,17 @@
         <div class="syllabus__head">
           <div>
             <h2 id="syllabus-title">סילבוס</h2>
-            <p class="section__intro">ארבעה מפגשים, צעד אחר צעד: מההיכרות הראשונה ועד יום באולפן.</p>
+            <p class="section__intro">צעד אחר צעד, מההיכרות הראשונה ועד יום באולפן.</p>
+            <p class="syllabus__note">כל המפגשים בימי ראשון, 18:00 עד 19:30, בזום. ההקלטות עולות לאזור המשתתפים.</p>
           </div>
-          <p class="syllabus__note">כל המפגשים בימי ראשון, 18:00 עד 19:30, בזום.<br>ההקלטות עולות לאזור המשתתפים.</p>
+          <img class="syllabus__board" src="assets/img/sketch-board.webp" width="1061" height="702" loading="lazy" alt="">
         </div>
 
         <ol class="timeline" id="timeline" role="list">
           <svg class="timeline__track" aria-hidden="true" preserveAspectRatio="none"><path class="base"/><path class="ink"/></svg>
           <div class="timeline__butterfly" aria-hidden="true"><img src="assets/img/fly-wide.webp" width="640" height="576" alt=""></div>
 
-          <li class="session" data-date="2026-12-06T18:00:00+02:00">
+          <li class="session hatched" data-sketch data-date="2026-12-06T18:00:00+02:00">
             <span class="session__num" aria-hidden="true">1</span>
             <h3>מי זה Claude? היכרות, סביבות עבודה ומודלים</h3>
             <p class="session__when"><b>06.12</b>יום א׳, 18:00 עד 19:30</p>
@@ -121,7 +123,7 @@
               <li>פתיחת פרויקט והרגלי עבודה חסכוניים</li>
             </ul>
           </li>
-          <li class="session" data-date="2026-12-13T18:00:00+02:00">
+          <li class="session hatched" data-sketch data-date="2026-12-13T18:00:00+02:00">
             <span class="session__num" aria-hidden="true">2</span>
             <h3>Skills: מלמדים את Claude את שיטת העבודה שלכם</h3>
             <p class="session__when"><b>13.12</b>יום א׳, 18:00 עד 19:30</p>
@@ -132,7 +134,7 @@
               <li>כתיבת Skill בעזרת Claude, ושיתוף עם הצוות</li>
             </ul>
           </li>
-          <li class="session" data-date="2026-12-27T18:00:00+02:00">
+          <li class="session hatched" data-sketch data-date="2026-12-27T18:00:00+02:00">
             <span class="session__num" aria-hidden="true">3</span>
             <h3>Claude כמפיק: לומדה בשיטת vibe coding</h3>
             <p class="session__when"><b>27.12</b>יום א׳, 18:00 עד 19:30</p>
@@ -142,7 +144,7 @@
               <li>פיתוח לומדת HTML: מסכי תוכן, אינטראקציות, שאלות ומשוב</li>
             </ul>
           </li>
-          <li class="session" data-date="2027-01-03T18:00:00+02:00">
+          <li class="session hatched" data-sketch data-date="2027-01-03T18:00:00+02:00">
             <span class="session__num" aria-hidden="true">4</span>
             <h3>Claude בהפקות וידאו: יום באולפן</h3>
             <p class="session__when"><b>03.01</b>יום א׳, 18:00 עד 19:30</p>
@@ -176,28 +178,29 @@
       <div class="wrap">
         <h2 id="price-title" class="visually-hidden">מחיר והרשמה</h2>
         <div class="offer">
-          <div class="offer__price">
+          <div class="offer__price hatched">
             <span class="offer__tag">מחיר השקה למחזור דצמבר</span>
             <p class="offer__amount">900<small>₪</small></p>
             <p class="offer__was">למשתתף, כולל מע״מ. במקום <s>1,200 ₪</s></p>
             <p class="offer__split">אפשר לחלק <b>לארבעה תשלומים</b></p>
           </div>
-          <ul class="offer__list">
+          <ul class="offer__list hatched" data-sketch>
             <li><span class="check" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M2 7.5 5.5 11 12 3.5" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>ארבעה מפגשים של שעה וחצי</li>
             <li><span class="check" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M2 7.5 5.5 11 12 3.5" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>ליווי אישי בין המפגשים</li>
             <li><span class="check" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M2 7.5 5.5 11 12 3.5" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>הקלטות של כל המפגשים</li>
             <li><span class="check" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M2 7.5 5.5 11 12 3.5" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>קבוצה קטנה, עד 10 משתתפים</li>
             <li><span class="check" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M2 7.5 5.5 11 12 3.5" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>סט Skills מותאם למפתחי למידה</li>
           </ul>
-          <p class="offer__note"><span class="i" aria-hidden="true">i</span>ההשתתפות מחייבת חשבון Claude Pro בתשלום (20 דולר לחודש), שאינו כלול במחיר הסדנה.</p>
-          <div class="cta scene" data-scene>
-            <img class="actor cta__jump" src="assets/img/claude-jump.webp" width="635" height="640" alt="" aria-hidden="true" loading="lazy">
+          <p class="offer__note" data-sketch><span class="i" aria-hidden="true">i</span>ההשתתפות מחייבת חשבון Claude Pro בתשלום (20 דולר לחודש), שאינו כלול במחיר הסדנה.</p>
+          <div class="cta scene hatched" data-scene data-sketch>
+            <div class="cta__jumpbox" aria-hidden="true"><img class="actor cta__jump" src="assets/img/claude-jump.webp" width="635" height="640" alt="" loading="lazy"></div>
             <div>
               <h3>מספר המקומות מוגבל</h3>
               <p>המחזור נפתח ביום א׳, 06.12, בשעה 18:00</p>
             </div>
             <div class="cta__actions">
               <a class="btn" href="#price" data-register>להרשמה</a>
+              <a class="btn btn--small btn--ghost" href="#price" data-questions>יש שאלות? השאירו פרטים ונחזור אליכם</a>
             </div>
           </div>
         </div>

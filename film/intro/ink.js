@@ -1,7 +1,7 @@
 // Ink line rendering: path + pen pressure (fast = thin, slow = thick) + slightly fuzzy edges + ink pooling where slow + old-age tremor / feibai (飞白, dry-brush breaks) + the one red section
 import { vnoise, clamp, lerp } from '/core/lib.js';
 
-export const PAPER = [244, 242, 236];   // the site's paper
+export const PAPER = [248, 248, 246];   // the site's paper: white, like the sketch
 export const INK = [44, 42, 40];        // graphite, like the course art
 export const RED = [139, 79, 214];      // the one accent: butterfly purple
 

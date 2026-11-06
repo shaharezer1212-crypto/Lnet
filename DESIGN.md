@@ -4,21 +4,21 @@ The contract every page of this site follows (landing, portal, admin). Source of
 
 ## Direction
 
-The printed syllabus is the brief: a pencil-sketched studio on paper, three Pixar-style characters (Shahar, Claude, the butterfly), bold condensed Hebrew. The site feels like the flyer came alive: paper, graphite, ink, plus the characters' own colors. Cream + Claude terracotta are intentional brand choices from the flyer, not a default.
+The page is the pencil sketch from the course art: white drawing paper, graphite, ink, and colour only where the sketch has it: the 3D characters (Shahar, Claude, the butterfly), the colored-pencil green of the chairs and plants, and the butterfly purple. Bold condensed Hebrew from the flyer.
 
-**One signature:** a hand-drawn pencil line that draws itself down the four-session timeline as you scroll, with the one-line Lnet butterfly flying along it. Everything else stays quiet.
+**One idea, everywhere:** the page gets drawn while you scroll, the way the intro film draws the room. Card frames are pencil outlines that trace themselves in; a pencil line runs down the syllabus with the 3D butterfly flying along it and colouring each session it passes; Claude and the butterfly are cut-outs that move with the scroll (walk in, perch, peek, jump, walk home). Nothing moves on its own except the butterfly's flutter.
 
 ## Color
 
 | Token | Hex | Role |
 |---|---|---|
-| `--paper` | `#f4f2ec` | Page background, the sketch paper |
-| `--paper-deep` | `#e9e5dc` | Quiet fills: locked sessions, file badges |
+| `--paper` | `#f8f8f6` | Page background: white drawing paper with a faint grain (same white as the intro film) |
+| `--paper-deep` | `#ececea` | Quiet fills: locked sessions, file badges |
 | `--ink` | `#000` | Text, outlines (1.5px), primary buttons, the price card |
-| `--graphite` | `#6f6b66` | Secondary text, pencil rules |
-| `--pencil` | `#a9a49c` | Dashed dividers, header rule |
+| `--graphite` | `#3b3b3b` | Pencil lines: hand-drawn frames, hatching, secondary text |
+| `--pencil` | `#a3a3a3` | Dashed dividers, header rule |
 | `--clay` | `#d97757` | Claude. Only for the word "Claude," in the hero |
-| `--leaf` | `#4be12c` | The green chairs: bullets, checks, CTA block, "next session" |
+| `--leaf` | `#93c83e` | Colored-pencil green of the chairs: bullets, checks, CTA block (with pencil strokes over it), "next session" ring |
 | `--wing` | `#8b4fd6` | The butterfly: timeline ink line, focus ring |
 | `--sun` | `#f2b84b` | Info dot, strike-through on the old price |
 
@@ -32,7 +32,8 @@ The printed syllabus is the brief: a pencil-sketched studio on paper, three Pixa
 
 ## Shape
 
-- Outlines: `1.5px solid var(--ink)`; no drop shadows anywhere.
+- Outlines: on the landing page, hand-drawn pencil frames (`[data-sketch]`, drawn by main.js); elsewhere `1.5px solid var(--ink)`.
+- Shadows: never soft. Cards that need depth get a hatched pencil shadow (`.hatched`).
 - Radius: `--radius-card` 28px (cards, as in the flyer), `--radius-pill` for buttons, 14px for inputs/file rows, 50% for numbered dots.
 - Numbered circles (1 to 4) only for the sessions, because they are a real sequence.
 

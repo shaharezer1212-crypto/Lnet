@@ -5,6 +5,10 @@ window.SITE = {
   // Empty → the "register" buttons scroll to the price block.
   registerUrl: "",
 
+  // Link for "יש שאלות?" (a Google Form, WhatsApp link, Calendly...).
+  // Empty → the button stays visible and scrolls to the price block until a link is set.
+  questionsUrl: "",
+
   linkedinUrl: "https://www.linkedin.com/",
 
   // Intro: plays assets/video/intro.mp4 if it exists, otherwise the drawn intro.
