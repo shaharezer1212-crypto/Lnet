@@ -80,7 +80,7 @@
     video.addEventListener("ended", function () {
       intro.classList.add("is-revealed");
       clearTimeout(timer);
-      timer = setTimeout(finish, 1500);
+      timer = setTimeout(finish, 700);
     });
     // WebM (VP9) is smaller and plays in browsers without H.264; MP4 covers Safari.
     var webm = src.replace(/\.mp4$/, ".webm");
