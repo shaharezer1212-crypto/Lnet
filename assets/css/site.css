@@ -16,6 +16,13 @@
   font-weight: 700;
   font-display: swap;
 }
+/* Full Josefin (digits included) for the big numbers: price, countdown. */
+@font-face {
+  font-family: "Josefin Display";
+  src: url("../fonts/JosefinSans.ttf") format("truetype");
+  font-weight: 100 700;
+  font-display: swap;
+}
 /* Josefin only for Latin glyphs: "Claude", "Skills", numbers in English
    copy. Hebrew falls through to Gazoz, exactly like the printed syllabus. */
 @font-face {
@@ -68,6 +75,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 img { max-width: 100%; display: block; }
+[hidden] { display: none !important; }
 a { color: inherit; }
 button { font: inherit; }
 
@@ -141,7 +149,9 @@ p { margin: 0; }
 }
 .intro__sketch path {
   fill: none; stroke: #3b3936; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
-  stroke-dasharray: var(--len); stroke-dashoffset: var(--len);
+  stroke-dasharray: var(--len, 4000); stroke-dashoffset: var(--len, 4000);
+}
+.intro.is-drawing .intro__sketch path {
   animation: draw 1.6s cubic-bezier(.6,.05,.3,1) forwards;
   animation-delay: var(--d, 0s);
 }
@@ -149,8 +159,8 @@ p { margin: 0; }
 .intro__photo {
   opacity: 0;
   clip-path: circle(0% at 50% 60%);
-  animation: reveal 1.1s cubic-bezier(.7,0,.2,1) 2.1s forwards;
 }
+.intro.is-drawing .intro__photo { animation: reveal 1.1s cubic-bezier(.7,0,.2,1) 2.1s forwards; }
 .intro__skip {
   position: absolute; bottom: clamp(1rem, 4vh, 2.5rem); inset-inline-end: var(--gutter);
   background: none; border: 0; cursor: pointer; color: var(--graphite);
@@ -168,6 +178,7 @@ p { margin: 0; }
   margin-inline: auto;
   aspect-ratio: 2000 / 1120;
   max-height: 78vh;
+  overflow: hidden;
 }
 .hero__art img {
   width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
@@ -193,7 +204,6 @@ p { margin: 0; }
   direction: ltr; text-align: end;
   unicode-bidi: isolate;
 }
-.hero h1 .claude { text-align: right; }
 .hero__lede { margin-top: 1.5rem; max-width: var(--measure); font-size: var(--step-1); line-height: 1.35; }
 .hero__lede strong { font-weight: 700; }
 .hero__meta { margin-top: 2.2rem; display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: center; }
@@ -226,9 +236,9 @@ p { margin: 0; }
 .syllabus__note { color: var(--graphite); font-size: var(--step--1); text-align: end; }
 @media (max-width: 760px) { .syllabus__head { grid-template-columns: 1fr; } .syllabus__note { text-align: start; } }
 
-.timeline { position: relative; margin-top: clamp(2.5rem, 6vw, 4rem); display: grid; gap: clamp(1.2rem, 3vw, 2rem); }
+.timeline { position: relative; padding: 0; margin-top: clamp(2.5rem, 6vw, 4rem); margin-bottom: 0; display: grid; gap: clamp(1.2rem, 3vw, 2rem); }
 .timeline__track {
-  position: absolute; inset-block: 0; inset-inline-start: 27px; width: 40px; height: 100%;
+  position: absolute; inset-block: 0; inset-inline-start: 18px; width: 40px; height: 100%;
   overflow: visible; pointer-events: none;
 }
 .timeline__track path {
@@ -240,8 +250,8 @@ p { margin: 0; }
   stroke-width: 2.4; stroke: var(--wing);
 }
 .timeline__butterfly {
-  position: absolute; inset-inline-start: 22px; top: 0; width: 50px; height: 34px;
-  transform: translateY(var(--by, 0px)); color: var(--wing);
+  position: absolute; inset-inline-start: 13px; top: 0; width: 50px; height: 34px;
+  color: var(--wing); transition: opacity .3s;
   pointer-events: none; z-index: 2;
 }
 .timeline__butterfly svg { width: 100%; height: 100%; overflow: visible; }
@@ -278,8 +288,9 @@ p { margin: 0; }
   .session__num { inset-inline-start: -62px; width: 44px; height: 44px; }
   .session__when { grid-column: 1; grid-row: auto; text-align: start; }
   .session h3 { grid-row: auto; }
-  .timeline__track { inset-inline-start: 14px; }
-  .timeline__butterfly { inset-inline-start: 9px; }
+  .timeline__track { inset-inline-start: 4px; }
+  .timeline__butterfly { inset-inline-start: -1px; }
+  .hero__text { margin-top: -1.5rem; }
 }
 
 /* ---------------- facilitator ---------------- */
@@ -308,7 +319,7 @@ p { margin: 0; }
   align-self: flex-start; background: var(--leaf); color: var(--ink);
   border-radius: var(--radius-pill); padding: .35rem 1.1rem .2rem; font-weight: 700;
 }
-.offer__amount { font-family: "Josefin", sans-serif; font-weight: 700; font-size: var(--step-4); line-height: .9; direction: ltr; text-align: right; }
+.offer__amount { font-family: "Josefin Display", sans-serif; font-weight: 700; font-size: var(--step-4); line-height: .9; direction: ltr; text-align: right; }
 .offer__amount small { font-family: "Gazoz", sans-serif; font-size: .45em; }
 .offer__was s { text-decoration-color: var(--sun); text-decoration-thickness: 3px; }
 .offer__split { border-top: 1px solid #444; padding-top: 1rem; margin-top: auto; }
@@ -390,7 +401,7 @@ p { margin: 0; }
 }
 .next-up__label { color: var(--leaf); font-weight: 700; }
 .next-up h2 { font-size: var(--step-2); margin-top: .3rem; }
-.next-up__count { font-family: "Josefin"; font-weight: 700; font-size: var(--step-3); line-height: 1; direction: ltr; text-align: center; }
+.next-up__count { font-family: "Josefin Display"; font-weight: 700; font-size: var(--step-3); line-height: 1; direction: ltr; text-align: center; }
 .next-up__count small { display: block; font-family: "Gazoz"; font-size: var(--step--1); font-weight: 400; color: #bbb; margin-top: .3rem; }
 @media (max-width: 640px) { .next-up { grid-template-columns: 1fr; } .next-up__count { text-align: start; } }
 

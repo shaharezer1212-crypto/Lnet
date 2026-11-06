@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>אזור המשתתפים | Claude, השותף החדש שלך</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#f4f2ec">
+  <link rel="preload" href="assets/fonts/FbGazoz-Bold.otf" as="font" type="font/otf" crossorigin>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/config.js"></script>
+</head>
+<body class="portal-body">
+  <a class="skip-link" href="#main">דילוג לתוכן</a>
+
+  <header class="site-head">
+    <div class="wrap">
+      <a class="brand" href="index.html" aria-label="Gada | Lnet, לדף הסדנה">
+        <img src="assets/img/logo-black.png" alt="Gada | Lnet" width="1233" height="225">
+      </a>
+      <nav class="nav" aria-label="ניווט">
+        <button class="btn btn--small btn--ghost" type="button" id="logout" hidden>יציאה</button>
+        <a class="btn btn--small" href="index.html">חזרה לדף הסדנה</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- gate -->
+    <section class="gate" id="gate" aria-labelledby="gate-title">
+      <form class="gate__card" id="gate-form" novalidate>
+        <h1 id="gate-title">כניסה לאזור המשתתפים</h1>
+        <p>כאן נמצאים ההקלטות, החומרים וסט ה־Skills של הסדנה. את קוד הכניסה קיבלתם במייל ההרשמה.</p>
+        <div class="field">
+          <label for="passcode">קוד כניסה</label>
+          <input id="passcode" name="passcode" type="password" autocomplete="current-password" required dir="ltr">
+        </div>
+        <button class="btn" type="submit">כניסה</button>
+        <p class="gate__error" id="gate-error" role="alert"></p>
+        <p style="font-size:var(--step--1);color:var(--graphite)">עוד לא נרשמתם? <a href="index.html#price">לפרטים ולהרשמה</a></p>
+      </form>
+    </section>
+
+    <!-- dashboard -->
+    <div class="portal-main" id="dash" hidden>
+      <div class="wrap">
+        <div class="dash-head">
+          <div>
+            <h1 id="dash-title">שלום, ברוכים הבאים</h1>
+            <p id="dash-cohort"></p>
+          </div>
+        </div>
+
+        <section class="next-up" id="next-up" aria-labelledby="next-title" hidden>
+          <div>
+            <p class="next-up__label" id="next-label">המפגש הבא</p>
+            <h2 id="next-title"></h2>
+            <p id="next-when"></p>
+            <p style="margin-top:1rem"><a class="btn btn--leaf" id="next-zoom" href="#" target="_blank" rel="noopener" hidden>הצטרפות לזום</a></p>
+          </div>
+          <p class="next-up__count" id="next-count" aria-live="off"></p>
+        </section>
+
+        <section aria-labelledby="modules-title">
+          <h2 id="modules-title" class="visually-hidden">המפגשים</h2>
+          <div class="modules" id="modules"></div>
+        </section>
+
+        <section class="toolkit" aria-label="ארגז כלים">
+          <div>
+            <h3>סט ה־Skills של הסדנה</h3>
+            <div class="materials"><ul id="toolkit-skills"></ul></div>
+          </div>
+          <div>
+            <h3>קישורים שימושיים</h3>
+            <div class="materials"><ul id="toolkit-links"></ul></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <img src="assets/img/logo-black.png" alt="Gada | Lnet" width="1233" height="225">
+      <p class="slogan">TIME TO LEVEL-UP!</p>
+      <small>© Gada-Lnet</small>
+    </div>
+  </footer>
+
+  <script src="assets/js/portal.js"></script>
+</body>
+</html>
