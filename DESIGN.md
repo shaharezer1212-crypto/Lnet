@@ -18,7 +18,7 @@ The page is the pencil sketch from the course art: white drawing paper, graphite
 | `--graphite` | `#3b3b3b` | Pencil lines: hand-drawn frames, hatching, secondary text |
 | `--pencil` | `#a3a3a3` | Dashed dividers, header rule |
 | `--clay` | `#d97757` | Claude. Only for the word "Claude," in the hero |
-| `--leaf` | `#93c83e` | Colored-pencil green of the chairs: bullets, checks, CTA block (with pencil strokes over it), "next session" ring |
+| `--leaf` | `#93c83e` | Colored-pencil green of the chairs: bullets, checks, CTA block (with pencil strokes over it) |
 | `--wing` | `#8b4fd6` | The butterfly: timeline ink line, focus ring |
 | `--sun` | `#f2b84b` | Info dot, strike-through on the old price |
 
