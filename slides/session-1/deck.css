@@ -379,3 +379,4 @@ p, li, .card, .stop span, .sign p { text-wrap: pretty; }
 .split > span.w:not(.ul) { white-space: nowrap; }
 .floor-shadow { position: absolute; z-index: 0; height: 34px; border-radius: 50%; background: radial-gradient(closest-side, rgb(0 0 0 / .28), transparent); }
 .on-scene .big { max-width: none; }
+.slide .mid { max-width: none; }
