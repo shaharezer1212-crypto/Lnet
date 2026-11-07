@@ -1,8 +1,8 @@
 {"scenes":[
  {"paper":true,"len":6.0},
- {"clip":"clips/k_entry.mp4","start":0,"draw":1.0,"len":10.0},
- {"clip":"clips/k_book.mp4","start":0.2,"draw":0.8,"len":3.8,"badge":[{"t0":54,"box":[448,1172,640,1455],"lines":["איך להפוך","למפתח/ת","למידה?"],"fill":[112,44,176],"border":[178,130,226],"ink":[255,255,255],"inset":0.0,"lock":true}]},
- {"clip":"clips/k_comp.mp4","start":0.3,"draw":0.8,"len":3.8},
- {"clip":"clips/k_studio.mp4","start":1.2,"draw":0.8,"len":3.8},
- {"clip":"clips/k_s6.mp4","start":1.0,"draw":0.8,"len":4.2}
+ {"clip":"clips/sd_entry.mp4","start":0,"draw":1.0,"len":10.0},
+ {"clip":"clips/sd_book.mp4","start":0.3,"draw":0.8,"len":3.8},
+ {"clip":"clips/sd_comp.mp4","start":0.3,"draw":0.8,"len":3.8},
+ {"clip":"clips/sd_studio.mp4","start":1.2,"draw":0.8,"len":3.8},
+ {"clip":"clips/s6.mp4","start":1.0,"draw":0.8,"len":4.2,"badge":{"t0":99,"box":[264,1640,344,1710]}}
 ]}
