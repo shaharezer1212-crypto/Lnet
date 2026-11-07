@@ -36,12 +36,38 @@
           "kind": "PDF"
         }
       ],
-      "links": [],
       "homework": {
         "title": "",
         "text": "",
         "url": ""
-      }
+      },
+      "prep": [
+        {
+          "title": "מתחילים לעבוד עם Claude",
+          "url": "https://support.claude.com/en/articles/8114491-get-started-with-claude",
+          "kind": "מאמר"
+        },
+        {
+          "title": "מה זה פרויקט ואיך פותחים אחד",
+          "url": "https://support.claude.com/en/articles/9517075-what-are-projects",
+          "kind": "מאמר"
+        },
+        {
+          "title": "Artifacts: מה זה ואיך משתמשים",
+          "url": "https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them",
+          "kind": "מאמר"
+        },
+        {
+          "title": "התקנת Claude in Chrome",
+          "url": "https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome",
+          "kind": "מדריך"
+        },
+        {
+          "title": "איך עובדות מגבלות השימוש",
+          "url": "https://support.claude.com/en/articles/11647753-how-do-usage-and-length-limits-work",
+          "kind": "מאמר"
+        }
+      ]
     },
     {
       "id": "s2",
@@ -65,12 +91,23 @@
         "url": ""
       },
       "files": [],
-      "links": [],
       "homework": {
         "title": "",
         "text": "",
         "url": ""
-      }
+      },
+      "prep": [
+        {
+          "title": "מה זה Skills",
+          "url": "https://support.claude.com/en/articles/12512176-what-are-skills",
+          "kind": "מאמר"
+        },
+        {
+          "title": "איך כותבים Skill משלכם",
+          "url": "https://support.claude.com/en/articles/12512198-how-to-create-custom-skills",
+          "kind": "מדריך"
+        }
+      ]
     },
     {
       "id": "s3",
@@ -93,12 +130,18 @@
         "url": ""
       },
       "files": [],
-      "links": [],
       "homework": {
         "title": "",
         "text": "",
         "url": ""
-      }
+      },
+      "prep": [
+        {
+          "title": "היום הראשון שלכם ב־Claude Code",
+          "url": "https://support.claude.com/en/articles/14552382-your-first-day-in-claude-code",
+          "kind": "מדריך"
+        }
+      ]
     },
     {
       "id": "s4",
@@ -121,12 +164,18 @@
         "url": ""
       },
       "files": [],
-      "links": [],
       "homework": {
         "title": "",
         "text": "",
         "url": ""
-      }
+      },
+      "prep": [
+        {
+          "title": "חיבור כלים חיצוניים עם Connectors",
+          "url": "https://support.claude.com/en/articles/11176164-use-connectors-to-extend-claude-s-capabilities",
+          "kind": "מאמר"
+        }
+      ]
     }
   ],
   "toolkit": {

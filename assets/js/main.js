@@ -158,24 +158,26 @@
     var c = docRect(promiseClaude), b = docRect(reader), h = docRect(portrait), tl = docRect(timeline);
     var A0 = { x: c.x + c.w * .5, y: c.y + c.h * .04 };      // on Claude's head
     var A1 = { x: b.x + b.w * .46, y: b.y + b.h * .25 };     // on the reading Claude's head
-    var A3 = { x: h.x + h.w * .78, y: h.y + h.h * .1 };      // on the portrait's rim
+    var A3 = { x: h.x + h.w * .9, y: h.y + h.h * .12 };      // on the portrait's rim
     var T0 = trackDoc(0), T1 = trackDoc(1);
     var k0 = A0.y - vh * .5, kS = k0 - vh * .55, k1 = Math.max(k0 + 10, A1.y - vh * .5);
     var tS = Math.max(k1 + 10, tl.y - vh * .7), tE = tS + tl.h, k3 = Math.max(tE + 10, A3.y - vh * .5);
-    var pos, sit = false, on = true, pose = "glasses";
+    var pos, sit = false, on = true, pose = "hello", flyPose = "wide";
     function fly(P, Q, u, arc) { var e = ease(clamp01(u)); return { x: lerp(P.x, Q.x, e), y: lerp(P.y, Q.y, e) - Math.sin(Math.PI * clamp01(u)) * (arc || 0) }; }
     if (reduced) { pos = A3; sit = true; }
     else if (sY < kS) { on = false; pos = { x: vw - 60, y: A0.y - 200 }; }
     else if (sY < k0) { pos = fly({ x: vw - 60, y: A0.y - 220 }, A0, (sY - kS) / (k0 - kS), 60); sit = sY > k0 - 30; if (sit) pos = A0; }
     else if (sY < k1) { var u = (sY - k0) / (k1 - k0); if (u < .3) { pos = A0; sit = true; } else if (u > .85) { pos = A1; sit = true; } else pos = fly(A0, A1, (u - .3) / .55, 140); }
     else if (sY < tS) { var u2 = (sY - k1) / (tS - k1); if (u2 < .35) { pos = A1; sit = true; } else pos = fly(A1, T0, (u2 - .35) / .65, 80); }
-    else if (sY < tE) { pos = trackDoc((sY - tS) / (tE - tS)); }
+    else if (sY < tE) { pos = trackDoc((sY - tS) / (tE - tS)); flyPose = "magnify"; }
     else if (sY < k3) { var u3 = (sY - tE) / (k3 - tE); pos = u3 > .9 ? A3 : fly(T1, A3, u3 / .9, 120); sit = u3 > .9; }
     else { pos = A3; sit = true; }
     trav.classList.toggle("is-on", on);
     trav.style.opacity = on ? "1" : "0";
-    // a different sitting pose at each perch: waving on Claude, reading with the reader, glasses on the portrait
-    if (sit) pose = pos === A0 ? "wave" : pos === A1 ? "read" : "glasses";
+    // a different pose at each perch: waving on Claude, reading with the reader, a big hello on the portrait;
+    // along the syllabus it inspects the sessions with its magnifying glass
+    if (sit) pose = pos === A0 ? "wave" : pos === A1 ? "read" : "hello";
+    trav.dataset.fly = flyPose;
     trav.classList.toggle("is-sitting", sit);
     trav.dataset.pose = pose;
     trav.style.transform = "translate(" + pos.x.toFixed(1) + "px," + pos.y.toFixed(1) + "px)";

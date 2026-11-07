@@ -95,7 +95,7 @@
       s.recording = s.recording || { type: "youtube", url: "" };
       s.slides = s.slides || { url: "" };
       s.files = s.files || s.materials || []; delete s.materials;
-      s.links = s.links || [];
+      s.prep = s.prep || s.links || []; delete s.links;
       s.homework = s.homework || { title: "", text: "", url: "" };
       if (s.summary === undefined) s.summary = "";
 
@@ -117,9 +117,9 @@
       );
       var g3 = group("המצגת", "קישור שיתוף של Google Slides או Canva, קישור ל־PDF, או כל קישור אחר.");
       g3.append(field("קישור למצגת", input(s.slides.url, function (v) { s.slides.url = v; }, true)));
-      var g4 = group("להרחבה", "מאמרים, סרטונים וכלים. כל קישור מופיע ככרטיס עם הסוג ומשפט הסבר.");
+      var g4 = group("הכנות לקראת המפגש (מומלץ)", "מאמרים וקישורים לקריאה לפני המפגש. מופיעים מתחת לקבצים להורדה.");
       var lh = document.createElement("div"); lh.className = "admin-rows"; g4.appendChild(lh);
-      rowsEditor(s.links, lh, LINK_COLS, { title: "", url: "", kind: LINK_KINDS[0], note: "" }, "הוספת קישור");
+      rowsEditor(s.prep, lh, LINK_COLS, { title: "", url: "", kind: LINK_KINDS[0], note: "" }, "הוספת קישור");
       var g5 = group("קבצים להורדה");
       var fh = document.createElement("div"); fh.className = "admin-rows"; g5.appendChild(fh);
       rowsEditor(s.files, fh, FILE_COLS, { title: "", url: "", kind: "PDF" }, "הוספת קובץ");
