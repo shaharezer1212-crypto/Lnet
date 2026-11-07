@@ -1,0 +1,21 @@
+<title>Claude Workshop Reel</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap">
+<style>
+/* layout: one centered phone-shaped player on pencil-paper ground, short caption under it */
+:root{--bg:#f6f4ef;--fg:#1d1b19;--muted:#6d6862;--frame:#1d1b19;--accent:#7a3fd1;--font:"Heebo","Arial Hebrew",Arial,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#17161a;--fg:#f1eee9;--muted:#a7a19a;--frame:#3a3640;--accent:#b48cf0;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#17161a;--fg:#f1eee9;--muted:#a7a19a;--frame:#3a3640;--accent:#b48cf0;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px}
+main{display:flex;flex-direction:column;align-items:center;gap:14px;direction:rtl}
+h1{margin:0;font-size:1.35rem;text-wrap:balance;text-align:center}
+.ver{color:var(--accent);font-weight:700}
+video{display:block;width:min(100%,420px);max-height:82vh;aspect-ratio:9/16;object-fit:contain;background:#000;border:3px solid var(--frame);border-radius:22px}
+p{margin:0;color:var(--muted);font-size:.95rem;text-align:center;max-width:42ch}
+</style>
+<main>
+  <h1>סרטון לסדנה: Claude, השותף לעבודה <span class="ver">גרסה 6</span></h1>
+  <video src="claude-workshop-v6-light.mp4" controls playsinline preload="auto"></video>
+  <p>9:16, 35 שניות, עם מוזיקה. לחצו על הנגן כדי להפעיל עם סאונד.</p>
+</main>
