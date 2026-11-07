@@ -534,9 +534,6 @@ main { overflow-x: clip; }
 .stop.is-done .stop__state { color: var(--wing); font-weight: 700; }
 .stop__date { font-size: var(--step--1); color: var(--graphite); }
 .stop__title { font-weight: 700; font-size: var(--step-1); line-height: 1.12; }
-.stop__has { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .3rem; }
-.chip { font-size: .85rem; border: 1.5px solid var(--ink); border-radius: var(--radius-pill); padding: .12rem .6rem 0; }
-.stop__soon { font-size: var(--step--1); color: var(--graphite); }
 .path__fly {
   position: absolute; width: 74px; height: auto; top: -44px; inset-inline-end: -14px; z-index: 3; pointer-events: none;
   filter: drop-shadow(0 8px 6px rgb(60 30 90 / .18));
@@ -571,15 +568,6 @@ main { overflow-x: clip; }
 .s-kicker { display: flex; align-items: center; gap: .7rem; color: var(--graphite); margin-bottom: .8rem; }
 .s-num { width: 40px; height: 40px; border-radius: 50%; background: var(--ink); color: var(--paper); display: grid; place-items: center; font-weight: 700; padding-top: .15em; flex: none; }
 .s-summary { margin-top: 1rem; max-width: var(--measure); font-size: var(--step-1); line-height: 1.35; }
-.done-toggle {
-  display: inline-flex; align-items: center; gap: .7rem; cursor: pointer;
-  background: var(--card); border: 1.5px solid var(--ink); border-radius: var(--radius-pill);
-  padding: .6rem 1.2rem .45rem; font-weight: 700;
-}
-.done-toggle__box { width: 22px; height: 22px; border: 1.5px solid var(--ink); border-radius: 6px; display: grid; place-items: center; }
-.done-toggle.is-on { background: var(--wing); color: #fff; border-color: var(--wing); }
-.done-toggle.is-on .done-toggle__box { border-color: #fff; }
-.done-toggle.is-on .done-toggle__box::after { content: ""; width: 10px; height: 6px; border: solid #fff; border-width: 0 0 2.4px 2.4px; transform: rotate(-45deg) translate(1px, -1px); }
 
 .s-grid { margin-top: clamp(1.8rem, 4vw, 2.6rem); display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: clamp(1.6rem, 3.5vw, 2.8rem); align-items: start; }
 @media (max-width: 900px) { .s-grid { grid-template-columns: 1fr; } }
