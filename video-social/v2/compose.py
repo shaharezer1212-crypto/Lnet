@@ -1,0 +1,55 @@
+"""Compose the base picture: each scene draws itself in pencil on paper, then its clip plays.
+usage: python3 compose.py plan.json outdir"""
+import json, sys, os, subprocess, numpy as np
+from PIL import Image, ImageFilter
+W, H, FPS = 1080, 1920, 30
+PAPER = np.array([247, 245, 241], np.float32)
+plan = json.load(open(sys.argv[1])); out = sys.argv[2]; os.makedirs(out, exist_ok=True)
+rng = np.random.default_rng(7)
+noise = np.array(Image.fromarray((rng.random((H // 8, W // 8)) * 255).astype(np.uint8)).resize((W, H), Image.BICUBIC).filter(ImageFilter.GaussianBlur(6)), np.float32) / 255
+yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+sweep = 0.6 * (xx / W)[:, :] + 0.25 * (yy / H) + 0.35 * noise   # lines appear right-to-left, top-to-bottom, with a hand-drawn jitter
+sweep = (sweep - sweep.min()) / (sweep.max() - sweep.min())
+def smooth(x): x = np.clip(x, 0, 1); return x * x * (3 - 2 * x)
+def lineart(img):
+    g = Image.fromarray(img.astype(np.uint8)).convert('L')
+    a = np.array(g.filter(ImageFilter.GaussianBlur(1.2)), np.float32); b = np.array(g.filter(ImageFilter.GaussianBlur(5)), np.float32)
+    d = np.clip((b - a - 4) / 16, 0, 1) ** 0.8
+    return d[..., None]
+def frames(clip, start, n):
+    tmp = f'/tmp/claude-0/-home-user-Lnet/bde28191-6427-5f3c-9348-1f34a6616c66/scratchpad/fx_{os.path.basename(clip)}'
+    os.makedirs(tmp, exist_ok=True)
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', str(start), '-i', clip, '-vf', f'fps={FPS},scale={W}:{H}:flags=lanczos', '-frames:v', str(n), f'{tmp}/%04d.png'], check=True)
+    fs = sorted(os.listdir(tmp))[:n]
+    out_ = [np.array(Image.open(f'{tmp}/{f}').convert('RGB'), np.float32) for f in fs]
+    for f in os.listdir(tmp): os.remove(f'{tmp}/{f}')
+    while len(out_) < n: out_.append(out_[-1])
+    return out_
+k = 0
+def save(a):
+    global k; Image.fromarray(np.clip(a, 0, 255).astype(np.uint8)).save(f'{out}/f{k:04d}.jpg', quality=93); k += 1
+prev = None
+for sc in plan['scenes']:
+    n_in = round(sc['draw'] * FPS); n_clip = round(sc['len'] * FPS) - n_in
+    clip = frames(sc['clip'], sc.get('start', 0), n_clip) if sc.get('clip') else None
+    first = clip[0] if clip else np.array(Image.open(sc['still']).convert('RGB').resize((W, H)), np.float32)
+    if prev is not None:   # erase the previous scene with a quick sweep back to paper
+        for i in range(sc.get('erase', 8)):
+            p = smooth((i + 1) / sc.get('erase', 8)); m = (sweep[..., None] > 1 - p * 1.15).astype(np.float32)
+            m = np.array(Image.fromarray((m[..., 0] * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(10)), np.float32)[..., None] / 255
+            save(prev * (1 - m) + PAPER * m)
+    la = lineart(first); gray = first.mean(-1, keepdims=True); shade = PAPER * 0.15 + gray * 0.85
+    a1, a2 = int(n_in * .55), int(n_in * .8)
+    for i in range(n_in):
+        if i < a1:
+            p = smooth((i + 1) / a1); m = np.clip((p * 1.12 - sweep) * 9, 0, 1)[..., None]
+            save(PAPER * (1 - la * m * 0.85) + 0)
+        elif i < a2:
+            p = smooth((i - a1 + 1) / (a2 - a1)); base = PAPER * (1 - la * 0.85)
+            save(base * (1 - p) + shade * p)
+        else:
+            p = smooth((i - a2 + 1) / (n_in - a2)); save(shade * (1 - p) + first * p)
+    seq = clip if clip else [first] * n_clip
+    for f in seq: save(f)
+    prev = seq[-1]
+print('frames', k, 'seconds', k / FPS)
