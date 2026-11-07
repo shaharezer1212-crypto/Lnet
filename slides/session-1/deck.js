@@ -10,7 +10,7 @@
   var notes = document.getElementById("notes"), counter = document.getElementById("counter");
   var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var printing = /[?&]print\b/.test(location.search);
-  var i = 0, timers = [];
+  var i = 0, timers = [], first = true;
 
   function fit() {
     var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
@@ -116,9 +116,12 @@
     slides.forEach(function (s) { s.setAttribute("aria-hidden", s === next ? "false" : "true"); });
     next.style.setProperty("--dir", dir);
     next.classList.remove("play");
-    next.classList.add("is-entering");
+    if (first) next.classList.add("no-enter");   // the first slide just appears, no slide-in
+    else next.classList.add("is-entering");
     void next.offsetWidth;
     next.classList.remove("is-entering");
+    if (first) setTimeout(function () { next.classList.remove("no-enter"); }, 50);
+    first = false;
     next.classList.add("is-active", "play");
     counter.textContent = (i + 1) + " / " + slides.length;
     notes.textContent = next.dataset.notes || "";
@@ -159,5 +162,13 @@
     show(i);
     document.documentElement.dataset.ready = "1";
   }
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(boot); else boot();
+  // start only when the fonts and the first slide's images are ready, so nothing pops in or reflows
+  function ready() {
+    var n = start ? start - 1 : 0, first = slides[Math.max(0, Math.min(slides.length - 1, n))];
+    var imgs = Array.prototype.slice.call(first.querySelectorAll("img"));
+    var waits = imgs.map(function (im) { return im.decode ? im.decode().catch(function () {}) : Promise.resolve(); });
+    if (document.fonts && document.fonts.ready) waits.push(document.fonts.ready);
+    Promise.race([Promise.all(waits), new Promise(function (r) { setTimeout(r, 4000); })]).then(boot);
+  }
+  ready();
 })();
