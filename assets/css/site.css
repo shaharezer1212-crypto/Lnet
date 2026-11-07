@@ -240,14 +240,16 @@ p { margin: 0; }
 @media (prefers-reduced-motion: reduce) { .sketch-line path { stroke-dashoffset: 0; } }
 
 /* ---------------- what you'll get (from page 1 of the flyer) ---------------- */
-.promise { display: grid; gap: clamp(2rem, 5vw, 5rem); grid-template-columns: 1.1fr 1fr; align-items: center; }
+.promise { display: grid; gap: clamp(2rem, 4vw, 4rem); grid-template-columns: .9fr 1.25fr; align-items: center; }
 .promise__quote { font-size: var(--step-2); line-height: 1.1; font-weight: 700; }
-.promise__quote + p { margin-top: 1.2rem; max-width: 46ch; color: var(--graphite); }
+.promise__quote + p { margin-top: 1.2rem; max-width: none; color: var(--graphite); text-wrap: pretty; }
 @media (max-width: 860px) { .promise { grid-template-columns: 1fr; } }
 
 /* ---------------- syllabus ---------------- */
 .syllabus__head { display: grid; gap: 1rem 3rem; grid-template-columns: 1fr minmax(0, 1.05fr); align-items: end; }
-.syllabus__board { width: min(100%, 440px); height: auto; justify-self: center; mix-blend-mode: multiply; margin-bottom: -1.5rem; }
+.syllabus__board { width: min(100%, 440px); height: auto; justify-self: center; mix-blend-mode: multiply; margin-bottom: -1.5rem;
+  /* fade the edges of the sketch into the paper so it does not sit as a box */
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%); mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 62%, transparent 100%); }
 .syllabus__note { margin-top: 1.2rem; }
 .syllabus__note { color: var(--graphite); font-size: var(--step--1); }
 @media (max-width: 760px) { .syllabus__head { grid-template-columns: 1fr; } .syllabus__board { margin-bottom: 0; } }
@@ -295,7 +297,7 @@ p { margin: 0; }
 .session__when b { display: block; color: var(--ink); font-size: var(--step-1); line-height: 1; }
 .session h3 { grid-column: 1; grid-row: 1; font-size: var(--step-1); line-height: 1.1; align-self: center; }
 .session ul { grid-column: 1 / -1; margin: .9rem 0 0; padding: 0; list-style: none; display: grid; gap: .45rem; }
-.session li { position: relative; padding-inline-start: 1.2rem; max-width: 70ch; }
+.session li { position: relative; padding-inline-start: 1.2rem; max-width: 70ch; text-wrap: pretty; }
 .session li::before {
   content: ""; position: absolute; inset-inline-start: 0; top: .55em;
   width: 8px; height: 8px; border-radius: 50%; background: var(--leaf);
@@ -321,7 +323,8 @@ p { margin: 0; }
 .host__photo { position: relative; z-index: 2; border-radius: 50%; border: var(--line); width: 100%; height: 100%; object-fit: cover; }
 .host h2 { font-size: var(--step-3); }
 .host__role { margin-top: .8rem; font-weight: 700; font-size: var(--step-1); line-height: 1.25; }
-.host__bio { margin-top: .8rem; max-width: var(--measure); }
+.host__bio { margin-top: .8rem; max-width: none; text-wrap: pretty; }
+.host__role { text-wrap: pretty; }
 .host__link { margin-top: 1.4rem; display: inline-flex; align-items: center; gap: .6rem; font-weight: 700; text-underline-offset: 6px; }
 .host__link span.in { background: var(--ink); color: var(--paper); border-radius: 5px; padding: .15rem .35rem 0; font-size: .85em; }
 @media (max-width: 700px) { .host { grid-template-columns: 1fr; } }
@@ -404,10 +407,6 @@ main { overflow-x: clip; }
   transform-origin: 50% 100%;
   transform: translateX(calc((1 - var(--e)) * 70%)) rotate(calc(sin(var(--p) * 2400deg) * (1 - var(--e)) * 7deg));
 }
-.promise__fly {
-  width: clamp(90px, 10vw, 130px); top: 4%; inset-inline-start: 42%;
-  transform: translate(calc(cos(var(--p) * 600deg) * 120px), calc(sin(var(--p) * 600deg) * 36px)) rotate(calc(sin(var(--p) * 600deg) * 12deg));
-}
 .promise__tag {
   position: absolute; top: 34%; inset-inline-start: 6%;
   border: 1.5px solid var(--ink); border-radius: 10px; background: var(--card);
@@ -420,12 +419,9 @@ main { overflow-x: clip; }
 
 /* the host: the butterfly lands on the portrait, Claude peeks out from behind it */
 .host__peek {
-  z-index: 1; width: 62%; bottom: -2%; inset-inline-start: -34%;
-  transform: translateX(calc((1 - var(--e)) * -55%)) rotate(-8deg);
-}
-.host__fly {
-  z-index: 3; width: 30%; top: -26%; inset-inline-end: 10%;
-  transform: translate(calc((1 - var(--e)) * -160px), calc((1 - var(--e)) * -120px)) rotate(calc((1 - var(--e)) * -25deg));
+  /* Claude peeks over the top of the portrait, hands on its rim; the photo (z 2) hides the rest of him */
+  z-index: 1; width: 50%; top: -29%; left: 2%;
+  transform: translateY(calc((1 - var(--e)) * 45%)) rotate(-4deg);
 }
 
 /* the call to action: Claude runs along the top edge of the green card while
@@ -669,3 +665,13 @@ main { overflow-x: clip; }
 .s-deck__head h2 { margin: 0; }
 .s-deck .slides { border-radius: 18px; background: #000; }
 @media (max-width: 600px) { .player--empty { padding: 7% 6% 0 42%; } .player--empty p { font-size: 1rem; } .player__peek { width: 24%; bottom: -14%; } }
+
+/* the travelling butterfly (main.js moves it in page coordinates) */
+.traveler { position: absolute; top: 0; left: 0; z-index: 20; pointer-events: none; opacity: 0; transition: opacity .3s; will-change: transform; }
+.traveler.is-on { opacity: 1; }
+.traveler img { position: absolute; top: 0; left: 0; height: auto; max-width: none; filter: drop-shadow(0 10px 8px rgb(60 30 90 / .2)); }
+.traveler__fly { width: clamp(64px, 7vw, 96px); translate: -50% -55%; animation: flutter .42s ease-in-out infinite alternate; }
+.traveler__sit { width: clamp(52px, 5.5vw, 74px); translate: -50% -64%; display: none; }
+.traveler.is-sitting .traveler__fly { display: none; }
+.traveler.is-sitting .traveler__sit { display: block; }
+@media (prefers-reduced-motion: reduce) { .traveler__fly { animation: none; } }
