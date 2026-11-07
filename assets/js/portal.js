@@ -215,19 +215,21 @@
         el("div", { class: "slides" }, [el("iframe", { src: sl.src, title: "המצגת של מפגש " + s.number, loading: "lazy", allowfullscreen: true })]),
         el("p", { class: "s-empty", text: "לוחצים על המצגת ועוברים בין השקפים בחיצים או ברווח." })
       ]), main.children[1]);
-    } else {
-      side.appendChild(el("section", { class: "side-card hatched", "data-sketch": true }, sl ? [
+    } else if (sl) {
+      side.appendChild(el("section", { class: "side-card hatched", "data-sketch": true }, [
         el("h2", { text: "המצגת" }),
         el("a", { class: "btn btn--small", href: sl.open, target: "_blank", rel: "noopener", text: "פתיחת המצגת בחלון חדש" })
-      ] : [el("h2", { text: "המצגת" }), el("p", { class: "s-empty", text: "המצגת תעלה כאן אחרי המפגש." })]));
+      ]));
     }
-    side.appendChild(el("section", { class: "side-card materials hatched", "data-sketch": true }, [
-      el("h2", { text: "קבצים להורדה" }), fileList(s.files, "קבצים יעלו כאן אחרי המפגש.")
+    // a card shows only when it has something in it
+    if (s.files && s.files.length) side.appendChild(el("section", { class: "side-card materials hatched", "data-sketch": true }, [
+      el("h2", { text: "קבצים להורדה" }), fileList(s.files)
     ]));
     // articles and links to read before the session, in place of the old "להרחבה" block
-    side.appendChild(el("section", { class: "side-card materials side-card--prep hatched", "data-sketch": true }, [
+    var prep = s.prep || s.links;
+    if (prep && prep.length) side.appendChild(el("section", { class: "side-card materials side-card--prep hatched", "data-sketch": true }, [
       el("h2", null, ["הכנות לקראת המפגש ", el("small", { class: "side-card__tag", text: "(מומלץ)" })]),
-      fileList(s.prep || s.links, "מאמרים וקישורים לקריאה לפני המפגש יעלו כאן.")
+      fileList(prep)
     ]));
     var hw = s.homework || {};
     if (hw.title) {
