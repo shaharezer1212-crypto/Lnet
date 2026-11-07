@@ -9,6 +9,10 @@ window.SITE = {
   // Empty → the button stays visible and scrolls to the price block until a link is set.
   questionsUrl: "",
 
+  // Shows "תצוגת דוגמה" on the portal login screen (the portal filled with example
+  // content). Set to false before sending the portal to participants.
+  portalDemoLink: true,
+
   linkedinUrl: "https://www.linkedin.com/",
 
   // Intro: plays assets/video/intro.mp4 if it exists, otherwise the drawn intro.

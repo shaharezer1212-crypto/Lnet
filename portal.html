@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>אזור המשתתפים | Claude, השותף החדש שלך</title>
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#f4f2ec">
+  <meta name="theme-color" content="#f8f8f6">
   <link rel="preload" href="assets/fonts/FbGazoz-Bold.otf" as="font" type="font/otf" crossorigin>
   <link rel="stylesheet" href="assets/css/site.css">
   <script src="assets/js/config.js"></script>
@@ -19,64 +19,80 @@
         <img src="assets/img/logo-black.png" alt="Gada | Lnet" width="1233" height="225">
       </a>
       <nav class="nav" aria-label="ניווט">
+        <a class="nav-section" href="#home" id="nav-home" hidden>כל המפגשים</a>
         <button class="btn btn--small btn--ghost" type="button" id="logout" hidden>יציאה</button>
-        <a class="btn btn--small" href="index.html">חזרה לדף הסדנה</a>
+        <a class="btn btn--small" href="index.html">לדף הסדנה</a>
       </nav>
     </div>
   </header>
 
+  <p class="demo-ribbon" id="demo-ribbon" hidden>תצוגת דוגמה: התוכן במפגש 1 הוא להמחשה בלבד.</p>
+
   <main id="main">
     <!-- gate -->
     <section class="gate" id="gate" aria-labelledby="gate-title">
-      <form class="gate__card" id="gate-form" novalidate>
+      <form class="gate__card hatched" id="gate-form" data-sketch novalidate>
+        <img class="gate__fly" src="assets/img/fly-wave.webp" width="605" height="640" alt="">
         <h1 id="gate-title">כניסה לאזור המשתתפים</h1>
-        <p>כאן נמצאים ההקלטות, החומרים וסט ה־Skills של הסדנה. את קוד הכניסה קיבלתם במייל ההרשמה.</p>
+        <p>כאן נמצאים ההקלטות, המצגות, הקישורים וסט ה־Skills של הסדנה. את קוד הכניסה קיבלתם במייל ההרשמה.</p>
         <div class="field">
           <label for="passcode">קוד כניסה</label>
           <input id="passcode" name="passcode" type="password" autocomplete="current-password" required dir="ltr">
         </div>
         <button class="btn" type="submit">כניסה</button>
         <p class="gate__error" id="gate-error" role="alert"></p>
-        <p style="font-size:var(--step--1);color:var(--graphite)">עוד לא נרשמתם? <a href="index.html#price">לפרטים ולהרשמה</a></p>
+        <p class="gate__foot">עוד לא נרשמתם? <a href="index.html#price">לפרטים ולהרשמה</a></p>
+        <p class="gate__foot" id="demo-link" hidden><a href="#demo">תצוגת דוגמה של אזור המשתתפים</a> (קוד: LEVELUP2026)</p>
       </form>
     </section>
 
-    <!-- dashboard -->
-    <div class="portal-main" id="dash" hidden>
+    <!-- home: the course path -->
+    <div class="portal-main" id="view-home" hidden>
       <div class="wrap">
-        <div class="dash-head">
+        <div class="p-hello">
           <div>
-            <h1 id="dash-title">שלום, ברוכים הבאים</h1>
-            <p id="dash-cohort"></p>
+            <h1 id="home-title" tabindex="-1">שלום, ברוכים הבאים</h1>
+            <p id="home-cohort"></p>
           </div>
         </div>
 
-        <section class="next-up" id="next-up" aria-labelledby="next-title" hidden>
+        <section class="next-up hatched" id="next-up" aria-labelledby="next-title" hidden>
           <div>
             <p class="next-up__label" id="next-label">המפגש הבא</p>
             <h2 id="next-title"></h2>
             <p id="next-when"></p>
-            <p style="margin-top:1rem"><a class="btn btn--leaf" id="next-zoom" href="#" target="_blank" rel="noopener" hidden>הצטרפות לזום</a></p>
+            <p class="next-up__actions">
+              <a class="btn btn--leaf" id="next-zoom" href="#" target="_blank" rel="noopener" hidden>הצטרפות לזום</a>
+              <a class="btn btn--ghost-light" id="next-open" href="#home">לעמוד המפגש</a>
+            </p>
           </div>
           <p class="next-up__count" id="next-count" aria-live="off"></p>
         </section>
 
-        <section aria-labelledby="modules-title">
-          <h2 id="modules-title" class="visually-hidden">המפגשים</h2>
-          <div class="modules" id="modules"></div>
+        <section class="path" aria-labelledby="path-title">
+          <div class="path__head">
+            <h2 id="path-title">המסלול שלכם</h2>
+            <p id="path-progress" class="path__progress"></p>
+          </div>
+          <ol class="path__list" id="path-list" role="list"></ol>
         </section>
 
         <section class="toolkit" aria-label="ארגז כלים">
-          <div>
+          <div class="hatched" data-sketch>
             <h3>סט ה־Skills של הסדנה</h3>
             <div class="materials"><ul id="toolkit-skills"></ul></div>
           </div>
-          <div>
+          <div class="hatched" data-sketch>
             <h3>קישורים שימושיים</h3>
             <div class="materials"><ul id="toolkit-links"></ul></div>
           </div>
         </section>
       </div>
+    </div>
+
+    <!-- one session -->
+    <div class="portal-main" id="view-session" hidden>
+      <div class="wrap" id="session-root"></div>
     </div>
   </main>
 
@@ -88,6 +104,7 @@
     </div>
   </footer>
 
+  <script src="assets/js/sketch.js"></script>
   <script src="assets/js/portal.js"></script>
 </body>
 </html>

@@ -3,7 +3,8 @@
   "use strict";
   var data = null, newHash = null;
   var $ = function (id) { return document.getElementById(id); };
-  var KINDS = ["PDF", "PPT", "ZIP", "MD", "LINK"];
+  var KINDS = ["PDF", "PPT", "ZIP", "MD", "DOC", "LINK"];
+  var LINK_KINDS = ["מאמר", "סרטון", "כלי", "מדריך", "דוגמה"];
   var REC = [["youtube", "YouTube"], ["vimeo", "Vimeo"], ["drive", "Google Drive"], ["file", "קובץ וידאו"]];
 
   function sha256(text) {
@@ -48,56 +49,102 @@
     return b;
   }
 
-  function materialsEditor(list, host) {
+  function textarea(value, onInput) {
+    var t = document.createElement("textarea");
+    t.value = value || "";
+    t.rows = 3;
+    t.addEventListener("input", function () { onInput(t.value.trim()); output(); });
+    return t;
+  }
+  function group(title, hint) {
+    var g = document.createElement("div");
+    g.className = "admin-group";
+    var h = document.createElement("h3");
+    h.textContent = title;
+    g.appendChild(h);
+    if (hint) { var p = document.createElement("p"); p.className = "admin-hint"; p.textContent = hint; g.appendChild(p); }
+    return g;
+  }
+
+  // rows editor: cols = [[key, label, kind]] where kind is "text", "ltr" or an options array
+  function rowsEditor(list, host, cols, blank, addText) {
     host.textContent = "";
     list.forEach(function (m, i) {
       var row = document.createElement("div");
       row.className = "mat-row";
-      row.append(
-        field("שם הקובץ", input(m.title, function (v) { m.title = v; })),
-        field("קישור", input(m.url, function (v) { m.url = v; }, true)),
-        field("סוג", select(KINDS, m.kind || "PDF", function (v) { m.kind = v; })),
-        button("הסרה", function () { list.splice(i, 1); materialsEditor(list, host); output(); }, true)
-      );
+      row.style.gridTemplateColumns = cols.map(function (c) { return c[2] === "ltr" ? "1.4fr" : Array.isArray(c[2]) ? "auto" : "1fr"; }).join(" ") + " auto";
+      cols.forEach(function (c) {
+        var key = c[0];
+        var ctl = Array.isArray(c[2]) ? select(c[2], m[key] || c[2][0], function (v) { m[key] = v; })
+          : input(m[key], function (v) { m[key] = v; }, c[2] === "ltr");
+        row.appendChild(field(c[1], ctl));
+      });
+      row.appendChild(button("הסרה", function () { list.splice(i, 1); rowsEditor(list, host, cols, blank, addText); output(); }, true));
       host.appendChild(row);
     });
-    host.appendChild(button("הוספת קובץ", function () {
-      list.push({ title: "", url: "", kind: "PDF" }); materialsEditor(list, host); output();
+    host.appendChild(button(addText, function () {
+      list.push(JSON.parse(JSON.stringify(blank))); rowsEditor(list, host, cols, blank, addText); output();
     }));
   }
+  var FILE_COLS = [["title", "שם הקובץ", "text"], ["url", "קישור", "ltr"], ["kind", "סוג", KINDS]];
+  var LINK_COLS = [["title", "כותרת", "text"], ["url", "קישור", "ltr"], ["kind", "סוג", LINK_KINDS], ["note", "משפט הסבר (לא חובה)", "text"]];
 
   function render() {
     var wrap = $("sessions");
     data.sessions.forEach(function (s) {
       s.recording = s.recording || { type: "youtube", url: "" };
-      s.materials = s.materials || [];
-      var card = document.createElement("section");
+      s.slides = s.slides || { url: "" };
+      s.files = s.files || s.materials || []; delete s.materials;
+      s.links = s.links || [];
+      s.homework = s.homework || { title: "", text: "", url: "" };
+      if (s.summary === undefined) s.summary = "";
+
+      var card = document.createElement("details");
       card.className = "admin-card";
-      var h = document.createElement("h2");
-      h.textContent = "מפגש " + s.number + ": " + s.title;
-      var mats = document.createElement("div");
-      mats.style.cssText = "display:grid;gap:.6rem";
-      card.append(
-        h,
+      var sum = document.createElement("summary");
+      sum.textContent = "מפגש " + s.number + ": " + s.title;
+      card.appendChild(sum);
+
+      var g1 = group("המפגש");
+      g1.append(
         field("קישור לזום", input(s.zoomUrl, function (v) { s.zoomUrl = v; }, true)),
-        field("איפה ההקלטה", select(REC, s.recording.type, function (v) { s.recording.type = v; })),
-        field("קישור להקלטה", input(s.recording.url, function (v) { s.recording.url = v; }, true)),
-        mats
+        field("סיכום קצר (מופיע מתחת לכותרת)", textarea(s.summary, function (v) { s.summary = v; }))
       );
-      materialsEditor(s.materials, mats);
+      var g2 = group("ההקלטה", "YouTube (לא רשום), Vimeo, Google Drive או קישור לקובץ וידאו.");
+      g2.append(
+        field("איפה ההקלטה", select(REC, s.recording.type, function (v) { s.recording.type = v; })),
+        field("קישור להקלטה", input(s.recording.url, function (v) { s.recording.url = v; }, true))
+      );
+      var g3 = group("המצגת", "קישור שיתוף של Google Slides או Canva, קישור ל־PDF, או כל קישור אחר.");
+      g3.append(field("קישור למצגת", input(s.slides.url, function (v) { s.slides.url = v; }, true)));
+      var g4 = group("להרחבה", "מאמרים, סרטונים וכלים. כל קישור מופיע ככרטיס עם הסוג ומשפט הסבר.");
+      var lh = document.createElement("div"); lh.className = "admin-rows"; g4.appendChild(lh);
+      rowsEditor(s.links, lh, LINK_COLS, { title: "", url: "", kind: LINK_KINDS[0], note: "" }, "הוספת קישור");
+      var g5 = group("קבצים להורדה");
+      var fh = document.createElement("div"); fh.className = "admin-rows"; g5.appendChild(fh);
+      rowsEditor(s.files, fh, FILE_COLS, { title: "", url: "", kind: "PDF" }, "הוספת קובץ");
+      var g6 = group("משימה עד המפגש הבא", "משאירים ריק אם אין משימה.");
+      g6.append(
+        field("שם המשימה", input(s.homework.title, function (v) { s.homework.title = v; })),
+        field("מה עושים", textarea(s.homework.text, function (v) { s.homework.text = v; })),
+        field("קישור לפרטים (לא חובה)", input(s.homework.url, function (v) { s.homework.url = v; }, true))
+      );
+      card.append(g1, g2, g3, g4, g5, g6);
       wrap.appendChild(card);
     });
 
-    var tk = document.createElement("section");
+    var tk = document.createElement("details");
     tk.className = "admin-card";
-    var th = document.createElement("h2");
-    th.textContent = "סט ה־Skills של הסדנה";
-    var tm = document.createElement("div");
-    tm.style.cssText = "display:grid;gap:.6rem";
+    var th = document.createElement("summary");
+    th.textContent = "סט ה־Skills וקישורים שימושיים";
     data.toolkit = data.toolkit || { skills: [], links: [] };
     data.toolkit.skills = data.toolkit.skills || [];
-    tk.append(th, tm);
-    materialsEditor(data.toolkit.skills, tm);
+    data.toolkit.links = data.toolkit.links || [];
+    var gs = group("סט ה־Skills"); var sh = document.createElement("div"); sh.className = "admin-rows"; gs.appendChild(sh);
+    var gl = group("קישורים שימושיים"); var lh2 = document.createElement("div"); lh2.className = "admin-rows"; gl.appendChild(lh2);
+    tk.append(th, gs, gl);
+    rowsEditor(data.toolkit.skills, sh, FILE_COLS, { title: "", url: "", kind: "ZIP" }, "הוספת קובץ");
+    rowsEditor(data.toolkit.links, lh2, [["title", "כותרת", "text"], ["url", "קישור", "ltr"]], { title: "", url: "", kind: "LINK" }, "הוספת קישור");
     wrap.appendChild(tk);
   }
 

@@ -166,52 +166,12 @@
   }
 
   /* ---------------- hand-drawn frames ---------------- */
-  // Each [data-sketch] element gets a pencil outline: a rounded rectangle traced
-  // by hand (small wobble, an overshoot where the pencil comes back to the start)
-  // plus a lighter second pass. It is drawn in as the card scrolls into view.
+  // Each [data-sketch] element gets a pencil outline (assets/js/sketch.js),
+  // drawn in as the card scrolls into view.
   var sketched = $$("[data-sketch]");
-  var NS = "http://www.w3.org/2000/svg";
-  function seeded(n) { return function () { n = (n * 9301 + 49297) % 233280; return n / 233280; }; }
-  function roughRect(w, h, r, rnd, jit) {
-    // points around the outline, clockwise from the top-left corner's end
-    var pts = [], step = 34, i, a;
-    function push(x, y) { pts.push([x + (rnd() - .5) * jit, y + (rnd() - .5) * jit]); }
-    for (i = r; i <= w - r; i += step) push(i, 0);
-    for (a = -90; a <= 0; a += 30) push(w - r + r * Math.cos(a * Math.PI / 180), r + r * Math.sin(a * Math.PI / 180));
-    for (i = r; i <= h - r; i += step) push(w, i);
-    for (a = 0; a <= 90; a += 30) push(w - r + r * Math.cos(a * Math.PI / 180), h - r + r * Math.sin(a * Math.PI / 180));
-    for (i = w - r; i >= r; i -= step) push(i, h);
-    for (a = 90; a <= 180; a += 30) push(r + r * Math.cos(a * Math.PI / 180), h - r + r * Math.sin(a * Math.PI / 180));
-    for (i = h - r; i >= r; i -= step) push(0, i);
-    for (a = 180; a <= 270; a += 30) push(r + r * Math.cos(a * Math.PI / 180), r + r * Math.sin(a * Math.PI / 180));
-    push(r + 26, -1.5); // overshoot past the start, the way a pencil closes a box
-    var d = "M" + pts[0][0].toFixed(1) + " " + pts[0][1].toFixed(1);
-    for (i = 1; i < pts.length; i++) {
-      var mx = (pts[i - 1][0] + pts[i][0]) / 2, my = (pts[i - 1][1] + pts[i][1]) / 2;
-      d += " Q" + pts[i - 1][0].toFixed(1) + " " + pts[i - 1][1].toFixed(1) + " " + mx.toFixed(1) + " " + my.toFixed(1);
-    }
-    return d;
-  }
   function drawFrames() {
-    sketched.forEach(function (el, k) {
-      var svg = el.querySelector(":scope > .sketch-line");
-      if (!svg) {
-        svg = document.createElementNS(NS, "svg");
-        svg.setAttribute("class", "sketch-line"); svg.setAttribute("aria-hidden", "true");
-        svg.appendChild(document.createElementNS(NS, "path"));
-        svg.appendChild(document.createElementNS(NS, "path"));
-        el.appendChild(svg);
-      }
-      var w = el.offsetWidth + 6, h = el.offsetHeight + 6;
-      svg.setAttribute("viewBox", "0 0 " + w + " " + h);
-      var r = Math.min(parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0, h / 2) + 3;
-      var rnd = seeded(k * 97 + 13), len = 0;
-      Array.prototype.forEach.call(svg.children, function (path, pass) {
-        path.setAttribute("d", roughRect(w, h, r, rnd, pass ? 3.2 : 1.6));
-        len = Math.max(len, Math.ceil(path.getTotalLength()));
-      });
-      svg.style.setProperty("--len", len);
-    });
+    if (!window.Sketch) return;
+    sketched.forEach(function (el, k) { window.Sketch.frame(el, k); });
   }
   function updateFrames() {
     var vh = window.innerHeight;

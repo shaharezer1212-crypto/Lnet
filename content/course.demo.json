@@ -1,0 +1,177 @@
+{
+  "course": {
+    "title": "Claude, השותף החדש שלך",
+    "cohort": "מחזור דצמבר 2026",
+    "startsAt": "2026-12-06T18:00:00+02:00",
+    "contactEmail": "",
+    "demo": true
+  },
+  "passcodeHash": "ca7168b01f6d772cf438749740e5f780eb7bc5bd4bed7744a53614220ee3b6b4",
+  "sessions": [
+    {
+      "id": "s1",
+      "number": 1,
+      "title": "מי זה Claude? היכרות, סביבות עבודה ומודלים",
+      "date": "2026-11-01T18:00:00+02:00",
+      "durationMinutes": 90,
+      "zoomUrl": "",
+      "recording": {
+        "type": "file",
+        "url": "assets/video/intro.mp4"
+      },
+      "summary": "הכרנו את Claude, ראינו איפה הוא מצטיין ואיפה הוא טועה, ופתחנו יחד את הפרויקט הראשון. מכאן כל אחד ממשיך עם פרויקט משלו.",
+      "topics": [
+        "מה Claude עושה היטב, היכן הוא טועה, ואיך בודקים את התוצרים שלו",
+        "סביבות העבודה: צ׳אט, פרויקטים, Artifacts, Claude in Chrome, Claude Code",
+        "מודלים ומסלולים",
+        "פתיחת פרויקט והרגלי עבודה חסכוניים"
+      ],
+      "slides": {
+        "url": "assets/materials/syllabus.pdf"
+      },
+      "files": [
+        {
+          "title": "הסילבוס המלא",
+          "url": "assets/materials/syllabus.pdf",
+          "kind": "PDF"
+        }
+      ],
+      "links": [
+        {
+          "title": "איזה מודל לבחור למשימה",
+          "url": "https://docs.claude.com/en/docs/about-claude/models/overview",
+          "kind": "מדריך",
+          "note": "איזה מודל מתאים לאיזו משימה, ומה ההבדל במהירות ובמחיר."
+        },
+        {
+          "title": "מה זה פרויקט ב־Claude",
+          "url": "https://support.claude.com/en/articles/9517075-what-are-projects",
+          "kind": "מאמר",
+          "note": "הנחיות קבועות וקבצים שנשארים זמינים בכל שיחה בפרויקט."
+        },
+        {
+          "title": "כתיבת פרומפטים: המדריך הרשמי",
+          "url": "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview",
+          "kind": "מדריך",
+          "note": "העקרונות שעליהם דיברנו במפגש, עם דוגמאות."
+        },
+        {
+          "title": "Claude in Chrome",
+          "url": "https://claude.ai/chrome",
+          "kind": "כלי",
+          "note": "התוסף שראינו בהדגמה: Claude עובד בתוך הדפדפן שלכם."
+        }
+      ],
+      "homework": {
+        "title": "פותחים פרויקט ראשון",
+        "text": "פתחו פרויקט ב־Claude לאחד מהתוצרים שאתם עובדים עליהם עכשיו, כתבו לו הנחיות קבועות והעלו שני מסמכי רקע. הביאו למפגש הבא שיחה אחת שעבדה טוב ואחת שלא.",
+        "url": ""
+      }
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "title": "Skills: מלמדים את Claude את שיטת העבודה שלכם",
+      "date": "2026-11-12T18:00:00+02:00",
+      "durationMinutes": 90,
+      "zoomUrl": "",
+      "recording": {
+        "type": "youtube",
+        "url": ""
+      },
+      "summary": "",
+      "topics": [
+        "מהו Skill, ובמה הוא שונה מפרומפט ומהנחיות פרויקט",
+        "זיהוי תהליך עבודה חוזר, ומבנה קובץ SKILL.md",
+        "הדגמה על Skills אמיתיים: מטרות למידה, מסמך פיצוח, תסריט לומדה ועריכה לשונית",
+        "כתיבת Skill בעזרת Claude, ושיתוף עם הצוות"
+      ],
+      "slides": {
+        "url": ""
+      },
+      "files": [],
+      "links": [],
+      "homework": {
+        "title": "",
+        "text": "",
+        "url": ""
+      }
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "title": "Claude כמפיק: לומדה בשיטת vibe coding",
+      "date": "2026-12-27T18:00:00+02:00",
+      "durationMinutes": 90,
+      "zoomUrl": "",
+      "recording": {
+        "type": "youtube",
+        "url": ""
+      },
+      "summary": "",
+      "topics": [
+        "עבודה בדפדפן מול מערכות LMS, וסיוע בהפקה ב־Storyline וב־Rise 360",
+        "vibe coding: מה זה, ואילו לומדות מתאים לבנות כך",
+        "פיתוח לומדת HTML: מסכי תוכן, אינטראקציות, שאלות ומשוב"
+      ],
+      "slides": {
+        "url": ""
+      },
+      "files": [],
+      "links": [],
+      "homework": {
+        "title": "",
+        "text": "",
+        "url": ""
+      }
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "title": "Claude בהפקות וידאו: יום באולפן",
+      "date": "2027-01-03T18:00:00+02:00",
+      "durationMinutes": 90,
+      "zoomUrl": "",
+      "recording": {
+        "type": "youtube",
+        "url": ""
+      },
+      "summary": "",
+      "topics": [
+        "חיבורי MCP לכלים ליצירת תמונה, וידאו ועיצוב",
+        "יכולות העיצוב של Claude: סטוריבורד, מסכים וגרפיקה",
+        "Claude Code בהפקה: עריכת סרטון ברמה של עורך וידאו"
+      ],
+      "slides": {
+        "url": ""
+      },
+      "files": [],
+      "links": [],
+      "homework": {
+        "title": "",
+        "text": "",
+        "url": ""
+      }
+    }
+  ],
+  "toolkit": {
+    "skills": [],
+    "links": [
+      {
+        "title": "פתיחת חשבון Claude Pro",
+        "url": "https://claude.ai/upgrade",
+        "kind": "LINK"
+      },
+      {
+        "title": "Claude באתר ובאפליקציה",
+        "url": "https://claude.ai",
+        "kind": "LINK"
+      },
+      {
+        "title": "התיעוד הרשמי של Skills",
+        "url": "https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview",
+        "kind": "LINK"
+      }
+    ]
+  }
+}
