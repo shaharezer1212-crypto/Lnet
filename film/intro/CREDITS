@@ -1,0 +1,6 @@
+Intro film "One line, one room", made in code in the One-line Drawing style of the
+Lemo-Opuscar library (github.com/lemomo-ai/lemo-opuscar, MIT). Engine files geom.js, ink.js,
+paper.js, cam.js and hands.js are adapted from that style's demo (MIT).
+The butterfly is the Lnet logo mark, used by its owner (Gada-Lnet).
+Room layout traced from the course's own hero illustration (owned by Gada-Lnet).
+No music, voice, samples or fonts are used: the film is silent.

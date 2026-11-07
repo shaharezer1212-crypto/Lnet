@@ -1,0 +1,151 @@
+{
+  "course": {
+    "title": "Claude, השותף החדש שלך",
+    "cohort": "מחזור דצמבר 2026",
+    "startsAt": "2026-12-06T18:00:00+02:00",
+    "contactEmail": "",
+    "demo": false
+  },
+  "passcodeHash": "ca7168b01f6d772cf438749740e5f780eb7bc5bd4bed7744a53614220ee3b6b4",
+  "sessions": [
+    {
+      "id": "s1",
+      "number": 1,
+      "title": "מי זה Claude? היכרות, סביבות עבודה ומודלים",
+      "date": "2026-12-06T18:00:00+02:00",
+      "durationMinutes": 90,
+      "zoomUrl": "",
+      "recording": {
+        "type": "youtube",
+        "url": ""
+      },
+      "summary": "",
+      "topics": [
+        "מה Claude עושה היטב, היכן הוא טועה, ואיך בודקים את התוצרים שלו",
+        "סביבות העבודה: צ׳אט, פרויקטים, Artifacts, Claude in Chrome, Claude Code",
+        "מודלים ומסלולים",
+        "פתיחת פרויקט והרגלי עבודה חסכוניים"
+      ],
+      "slides": {
+        "url": ""
+      },
+      "files": [],
+      "links": [],
+      "homework": {
+        "title": "",
+        "text": "",
+        "url": ""
+      }
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "title": "Skills: מלמדים את Claude את שיטת העבודה שלכם",
+      "date": "2026-12-13T18:00:00+02:00",
+      "durationMinutes": 90,
+      "zoomUrl": "",
+      "recording": {
+        "type": "youtube",
+        "url": ""
+      },
+      "summary": "",
+      "topics": [
+        "מהו Skill, ובמה הוא שונה מפרומפט ומהנחיות פרויקט",
+        "זיהוי תהליך עבודה חוזר, ומבנה קובץ SKILL.md",
+        "הדגמה על Skills אמיתיים: מטרות למידה, מסמך פיצוח, תסריט לומדה ועריכה לשונית",
+        "כתיבת Skill בעזרת Claude, ושיתוף עם הצוות"
+      ],
+      "slides": {
+        "url": ""
+      },
+      "files": [],
+      "links": [],
+      "homework": {
+        "title": "",
+        "text": "",
+        "url": ""
+      }
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "title": "Claude כמפיק: לומדה בשיטת vibe coding",
+      "date": "2026-12-27T18:00:00+02:00",
+      "durationMinutes": 90,
+      "zoomUrl": "",
+      "recording": {
+        "type": "youtube",
+        "url": ""
+      },
+      "summary": "",
+      "topics": [
+        "עבודה בדפדפן מול מערכות LMS, וסיוע בהפקה ב־Storyline וב־Rise 360",
+        "vibe coding: מה זה, ואילו לומדות מתאים לבנות כך",
+        "פיתוח לומדת HTML: מסכי תוכן, אינטראקציות, שאלות ומשוב"
+      ],
+      "slides": {
+        "url": ""
+      },
+      "files": [],
+      "links": [],
+      "homework": {
+        "title": "",
+        "text": "",
+        "url": ""
+      }
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "title": "Claude בהפקות וידאו: יום באולפן",
+      "date": "2027-01-03T18:00:00+02:00",
+      "durationMinutes": 90,
+      "zoomUrl": "",
+      "recording": {
+        "type": "youtube",
+        "url": ""
+      },
+      "summary": "",
+      "topics": [
+        "חיבורי MCP לכלים ליצירת תמונה, וידאו ועיצוב",
+        "יכולות העיצוב של Claude: סטוריבורד, מסכים וגרפיקה",
+        "Claude Code בהפקה: עריכת סרטון ברמה של עורך וידאו"
+      ],
+      "slides": {
+        "url": ""
+      },
+      "files": [],
+      "links": [],
+      "homework": {
+        "title": "",
+        "text": "",
+        "url": ""
+      }
+    }
+  ],
+  "toolkit": {
+    "skills": [],
+    "links": [
+      {
+        "title": "פתיחת חשבון Claude Pro",
+        "url": "https://claude.ai/upgrade",
+        "kind": "LINK"
+      },
+      {
+        "title": "Claude באתר ובאפליקציה",
+        "url": "https://claude.ai",
+        "kind": "LINK"
+      },
+      {
+        "title": "התיעוד הרשמי של Skills",
+        "url": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview",
+        "kind": "LINK"
+      },
+      {
+        "title": "Claude Academy: קורסים ומדריכים רשמיים",
+        "url": "https://academy.claude.com",
+        "kind": "LINK"
+      }
+    ]
+  }
+}

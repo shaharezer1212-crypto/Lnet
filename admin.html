@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>עדכון תוכן הסדנה</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body class="portal-body">
+  <header class="site-head">
+    <div class="wrap">
+      <a class="brand" href="index.html"><img src="assets/img/logo-black.png" alt="Gada | Lnet" width="1233" height="225"></a>
+      <nav class="nav"><a class="btn btn--small btn--ghost" href="portal.html">לאזור המשתתפים</a></nav>
+    </div>
+  </header>
+
+  <main class="portal-main" id="main">
+    <div class="wrap">
+      <h1 style="font-size:var(--step-3)">עדכון תוכן הסדנה</h1>
+      <div class="section__intro">
+        <p>הדף הזה לא שומר כלום בעצמו. הוא בונה בשבילך קובץ <b dir="ltr">course.json</b> חדש:</p>
+        <ol style="margin:.6rem 0 0;padding-inline-start:1.2rem;display:grid;gap:.3rem">
+          <li>מעלים את ההקלטה ל־YouTube (כ"לא רשום") או ל־Vimeo, ומעתיקים את הקישור.</li>
+          <li>את המצגת משתפים מ־Google Slides או Canva ("כל מי שיש לו את הקישור"), או מעלים כ־PDF.</li>
+          <li>קבצים מעלים לתיקייה <b dir="ltr">assets/materials/</b> בגיטהאב, או ל־Google Drive עם קישור לצפייה.</li>
+          <li>ממלאים כאן, לוחצים "הורדת course.json", ומחליפים את הקובץ <b dir="ltr">content/course.json</b> בגיטהאב.</li>
+        </ol>
+      </div>
+
+      <div class="admin-grid" id="sessions"></div>
+
+      <div class="admin-grid">
+        <div class="admin-card">
+          <h2>קוד הכניסה לאזור המשתתפים</h2>
+          <div class="field">
+            <label for="new-pass">קוד חדש (משאירים ריק כדי לא לשנות)</label>
+            <input id="new-pass" dir="ltr" autocomplete="off">
+          </div>
+          <p style="color:var(--graphite);font-size:var(--step--1)">הקוד נשמר בקובץ רק כגיבוב (hash), ולכן אי אפשר לקרוא אותו מתוך האתר. שמרו אותו אצלכם.</p>
+        </div>
+
+        <div class="admin-card">
+          <h2>הקובץ המוכן</h2>
+          <textarea class="admin-out" id="out" readonly aria-label="תוכן הקובץ course.json"></textarea>
+          <div style="display:flex;flex-wrap:wrap;gap:.7rem">
+            <button class="btn" type="button" id="download">הורדת course.json</button>
+            <button class="btn btn--ghost" type="button" id="copy">העתקת הקובץ</button>
+          </div>
+          <p class="form__status" id="admin-status" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>
