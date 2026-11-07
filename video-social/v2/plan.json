@@ -1,8 +1,94 @@
-{"scenes":[
- {"paper":true,"len":6.0},
- {"clip":"clips/sd_entry.mp4","start":0,"draw":1.0,"len":10.0,"badge":{"t0":239,"box":[357,1468,557,1606],"ok":196,"inset":0.0}},
- {"clip":"clips/sd_book.mp4","start":0.3,"draw":0.8,"len":3.8,"badge":{"t0":51,"box":[303,1363,480,1466],"inset":0.0,"lock":true}},
- {"clip":"clips/sd_comp.mp4","start":0.3,"draw":0.8,"len":3.8,"badge":{"t0":51,"box":[205,1475,305,1577],"inset":0.0,"lock":true}},
- {"clip":"clips/sd_studio.mp4","start":1.2,"draw":0.8,"len":3.8,"badge":{"t0":54,"box":[265,1213,372,1312],"inset":0.0,"lock":true}},
- {"clip":"clips/sd_s6.mp4","start":1.0,"draw":0.8,"len":4.2,"badge":{"t0":89,"box":[205,1612,325,1715],"inset":0.0,"lock":true}}
-]}
+{
+ "scenes": [
+  {
+   "paper": true,
+   "len": 6.0
+  },
+  {
+   "clip": "clips/sd_entry.mp4",
+   "start": 0,
+   "draw": 1.0,
+   "len": 10.0,
+   "badge": {
+    "t0": 239,
+    "box": [
+     357,
+     1468,
+     557,
+     1606
+    ],
+    "ok": 196,
+    "inset": 0.0
+   }
+  },
+  {
+   "clip": "clips/sd_book.mp4",
+   "start": 0.3,
+   "draw": 0.8,
+   "len": 3.8,
+   "badge": {
+    "t0": 51,
+    "box": [
+     303,
+     1363,
+     480,
+     1466
+    ],
+    "inset": 0.0,
+    "lock": true
+   }
+  },
+  {
+   "clip": "clips/sd_comp.mp4",
+   "start": 0.0,
+   "draw": 0.8,
+   "len": 3.8,
+   "badge": {
+    "t0": 60,
+    "box": [
+     205,
+     1475,
+     305,
+     1577
+    ],
+    "inset": 0.0,
+    "lock": true
+   },
+   "maxclip": 2.6
+  },
+  {
+   "clip": "clips/sd_studio.mp4",
+   "start": 1.2,
+   "draw": 0.8,
+   "len": 3.8,
+   "badge": {
+    "t0": 54,
+    "box": [
+     265,
+     1213,
+     372,
+     1312
+    ],
+    "inset": 0.0,
+    "lock": true
+   }
+  },
+  {
+   "clip": "clips/sd_s6.mp4",
+   "start": 1.0,
+   "draw": 0.8,
+   "len": 4.2,
+   "badge": {
+    "t0": 89,
+    "box": [
+     205,
+     1612,
+     325,
+     1715
+    ],
+    "inset": 0.0,
+    "lock": true
+   }
+  }
+ ]
+}

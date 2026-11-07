@@ -56,7 +56,9 @@ for sc in plan['scenes']:
         open(os.path.join(cdir, 'done'), 'w').close(); prev_key = key
         continue
     n_in = round(sc['draw'] * FPS); n_clip = round(sc['len'] * FPS) - n_in
-    clip = frames(sc['clip'], sc.get('start', 0), n_clip) if sc.get('clip') else None
+    clip = frames(sc['clip'], sc.get('start', 0), min(n_clip, round(sc.get('maxclip', 99) * FPS))) if sc.get('clip') else None
+    if clip:
+        while len(clip) < n_clip: clip.append(clip[-1].copy())
     if clip:
         clip = [G.grade(f) for f in clip]
         for bd in ([sc['badge']] if isinstance(sc.get('badge'), dict) else sc.get('badge', [])):

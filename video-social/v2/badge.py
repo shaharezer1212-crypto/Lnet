@@ -4,6 +4,7 @@ from numpy.lib.stride_tricks import sliding_window_view as swv
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 FONT = '/home/user/Lnet/assets/fonts/FbGazoz-Bold.otf'
 S = 2
+THRESH = 340
 def _gray(a): return a[::S, ::S].mean(-1)
 def _rot(tpl, ang):
     if abs(ang) < 1e-3: return tpl
@@ -27,7 +28,7 @@ def track(frames, t0, box, R=40, scales=(0.95, 1.0, 1.05)):
                 for a in (ang - 6, ang - 3, ang, ang + 3, ang + 6):
                     t = _rot(tb, a); d = ((win - t) ** 2).mean((-1, -2)); j = np.unravel_index(np.argmin(d), d.shape)
                     if best is None or d[j] < best[0]: best = (d[j], sx0 + j[1] + w / 2, sy0 + j[0] + h / 2, a, s_)
-            ok = best is not None and best[0] < 340
+            ok = best is not None and best[0] < THRESH
             if ok: _, cx, cy, ang, sc = best; ang = float(np.clip(ang, -35, 35)); sc = float(np.clip(sc, 0.4, 2.5))
             out[i] = (cx * S, cy * S, W0 * sc * S, H0 * sc * S, ang, ok)
     run(range(t0, n)); run(range(t0, -1, -1))
@@ -61,17 +62,27 @@ def measure_angle(frame, cx, cy, w, h):
     th = (th + 90) % 180 - 90
     if abs(th) > 45: return None
     return -th
-def apply(frames, t0, box, start_ok=0, lines=('מפתח/ת', 'למידה'), inset=0.02, fill=(250, 250, 248), border=(150, 150, 150), ink=(28, 28, 28), lock=False):
+def apply(frames, t0, box, start_ok=0, lines=('מפתח/ת', 'למידה'), inset=0.02, fill=(250, 250, 248), border=(150, 150, 150), ink=(28, 28, 28), lock=False, steady=True):
     tr = track(frames, t0, box, scales=(1.0,) if lock else (0.95, 1.0, 1.05))
+    if steady:
+        # never fade: hold the last good position through tracking drops; keep the card level
+        good = [i for i, b in enumerate(tr) if b[5]]
+        if good:
+            last = None; fixed = []
+            first = tr[good[0]]
+            for i, b in enumerate(tr):
+                if b[5]: last = b
+                fixed.append(last if last is not None else first)
+            tr = [(b[0], b[1], b[2], b[3], 0.0, True) for b in fixed]
     vis = np.array([1.0 if (b[5] and i >= start_ok) else 0.0 for i, b in enumerate(tr)])
     sm = np.convolve(np.pad(vis, 2, mode='edge'), np.ones(5) / 5, mode='valid')
     angs = []
     for i, b in enumerate(tr):
-        a = measure_angle(frames[i], b[0], b[1], b[2], b[3]); angs.append(b[4] if a is None else a)
+        a = None if steady else measure_angle(frames[i], b[0], b[1], b[2], b[3]); angs.append(b[4] if a is None else a)
     angs = np.array(angs, np.float32); pad = np.pad(angs, 3, mode='edge')
     angs = np.array([np.median(pad[i:i + 7]) for i in range(len(angs))])
-    cxs = np.convolve(np.pad([b[0] for b in tr], 1, mode='edge'), np.ones(3) / 3, mode='valid')
-    cys = np.convolve(np.pad([b[1] for b in tr], 1, mode='edge'), np.ones(3) / 3, mode='valid')
+    K = 7 if steady else 3; cxs = np.convolve(np.pad([b[0] for b in tr], K // 2, mode='edge'), np.ones(K) / K, mode='valid')
+    cys = np.convolve(np.pad([b[1] for b in tr], K // 2, mode='edge'), np.ones(K) / K, mode='valid')
     H, W = frames[0].shape[:2]
     for i, f in enumerate(frames):
         if sm[i] <= 0.02: continue
