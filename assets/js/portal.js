@@ -262,11 +262,22 @@
       ]));
     }
     var sl = slidesEmbed(s.slides && s.slides.url);
-    side.appendChild(el("section", { class: "side-card hatched", "data-sketch": true }, sl ? [
-      el("h2", { text: "המצגת" }),
-      sl.src ? el("div", { class: "slides" }, [el("iframe", { src: sl.src, title: "המצגת של מפגש " + s.number, loading: "lazy", allowfullscreen: true })]) : null,
-      el("a", { class: "btn btn--small", href: sl.open, target: "_blank", rel: "noopener", text: "פתיחת המצגת בחלון חדש" })
-    ] : [el("h2", { text: "המצגת" }), el("p", { class: "s-empty", text: "המצגת תעלה כאן אחרי המפגש." })]));
+    if (sl && sl.src) {
+      // the deck gets the full width of the main column, in 16:9, right under the recording
+      main.insertBefore(el("section", { class: "s-block s-deck" }, [
+        el("div", { class: "s-deck__head" }, [
+          el("h2", { text: "המצגת" }),
+          el("a", { class: "btn btn--small btn--ghost", href: sl.open, target: "_blank", rel: "noopener", text: "פתיחה במסך מלא" })
+        ]),
+        el("div", { class: "slides" }, [el("iframe", { src: sl.src, title: "המצגת של מפגש " + s.number, loading: "lazy", allowfullscreen: true })]),
+        el("p", { class: "s-empty", text: "לוחצים על המצגת ועוברים בין השקפים בחיצים או ברווח." })
+      ]), main.children[1]);
+    } else {
+      side.appendChild(el("section", { class: "side-card hatched", "data-sketch": true }, sl ? [
+        el("h2", { text: "המצגת" }),
+        el("a", { class: "btn btn--small", href: sl.open, target: "_blank", rel: "noopener", text: "פתיחת המצגת בחלון חדש" })
+      ] : [el("h2", { text: "המצגת" }), el("p", { class: "s-empty", text: "המצגת תעלה כאן אחרי המפגש." })]));
+    }
     side.appendChild(el("section", { class: "side-card materials hatched", "data-sketch": true }, [
       el("h2", { text: "קבצים להורדה" }), fileList(s.files, "קבצים יעלו כאן אחרי המפגש.")
     ]));

@@ -3,11 +3,11 @@
 window.SITE = {
   // Link to the payment / registration form (Grow, Cardcom, Google Form...).
   // Empty → the "register" buttons scroll to the price block.
-  registerUrl: "",
+  registerUrl: "https://www.easyform.co.il/?formId=9c36dffb-ffd8-f111-ad46-d4f5ef253abe",
 
   // Link for "יש שאלות?" (a Google Form, WhatsApp link, Calendly...).
   // Empty → the button stays visible and scrolls to the price block until a link is set.
-  questionsUrl: "",
+  questionsUrl: "https://www.lnet.co.il/contact-us",
 
   // Shows "תצוגת דוגמה" on the portal login screen (the portal filled with example
   // content). Set to false before sending the portal to participants.
