@@ -13,3 +13,5 @@ video-social/v2/mix.wav
 video-social/v2/cache/
 video-social/v2/base_a/
 video-social/v2/*.log
+video-social/v2/video_only.mp4
+video-social/v2/mix*.wav
