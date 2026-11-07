@@ -173,6 +173,7 @@
     else if (sY < k3) { var u3 = (sY - tE) / (k3 - tE); pos = u3 > .9 ? A3 : fly(T1, A3, u3 / .9, 120); sit = u3 > .9; }
     else { pos = A3; sit = true; }
     trav.classList.toggle("is-on", on);
+    trav.style.opacity = on ? "1" : "0";
     trav.classList.toggle("is-sitting", sit);
     trav.style.transform = "translate(" + pos.x.toFixed(1) + "px," + pos.y.toFixed(1) + "px)";
   }
