@@ -39,7 +39,7 @@
       "links": [
         {
           "title": "איזה מודל לבחור למשימה",
-          "url": "https://docs.claude.com/en/docs/about-claude/models/overview",
+          "url": "https://platform.claude.com/docs/en/models/overview",
           "kind": "מדריך",
           "note": "איזה מודל מתאים לאיזו משימה, ומה ההבדל במהירות ובמחיר."
         },
@@ -51,7 +51,7 @@
         },
         {
           "title": "כתיבת פרומפטים: המדריך הרשמי",
-          "url": "https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
           "kind": "מדריך",
           "note": "העקרונות שעליהם דיברנו במפגש, עם דוגמאות."
         },
@@ -169,7 +169,7 @@
       },
       {
         "title": "התיעוד הרשמי של Skills",
-        "url": "https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview",
+        "url": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview",
         "kind": "LINK"
       }
     ]

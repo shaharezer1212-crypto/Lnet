@@ -13,7 +13,8 @@ window.SITE = {
   // content). Set to false before sending the portal to participants.
   portalDemoLink: true,
 
-  linkedinUrl: "https://www.linkedin.com/",
+  // Shahar's LinkedIn profile. Empty → the link is hidden.
+  linkedinUrl: "",
 
   // Intro: plays assets/video/intro.mp4 if it exists, otherwise the drawn intro.
   // Shown once per browser session. Set to false to switch it off.

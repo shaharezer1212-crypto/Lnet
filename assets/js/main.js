@@ -162,6 +162,18 @@
       p = Math.max(0, Math.min(1, p));
       el.style.setProperty("--p", p.toFixed(4));
       el.style.setProperty("--e", easeOut(p).toFixed(4));
+      var run = el.querySelector(".runner");
+      if (run) {
+        // two running frames swapped every ~40px of scrolling; a jump on arrival
+        // the run ends when the card's top reaches 55% of the screen, early enough
+        // that the page can always scroll that far
+        var rp = reduced ? 1 : Math.max(0, Math.min(1, (vh - el.getBoundingClientRect().top) / (vh * 0.45)));
+        run.style.setProperty("--rp", rp.toFixed(4));
+        var step = Math.floor(window.scrollY / 40);
+        run.dataset.frame = rp >= 0.995 ? "end" : rp <= 0 ? "a" : (step % 2 ? "b" : "a");
+        run.style.setProperty("--bob", (step % 2).toString());
+        run.style.setProperty("--lean", rp > 0 && rp < 0.995 ? "-6" : "0");
+      }
     });
   }
 

@@ -247,7 +247,7 @@ p { margin: 0; }
 
 /* ---------------- syllabus ---------------- */
 .syllabus__head { display: grid; gap: 1rem 3rem; grid-template-columns: 1fr minmax(0, 1.05fr); align-items: end; }
-.syllabus__board { width: 100%; height: auto; mix-blend-mode: multiply; margin-bottom: -2rem; }
+.syllabus__board { width: min(100%, 440px); height: auto; justify-self: center; mix-blend-mode: multiply; margin-bottom: -1.5rem; }
 .syllabus__note { margin-top: 1.2rem; }
 .syllabus__note { color: var(--graphite); font-size: var(--step--1); }
 @media (max-width: 760px) { .syllabus__head { grid-template-columns: 1fr; } .syllabus__board { margin-bottom: 0; } }
@@ -381,11 +381,10 @@ p { margin: 0; }
 .form__status { min-height: 1.5em; font-weight: 700; }
 
 /* ---------------- footer ---------------- */
-.site-foot { position: relative; padding-block: 3rem 2.5rem; border-top: 1.5px solid var(--ink); margin-top: clamp(7rem, 12vw, 9rem); }
+.site-foot { position: relative; padding-block: 3rem 2.5rem; border-top: 1.5px solid var(--ink); margin-top: clamp(3rem, 6vw, 5rem); }
 .site-foot .wrap { display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; align-items: center; }
-.site-foot .wrap img { height: 22px; width: auto; }
-.site-foot small { color: var(--graphite); font-size: var(--step--1); }
-.slogan { font-family: "Josefin"; font-weight: 700; color: var(--leaf); -webkit-text-stroke: 1px #2c8c18; font-size: var(--step-2); direction: ltr; }
+.site-foot__logo { height: 22px; width: auto; }
+.slogan { width: min(420px, 70vw); height: auto; }
 
 /* ======================= THE CHARACTERS =======================
    Claude and the butterfly appear as cut-outs. Each scene ([data-scene]) gets
@@ -429,23 +428,23 @@ main { overflow-x: clip; }
   transform: translate(calc((1 - var(--e)) * -160px), calc((1 - var(--e)) * -120px)) rotate(calc((1 - var(--e)) * -25deg));
 }
 
-/* the call to action: Claude jumps up out of the green card, beside the button */
-.cta { position: relative; }
-.cta > :not(.cta__jumpbox):not(.sketch-line) { position: relative; z-index: 1; }
-.cta__jumpbox { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; z-index: 0; }
-.cta__jump {
-  width: clamp(110px, 11vw, 150px); bottom: 0; inset-inline-end: 34%; z-index: 0;
-  transform-origin: 50% 100%;
-  transform: translateY(calc(18% + (1 - var(--e)) * 90%)) rotate(calc(sin(var(--p) * 1800deg) * 5deg));
+/* the call to action: Claude runs along the top edge of the green card while
+   you scroll (two running frames swapped by main.js), from the right towards the
+   register button, and jumps when he gets there. */
+.cta { position: relative; margin-top: clamp(5.5rem, 9vw, 7.5rem); }
+.runner {
+  position: absolute; bottom: calc(100% - 4px); left: 0; right: 0; height: clamp(84px, 9vw, 124px);
+  pointer-events: none; z-index: 3;
+  --x: calc((1 - var(--rp, 0)) * (100% - var(--w)) + var(--stop) * var(--rp, 0));
+  --w: clamp(84px, 9vw, 124px); --stop: 6%;
 }
-@media (max-width: 760px) { .cta__jumpbox { display: none; } }
-
-/* the footer: Claude walks home along the line */
-.foot-walk { position: absolute; inset: auto 0 100% 0; height: 0; width: min(1180px, 100% - 2 * var(--gutter)); margin-inline: auto; }
-.foot-walk .actor {
-  width: clamp(80px, 8vw, 110px); bottom: -6px; left: 0;
-  transform: translateX(calc((1 - var(--p)) * (min(100vw, 1180px) - 9rem))) translateY(calc(sin(var(--p) * 3600deg) * sin(var(--p) * 3600deg) * -10px)) scaleX(-1);
+.runner img {
+  position: absolute; bottom: 0; left: var(--x); width: var(--w); height: auto;
+  transform: scaleX(-1) translateY(calc(var(--bob, 0) * -6px)) rotate(calc(var(--lean, 0) * 1deg));
+  transform-origin: 50% 100%; visibility: hidden;
 }
+.runner[data-frame="a"] .runner__a, .runner[data-frame="b"] .runner__b, .runner[data-frame="end"] .runner__end { visibility: visible; }
+.runner .runner__end { transform: none; }
 
 @media (max-width: 860px) {
   .promise__stage { height: 300px; }
