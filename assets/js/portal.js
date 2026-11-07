@@ -1,10 +1,10 @@
 /* Participant portal: passcode gate, the course path, and one page per session
-   (recording, presentation, extension links, files, task for next time).
+   (recording, presentation, files, prep reading, task for next time).
    Content lives in content/course.json (edit it with admin.html).
    Open portal.html#demo to see the portal filled with example content. */
 (function () {
   "use strict";
-  var KEY = "lnet-portal-pass", DONE = "lnet-portal-done", DEMO = "lnet-portal-demo";
+  var KEY = "lnet-portal-pass", DEMO = "lnet-portal-demo";
   var $ = function (id) { return document.getElementById(id); };
   var reduced = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var data = null, authed = false;
@@ -59,17 +59,6 @@
   }
   var STATE_TEXT = { past: "התקיים", live: "מתקיים עכשיו", future: "בקרוב" };
 
-  /* ---------- progress (this browser only) ---------- */
-  function doneSet() {
-    try { return JSON.parse(store("localStorage", DONE) || "[]"); } catch (e) { return []; }
-  }
-  function isDone(id) { return doneSet().indexOf(id) >= 0; }
-  function setDone(id, on) {
-    var list = doneSet().filter(function (x) { return x !== id; });
-    if (on) list.push(id);
-    store("localStorage", DONE, JSON.stringify(list));
-  }
-
   /* ---------- media ---------- */
   function recordingEmbed(rec) {
     var url = (rec && rec.url || "").trim(), m;
@@ -120,31 +109,6 @@
     return ul;
   }
 
-  function linkCards(links) {
-    var grid = el("ul", { class: "link-grid", role: "list" });
-    links.forEach(function (l) {
-      grid.appendChild(el("li", { class: "link-card hatched", "data-sketch": true }, [
-        el("a", { href: l.url, target: "_blank", rel: "noopener" }, [
-          el("span", { class: "link-card__kind", text: l.kind || "קישור" }),
-          el("span", { class: "link-card__title", text: l.title }),
-          l.note ? el("span", { class: "link-card__note", text: l.note }) : null,
-          el("span", { class: "link-card__host", dir: "ltr", text: host(l.url) })
-        ])
-      ]));
-    });
-    return grid;
-  }
-
-  function has(s) {
-    var out = [];
-    if (s.recording && s.recording.url) out.push("הקלטה");
-    if (s.slides && s.slides.url) out.push("מצגת");
-    if (s.links && s.links.length) out.push(s.links.length === 1 ? "קישור להרחבה" : s.links.length + " קישורים להרחבה");
-    if (s.files && s.files.length) out.push(s.files.length === 1 ? "קובץ" : s.files.length + " קבצים");
-    if (s.homework && s.homework.title) out.push("משימה");
-    return out;
-  }
-
   /* ---------- home ---------- */
   var countTimer = null;
   function renderNext() {
@@ -177,41 +141,36 @@
   function renderPath() {
     var now = Date.now(), list = $("path-list");
     list.textContent = "";
-    var doneCount = 0, flyAt = -1;
+    var flyAt = -1;
     data.sessions.forEach(function (s, i) {
-      var st = state(s, now), done = isDone(s.id);
-      if (done) doneCount++;
-      if (flyAt < 0 && !done) flyAt = i;
-      var chips = el("span", { class: "stop__has" });
-      var h = has(s);
-      if (h.length) h.forEach(function (t) { chips.appendChild(el("span", { class: "chip", text: t })); });
-      else chips.appendChild(el("span", { class: "stop__soon", text: st === "future" ? "החומרים יעלו אחרי המפגש" : "החומרים בדרך" }));
-      list.appendChild(el("li", { class: "stop hatched is-" + st + (done ? " is-done" : ""), "data-sketch": true }, [
-        el("a", { class: "stop__link", href: "#" + s.id, "aria-label": "מפגש " + s.number + ": " + s.title + ". " + STATE_TEXT[st] + (done ? ". סימנתם שסיימתם" : "") }, [
+      var st = state(s, now);
+      if (flyAt < 0 && st !== "past") flyAt = i;
+      list.appendChild(el("li", { class: "stop hatched is-" + st, "data-sketch": true }, [
+        el("a", { class: "stop__link", href: "#" + s.id, "aria-label": "מפגש " + s.number + ": " + s.title + ". " + STATE_TEXT[st] }, [
           el("span", { class: "stop__top" }, [
             el("span", { class: "stop__num", "aria-hidden": "true", text: String(s.number) }),
-            el("span", { class: "stop__state", text: done ? "סיימתם" : STATE_TEXT[st] })
+            el("span", { class: "stop__state", text: STATE_TEXT[st] })
           ]),
           el("span", { class: "stop__date", text: whenText(s) }),
-          el("span", { class: "stop__title", text: s.title }),
-          chips
+          el("span", { class: "stop__title", text: s.title })
         ])
       ]));
     });
-    // the butterfly waits on the first session not yet marked as done
+    // the butterfly moves on by itself: it waits on the next (or live) session
     var fly = el("img", { class: "path__fly", src: "assets/img/fly-wide.webp", alt: "", width: 640, height: 576 });
-    var stops = list.children;
     if (flyAt < 0) { fly.classList.add("is-finished"); list.appendChild(fly); }
-    else stops[flyAt].appendChild(fly);
-    $("path-progress").textContent = doneCount === data.sessions.length ? "סיימתם את כל המפגשים. כל הכבוד!" :
-      doneCount ? "סימנתם " + doneCount + " מתוך " + data.sessions.length + " מפגשים" : "סמנו כל מפגש שסיימתם, והפרפר יתקדם איתכם.";
+    else list.children[flyAt].appendChild(fly);
+    $("path-progress").textContent = "";
   }
 
   function renderToolkit() {
-    var t = data.toolkit || {};
-    var sk = $("toolkit-skills"), ln = $("toolkit-links");
-    var a = fileList(t.skills, "קובצי ה־Skills יעלו כאן אחרי המפגש השני."); a.id = "toolkit-skills"; sk.replaceWith(a);
-    var b = fileList(t.links, "עוד אין קישורים."); b.id = "toolkit-links"; ln.replaceWith(b);
+    var t = data.toolkit || {}, shown = 0;
+    [["toolkit-skills", t.skills], ["toolkit-links", t.links]].forEach(function (p) {
+      var old = $(p[0]), card = old.closest(".hatched");
+      if (!p[1] || !p[1].length) { card.hidden = true; return; }
+      var ul = fileList(p[1]); ul.id = p[0]; old.replaceWith(ul); card.hidden = false; shown++;
+    });
+    document.querySelector(".toolkit").hidden = !shown;
   }
 
   /* ---------- one session ---------- */
@@ -219,16 +178,6 @@
     var now = Date.now(), st = state(s, now), i = data.sessions.indexOf(s);
     var root = $("session-root");
     root.textContent = "";
-    var done = isDone(s.id);
-
-    var toggle = el("button", { class: "done-toggle" + (done ? " is-on" : ""), type: "button", "aria-pressed": done ? "true" : "false" }, [
-      el("span", { class: "done-toggle__box", "aria-hidden": "true" }), el("span", { text: done ? "סימנתם שסיימתם את המפגש" : "סימון: סיימתי את המפגש" })
-    ]);
-    toggle.addEventListener("click", function () {
-      var on = !isDone(s.id); setDone(s.id, on);
-      toggle.classList.toggle("is-on", on); toggle.setAttribute("aria-pressed", on ? "true" : "false");
-      toggle.lastChild.textContent = on ? "סימנתם שסיימתם את המפגש" : "סימון: סיימתי את המפגש";
-    });
 
     root.appendChild(el("p", { class: "s-crumbs" }, [el("a", { href: "#home", text: "כל המפגשים" })]));
     root.appendChild(el("header", { class: "s-head" }, [
@@ -239,19 +188,13 @@
         ]),
         el("h1", { id: "session-title", tabindex: "-1", text: s.title }),
         s.summary ? el("p", { class: "s-summary", text: s.summary }) : null
-      ]),
-      st !== "future" ? toggle : null
+      ])
     ]));
 
     var main = el("div", { class: "s-main" }, [player(s, st)]);
     var topics = el("ul", { class: "s-topics" });
     (s.topics || []).forEach(function (t) { topics.appendChild(el("li", { text: t })); });
     main.appendChild(el("section", { class: "s-block" }, [el("h2", { text: st === "future" ? "מה נעשה במפגש" : "מה עשינו במפגש" }), topics]));
-    var links = s.links || [];
-    main.appendChild(el("section", { class: "s-block" }, [
-      el("h2", { text: "להרחבה" }),
-      links.length ? linkCards(links) : el("p", { class: "s-empty", text: "קישורים להרחבה יעלו כאן אחרי המפגש: מאמרים, סרטונים וכלים שהזכרנו." })
-    ]));
 
     var side = el("aside", { class: "s-side", "aria-label": "חומרי המפגש" });
     if (s.zoomUrl && st !== "past") {
@@ -280,6 +223,11 @@
     }
     side.appendChild(el("section", { class: "side-card materials hatched", "data-sketch": true }, [
       el("h2", { text: "קבצים להורדה" }), fileList(s.files, "קבצים יעלו כאן אחרי המפגש.")
+    ]));
+    // articles and links to read before the session, in place of the old "להרחבה" block
+    side.appendChild(el("section", { class: "side-card materials side-card--prep hatched", "data-sketch": true }, [
+      el("h2", null, ["הכנות לקראת המפגש ", el("small", { class: "side-card__tag", text: "(מומלץ)" })]),
+      fileList(s.prep || s.links, "מאמרים וקישורים לקריאה לפני המפגש יעלו כאן.")
     ]));
     var hw = s.homework || {};
     if (hw.title) {

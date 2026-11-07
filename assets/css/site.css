@@ -670,10 +670,15 @@ main { overflow-x: clip; }
 .traveler { position: absolute; top: 0; left: 0; z-index: 20; pointer-events: none; opacity: 0; transition: opacity .3s; will-change: transform; }
 .traveler.is-on { opacity: 1; }
 .traveler img { position: absolute; top: 0; left: 0; height: auto; max-width: none; filter: drop-shadow(0 10px 8px rgb(60 30 90 / .2)); }
-.traveler__fly { width: clamp(64px, 7vw, 96px); translate: -50% -55%; animation: flutter .42s ease-in-out infinite alternate; }
-.traveler__sit { width: clamp(52px, 5.5vw, 74px); translate: -50% -64%; display: none; }
-.traveler.is-sitting .traveler__fly { display: none; }
-.traveler.is-sitting[data-pose="glasses"] .traveler__sit[data-pose="glasses"],
+.traveler__fly { width: clamp(70px, 8.5vw, 124px) !important; translate: -50% -55%; animation: flutter .42s ease-in-out infinite alternate; display: none; }
+.traveler:not(.is-sitting)[data-fly="wide"] .traveler__fly[data-fly="wide"],
+.traveler:not(.is-sitting)[data-fly="magnify"] .traveler__fly[data-fly="magnify"] { display: block; }
+.traveler__sit { width: clamp(58px, 7vw, 100px) !important; translate: -50% -64%; display: none; }
+.traveler__sit[data-pose="hello"] { width: clamp(72px, 9vw, 132px) !important; translate: -30% -70%; }
 .traveler.is-sitting[data-pose="wave"] .traveler__sit[data-pose="wave"],
-.traveler.is-sitting[data-pose="read"] .traveler__sit[data-pose="read"] { display: block; }
+.traveler.is-sitting[data-pose="read"] .traveler__sit[data-pose="read"],
+.traveler.is-sitting[data-pose="hello"] .traveler__sit[data-pose="hello"] { display: block; }
 @media (prefers-reduced-motion: reduce) { .traveler__fly { animation: none; } }
+.side-card__tag { font-size: .62em; font-weight: 400; opacity: .7; white-space: nowrap; }
+.toolkit[hidden], .toolkit > [hidden] { display: none; }
+.toolkit:has(> [hidden]) { grid-template-columns: 1fr; }
