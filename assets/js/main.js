@@ -162,11 +162,11 @@
     var T0 = trackDoc(0), T1 = trackDoc(1);
     var k0 = A0.y - vh * .5, kS = k0 - vh * .55, k1 = Math.max(k0 + 10, A1.y - vh * .5);
     var tS = Math.max(k1 + 10, tl.y - vh * .7), tE = tS + tl.h, k3 = Math.max(tE + 10, A3.y - vh * .5);
-    var pos, sit = false, on = true;
+    var pos, sit = false, on = true, pose = "glasses";
     function fly(P, Q, u, arc) { var e = ease(clamp01(u)); return { x: lerp(P.x, Q.x, e), y: lerp(P.y, Q.y, e) - Math.sin(Math.PI * clamp01(u)) * (arc || 0) }; }
     if (reduced) { pos = A3; sit = true; }
     else if (sY < kS) { on = false; pos = { x: vw - 60, y: A0.y - 200 }; }
-    else if (sY < k0) { pos = fly({ x: vw - 60, y: A0.y - 220 }, A0, (sY - kS) / (k0 - kS), 60); sit = sY > k0 - 30; }
+    else if (sY < k0) { pos = fly({ x: vw - 60, y: A0.y - 220 }, A0, (sY - kS) / (k0 - kS), 60); sit = sY > k0 - 30; if (sit) pos = A0; }
     else if (sY < k1) { var u = (sY - k0) / (k1 - k0); if (u < .3) { pos = A0; sit = true; } else if (u > .85) { pos = A1; sit = true; } else pos = fly(A0, A1, (u - .3) / .55, 140); }
     else if (sY < tS) { var u2 = (sY - k1) / (tS - k1); if (u2 < .35) { pos = A1; sit = true; } else pos = fly(A1, T0, (u2 - .35) / .65, 80); }
     else if (sY < tE) { pos = trackDoc((sY - tS) / (tE - tS)); }
@@ -174,7 +174,10 @@
     else { pos = A3; sit = true; }
     trav.classList.toggle("is-on", on);
     trav.style.opacity = on ? "1" : "0";
+    // a different sitting pose at each perch: waving on Claude, reading with the reader, glasses on the portrait
+    if (sit) pose = pos === A0 ? "wave" : pos === A1 ? "read" : "glasses";
     trav.classList.toggle("is-sitting", sit);
+    trav.dataset.pose = pose;
     trav.style.transform = "translate(" + pos.x.toFixed(1) + "px," + pos.y.toFixed(1) + "px)";
   }
 
