@@ -140,6 +140,11 @@
         "title": "התיעוד הרשמי של Skills",
         "url": "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview",
         "kind": "LINK"
+      },
+      {
+        "title": "Claude Academy: קורסים ומדריכים רשמיים",
+        "url": "https://academy.claude.com",
+        "kind": "LINK"
       }
     ]
   }

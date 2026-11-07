@@ -65,6 +65,12 @@
           "url": "https://claude.ai/chrome",
           "kind": "כלי",
           "note": "התוסף שראינו בהדגמה: Claude עובד בתוך הדפדפן שלכם."
+        },
+        {
+          "title": "Artifacts: המדריך הרשמי",
+          "url": "https://academy.claude.com/tutorials/intro-to-artifacts",
+          "kind": "מדריך",
+          "note": "איך יוצרים, עורכים ומשתפים Artifacts, מתוך Claude Academy."
         }
       ],
       "homework": {
