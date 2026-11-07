@@ -28,39 +28,52 @@ def track(frames, t0, box, R=40):
     run(range(t0, n)); run(range(t0, -1, -1))
     return out
 _cache = {}
-def patch(w, h, col):
-    key = (w, h, tuple((col // 6).astype(int)))
+def card_img(w, h, lines, fill=(250, 250, 248), border=(150, 150, 150), ink=(28, 28, 28)):
+    key = (w, h, lines, fill, border, ink)
     if key in _cache: return _cache[key]
-    im = Image.new('RGBA', (w, h), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
-    d.rounded_rectangle((1, 1, w - 2, h - 2), radius=max(3, w // 14), fill=tuple(int(c) for c in col) + (255,))
-    for size in range(80, 8, -1):
+    im = Image.new('RGBA', (w + 8, h + 8), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+    d.rounded_rectangle((5, 6, w + 5, h + 6), radius=max(4, w // 12), fill=(0, 0, 0, 40))          # soft contact shadow
+    d.rounded_rectangle((2, 2, w + 1, h + 1), radius=max(4, w // 12), fill=fill + (255,), outline=border + (255,), width=max(2, w // 45))
+    for size in range(110, 8, -1):
         f = ImageFont.truetype(FONT, size)
-        b1 = d.textbbox((0, 0), 'מפתח/ת', font=f, direction='rtl'); b2 = d.textbbox((0, 0), 'למידה', font=f, direction='rtl')
-        lw = max(b1[2] - b1[0], b2[2] - b2[0]); lh = (b1[3] - b1[1]) + (b2[3] - b2[1]) + size * .2
-        if lw <= w * .84 and lh <= h * .8: break
-    y = (h - lh) / 2
-    for t, b in (('מפתח/ת', b1), ('למידה', b2)):
-        d.text(((w - (b[2] - b[0])) / 2 - b[0], y - b[1]), t, font=f, fill=(28, 28, 28, 255), direction='rtl'); y += (b[3] - b[1]) + size * .2
-    im = im.filter(ImageFilter.GaussianBlur(0.6))
-    _cache[key] = im; return im
-def paint(frame, tr, alpha, inset=0.14):
-    cx, cy, w, h, ang, _ = tr
-    iw, ih = int(w * (1 - 2 * inset)), int(h * (1 - 2 * inset))
-    x0, y0 = int(cx - w / 2), int(cy - h / 2)
-    reg = frame[max(0, y0):y0 + h, max(0, x0):x0 + w].reshape(-1, 3)
-    if reg.size == 0: return
-    l = reg.mean(-1); col = np.median(reg[l > np.percentile(l, 65)], 0)
-    p = patch(iw, ih, col).rotate(ang, resample=Image.BICUBIC, expand=True)
-    pa = np.array(p, np.float32); pw, ph = p.size
-    ox, oy = int(cx - pw / 2), int(cy - ph / 2)
-    H, W = frame.shape[:2]
-    if ox < 0 or oy < 0 or ox + pw > W or oy + ph > H: return
-    a = pa[..., 3:] / 255 * alpha
-    frame[oy:oy + ph, ox:ox + pw] = frame[oy:oy + ph, ox:ox + pw] * (1 - a) + pa[..., :3] * a
-def apply(frames, t0, box, start_ok=0):
+        bbs = [d.textbbox((0, 0), t, font=f, direction='rtl') for t in lines]
+        lw = max(b[2] - b[0] for b in bbs); lh = sum(b[3] - b[1] for b in bbs) + size * .22 * (len(lines) - 1)
+        if lw <= w * .8 and lh <= h * .72: break
+    y = 2 + (h - lh) / 2
+    for t, b in zip(lines, bbs):
+        d.text((2 + (w - (b[2] - b[0])) / 2 - b[0], y - b[1]), t, font=f, fill=ink + (255,), direction='rtl'); y += (b[3] - b[1]) + size * .22
+    im = im.filter(ImageFilter.GaussianBlur(0.5)); _cache[key] = im; return im
+def measure_angle(frame, cx, cy, w, h):
+    """long-axis angle of the bright badge blob (degrees, PIL convention)"""
+    x0, y0 = int(cx - w * .65), int(cy - h * .65); x1, y1 = int(cx + w * .65), int(cy + h * .65)
+    reg = frame[max(0, y0):y1, max(0, x0):x1]
+    if reg.size == 0: return None
+    l = reg.mean(-1); sat = reg.max(-1) - reg.min(-1)
+    ys, xs = np.nonzero((l > 205) & (sat < 28))
+    if len(xs) < 40: return None
+    c = np.cov(np.vstack([xs - xs.mean(), ys - ys.mean()])); ev, evec = np.linalg.eigh(c)
+    vx, vy = evec[:, 1]; th = np.degrees(np.arctan2(vy, vx))
+    th = (th + 90) % 180 - 90
+    if abs(th) > 45: return None
+    return -th
+def apply(frames, t0, box, start_ok=0, lines=('מפתח/ת', 'למידה'), inset=0.02, fill=(250, 250, 248), border=(150, 150, 150), ink=(28, 28, 28)):
     tr = track(frames, t0, box)
     vis = np.array([1.0 if (b[5] and i >= start_ok) else 0.0 for i, b in enumerate(tr)])
     sm = np.convolve(np.pad(vis, 2, mode='edge'), np.ones(5) / 5, mode='valid')
+    angs = []
+    for i, b in enumerate(tr):
+        a = measure_angle(frames[i], b[0], b[1], b[2], b[3]); angs.append(b[4] if a is None else a)
+    angs = np.array(angs, np.float32); pad = np.pad(angs, 3, mode='edge')
+    angs = np.array([np.median(pad[i:i + 7]) for i in range(len(angs))])
+    cxs = np.convolve(np.pad([b[0] for b in tr], 1, mode='edge'), np.ones(3) / 3, mode='valid')
+    cys = np.convolve(np.pad([b[1] for b in tr], 1, mode='edge'), np.ones(3) / 3, mode='valid')
+    H, W = frames[0].shape[:2]
     for i, f in enumerate(frames):
-        if sm[i] > 0.02: paint(f, tr[i], float(min(1, sm[i])))
+        if sm[i] <= 0.02: continue
+        w, h = tr[i][2], tr[i][3]; cw, ch = int(w * (1 - 2 * inset)), int(h * (1 - 2 * inset))
+        p = card_img(cw, ch, tuple(lines), tuple(fill), tuple(border), tuple(ink)).rotate(float(angs[i]), resample=Image.BICUBIC, expand=True)
+        pa = np.array(p, np.float32); pw, ph = p.size; ox, oy = int(cxs[i] - pw / 2), int(cys[i] - ph / 2)
+        if ox < 0 or oy < 0 or ox + pw > W or oy + ph > H: continue
+        a = pa[..., 3:] / 255 * float(min(1, sm[i]))
+        f[oy:oy + ph, ox:ox + pw] = f[oy:oy + ph, ox:ox + pw] * (1 - a) + pa[..., :3] * a
     return frames
