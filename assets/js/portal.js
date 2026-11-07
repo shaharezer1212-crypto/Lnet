@@ -88,6 +88,8 @@
     if (/canva\.com\/design\//.test(url)) return { src: url.split("?")[0].replace(/\/(edit|view)$/, "/view") + "?embed", open: url, label: "Canva" };
     if ((m = url.match(/drive\.google\.com\/file\/d\/([\w-]+)/))) return { src: "https://drive.google.com/file/d/" + m[1] + "/preview", open: url, label: "Google Drive" };
     if (/\.pdf(\?|#|$)/i.test(url)) return { src: url + "#view=FitH", open: url, label: "PDF" };
+    // a deck from this site (slides/session-N/index.html): shown live, with its animations
+    if (!/^https?:/i.test(url) && /\.html?(\?|#|$)/i.test(url)) return { src: url, open: url, label: "מצגת" };
     return { src: null, open: url, label: "קישור" };
   }
   function host(url) {

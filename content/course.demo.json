@@ -27,9 +27,14 @@
         "פתיחת פרויקט והרגלי עבודה חסכוניים"
       ],
       "slides": {
-        "url": "assets/materials/syllabus.pdf"
+        "url": "slides/session-1/index.html"
       },
       "files": [
+        {
+          "title": "המצגת של מפגש 1",
+          "url": "slides/session-1/session-1.pdf",
+          "kind": "PDF"
+        },
         {
           "title": "הסילבוס המלא",
           "url": "assets/materials/syllabus.pdf",
