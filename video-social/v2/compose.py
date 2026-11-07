@@ -28,14 +28,33 @@ def frames(clip, start, n):
     while len(out_) < n: out_.append(out_[-1])
     return out_
 k = 0
+import hashlib, shutil
+CACHE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cache')
 def save(a):
     global k; Image.fromarray(np.clip(a, 0, 255).astype(np.uint8)).save(f'{out}/f{k:04d}.jpg', quality=93); k += 1
 prev = None
+def scene_key(sc, prev_key):
+    h = hashlib.md5((json.dumps(sc, sort_keys=True) + str(prev_key)).encode())
+    if sc.get('clip'): h.update(str(os.path.getmtime(sc['clip'])).encode())
+    for f in ('grade.py', 'badge.py', 'compose.py'): h.update(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), f), 'rb').read())
+    return h.hexdigest()[:12]
+prev_key = None
 for sc in plan['scenes']:
+    key = scene_key(sc, prev_key); cdir = os.path.join(CACHE, key)
+    if os.path.isdir(cdir) and os.path.exists(os.path.join(cdir, 'done')):
+        fs = sorted(f for f in os.listdir(cdir) if f.endswith('.jpg'))
+        for f in fs: shutil.copy(os.path.join(cdir, f), f'{out}/f{k:04d}.jpg'); k += 1
+        prev = np.array(Image.open(os.path.join(cdir, fs[-1])), np.float32) if not sc.get('paper') else None
+        prev_key = key; continue
+    k0 = k
     if sc.get('paper'):
         pap = G.grade(np.full((H, W, 3), 250, np.float32))
         for i in range(round(sc['len'] * FPS)): save(pap)
-        prev = None; continue
+        prev = None
+        os.makedirs(cdir, exist_ok=True)
+        for i in range(k0, k): shutil.copy(f'{out}/f{i:04d}.jpg', os.path.join(cdir, f'f{i - k0:04d}.jpg'))
+        open(os.path.join(cdir, 'done'), 'w').close(); prev_key = key
+        continue
     n_in = round(sc['draw'] * FPS); n_clip = round(sc['len'] * FPS) - n_in
     clip = frames(sc['clip'], sc.get('start', 0), n_clip) if sc.get('clip') else None
     if clip:
@@ -62,4 +81,7 @@ for sc in plan['scenes']:
     seq = clip if clip else [first] * n_clip
     for f in seq: save(f)
     prev = seq[-1]
+    os.makedirs(cdir, exist_ok=True)
+    for i in range(k0, k): shutil.copy(f'{out}/f{i:04d}.jpg', os.path.join(cdir, f'f{i - k0:04d}.jpg'))
+    open(os.path.join(cdir, 'done'), 'w').close(); prev_key = key
 print('frames', k, 'seconds', k / FPS)
