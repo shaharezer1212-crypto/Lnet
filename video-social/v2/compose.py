@@ -1,9 +1,11 @@
 """Compose the base picture: each scene draws itself in pencil on paper, then its clip plays.
 usage: python3 compose.py plan.json outdir"""
 import json, sys, os, subprocess, numpy as np
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import grade as G, badge as B
 from PIL import Image, ImageFilter
 W, H, FPS = 1080, 1920, 30
-PAPER = np.array([247, 245, 241], np.float32)
+PAPER = G.PAPER
 plan = json.load(open(sys.argv[1])); out = sys.argv[2]; os.makedirs(out, exist_ok=True)
 rng = np.random.default_rng(7)
 noise = np.array(Image.fromarray((rng.random((H // 8, W // 8)) * 255).astype(np.uint8)).resize((W, H), Image.BICUBIC).filter(ImageFilter.GaussianBlur(6)), np.float32) / 255
@@ -30,8 +32,15 @@ def save(a):
     global k; Image.fromarray(np.clip(a, 0, 255).astype(np.uint8)).save(f'{out}/f{k:04d}.jpg', quality=93); k += 1
 prev = None
 for sc in plan['scenes']:
+    if sc.get('paper'):
+        pap = G.grade(np.full((H, W, 3), 250, np.float32))
+        for i in range(round(sc['len'] * FPS)): save(pap)
+        prev = None; continue
     n_in = round(sc['draw'] * FPS); n_clip = round(sc['len'] * FPS) - n_in
     clip = frames(sc['clip'], sc.get('start', 0), n_clip) if sc.get('clip') else None
+    if clip:
+        clip = [G.grade(f) for f in clip]
+        if sc.get('badge'): B.apply(clip, sc['badge']['t0'], tuple(sc['badge']['box']), sc['badge'].get('ok', 0))
     first = clip[0] if clip else np.array(Image.open(sc['still']).convert('RGB').resize((W, H)), np.float32)
     if prev is not None:   # erase the previous scene with a quick sweep back to paper
         for i in range(sc.get('erase', 8)):

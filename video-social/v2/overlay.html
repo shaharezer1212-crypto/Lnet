@@ -25,8 +25,33 @@ body{font-family:Gazoz,Josefin,sans-serif;color:#141414}
 .end .cta{font-size:104px;line-height:1.08;text-align:center;position:relative}
 .end img.lvl{width:760px;position:relative}
 .end img.duo{width:560px;position:relative;margin-top:-20px}
+
+.intro{position:absolute;inset:0;opacity:0}
+.slide{position:absolute;top:560px;right:70px;left:70px;text-align:center}
+.slide .w{display:inline-block;transform:scale(0);opacity:0}
+.slide .big{font-size:150px;line-height:1.02}
+.slide .mid{font-size:112px;line-height:1.08}
+.slide .sm{font-size:84px;line-height:1.1}
+.slide svg{position:absolute;overflow:visible}
+.slide svg path{fill:none;stroke:#7a3fd1;stroke-width:9;stroke-linecap:round}
+.slide img.logo{width:700px;display:block;margin:46px auto 0;transform:scale(0)}
+.ifly{position:absolute;width:300px;top:0;left:0}
+.imag{position:absolute;width:560px;left:260px;top:1080px}
+.iduo{position:absolute;width:820px;left:130px;top:1130px}
+.ipeek{position:absolute;width:640px;left:220px;bottom:-40px}
+.lat2{font-family:Josefin;font-weight:700}
 </style></head><body>
 <div id="caps"></div>
+<div class="intro" id="intro">
+ <div class="slide" id="sl1"><div class="big"><span class="w">מפתחות</span> <span class="w">ומפתחי</span><br><span class="w" id="hl1">למידה?</span></div>
+   <svg id="circ" style="left:0;top:0" width="10" height="10"><path d=""/></svg></div>
+ <div class="slide" id="sl2"><div class="mid"><span class="w">רוצים</span> <span class="w">להפוך</span> <span class="w">את</span><br><span class="w lat2">Claude</span> <span class="w">לשותף</span><br><span class="w">בעבודה</span> <span class="w">שלכם?</span></div></div>
+ <div class="slide" id="sl3"><div class="mid"><span class="w">סדנה</span> <span class="w">בת</span> <span class="w">4</span> <span class="w">מפגשים</span></div><div class="sm"><span class="w">מבית</span></div><img class="logo" id="ilogo" src="../../assets/img/logo-black.png"></div>
+ <img class="ifly" id="ifly" src="../../assets/img/fly-wide.webp">
+ <img class="imag" id="imag" src="../../assets/img/fly-magnify.webp">
+ <img class="iduo" id="iduo" src="../../assets/img/duo-highfive.webp">
+ <img class="ipeek" id="ipeek" src="../../assets/img/claude-peek.webp">
+</div>
 <div class="list" id="list"><div class="glow"></div>
   <h2>סדנה בת ארבעה מפגשים:<br>ללמוד לעבוד יחד עם <span style="font-family:Josefin;font-weight:700">Claude</span></h2>
   <div class="row"><span class="n">1</span><span>מי זה <span class="lat" style="font-family:Josefin;font-weight:700">Claude</span>? היכרות ומודלים</span></div>
@@ -49,7 +74,32 @@ function setup(cfg){CFG=cfg;const box=document.getElementById('caps');
     d.innerHTML='<div class="glow"></div>'+(c.pill?'<span class="pill">'+c.pill+'</span>':'')+c.lines.map(l=>'<span class="line">'+L(l)+'</span>').join('')+'<svg viewBox="0 0 520 30"><path d="M8 18 C 120 6, 250 28, 380 14 S 500 12, 512 16"/></svg>';
     box.appendChild(d);const p=d.querySelector('path');const len=p.getTotalLength();p.style.strokeDasharray=len;p.dataset.len=len;capEls.push([c,d,p]);});
 }
-function render(t){
+
+
+function renderIntro(t){const I=CFG.intro, el=document.getElementById('intro'); if(!I){el.style.opacity=0;return}
+  if(t<0||t>I.out){el.style.opacity=0;return} el.style.opacity=Math.min(1,clamp((I.out-t)/.3));
+  const sl=[['sl1',0,I.s2],['sl2',I.s2,I.s3],['sl3',I.s3,I.out+1]];
+  sl.forEach(([id,a,b])=>{const e=document.getElementById(id); const on=t>=a&&t<b; e.style.display=on?'block':'none'; if(!on)return;
+    const out=clamp((b-t)/.22); e.style.opacity=out; e.style.transform='translateY('+(-40*(1-out))+'px)';
+    e.querySelectorAll('.w').forEach((w,i)=>{const k=back((t-a-.1-i*.14)/.35);w.style.transform='scale('+Math.max(0,k)+')';w.style.opacity=clamp((t-a-.1-i*.14)/.12)});
+    const lg=e.querySelector('.logo'); if(lg){const k=back((t-a-.9)/.45);lg.style.transform='scale('+Math.max(0,k)+')'}
+    const c=e.querySelector('#circ path'); if(c){ if(!c.dataset.ok){const w=document.getElementById('hl1'), sv=e.querySelector('#circ'), pr=e.getBoundingClientRect(), r=w.getBoundingClientRect();
+        const cx=r.left-pr.left+r.width/2, cy=r.top-pr.top+r.height/2+6, rx=r.width/2+70, ry=r.height/2+28; sv.setAttribute('width',e.clientWidth); sv.setAttribute('height',900);
+        let d=''; for(let k=0;k<=72;k++){const th=-Math.PI*0.62+k/64*2*Math.PI; const j=1+0.035*Math.sin(k*0.4); d+=(k?'L':'M')+(cx+rx*j*Math.cos(th)).toFixed(1)+' '+(cy+ry*j*Math.sin(th)).toFixed(1)+' ';}
+        c.setAttribute('d',d); c.dataset.ok=1;}
+      const L=c.getTotalLength();c.style.strokeDasharray=L;c.style.strokeDashoffset=L*(1-ease((t-a-.7)/.6))}});
+  const mg=document.getElementById('imag'); const mi=back((t-.5)/.6), mo=clamp((I.s2-t)/.25); mg.style.transform='translateY('+((1-Math.min(1,mi))*700)+'px) rotate('+(Math.sin(t*3)*4)+'deg)'; mg.style.opacity=t<I.s2?mo:0;
+  const du=document.getElementById('iduo'); const di=back((t-I.s3-.6)/.6); du.style.transform='translateY('+((1-Math.min(1,Math.max(0,di)))*800)+'px)'; du.style.opacity=t>=I.s3?1:0;
+  // butterfly flutters in from the right and hovers near the headline
+  const f=document.getElementById('ifly'); const u=ease((t-.3)/1.1); const bob=Math.sin(t*7)*14;
+  const fx=1120-u*(1120-740), fy=170+Math.sin(u*Math.PI)*-90+bob; f.style.transform='translate('+fx+'px,'+fy+'px) rotate('+(-8+Math.sin(t*9)*6)+'deg) scaleX('+(1+Math.sin(t*22)*0.06)+')';
+  f.style.opacity=0;
+  // Claude peeks from the bottom while the question is asked
+  const p=document.getElementById('ipeek'); const pin=back((t-I.s2-.2)/.6), pout=clamp((I.s3+.2-t)/.35);
+  p.style.transform='translateY('+(1-Math.min(pin,1)*pout)*560+'px) rotate(-3deg)';
+}
+
+function render(t){renderIntro(t);
   capEls.forEach(([c,d,p])=>{const a=t-c.in, b=c.out-t;
     if(a<0||b<0){d.style.opacity=0;return}
     d.style.opacity=Math.min(1,clamp(b/.3));d.style.transform='translateY('+(-30*(1-clamp(b/.3)))+'px)';

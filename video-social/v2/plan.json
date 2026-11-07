@@ -1,8 +1,9 @@
 {"scenes":[
- {"clip":"clips/s1.mp4","start":0,"draw":1.0,"len":6.0},
- {"clip":"clips/s2.mp4","start":0,"draw":0.8,"len":6.6},
- {"clip":"clips/s3.mp4","start":1.4,"draw":0.8,"len":4.0},
- {"clip":"clips/s4.mp4","start":0.6,"draw":0.8,"len":4.0},
- {"clip":"clips/s5.mp4","start":0.8,"draw":0.8,"len":4.0},
- {"clip":"clips/s6.mp4","start":1.2,"draw":0.8,"len":4.4}
+ {"paper":true,"len":6.0},
+ {"clip":"clips/s1.mp4","start":0,"draw":1.0,"len":4.6},
+ {"clip":"clips/s2.mp4","start":0.2,"draw":0.8,"len":5.2,"badge":{"t0":131,"box":[286,1486,426,1594],"ok":72}},
+ {"clip":"clips/s3.mp4","start":1.4,"draw":0.8,"len":3.8},
+ {"clip":"clips/s4.mp4","start":0.6,"draw":0.8,"len":3.8,"badge":{"t0":0,"box":[174,1480,260,1550]}},
+ {"clip":"clips/s5.mp4","start":1.6,"draw":0.8,"len":3.8,"badge":{"t0":87,"box":[236,1450,343,1550]}},
+ {"clip":"clips/s6.mp4","start":1.2,"draw":0.8,"len":4.0,"badge":{"t0":93,"box":[264,1640,344,1710]}}
 ]}
