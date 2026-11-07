@@ -75,7 +75,7 @@ def apply(frames, t0, box, start_ok=0, lines=('מפתח/ת', 'למידה'), inse
                 fixed.append(last if last is not None else first)
             tr = [(b[0], b[1], b[2], b[3], 0.0, True) for b in fixed]
     vis = np.array([1.0 if (b[5] and i >= start_ok) else 0.0 for i, b in enumerate(tr)])
-    sm = np.convolve(np.pad(vis, 2, mode='edge'), np.ones(5) / 5, mode='valid')
+    sm = vis if steady else np.convolve(np.pad(vis, 2, mode='edge'), np.ones(5) / 5, mode='valid')
     angs = []
     for i, b in enumerate(tr):
         a = None if steady else measure_angle(frames[i], b[0], b[1], b[2], b[3]); angs.append(b[4] if a is None else a)
