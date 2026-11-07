@@ -274,7 +274,6 @@ p { margin: 0; }
 @keyframes flutter { from { transform: rotate(-3deg) scaleX(1); } to { transform: rotate(3deg) scaleX(.9); } }
 .session__num { transition: background-color .3s, color .3s; }
 .session.is-reached .session__num { background: var(--wing); color: #fff; animation: pop .45s cubic-bezier(.3,1.6,.5,1); }
-.session.is-next .session__num { box-shadow: 0 0 0 5px var(--leaf); }
 @keyframes pop { 40% { transform: scale(1.22); } }
 
 .session {

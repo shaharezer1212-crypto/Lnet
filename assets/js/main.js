@@ -222,16 +222,6 @@
     });
   }
 
-  /* ---------------- next session ---------------- */
-  function markNext() {
-    var now = Date.now();
-    var next = $$(".session[data-date]").find(function (li) {
-      // a session stays "next" until it ends (90 minutes after start)
-      return new Date(li.dataset.date).getTime() + 90 * 60000 > now;
-    });
-    if (next) next.classList.add("is-next");
-  }
-
   /* ---------------- scroll ---------------- */
   var head = $(".site-head");
   var heroImg = $(".hero__art img");
@@ -269,7 +259,6 @@
   /* ---------------- boot ---------------- */
   setupIntro();
   setupLinks();
-  markNext();
 
   function relayout() { buildTrack(); drawFrames(); updateTrack(); updateScenes(); updateFrames(); }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
