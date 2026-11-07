@@ -1,0 +1,6 @@
+{"scenes":[
+ {"paper":true,"len":6.0},
+ {"clip":"clips/sd_entry.mp4","start":0,"draw":1.0,"len":10.0},
+ {"clip":"clips/sd_book.mp4","start":0.3,"draw":0.8,"len":3.8},
+ {"clip":"clips/sd_studio.mp4","start":1.2,"draw":0.8,"len":3.8}
+]}
