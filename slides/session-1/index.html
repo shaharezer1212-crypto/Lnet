@@ -5,63 +5,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>מפגש 1: מי זה Claude?</title>
 <meta name="robots" content="noindex">
+<link rel="preload" href="../../assets/fonts/FbGazoz-Bold.otf" as="font" type="font/otf" crossorigin>
 <link rel="stylesheet" href="deck.css">
 </head>
 <body>
 <!--
-  Session 1 deck. Every fact on the slides comes from an official Anthropic page
-  (see RESEARCH.md, checked 2026-11-07); each slide names its source.
-  Keys: ← / Space next, → back, N speaker notes, F full screen, Home / End.
-  Print (Ctrl+P, landscape) or build-pdf.mjs gives one slide per page.
+  Session 1 deck. Every fact comes from an official Anthropic page (RESEARCH.md,
+  checked 2026-11-07); each content slide names its source.
+  Keys: ← or Space next, → back, N speaker notes, F full screen, Home / End, #n in the address.
 -->
 <main class="deck" id="deck">
 
-<!-- 1 -->
-<section class="slide s-cover" data-notes="פתיחה. מציגים את שם הסדנה ואת שלושת החברים שילוו אותנו: אני, Claude והפרפר של Lnet.">
-  <img class="logo" src="../../assets/img/logo-black.png" alt="Gada | Lnet">
+<!-- 1 cover -->
+<section class="slide s-cover" data-notes="פתיחה. שלושת החברים שילוו אותנו: אני, Claude והפרפר של Lnet.">
+  <div class="scene-bg"><img src="../../assets/img/hero-trio.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <img class="cover__logo" src="../../assets/img/logo-black.png" alt="Gada | Lnet">
   <div class="cover__text">
-    <p class="kicker">מפגש 1 מתוך 4</p>
-    <h1><span class="claude" dir="ltr">Claude,</span> השותף החדש שלך</h1>
-    <p class="lede">מי זה Claude? היכרות, סביבות עבודה ומודלים</p>
+    <p class="cover__chip">מפגש 1 מתוך 4</p>
+    <h1 class="split"><span class="claude">Claude,</span> השותף החדש שלך</h1>
+    <p class="cover__sub">מי זה Claude? היכרות, סביבות עבודה ומודלים</p>
   </div>
-  <img class="cover__art" src="../../assets/img/hero-trio.webp" alt="">
 </section>
 
-<!-- 2 -->
-<section class="slide" data-notes="המטרה של הסדנה כולה. ארבעה מפגשים, ובסופם Claude עובד אצלכם כמו עובד שקיבל חפיפה מסודרת.">
-  <h2>מטרת הסדנה</h2>
-  <p class="big">להכשיר את Claude כמו עובד חדש שנכנס לצוות פיתוח הלמידה שלכם, עד שהוא מכיר את שיטת העבודה שלכם ומפיק איתכם תוצרים אמיתיים.</p>
-  <ol class="path4" role="list">
-    <li class="card" data-sketch><b>1</b><span>מי זה Claude? היכרות, סביבות עבודה ומודלים</span></li>
-    <li class="card" data-sketch><b>2</b><span>Skills: מלמדים את Claude את שיטת העבודה שלכם</span></li>
-    <li class="card" data-sketch><b>3</b><span>Claude כמפיק: לומדה בשיטת vibe coding</span></li>
-    <li class="card" data-sketch><b>4</b><span>Claude בהפקות וידאו: יום באולפן</span></li>
+<!-- 2 goal -->
+<section class="slide t-purple" data-notes="המטרה של הסדנה כולה: ארבעה מפגשים, ובסופם Claude עובד אצלכם כמו עובד שקיבל חפיפה מסודרת.">
+  <span class="tag">מטרת הסדנה</span>
+  <h2 class="split" style="max-width:1150px">להכשיר את Claude כמו <span class="ul ul--accent">עובד חדש</span> בצוות</h2>
+  <p class="mid">עד שהוא מכיר את שיטת העבודה שלכם ומפיק איתכם תוצרים אמיתיים.</p>
+  <ol class="goal__path" role="list">
+    <li><b>1</b><span>מי זה Claude? היכרות, סביבות עבודה ומודלים</span></li>
+    <li><b>2</b><span>Skills: מלמדים את Claude את שיטת העבודה שלכם</span></li>
+    <li><b>3</b><span>Claude כמפיק: לומדה בשיטת vibe coding</span></li>
+    <li><b>4</b><span>Claude בהפקות וידאו: יום באולפן</span></li>
   </ol>
-  <img class="char char--br" src="../../assets/img/duo-highfive.webp" alt="">
+  <img class="char" style="width:400px; top:90px; left:110px" src="../../assets/img/duo-highfive.webp" alt="">
 </section>
 
-<!-- 3 -->
-<section class="slide" data-notes="סדר היום של המפגש. מספרים כאן כי זה באמת סדר.">
-  <h2>מה עושים היום</h2>
+<!-- 3 agenda -->
+<section class="slide" data-notes="סדר היום. ממוספר כי זה באמת הסדר.">
+  <h2 class="split"><span class="ul ul--wing">מה עושים היום</span></h2>
   <ol class="agenda" role="list">
     <li>נכיר: אני, אתם ו־Claude</li>
     <li>המודלים, ה־Effort והטוקנים</li>
-    <li>איך צורכים טוקנים בצורה חכמה</li>
+    <li>צריכת טוקנים חכמה</li>
     <li>סיור ב־Claude.ai ופתיחת פרויקט</li>
     <li>מתי Claude Code ומתי Claude in Chrome</li>
-    <li>למה Claude מתאים למפתחי למידה</li>
+    <li>למה Claude למפתחי למידה</li>
     <li>התנסות: הפרויקט הראשון שלכם</li>
   </ol>
-  <img class="char char--bl" src="../../assets/img/claude-wave.webp" alt="">
+  <img class="char" style="width:270px; bottom:40px; left:760px" src="../../assets/img/fly-sit.webp" alt="">
 </section>
 
-<!-- 4 -->
+<!-- 4 me -->
 <section class="slide s-me" data-notes="הצגה עצמית קצרה. דקה, לא יותר.">
-  <img class="me__photo" src="../../assets/img/shahar-wave.webp" alt="">
-  <div>
-    <h2>נעים מאוד, שחר עזר</h2>
+  <div class="me__panel" style="position:absolute; inset:0 auto 0 0; width:760px; background:var(--grain), var(--strokes), var(--clay); z-index:-1"></div>
+  <img class="char" style="width:430px; bottom:0; left:165px" src="../../assets/img/shahar-wave.webp" alt="">
+  <div class="me__card" style="width:900px; margin-top:60px">
+    <span class="tag" style="background:var(--clay); color:#fff">נעים מאוד</span>
+    <h2 class="split">שחר עזר</h2>
     <p class="big">מנהל תחום בינה מלאכותית וצוות פיתוח למידה ב־Gada-Lnet.</p>
-    <ul class="bullets">
+    <ul>
       <li>מנחה וובינרים וסדנאות בנושאי כלי AI</li>
       <li>מלווה ארגונים בתהליכי הטמעה</li>
       <li>מאמין בהטמעה נכונה ומבוקרת, כזו שיוצרת סקרנות ולא פחד</li>
@@ -69,274 +73,285 @@
   </div>
 </section>
 
-<!-- 5 -->
-<section class="slide s-question" data-notes="שאלה לקהל. מבקשים הרמת ידיים, ושואלים שניים־שלושה למה השתמשו.">
-  <img class="char char--q" src="../../assets/img/fly-wave.webp" alt="">
-  <h2 class="huge">מי כבר עבד עם Claude?</h2>
-  <p class="big muted">ובשביל מה?</p>
+<!-- 5 question -->
+<section class="slide t-ink s-question" data-notes="שאלה לקהל. הרמת ידיים, ושואלים שניים־שלושה למה השתמשו.">
+  <div class="spot"></div>
+  <img class="char" style="width:440px; bottom:120px; left:200px" src="../../assets/img/fly-wave.webp" alt="">
+  <h2 class="split">מי כבר עבד עם Claude?</h2>
+  <p class="mid">ובשביל מה?</p>
 </section>
 
-<!-- 6 -->
-<section class="slide" data-notes="מי זה Claude, במילים של Anthropic. הדגש: לתת לו משימה ולא רק שאלה.">
-  <h2>מי זה Claude?</h2>
-  <div class="split">
-    <div>
-      <p class="big">משפחה של מודלי שפה גדולים שפיתחה חברת Anthropic.</p>
-      <blockquote class="card quote" data-sketch dir="ltr">Hand Claude a task, not just a question</blockquote>
-      <ul class="bullets">
-        <li>המשימה של Anthropic: פיתוח אחראי של AI מתקדם לטובת האנושות בטווח הארוך.</li>
-        <li>Claude מאומן להיות מועיל, ישר ולא מזיק (helpful, honest, harmless).</li>
-        <li>הטיפ הרשמי: לדבר איתו כמו עם עמית לעבודה, להיות ספציפיים ולשפר בסבבים.</li>
-      </ul>
-    </div>
-    <img class="split__art" src="../../assets/img/claude-wave.webp" alt="">
+<!-- 6 who -->
+<section class="slide t-clay" data-notes="מי זה Claude במילים של Anthropic. הדגש: לתת לו משימה, לא רק שאלה.">
+  <span class="tag">מי זה Claude?</span>
+  <p class="big" style="max-width:none">משפחה של מודלי שפה גדולים שפיתחה חברת Anthropic. והמשפט שמסכם את הגישה:</p>
+  <p class="quote">Hand Claude a task, not just a question.</p>
+  <p class="quote__by">מתוך דף המוצר של Claude</p>
+  <div class="who__facts">
+    <div class="card"><h3>המשימה</h3><p>פיתוח אחראי של AI מתקדם, לטובת האנושות בטווח הארוך.</p></div>
+    <div class="card"><h3>האופי</h3><p>מאומן להיות מועיל, ישר ולא מזיק.</p></div>
+    <div class="card"><h3>הטיפ</h3><p>לדבר איתו כמו עם עמית לעבודה, ולשפר בסבבים.</p></div>
   </div>
-  <p class="src">מקורות: anthropic.com/company, claude.com/product/overview, support.claude.com/en/articles/8114491</p>
+  <img class="char" style="width:430px; bottom:90px; left:80px" src="../../assets/img/claude-wave.webp" alt="">
+  <p class="src">מקורות: claude.com/product/overview, anthropic.com/company, support.claude.com/en/articles/8114491</p>
 </section>
 
-<!-- 7 -->
-<section class="slide" data-notes="ארבעת המודלים הנוכחיים. שימו לב: Fable הוא השכבה החדשה מעל Opus. ההמלצה הרשמית כשלא בטוחים: Opus 5.5.">
-  <h2>משפחת המודלים</h2>
-  <div class="grid4">
-    <div class="card model" data-sketch><h3 dir="ltr">Fable 5.1</h3><p>לחשיבה תובענית ולעבודה אוטונומית ארוכה. האיטי והיקר ביותר.</p></div>
-    <div class="card model" data-sketch><h3 dir="ltr">Opus 5.5</h3><p>לעבודת ידע ולפיתוח ארוכים. ההמלצה הרשמית כשלא בטוחים.</p></div>
-    <div class="card model" data-sketch><h3 dir="ltr">Sonnet 5.5</h3><p>השילוב הטוב ביותר של מהירות ואינטליגנציה.</p></div>
-    <div class="card model" data-sketch><h3 dir="ltr">Haiku 5.5</h3><p>המהיר ביותר, למשימות קצרות ובנפח גבוה.</p></div>
+<!-- 7 models -->
+<section class="slide" data-notes="ארבעת המודלים הנוכחיים. Fable הוא השכבה החדשה מעל Opus. ההמלצה הרשמית כשלא בטוחים: Opus 5.5. המדדים הם המחשה יחסית של התיאור הרשמי.">
+  <h2 class="split"><span class="ul ul--wing">משפחת המודלים</span></h2>
+  <div class="models">
+    <div class="card model model--fable" data-a="flip"><div class="model__head"><h3>Fable 5.1</h3></div><div class="model__body">לחשיבה תובענית ולעבודה אוטונומית ארוכה. האיטי והיקר ביותר.</div><div class="model__meter"><div class="meter">מהירות<i style="--v:.25"></i></div><div class="meter">עומק<i style="--v:1"></i></div></div></div>
+    <div class="card model model--opus" data-a="flip"><span class="badge">כשלא בטוחים</span><div class="model__head"><h3>Opus 5.5</h3></div><div class="model__body">לעבודת ידע ולפיתוח ארוכים. ההמלצה הרשמית לרוב המשימות.</div><div class="model__meter"><div class="meter">מהירות<i style="--v:.45"></i></div><div class="meter">עומק<i style="--v:.85"></i></div></div></div>
+    <div class="card model model--sonnet" data-a="flip"><div class="model__head"><h3>Sonnet 5.5</h3></div><div class="model__body">השילוב הטוב ביותר של מהירות ואינטליגנציה.</div><div class="model__meter"><div class="meter">מהירות<i style="--v:.7"></i></div><div class="meter">עומק<i style="--v:.65"></i></div></div></div>
+    <div class="card model model--haiku" data-a="flip"><div class="model__head"><h3>Haiku 5.5</h3></div><div class="model__body">המהיר ביותר, למשימות קצרות ובנפח גבוה.</div><div class="model__meter"><div class="meter">מהירות<i style="--v:1"></i></div><div class="meter">עומק<i style="--v:.4"></i></div></div></div>
   </div>
-  <p class="note">לכולם חלון הקשר של מיליון טוקנים. מחליפים מודל בלחיצה על שמו ליד כפתור השליחה.</p>
+  <p class="note">לכולם חלון הקשר של מיליון טוקנים. מחליפים מודל בלחיצה על שמו, ליד כפתור השליחה.</p>
   <p class="src">מקורות: platform.claude.com/docs/en/about-claude/models/overview, support.claude.com/en/articles/8664678</p>
 </section>
 
-<!-- 8 -->
-<section class="slide" data-notes="Effort: כמה Claude משקיע במשימה, בלי להחליף מודל. במודלים החדשים אי אפשר לכבות את החשיבה, מווסתים אותה דרך Effort.">
-  <h2>רמת ה־Effort</h2>
-  <p class="big">כמה Claude משקיע בתשובה, בלי להחליף מודל.</p>
-  <div class="scale" dir="ltr">
-    <span>Low</span><span>Medium</span><span>High</span><span>Extra high</span><span>Max</span>
+<!-- 8 effort -->
+<section class="slide t-leaf" data-notes="Effort: כמה Claude משקיע בתשובה, בלי להחליף מודל. במודלים החדשים אי אפשר לכבות את החשיבה, מווסתים אותה דרך Effort.">
+  <span class="tag">רמת ה־Effort</span>
+  <div class="effort__row">
+    <div style="display:grid; gap:30px; align-content:center">
+      <h2 class="split">כמה Claude מתאמץ</h2>
+      <p class="big">יותר Effort: תשובה יסודית יותר, איטית יותר, ויותר טוקנים.</p>
+      <ul class="ticks">
+        <li>ליום־יום ברירת המחדל מספיקה</li>
+        <li>לתכנון או לניתוח מסמכים מעלים</li>
+        <li>במודלים החדשים החשיבה תמיד פועלת, ו־Effort קובע כמה</li>
+      </ul>
+    </div>
+    <div class="dial" data-a="rise">
+      <svg viewBox="0 0 880 470" aria-hidden="true">
+        <path d="M60 440 A380 380 0 0 1 820 440" fill="none" stroke="#000" stroke-width="70" stroke-linecap="round" opacity=".12"/>
+        <path d="M60 440 A380 380 0 0 1 820 440" fill="none" stroke="url(#eg)" stroke-width="54" stroke-linecap="round"/>
+        <defs><linearGradient id="eg" x1="0" x2="1"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#f2b84b"/><stop offset="1" stop-color="#8b4fd6"/></linearGradient></defs>
+        <g class="needle"><path d="M440 440 L432 120 L440 100 L448 120 Z" fill="#000"/><circle cx="440" cy="440" r="34" fill="#000"/></g>
+      </svg>
+      <div class="dial__labels" dir="ltr">
+        <span style="left:4%; top:96%">Low</span><span style="left:18%; top:30%">Medium</span><span style="left:50%; top:2%">High</span><span style="left:83%; top:30%">Extra high</span><span style="left:97%; top:96%">Max</span>
+      </div>
+    </div>
   </div>
-  <div class="scale__legend"><span>מהיר וחסכוני</span><span>יסודי, איטי, צורך יותר טוקנים</span></div>
-  <ul class="bullets">
-    <li>למשימות יומיומיות ברירת המחדל מספיקה.</li>
-    <li>לתכנון פרויקט או לניתוח מסמכים מורכב מעלים Effort.</li>
-    <li>במודלים החדשים החשיבה (Thinking) תמיד פועלת, ו־Effort קובע כמה.</li>
-  </ul>
   <p class="src">מקור: support.claude.com/en/articles/8664678</p>
 </section>
 
-<!-- 9 -->
-<section class="slide" data-notes="מה זה טוקן. ההגדרה הרשמית, ושתי המחשות לגודל.">
-  <h2>מה זה לעזאזל טוקן?</h2>
-  <div class="split">
-    <div>
-      <p class="big">היחידה הקטנה ביותר שהמודל עובד איתה: מילה, חלק ממילה או אפילו תו.</p>
-      <div class="facts">
-        <div class="card fact" data-sketch><b dir="ltr">1M</b><span>טוקנים הם בערך 555 אלף מילים באנגלית</span></div>
-        <div class="card fact" data-sketch><b dir="ltr">200K</b><span>טוקנים הם בערך 500 עמודי טקסט</span></div>
-      </div>
-      <p class="note">כמה תווים יש בטוקן תלוי בשפה ובמודל. במודלים מ־4.7 ואילך אותו טקסט מתפרק לכ־30% יותר טוקנים.</p>
+<!-- 9 tokens -->
+<section class="slide" data-notes="מה זה טוקן. ההגדרה הרשמית ושתי המחשות לגודל.">
+  <div class="scene-bg"><img src="../../assets/img/scene-tokens.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene">
+    <h2 class="split">מה לעזאזל טוקן?</h2>
+    <p class="big">היחידה הקטנה ביותר שהמודל עובד איתה: מילה, חלק ממילה, אפילו תו.</p>
+    <div class="stickers">
+      <div class="card sticky num"><b>1M</b><span>טוקנים, בערך 555 אלף מילים</span></div>
+      <div class="card sticky sticky--green num"><b>200K</b><span>טוקנים, בערך 500 עמודים</span></div>
     </div>
-    <img class="split__art" src="../../assets/img/claude-piggy.webp" alt="">
+    <p class="note">כמה תווים יש בטוקן תלוי בשפה ובמודל.</p>
   </div>
-  <p class="src">מקורות: platform.claude.com/docs/en/about-claude/glossary, support.claude.com/en/articles/8606394</p>
+  <p class="src">מקורות: platform.claude.com/docs/en/about-claude/glossary, models/overview, support.claude.com/en/articles/8606394</p>
 </section>
 
-<!-- 10 -->
-<section class="slide" data-notes="איך נמדד השימוש. שני מושגים: מגבלת שימוש לאורך זמן, ומגבלת אורך של שיחה אחת. הכול נמשך מאותה מכסה.">
-  <h2>איך נמדד השימוש שלנו</h2>
-  <div class="two">
-    <div class="card" data-sketch>
-      <h3>מגבלת שימוש</h3>
-      <p>חלון של 5 שעות שמתחיל בהודעה הראשונה, ועוד מגבלה שבועית. Claude.ai, Claude Code ו־Claude Desktop מושכים מאותה מכסה.</p>
+<!-- 10 usage -->
+<section class="slide t-purple" data-notes="שני מושגים: מגבלת שימוש לאורך זמן, ומגבלת אורך של שיחה אחת. הכול נמשך מאותה מכסה. ככל שהשיחה מתארכת, היא צורכת יותר.">
+  <span class="tag">איך נמדד השימוש</span>
+  <div class="usage">
+    <div class="usage__cards">
+      <h2 class="split">שיחה ארוכה עולה יותר</h2>
+      <div class="card"><h3>מגבלת שימוש</h3><p>חלון של 5 שעות מההודעה הראשונה, ועוד מגבלה שבועית. Claude.ai, Claude Code ו־Desktop מושכים מאותה מכסה.</p></div>
+      <div class="card"><h3>מגבלת אורך</h3><p>כמה שיחה אחת יכולה להכיל. אורך השיחה הנוכחית משפיע על הצריכה, וגם קבצים, כלים, מודל ו־Effort.</p></div>
     </div>
-    <div class="card" data-sketch>
-      <h3>מגבלת אורך</h3>
-      <p>כמה שיחה אחת יכולה להכיל, כלומר חלון ההקשר. שיחה ארוכה נושאת איתה את כל מה שנאמר בה עד עכשיו.</p>
+    <div>
+      <div class="chat" aria-hidden="true">
+        <p class="bubble me" data-a="rise">תכתוב לי מטרות למידה ליחידה</p>
+        <p class="bubble" data-a="rise">הנה שש מטרות לפי בלום...</p>
+        <p class="bubble me" data-a="rise">תקצר את השלישית</p>
+        <p class="bubble" data-a="rise">בטח, הנה גרסה קצרה...</p>
+        <p class="bubble me" data-a="rise">ועכשיו תסריט ללומדה</p>
+        <p class="bubble" data-a="rise">מתחיל במסך הפתיחה...</p>
+      </div>
+      <div class="load" style="margin-top:34px"><i></i><span>אורך השיחה הולך וגדל עם כל הודעה</span></div>
     </div>
   </div>
-  <h3 class="sub">מה צורך יותר</h3>
-  <ul class="chips" role="list">
-    <li>הודעות ארוכות</li><li>קבצים גדולים</li><li>שיחה ארוכה</li><li>Research וחיפוש ברשת</li><li>Connectors</li><li>מודל חזק</li><li>Effort גבוה</li><li>משימות רב־שלביות</li>
-  </ul>
   <p class="src">מקורות: support.claude.com/en/articles/11647753, support.claude.com/en/articles/9797557</p>
 </section>
 
-<!-- 11 -->
-<section class="slide" data-notes="הטיפים הרשמיים לחיסכון. לעבור עליהם מהר ולתת דוגמה אחת מהיום־יום של מפתחי למידה.">
-  <h2>איך צורכים טוקנים בצורה חכמה</h2>
-  <div class="split">
-    <ul class="checks">
-      <li>נושא חדש? שיחה חדשה.</li>
-      <li>מתכננים לפני שכותבים, ושולחים הכול בהודעה אחת.</li>
-      <li>מאחדים שאלות קשורות בהודעה אחת.</li>
-      <li>חומרים שחוזרים עליהם שמים ב־Project. שם הם נספרים פחות.</li>
-      <li>הנחיות פרויקט קצרות, וקבצים שלא בשימוש יוצאים.</li>
-      <li>מכבים Connectors וחיפוש ברשת כשלא צריך.</li>
-      <li>Effort נמוך למשימות שגרתיות.</li>
-      <li>בודקים מדי פעם ב־Settings ואז Usage.</li>
-    </ul>
-    <img class="split__art" src="../../assets/img/claude-piggy.webp" alt="">
+<!-- 11 tips -->
+<section class="slide" data-notes="הטיפים הרשמיים לחיסכון. לעבור מהר, ולתת דוגמה אחת מהיום־יום שלנו.">
+  <h2 class="split"><span class="ul ul--wing">צורכים טוקנים בחוכמה</span></h2>
+  <div class="notes-wall">
+    <div class="card sticky">נושא חדש? שיחה חדשה.</div>
+    <div class="card sticky sticky--green">מתכננים לפני, ושולחים הכול בהודעה אחת.</div>
+    <div class="card sticky sticky--pink">מאחדים שאלות קשורות.</div>
+    <div class="card sticky sticky--blue">חומרים קבועים ב־Project. שם הם נספרים פחות.</div>
+    <div class="card sticky sticky--purple">הנחיות פרויקט קצרות, וקבצים מיותרים בחוץ.</div>
+    <div class="card sticky">מכבים Connectors וחיפוש ברשת כשלא צריך.</div>
+    <div class="card sticky sticky--green">Effort נמוך למשימות שגרתיות.</div>
+    <div class="card sticky sticky--pink">מציצים מדי פעם ב־Settings ואז Usage.</div>
   </div>
   <p class="src">מקורות: support.claude.com/en/articles/9797557, support.claude.com/en/articles/11647753</p>
 </section>
 
-<!-- 12 -->
+<!-- 12 divider -->
 <section class="slide s-divider" data-notes="מעבר לסיור במוצר.">
-  <img class="char char--div" src="../../assets/img/fly-magnify.webp" alt="">
-  <p class="kicker">סיור</p>
-  <h2 class="huge" dir="ltr">Claude.ai</h2>
-  <p class="big">מה יש בסביבת העבודה, ולמה כל דבר משמש.</p>
+  <div class="scene-bg"><img src="../../assets/img/scene-tour.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene">
+    <span class="tag" style="background:var(--wing); color:#fff">סיור</span>
+    <h2 class="mega latin split" dir="ltr" style="text-align:right">Claude.ai</h2>
+    <p class="big">מה יש בסביבת העבודה, ולמה כל דבר משמש.</p>
+  </div>
 </section>
 
-<!-- 13 -->
-<section class="slide" data-notes="מפה של סביבת העבודה. בהרבה חשבונות הצ'אט ו־Cowork כבר מאוחדים לשיחה אחת. חלק מהמשתתפים עוד יראו אותם בנפרד.">
-  <h2>מה יש ב־Claude.ai</h2>
-  <div class="grid3">
-    <div class="card tile" data-sketch><h3>שיחה ו־Cowork</h3><p>שיחה אחת שבה Claude גם עונה וגם מבצע משימות ארוכות. מתארים תוצאה וחוזרים לעבודה גמורה.</p></div>
-    <div class="card tile" data-sketch><h3>Projects</h3><p>סביבת עבודה עם שיחות, קבצים והנחיות משלה.</p></div>
-    <div class="card tile" data-sketch><h3>Artifacts</h3><p>מסמך, מצגת, דיאגרמה או כלי אינטראקטיבי שנפתח ליד השיחה, עם ייצוא ל־Word, PDF ו־PowerPoint.</p></div>
-    <div class="card tile" data-sketch><h3>Research</h3><p>סדרת חיפושים שנבנים זה על זה, עד דוח עם מקורות. בתוכניות בתשלום.</p></div>
-    <div class="card tile" data-sketch><h3>Connectors</h3><p>חיבור לשירותים כמו Google Drive ו־Slack, עם ההרשאות שלכם.</p></div>
-    <div class="card tile" data-sketch><h3>Skills</h3><p>תיקיות הוראות ש־Claude טוען רק כשהן רלוונטיות. נושא המפגש הבא.</p></div>
+<!-- 13 tour -->
+<section class="slide" data-notes="מפה של סביבת העבודה. בהרבה חשבונות הצ'אט ו־Cowork כבר מאוחדים לשיחה אחת, וחלק מהמשתתפים עוד יראו אותם בנפרד.">
+  <h2 class="split"><span class="ul ul--wing">מה יש ב־Claude.ai</span></h2>
+  <div class="board">
+    <div class="card sticky"><i class="pin"></i><h3>שיחה ו־Cowork</h3><p>Claude גם עונה וגם מבצע משימות ארוכות. מתארים תוצאה וחוזרים לעבודה גמורה.</p></div>
+    <div class="card sticky sticky--green"><i class="pin"></i><h3>Projects</h3><p>חדר עבודה עם שיחות, קבצים והנחיות משלו.</p></div>
+    <div class="card sticky sticky--blue"><i class="pin"></i><h3>Artifacts</h3><p>מסמך, מצגת או כלי שנפתח ליד השיחה, עם ייצוא ל־Word, PDF ו־PowerPoint.</p></div>
+    <div class="card sticky sticky--pink"><i class="pin"></i><h3>Research</h3><p>חיפושים שנבנים זה על זה, עד דוח עם מקורות.</p></div>
+    <div class="card sticky sticky--purple"><i class="pin"></i><h3>Connectors</h3><p>חיבור ל־Google Drive, Slack ועוד, עם ההרשאות שלכם.</p></div>
+    <div class="card sticky"><i class="pin"></i><h3>Skills</h3><p>הוראות ש־Claude טוען רק כשצריך. המפגש הבא.</p></div>
   </div>
   <p class="src">מקורות: support.claude.com/en/articles/16761823, 13345190, 9517075, 17153992, 11088861, 11176164, 12512176</p>
 </section>
 
-<!-- 14 -->
+<!-- 14 projects -->
 <section class="slide" data-notes="Projects הם הבסיס של כל הסדנה. כל תוצר למידה יכול לקבל פרויקט משלו.">
-  <h2>Projects: חדר עבודה לכל תוצר</h2>
-  <div class="split">
-    <div>
-      <div class="two">
-        <div class="card" data-sketch><h3>ידע</h3><p>מסמכים, קבצים וטקסט ש־Claude משתמש בהם בכל שיחה בפרויקט.</p></div>
-        <div class="card" data-sketch><h3>הנחיות</h3><p>איך Claude מתנהג בפרויקט: טון, קהל יעד, פורמט.</p></div>
-      </div>
-      <ul class="bullets">
-        <li>הקשר לא עובר בין שיחות, אלא אם הוא שמור בידע של הפרויקט.</li>
-        <li>כשהידע גדל, Claude עובר לחיפוש בתוכו ומגדיל את הקיבולת עד פי 10 (בתוכניות בתשלום).</li>
-        <li>בתוכנית החינמית עד 5 פרויקטים.</li>
-      </ul>
+  <div class="scene-bg"><img src="../../assets/img/scene-board.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene">
+    <h2 class="split">Projects: חדר עבודה לכל תוצר</h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:30px">
+      <div class="card"><h3>ידע</h3><p>מסמכים וקבצים ש־Claude משתמש בהם בכל שיחה בפרויקט.</p></div>
+      <div class="card"><h3>הנחיות</h3><p>טון, קהל יעד ופורמט, לכל השיחות בפרויקט.</p></div>
     </div>
-    <img class="split__art" src="../../assets/img/claude-folder.webp" alt="">
+    <ul class="ticks" style="--accent: var(--leaf)">
+      <li>הקשר לא עובר בין שיחות, אלא אם הוא שמור בידע</li>
+      <li>ידע גדול? Claude מחפש בתוכו, עד פי 10 קיבולת</li>
+      <li>בתוכנית החינמית עד 5 פרויקטים</li>
+    </ul>
   </div>
   <p class="src">מקורות: support.claude.com/en/articles/9517075, 9519177, 11473015</p>
 </section>
 
-<!-- 15 -->
-<section class="slide" data-notes="פתיחת פרויקט צעד אחר צעד. להראות בשידור חי. שימו לב לנקודה 3: Claude לא רואה את השם והתיאור.">
-  <h2>פותחים פרויקט</h2>
-  <ol class="steps" role="list">
-    <li class="card" data-sketch><b>1</b><span>בסרגל הצד: Projects, או claude.ai/projects</span></li>
-    <li class="card" data-sketch><b>2</b><span>לוחצים New Project</span></li>
-    <li class="card" data-sketch><b>3</b><span>שם ותיאור. Claude לא רואה אותם, הם בשבילכם</span></li>
-    <li class="card" data-sketch><b>4</b><span>מעלים קבצים לבסיס הידע בעזרת +</span></li>
-    <li class="card" data-sketch><b>5</b><span>Set project instructions: כותבים איך Claude צריך לעבוד, ושומרים</span></li>
-    <li class="card" data-sketch><b>6</b><span>שיחה קיימת? Add to project מהתפריט שליד שמה</span></li>
-  </ol>
+<!-- 15 steps -->
+<section class="slide" data-notes="פתיחת פרויקט צעד אחר צעד. להראות בשידור חי. נקודה 3: Claude לא רואה את השם והתיאור.">
+  <h2 class="split"><span class="ul ul--wing">פותחים פרויקט</span></h2>
+  <div class="trail">
+    <svg viewBox="0 0 1640 640" preserveAspectRatio="none" aria-hidden="true"><path class="trail__path" d="M1378 150 C1268 150 1258 490 1148 490 C1038 490 1028 150 918 150 C808 150 799 490 689 490 C579 490 569 150 459 150 C349 150 340 490 230 490"/></svg>
+    <div class="stop" style="left:84%; top:23%"><b>1</b><span>בסרגל הצד: Projects, או claude.ai/projects</span></div>
+    <div class="stop" style="left:70%; top:77%"><b>2</b><span>לוחצים New Project</span></div>
+    <div class="stop" style="left:56%; top:23%"><b>3</b><span>שם ותיאור. Claude לא רואה אותם</span></div>
+    <div class="stop" style="left:42%; top:77%"><b>4</b><span>מעלים קבצים לבסיס הידע עם +</span></div>
+    <div class="stop" style="left:28%; top:23%"><b>5</b><span>Set project instructions, ושומרים</span></div>
+    <div class="stop" style="left:14%; top:77%"><b>6</b><span>שיחה קיימת? Add to project</span></div>
+  </div>
+  <img class="char" style="width:300px; top:60px; left:120px" src="../../assets/img/claude-folder.webp" alt="">
   <p class="src">מקור: support.claude.com/en/articles/9519177</p>
 </section>
 
-<!-- 16 -->
-<section class="slide" data-notes="ההבחנה הרשמית בין פרויקט ל־Skill. זה הגשר למפגש השני.">
-  <h2>פרויקט או Skill?</h2>
-  <div class="two two--vs">
-    <div class="card" data-sketch><h3>Project</h3><p class="big">ידע רקע שטעון תמיד.</p><p>החומרים של התוצר הזה: מסמך פיצוח, תוכן, הערות לקוח.</p></div>
-    <div class="card card--leaf" data-sketch><h3>Skill</h3><p class="big">ידע פרוצדורלי שנטען כשצריך.</p><p>איך אתם עושים דברים: כתיבת מטרות למידה, תסריט לומדה, עריכה לשונית.</p></div>
-  </div>
-  <p class="note">ניפגש עם Skills לעומק במפגש הבא.</p>
-  <p class="src">מקור: support.claude.com/en/articles/12512176</p>
+<!-- 16 versus -->
+<section class="slide s-vs" data-notes="ההבחנה הרשמית בין פרויקט ל־Skill. זה הגשר למפגש השני.">
+  <div class="vs__half vs__half--a" data-a="right"><h3>Project</h3><p class="big">ידע רקע שטעון תמיד.</p><p class="mid">החומרים של התוצר הזה: מסמך פיצוח, תוכן, הערות לקוח.</p></div>
+  <div class="vs__half vs__half--b" data-a="left"><h3>Skill</h3><p class="big">ידע פרוצדורלי שנטען כשצריך.</p><p class="mid">איך אתם עושים דברים: מטרות למידה, תסריט לומדה, עריכה לשונית.</p></div>
+  <div class="vs__badge" data-a="stamp">VS</div>
+  <p class="src">מקור: support.claude.com/en/articles/12512176. ניפגש עם Skills לעומק במפגש הבא.</p>
 </section>
 
-<!-- 17 -->
-<section class="slide" data-notes="Claude Code. הקהל שלו הוא בעיקר מפתחים, אבל במפגש 3 נשתמש בו לבניית לומדת HTML. לעבודת ידע בלי קוד Anthropic מפנה ל־Cowork.">
-  <h2>מתי נכון להשתמש ב־Claude Code?</h2>
-  <div class="split">
-    <div>
-      <p class="big">כלי אגנטי שקורא את התיקייה כולה, עורך קבצים ומריץ פקודות, ומבקש אישור לפני כל שינוי.</p>
-      <ul class="checks">
-        <li>כשהעבודה היא קבצים ולא שיחה: אתר, לומדת HTML, הרבה קבצים ביחד.</li>
-        <li>כשרוצים ש־Claude יבנה, יריץ ויתקן בעצמו.</li>
-        <li>רץ בטרמינל, ב־VS Code, באפליקציית Desktop ובדפדפן (claude.ai/code).</li>
-        <li>בתוכניות בתשלום. לעבודת ידע בלי קוד יש את Cowork.</li>
-      </ul>
-    </div>
-    <img class="split__art" src="../../assets/img/claude-code.webp" alt="">
+<!-- 17 code -->
+<section class="slide t-ink" data-notes="Claude Code: קורא את כל התיקייה, עורך ומריץ, ומבקש אישור לפני שינוי. במפגש 3 נבנה איתו לומדת HTML. לעבודת ידע בלי קוד Anthropic מפנה ל־Cowork.">
+  <div class="scene-bg"><img src="../../assets/img/scene-code.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene" style="width:900px">
+    <h2 class="split latin" dir="ltr" style="text-align:right">Claude Code</h2>
+    <p class="mid">מתי? כשהעבודה היא קבצים ולא שיחה.</p>
+    <div class="term" data-a="rise"><div class="term__bar"><i></i><i></i><i></i></div><pre class="typer" data-lines="› build an HTML module from storyboard.md|  Reading the folder... 12 files|  Writing index.html, quiz.js, style.css|  Allow editing 3 files? Yes|✓ Done. Opened preview."></pre></div>
+    <ul class="ticks">
+      <li>Desktop, VS Code, טרמינל או claude.ai/code</li>
+      <li>בתוכניות בתשלום. לעבודת ידע בלי קוד: Cowork</li>
+    </ul>
   </div>
   <p class="src">מקורות: code.claude.com/docs/en/overview, support.claude.com/en/articles/14552382, 13345190</p>
 </section>
 
-<!-- 18 -->
+<!-- 18 chrome -->
 <section class="slide" data-notes="Claude in Chrome. להדגיש את הבטיחות: prompt injection. לעבוד בפרופיל דפדפן נפרד ולהתחיל באתרים מהימנים.">
-  <h2>מתי נכון להשתמש ב־Claude in Chrome?</h2>
-  <div class="split">
-    <div>
-      <p class="big">תוסף ש־Claude קורא בעזרתו, לוחץ, מקליד ומנווט באתרים לצדכם.</p>
-      <ul class="checks">
-        <li>כשהעבודה קורית באתר: מחקר, מילוי טפסים, משימות חוזרות במערכת.</li>
-        <li>כשרוצים להקליט workflow ולהריץ אותו שוב, או לתזמן משימה.</li>
-      </ul>
-      <div class="card card--warn" data-sketch>
-        <h3>שימו לב</h3>
-        <p>רק בגוגל כרום ורק בתוכניות בתשלום. אתר יכול להסתיר הוראות זדוניות (prompt injection), ו"הסיכון אינו אפס". לא משתמשים בו לחשבונות כספיים, משפטיים, רפואיים או רגישים, ועדיף פרופיל דפדפן נפרד.</p>
-      </div>
-    </div>
-    <img class="split__art" src="../../assets/img/fly-browser.webp" alt="">
+  <div class="scene-bg"><img src="../../assets/img/scene-browser.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene">
+    <h2 class="split latin" dir="ltr" style="text-align:right">Claude in Chrome</h2>
+    <p class="big">קורא, לוחץ, מקליד ומנווט באתרים, לצדכם.</p>
+    <ul class="ticks">
+      <li>מחקר, טפסים, משימות חוזרות במערכת</li>
+      <li>מקליטים workflow ומריצים שוב, או מתזמנים</li>
+    </ul>
+    <div class="card warn"><h3>שימו לב</h3><p>רק בכרום ורק בתוכניות בתשלום. אתר יכול להסתיר הוראות זדוניות, ו"הסיכון אינו אפס". לא לחשבונות כספיים, משפטיים, רפואיים או רגישים. עדיף פרופיל דפדפן נפרד.</p></div>
   </div>
   <p class="src">מקורות: support.claude.com/en/articles/12012173, 12902428</p>
 </section>
 
-<!-- 19 -->
+<!-- 19 doors -->
 <section class="slide" data-notes="סיכום: הכלי נקבע לפי איפה העבודה קורית.">
-  <h2>איזה כלי מתי?</h2>
-  <div class="grid3">
-    <div class="card tile" data-sketch><p class="tile__where">העבודה בשיחה ובמסמכים</p><h3>שיחה ו־Cowork</h3><p>כתיבה, ניתוח, מחקר, מסמכים ומצגות.</p></div>
-    <div class="card tile" data-sketch><p class="tile__where">העבודה בקבצים ובקוד</p><h3 dir="ltr">Claude Code</h3><p>לומדת HTML, אתר, עבודה על תיקייה שלמה.</p></div>
-    <div class="card tile" data-sketch><p class="tile__where">העבודה באתר</p><h3 dir="ltr">Claude in Chrome</h3><p>מערכות ואתרים: לחיצות, טפסים, משימות חוזרות.</p></div>
+  <h2 class="split"><span class="ul ul--wing">איזה כלי מתי?</span></h2>
+  <div class="doors">
+    <div class="card door door--a"><div class="door__head"><p>העבודה בשיחה ובמסמכים</p><h3>שיחה ו־Cowork</h3></div><div class="door__body"><span>כתיבה, ניתוח, מחקר, מסמכים ומצגות.</span><img src="../../assets/img/claude-folder.webp" alt=""></div></div>
+    <div class="card door door--b"><div class="door__head"><p>העבודה בקבצים ובקוד</p><h3 class="latin" dir="ltr" style="text-align:right">Claude Code</h3></div><div class="door__body"><span>לומדת HTML, אתר, תיקייה שלמה.</span><img src="../../assets/img/claude-code.webp" alt=""></div></div>
+    <div class="card door door--c"><div class="door__head"><p>העבודה באתר</p><h3 class="latin" dir="ltr" style="text-align:right">Claude in Chrome</h3></div><div class="door__body"><span>מערכות ואתרים: לחיצות, טפסים, משימות חוזרות.</span><img src="../../assets/img/fly-browser.webp" alt=""></div></div>
   </div>
-  <img class="char char--bl" src="../../assets/img/fly-sit.webp" alt="">
 </section>
 
-<!-- 20 -->
-<section class="slide" data-notes="למה Claude מתאים למפתחי למידה. בעמודה הימנית מה ש־Anthropic אומרת, ובשמאלית מה זה אומר לנו. אין עמוד רשמי שמדבר על פיתוח למידה בארגונים, אז המסקנות הן שלנו.">
-  <h2>למה Claude, למפתחי למידה?</h2>
+<!-- 20 why -->
+<section class="slide" data-notes="למה Claude למפתחי למידה. השורה הקטנה בכל כרטיס היא מה ש־Anthropic אומרת, והמודגשת היא היישום שלנו. אין עמוד רשמי על פיתוח למידה בארגונים.">
+  <h2 class="split"><span class="ul ul--wing">למה Claude, למפתחי למידה?</span></h2>
+  <p class="mid">מה ש־Anthropic מבטיחה, ומה זה אומר לנו.</p>
   <div class="why">
-    <div class="why__row"><div class="card" data-sketch><b>טקסטים וטיוטות ראשונות</b><span>Anthropic מדגישה כתיבה, חשיבה וטיוטה ראשונה שמוכנה לבדיקה</span></div><p>תסריטים, מסמכי פיצוח ושאלות, בעברית טובה</p></div>
-    <div class="why__row"><div class="card" data-sketch><b>חלון הקשר של מיליון טוקנים</b><span>מסמכים ארוכים נכנסים לשיחה אחת</span></div><p>חומר הגלם של הקורס, תקנונים ומצגות לקוח</p></div>
-    <div class="why__row"><div class="card" data-sketch><b>Projects</b><span>הקשר, הנחיות וקבצים לכל פרויקט</span></div><p>פרויקט לכל לומדה או קורס</p></div>
-    <div class="why__row"><div class="card" data-sketch><b>Artifacts</b><span>מסמכים, מצגות וכלים אינטראקטיביים, עם ייצוא</span></div><p>סטוריבורד, אינטראקציה, דף עבודה</p></div>
-    <div class="why__row"><div class="card" data-sketch><b>Skills</b><span>תהליכי עבודה חוזרים, בעקביות</span></div><p>הסטנדרט של הצוות, בכל פעם</p></div>
+    <div class="card"><div class="why__top"><b>כתיבה וטיוטות</b></div><div class="why__body"><small>כתיבה, חשיבה וטיוטה ראשונה שמוכנה לבדיקה</small><p>תסריטים, מסמכי פיצוח ושאלות</p></div></div>
+    <div class="card"><div class="why__top"><b>מיליון טוקנים</b></div><div class="why__body"><small>מסמכים ארוכים נכנסים לשיחה אחת</small><p>חומר הגלם של הקורס, בשלמותו</p></div></div>
+    <div class="card"><div class="why__top"><b>Projects</b></div><div class="why__body"><small>הקשר, הנחיות וקבצים לכל פרויקט</small><p>פרויקט לכל לומדה או קורס</p></div></div>
+    <div class="card"><div class="why__top"><b>Artifacts</b></div><div class="why__body"><small>מסמכים, מצגות וכלים, עם ייצוא</small><p>סטוריבורד, אינטראקציה, דף עבודה</p></div></div>
+    <div class="card"><div class="why__top"><b>Skills</b></div><div class="why__body"><small>תהליכי עבודה חוזרים, בעקביות</small><p>הסטנדרט של הצוות, בכל פעם</p></div></div>
   </div>
-  <p class="src">מקורות: claude.com/product/overview, support.claude.com/en/articles/8606394, 9517075, 17153992, 12512176. העמודה השמאלית היא היישום שלנו.</p>
+  <img class="char" style="width:300px; top:50px; left:120px" src="../../assets/img/duo-highfive.webp" alt="">
+  <p class="src">מקורות: claude.com/product/overview, support.claude.com/en/articles/8606394, 9517075, 17153992, 12512176</p>
 </section>
 
-<!-- 21 -->
-<section class="slide s-divider" data-notes="תרגול עצמי. 45 דקות. אני זמין לשאלות.">
-  <img class="char char--div" src="../../assets/img/claude-run-b.webp" alt="">
-  <h2 class="huge">בואו נתחיל להתנסות</h2>
-  <div class="card task" data-sketch>
-    <h3>הפרויקט הראשון שלכם</h3>
-    <ol>
-      <li>פותחים פרויקט לאחד התוצרים שאתם עובדים עליהם עכשיו.</li>
-      <li>כותבים הנחיות קבועות: קהל יעד, טון, פורמט.</li>
-      <li>מעלים שני מסמכי רקע.</li>
-      <li>מביאים למפגש הבא שיחה אחת שעבדה טוב, ואחת שלא.</li>
-    </ol>
+<!-- 21 practice -->
+<section class="slide s-divider" data-notes="תרגול עצמי, 45 דקות. אני זמין לשאלות.">
+  <div class="scene-bg"><img src="../../assets/img/scene-workshop.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene">
+    <h2 class="split">בואו נתחיל להתנסות</h2>
+    <div class="card task">
+      <h3>הפרויקט הראשון שלכם</h3>
+      <ol>
+        <li>פרויקט לתוצר שאתם עובדים עליו עכשיו</li>
+        <li>הנחיות קבועות: קהל, טון, פורמט</li>
+        <li>שני מסמכי רקע</li>
+        <li>למפגש הבא: שיחה שעבדה ושיחה שלא</li>
+      </ol>
+    </div>
+    <p class="timer"><span dir="ltr">45</span> <span style="font: 700 60px/1 Gazoz">דקות</span></p>
   </div>
 </section>
 
-<!-- 22 -->
+<!-- 22 end -->
 <section class="slide s-end" data-notes="סגירה. מזכירים שאני זמין לליווי בין המפגשים.">
-  <img class="end__art" src="../../assets/img/hero-trio.webp" alt="">
+  <div class="scene-bg"><img src="../../assets/img/hero-trio.webp" alt=""></div>
+  <div class="scene-fade"></div>
   <div class="end__text">
-    <h2>תמיד מוזמנים להתייעץ</h2>
+    <h2 class="split">תמיד מוזמנים להתייעץ</h2>
     <p class="big">ההקלטה, המצגת והקישורים מחכים באזור המשתתפים.</p>
     <img class="end__slogan" src="../../assets/img/level-up.webp" alt="TIME TO LEVEL-UP!">
   </div>
 </section>
 
-<!-- 23 -->
-<section class="slide s-sources" data-notes="שקף מקורות, לא להציג. נשאר בקובץ להפצה.">
+<!-- 23 sources -->
+<section class="slide" data-notes="שקף מקורות. לא מציגים, נשאר בקובץ להפצה.">
   <h2>מקורות (נבדקו ב־7.11.2026)</h2>
-  <ul class="sources" dir="ltr">
+  <ul class="sources">
     <li>anthropic.com/company</li>
     <li>claude.com/product/overview</li>
     <li>claude.com/pricing</li>
