@@ -673,5 +673,7 @@ main { overflow-x: clip; }
 .traveler__fly { width: clamp(64px, 7vw, 96px); translate: -50% -55%; animation: flutter .42s ease-in-out infinite alternate; }
 .traveler__sit { width: clamp(52px, 5.5vw, 74px); translate: -50% -64%; display: none; }
 .traveler.is-sitting .traveler__fly { display: none; }
-.traveler.is-sitting .traveler__sit { display: block; }
+.traveler.is-sitting[data-pose="glasses"] .traveler__sit[data-pose="glasses"],
+.traveler.is-sitting[data-pose="wave"] .traveler__sit[data-pose="wave"],
+.traveler.is-sitting[data-pose="read"] .traveler__sit[data-pose="read"] { display: block; }
 @media (prefers-reduced-motion: reduce) { .traveler__fly { animation: none; } }
