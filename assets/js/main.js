@@ -94,7 +94,6 @@
   /* ---------------- timeline track ---------------- */
   var timeline = $("#timeline");
   var track = timeline && $(".timeline__track", timeline);
-  var bfly = timeline && $(".timeline__butterfly", timeline);
   var trackPath = null, trackLen = 0;
   var sessions = timeline ? $$(".session", timeline) : [];
 
@@ -118,7 +117,6 @@
     track.style.setProperty("--len", trackLen);
   }
 
-  var lastBy = 0;
   function updateTrack() {
     if (!trackPath) return;
     var r = timeline.getBoundingClientRect();
@@ -129,20 +127,54 @@
     p = Math.max(0, Math.min(1, p));
     if (reduced) p = 1;
     track.style.setProperty("--p", p.toFixed(4));
-    if (bfly) {
-      var pt = trackPath.getPointAtLength(trackLen * p);
-      var by = pt.y - bfly.offsetHeight * 0.55;
-      var tilt = Math.max(-14, Math.min(14, (by - lastBy) * 0.8));
-      lastBy = by;
-      bfly.style.transform = "translateY(" + by.toFixed(1) + "px) rotate(" + (reduced ? 0 : tilt).toFixed(1) + "deg)";
-      bfly.style.opacity = p <= 0 ? "0.5" : "1";
-      // a session lights up once the butterfly has flown past its number
-      sessions.forEach(function (li) {
-        var num = li.firstElementChild;
-        var cy = li.offsetTop + num.offsetTop + num.offsetHeight / 2;
-        li.classList.toggle("is-reached", pt.y >= cy);
-      });
-    }
+    var pt = trackPath.getPointAtLength(trackLen * p);
+    // a session lights up once the butterfly has flown past its number
+    sessions.forEach(function (li) {
+      var num = li.firstElementChild;
+      var cy = li.offsetTop + num.offsetTop + num.offsetHeight / 2;
+      li.classList.toggle("is-reached", p > 0 && pt.y >= cy);
+    });
+  }
+
+  /* ---------------- the travelling butterfly ----------------
+     One butterfly crosses the page as you scroll: it flies in from the side and
+     sits on Claude's head in the "new employee" scene, hops onto the reading
+     Claude by the syllabus, flies down the pencil line past the sessions, and
+     lands on the host's portrait. Positions are in page coordinates. */
+  var trav = $("#traveler");
+  var promiseClaude = $(".promise__claude"), reader = $(".syllabus__board"), portrait = $(".host__portrait");
+  function docRect(el) { var r = el.getBoundingClientRect(); return { x: r.left + window.scrollX, y: r.top + window.scrollY, w: r.width, h: r.height }; }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function clamp01(t) { return Math.max(0, Math.min(1, t)); }
+  function ease(t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+  function trackDoc(p) {
+    var r = track.getBoundingClientRect(), pt = trackPath.getPointAtLength(trackLen * p);
+    var sx = r.width / 40;
+    return { x: r.left + window.scrollX + pt.x * sx, y: r.top + window.scrollY + pt.y };
+  }
+  function updateTraveler() {
+    if (!trav || !promiseClaude || !reader || !portrait || !trackPath) return;
+    var vh = window.innerHeight, vw = document.documentElement.clientWidth, sY = window.scrollY;
+    var c = docRect(promiseClaude), b = docRect(reader), h = docRect(portrait), tl = docRect(timeline);
+    var A0 = { x: c.x + c.w * .5, y: c.y + c.h * .04 };      // on Claude's head
+    var A1 = { x: b.x + b.w * .46, y: b.y + b.h * .25 };     // on the reading Claude's head
+    var A3 = { x: h.x + h.w * .78, y: h.y + h.h * .1 };      // on the portrait's rim
+    var T0 = trackDoc(0), T1 = trackDoc(1);
+    var k0 = A0.y - vh * .5, kS = k0 - vh * .55, k1 = Math.max(k0 + 10, A1.y - vh * .5);
+    var tS = Math.max(k1 + 10, tl.y - vh * .7), tE = tS + tl.h, k3 = Math.max(tE + 10, A3.y - vh * .5);
+    var pos, sit = false, on = true;
+    function fly(P, Q, u, arc) { var e = ease(clamp01(u)); return { x: lerp(P.x, Q.x, e), y: lerp(P.y, Q.y, e) - Math.sin(Math.PI * clamp01(u)) * (arc || 0) }; }
+    if (reduced) { pos = A3; sit = true; }
+    else if (sY < kS) { on = false; pos = { x: vw - 60, y: A0.y - 200 }; }
+    else if (sY < k0) { pos = fly({ x: vw - 60, y: A0.y - 220 }, A0, (sY - kS) / (k0 - kS), 60); sit = sY > k0 - 30; }
+    else if (sY < k1) { var u = (sY - k0) / (k1 - k0); if (u < .3) { pos = A0; sit = true; } else if (u > .85) { pos = A1; sit = true; } else pos = fly(A0, A1, (u - .3) / .55, 140); }
+    else if (sY < tS) { var u2 = (sY - k1) / (tS - k1); if (u2 < .35) { pos = A1; sit = true; } else pos = fly(A1, T0, (u2 - .35) / .65, 80); }
+    else if (sY < tE) { pos = trackDoc((sY - tS) / (tE - tS)); }
+    else if (sY < k3) { var u3 = (sY - tE) / (k3 - tE); pos = u3 > .9 ? A3 : fly(T1, A3, u3 / .9, 120); sit = u3 > .9; }
+    else { pos = A3; sit = true; }
+    trav.classList.toggle("is-on", on);
+    trav.classList.toggle("is-sitting", sit);
+    trav.style.transform = "translate(" + pos.x.toFixed(1) + "px," + pos.y.toFixed(1) + "px)";
   }
 
   /* ---------------- the characters ---------------- */
@@ -210,6 +242,7 @@
       }
       updateTrack();
       updateScenes();
+      updateTraveler();
       updateFrames();
     });
   }
@@ -232,7 +265,7 @@
   setupIntro();
   setupLinks();
 
-  function relayout() { buildTrack(); drawFrames(); updateTrack(); updateScenes(); updateFrames(); }
+  function relayout() { buildTrack(); drawFrames(); updateTrack(); updateScenes(); updateFrames(); updateTraveler(); }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
   window.addEventListener("load", relayout);
   var rt;
