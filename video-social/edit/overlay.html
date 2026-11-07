@@ -1,0 +1,71 @@
+<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><style>
+@font-face{font-family:Gazoz;src:url(../../assets/fonts/FbGazoz-Bold.otf)}
+@font-face{font-family:Josefin;src:url(../../assets/fonts/JosefinSans.ttf);font-weight:100 900}
+html,body{margin:0;width:1080px;height:1920px;background:transparent;overflow:hidden}
+body{font-family:Gazoz,Josefin,sans-serif;color:#141414}
+.cap{position:absolute;top:250px;right:80px;left:80px;text-align:center;opacity:0}
+.cap .glow{position:absolute;inset:-70px -60px;background:radial-gradient(closest-side,rgba(250,249,246,.92),rgba(250,249,246,.75) 60%,rgba(250,249,246,0));z-index:-1}
+.cap .line{display:block;font-size:92px;line-height:1.08;clip-path:inset(0 0 0 100%)}
+.cap .lat{font-family:Josefin;font-weight:700;font-size:.92em}
+.pill{display:inline-block;background:#8bc53f;color:#141414;border-radius:999px;font-size:52px;padding:10px 34px 0;margin-bottom:22px;transform:scale(0)}
+.cap svg{display:block;margin:18px auto 0;width:520px;height:30px;overflow:visible}
+.cap svg path{fill:none;stroke:#141414;stroke-width:5;stroke-linecap:round}
+.list{position:absolute;top:220px;right:70px;left:70px;opacity:0}
+.list .glow{position:absolute;inset:-60px -50px;background:radial-gradient(closest-side,rgba(250,249,246,.95),rgba(250,249,246,.82) 65%,rgba(250,249,246,0));z-index:-1}
+.list h2{margin:0 0 26px;font-size:78px;line-height:1.05;text-align:center;font-weight:400}
+.list .row{display:flex;gap:22px;align-items:center;font-size:50px;line-height:1.1;margin:0 0 20px;opacity:0;transform:translateX(-40px)}
+.list .n{flex:none;width:72px;height:72px;border-radius:50%;background:#7a3fd1;color:#fff;display:grid;place-items:center;font-size:44px;padding-top:6px;box-sizing:border-box}
+.tag{position:absolute;left:90px;top:300px;width:auto;white-space:nowrap;background:#fff;border:5px solid #141414;border-radius:28px;padding:30px 40px 22px;box-shadow:14px 14px 0 rgba(20,20,20,.12);transform-origin:50% 100%;opacity:0}
+.tag b{display:block;font-size:84px;line-height:1;font-weight:400}
+.tag > span{display:block;font-size:46px;margin-top:10px}
+.tag i{position:absolute;left:52%;bottom:-150px;width:5px;height:150px;background:#141414;transform:rotate(-42deg);transform-origin:top;border-radius:3px}
+.end{position:absolute;inset:0;background:#faf9f6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:70px;opacity:0}
+.end .paper{position:absolute;inset:0;background:repeating-linear-gradient(-12deg,rgba(0,0,0,.018) 0 2px,transparent 2px 7px)}
+.end img.logo{width:620px;position:relative}
+.end .cta{font-size:104px;line-height:1.08;text-align:center;position:relative}
+.end img.lvl{width:760px;position:relative}
+.end img.duo{width:560px;position:relative;margin-top:-20px}
+</style></head><body>
+<div id="caps"></div>
+<div class="list" id="list"><div class="glow"></div>
+  <h2>סדנה בת ארבעה מפגשים:<br>ללמוד לעבוד יחד עם <span style="font-family:Josefin;font-weight:700">Claude</span></h2>
+  <div class="row"><span class="n">1</span><span>מי זה <span class="lat" style="font-family:Josefin;font-weight:700">Claude</span>? היכרות ומודלים</span></div>
+  <div class="row"><span class="n">2</span><span><span style="font-family:Josefin;font-weight:700">Skills</span>: שיטת העבודה שלכם</span></div>
+  <div class="row"><span class="n">3</span><span>לומדה בשיטת <span style="font-family:Josefin;font-weight:700">vibe coding</span></span></div>
+  <div class="row"><span class="n">4</span><span>הפקות וידאו: יום באולפן</span></div>
+</div>
+<div class="tag" id="tag"><b>שחר עזר</b><span>מוביל בינה מלאכותית <span style="font-family:Josefin;font-weight:700">Lnet</span></span><i></i></div>
+<div class="end" id="end"><div class="paper"></div>
+  <img class="logo" src="../../assets/img/logo-black.png">
+  <div class="cta">לפרטים נוספים:<br>קישור בפוסט</div>
+  <img class="lvl" src="../../assets/img/level-up.webp">
+</div>
+<script>
+const L=s=>s.replace(/(Claude|Skills|vibe coding|Gada-Lnet|Lnet)/g,'<span class="lat">$1</span>');
+const clamp=x=>Math.max(0,Math.min(1,x)), ease=x=>1-Math.pow(1-clamp(x),3), back=x=>{x=clamp(x);const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+let CFG=null, capEls=[];
+function setup(cfg){CFG=cfg;const box=document.getElementById('caps');
+  cfg.caps.forEach(c=>{const d=document.createElement('div');d.className='cap';
+    d.innerHTML='<div class="glow"></div>'+(c.pill?'<span class="pill">'+c.pill+'</span>':'')+c.lines.map(l=>'<span class="line">'+L(l)+'</span>').join('')+'<svg viewBox="0 0 520 30"><path d="M8 18 C 120 6, 250 28, 380 14 S 500 12, 512 16"/></svg>';
+    box.appendChild(d);const p=d.querySelector('path');const len=p.getTotalLength();p.style.strokeDasharray=len;p.dataset.len=len;capEls.push([c,d,p]);});
+}
+function render(t){
+  capEls.forEach(([c,d,p])=>{const a=t-c.in, b=c.out-t;
+    if(a<0||b<0){d.style.opacity=0;return}
+    d.style.opacity=Math.min(1,clamp(b/.3));d.style.transform='translateY('+(-30*(1-clamp(b/.3)))+'px)';
+    const pill=d.querySelector('.pill'); if(pill)pill.style.transform='scale('+back(a/.35)+')';
+    const off=pill?.25:0;
+    d.querySelectorAll('.line').forEach((l,i)=>{const k=ease((a-off-i*.28)/.55);l.style.clipPath='inset(0 0 0 '+(100-100*k)+'%)'});
+    const n=d.querySelectorAll('.line').length; const k=ease((a-off-n*.28-.2)/.5); p.style.strokeDashoffset=p.dataset.len*(1-k);
+  });
+  const li=CFG.list, le=document.getElementById('list');
+  if(li&&t>=li.in&&t<=li.out){const a=t-li.in,b=li.out-t;le.style.opacity=Math.min(clamp(a/.3),clamp(b/.3));
+    le.querySelectorAll('.row').forEach((r,i)=>{const k=ease((a-.6-i*.45)/.4);r.style.opacity=k;r.style.transform='translateX('+(-40*(1-k))+'px)'});
+  } else le.style.opacity=0;
+  const tg=CFG.tag, te=document.getElementById('tag');
+  if(tg&&t>=tg.in&&t<=tg.out){const a=t-tg.in,b=tg.out-t;te.style.opacity=Math.min(clamp(a/.2),clamp(b/.25));te.style.transform='rotate(-3deg) scale('+back(a/.45)+')'} else te.style.opacity=0;
+  const en=CFG.end, ee=document.getElementById('end');
+  if(en&&t>=en.in){const a=t-en.in;ee.style.opacity=clamp(a/.35);
+    [...ee.children].slice(1).forEach((c,i)=>{const k=back((a-.25-i*.22)/.45);c.style.transform='scale('+Math.max(0,k)+')'})} else ee.style.opacity=0;
+}
+</script></body></html>
