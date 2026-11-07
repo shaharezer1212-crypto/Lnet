@@ -9,7 +9,7 @@ def _rot(tpl, ang):
     if abs(ang) < 1e-3: return tpl
     im = Image.fromarray(tpl.astype(np.float32), 'F')
     return np.array(im.rotate(ang, resample=Image.BILINEAR, fillcolor=float(tpl.mean())), np.float32)
-def track(frames, t0, box, R=40):
+def track(frames, t0, box, R=40, scales=(0.95, 1.0, 1.05)):
     """position + angle + scale tracking; returns (cx, cy, w, h, ang, ok)"""
     x0, y0, x1, y1 = [v // S for v in box]; W0, H0 = x1 - x0, y1 - y0
     n = len(frames); out = [None] * n
@@ -17,7 +17,7 @@ def track(frames, t0, box, R=40):
         base = _gray(frames[t0])[y0:y1, x0:x1].copy(); cx, cy, ang, sc = x0 + W0 / 2, y0 + H0 / 2, 0.0, 1.0
         for i in order:
             g = _gray(frames[i]); H, W = g.shape; best = None
-            for s_ in (sc * 0.95, sc, sc * 1.05):
+            for s_ in [sc * k for k in scales]:
                 w, h = max(8, int(W0 * s_)), max(6, int(H0 * s_))
                 tb = np.array(Image.fromarray(base.astype(np.float32), 'F').resize((w, h), Image.BILINEAR), np.float32)
                 px, py = int(cx - w / 2), int(cy - h / 2)
@@ -61,8 +61,8 @@ def measure_angle(frame, cx, cy, w, h):
     th = (th + 90) % 180 - 90
     if abs(th) > 45: return None
     return -th
-def apply(frames, t0, box, start_ok=0, lines=('מפתח/ת', 'למידה'), inset=0.02, fill=(250, 250, 248), border=(150, 150, 150), ink=(28, 28, 28)):
-    tr = track(frames, t0, box)
+def apply(frames, t0, box, start_ok=0, lines=('מפתח/ת', 'למידה'), inset=0.02, fill=(250, 250, 248), border=(150, 150, 150), ink=(28, 28, 28), lock=False):
+    tr = track(frames, t0, box, scales=(1.0,) if lock else (0.95, 1.0, 1.05))
     vis = np.array([1.0 if (b[5] and i >= start_ok) else 0.0 for i, b in enumerate(tr)])
     sm = np.convolve(np.pad(vis, 2, mode='edge'), np.ones(5) / 5, mode='valid')
     angs = []
