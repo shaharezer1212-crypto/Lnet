@@ -10,21 +10,26 @@ def _rot(tpl, ang):
     im = Image.fromarray(tpl.astype(np.float32), 'F')
     return np.array(im.rotate(ang, resample=Image.BILINEAR, fillcolor=float(tpl.mean())), np.float32)
 def track(frames, t0, box, R=40):
-    x0, y0, x1, y1 = [v // S for v in box]; w, h = x1 - x0, y1 - y0
+    """position + angle + scale tracking; returns (cx, cy, w, h, ang, ok)"""
+    x0, y0, x1, y1 = [v // S for v in box]; W0, H0 = x1 - x0, y1 - y0
     n = len(frames); out = [None] * n
     def run(order):
-        base = _gray(frames[t0])[y0:y1, x0:x1].copy(); px, py, ang = x0, y0, 0.0
+        base = _gray(frames[t0])[y0:y1, x0:x1].copy(); cx, cy, ang, sc = x0 + W0 / 2, y0 + H0 / 2, 0.0, 1.0
         for i in order:
-            g = _gray(frames[i]); H, W = g.shape
-            sx0, sy0 = max(0, px - R), max(0, py - R); sx1, sy1 = min(W, px + w + R), min(H, py + h + R)
-            win = swv(g[sy0:sy1, sx0:sx1], (h, w))
-            best = None
-            for a in np.arange(ang - 9, ang + 9.1, 3):
-                t = _rot(base, a); d = ((win - t) ** 2).mean((-1, -2)); j = np.unravel_index(np.argmin(d), d.shape)
-                if best is None or d[j] < best[0]: best = (d[j], sx0 + j[1], sy0 + j[0], a)
-            err, nx, ny, na = best; ok = err < 320
-            if ok: px, py, ang = nx, ny, float(np.clip(na, -35, 35))
-            out[i] = ((px + w / 2) * S, (py + h / 2) * S, w * S, h * S, ang, ok)
+            g = _gray(frames[i]); H, W = g.shape; best = None
+            for s_ in (sc * 0.95, sc, sc * 1.05):
+                w, h = max(8, int(W0 * s_)), max(6, int(H0 * s_))
+                tb = np.array(Image.fromarray(base.astype(np.float32), 'F').resize((w, h), Image.BILINEAR), np.float32)
+                px, py = int(cx - w / 2), int(cy - h / 2)
+                sx0, sy0 = max(0, px - R), max(0, py - R); sx1, sy1 = min(W, px + w + R), min(H, py + h + R)
+                if sx1 - sx0 < w or sy1 - sy0 < h: continue
+                win = swv(g[sy0:sy1, sx0:sx1], (h, w))
+                for a in (ang - 6, ang - 3, ang, ang + 3, ang + 6):
+                    t = _rot(tb, a); d = ((win - t) ** 2).mean((-1, -2)); j = np.unravel_index(np.argmin(d), d.shape)
+                    if best is None or d[j] < best[0]: best = (d[j], sx0 + j[1] + w / 2, sy0 + j[0] + h / 2, a, s_)
+            ok = best is not None and best[0] < 340
+            if ok: _, cx, cy, ang, sc = best; ang = float(np.clip(ang, -35, 35)); sc = float(np.clip(sc, 0.4, 2.5))
+            out[i] = (cx * S, cy * S, W0 * sc * S, H0 * sc * S, ang, ok)
     run(range(t0, n)); run(range(t0, -1, -1))
     return out
 _cache = {}
@@ -70,7 +75,7 @@ def apply(frames, t0, box, start_ok=0, lines=('מפתח/ת', 'למידה'), inse
     H, W = frames[0].shape[:2]
     for i, f in enumerate(frames):
         if sm[i] <= 0.02: continue
-        w, h = tr[i][2], tr[i][3]; cw, ch = int(w * (1 - 2 * inset)), int(h * (1 - 2 * inset))
+        w, h = tr[i][2], tr[i][3]; cw, ch = max(10, int(w * (1 - 2 * inset))), max(8, int(h * (1 - 2 * inset)))
         p = card_img(cw, ch, tuple(lines), tuple(fill), tuple(border), tuple(ink)).rotate(float(angs[i]), resample=Image.BICUBIC, expand=True)
         pa = np.array(p, np.float32); pw, ph = p.size; ox, oy = int(cxs[i] - pw / 2), int(cys[i] - ph / 2)
         if ox < 0 or oy < 0 or ox + pw > W or oy + ph > H: continue
