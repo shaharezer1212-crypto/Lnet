@@ -83,8 +83,8 @@ function renderIntro(t){const I=CFG.intro, el=document.getElementById('intro'); 
     const out=clamp((b-t)/.22); e.style.opacity=out; e.style.transform='translateY('+(-40*(1-out))+'px)';
     e.querySelectorAll('.w').forEach((w,i)=>{const k=back((t-a-.1-i*.14)/.35);w.style.transform='scale('+Math.max(0,k)+')';w.style.opacity=clamp((t-a-.1-i*.14)/.12)});
     const lg=e.querySelector('.logo'); if(lg){const k=back((t-a-.9)/.45);lg.style.transform='scale('+Math.max(0,k)+')'}
-    const c=e.querySelector('#circ path'); if(c){ if(!c.dataset.ok){const w=document.getElementById('hl1'), sv=e.querySelector('#circ'), pr=e.getBoundingClientRect(), r=w.getBoundingClientRect();
-        const cx=r.left-pr.left+r.width/2, cy=r.top-pr.top+r.height/2+6, rx=r.width/2+170, ry=r.height/2+48; sv.setAttribute('width',e.clientWidth); sv.setAttribute('height',900);
+    const c=e.querySelector('#circ path'); if(c){ if(!c.dataset.ok){const w=document.getElementById('hl1'), sv=e.querySelector('#circ'); const keepT=w.style.transform, keepE=e.style.transform; w.style.transform='none'; e.style.transform='none'; const pr=e.getBoundingClientRect(), r=w.getBoundingClientRect(); w.style.transform=keepT; e.style.transform=keepE;
+        const cx=r.left-pr.left+r.width/2, cy=r.top-pr.top+r.height/2+6, rx=r.width/2+70, ry=r.height/2+34; sv.setAttribute('width',e.clientWidth); sv.setAttribute('height',900);
         let d=''; for(let k=0;k<=72;k++){const th=-Math.PI*0.62+k/64*2*Math.PI; const j=1+0.035*Math.sin(k*0.4); d+=(k?'L':'M')+(cx+rx*j*Math.cos(th)).toFixed(1)+' '+(cy+ry*j*Math.sin(th)).toFixed(1)+' ';}
         c.setAttribute('d',d); c.dataset.ok=1;}
       const L=c.getTotalLength();c.style.strokeDasharray=L;c.style.strokeDashoffset=L*(1-ease((t-a-.7)/.6))}});
