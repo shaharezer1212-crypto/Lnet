@@ -27,9 +27,15 @@
         "פתיחת פרויקט והרגלי עבודה חסכוניים"
       ],
       "slides": {
-        "url": ""
+        "url": "slides/session-1/index.html"
       },
-      "files": [],
+      "files": [
+        {
+          "title": "המצגת של מפגש 1 (PDF)",
+          "url": "slides/session-1/session-1.pdf",
+          "kind": "PDF"
+        }
+      ],
       "links": [],
       "homework": {
         "title": "",
