@@ -49,6 +49,24 @@ def card_img(w, h, lines, fill=(250, 250, 248), border=(150, 150, 150), ink=(28,
     for t, b in zip(lines, bbs):
         d.text((2 + (w - (b[2] - b[0])) / 2 - b[0], y - b[1]), t, font=f, fill=ink + (255,), direction='rtl'); y += (b[3] - b[1]) + size * .22
     im = im.filter(ImageFilter.GaussianBlur(0.5)); _cache[key] = im; return im
+def plain_img(w, h, lines, col, ink=(28, 28, 28)):
+    key = ('plain', w, h, lines, col, ink)
+    if key in _cache: return _cache[key]
+    m = Image.new('L', (w, h), 0); ImageDraw.Draw(m).rounded_rectangle((3, 3, w - 4, h - 4), radius=max(3, w // 10), fill=255)
+    m = m.filter(ImageFilter.GaussianBlur(max(1.2, w / 60)))
+    im = Image.new('RGBA', (w, h), col + (0,)); im.putalpha(m)
+    d = ImageDraw.Draw(im)
+    for size in range(110, 8, -1):
+        f = ImageFont.truetype(FONT, size)
+        bbs = [d.textbbox((0, 0), t, font=f, direction='rtl') for t in lines]
+        lw = max(b[2] - b[0] for b in bbs); lh = sum(b[3] - b[1] for b in bbs) + size * .22 * (len(lines) - 1)
+        if lw <= w * .8 and lh <= h * .76: break
+    t_ = Image.new('RGBA', (w, h), (0, 0, 0, 0)); dt = ImageDraw.Draw(t_)
+    y = (h - lh) / 2
+    for t, b in zip(lines, bbs):
+        dt.text(((w - (b[2] - b[0])) / 2 - b[0], y - b[1]), t, font=f, fill=ink + (235,), direction='rtl'); y += (b[3] - b[1]) + size * .22
+    im.alpha_composite(t_.filter(ImageFilter.GaussianBlur(0.4)))
+    _cache[key] = im; return im
 def measure_angle(frame, cx, cy, w, h):
     """long-axis angle of the bright badge blob (degrees, PIL convention)"""
     x0, y0 = int(cx - w * .65), int(cy - h * .65); x1, y1 = int(cx + w * .65), int(cy + h * .65)
@@ -62,7 +80,7 @@ def measure_angle(frame, cx, cy, w, h):
     th = (th + 90) % 180 - 90
     if abs(th) > 45: return None
     return -th
-def apply(frames, t0, box, start_ok=0, lines=('מפתח/ת', 'למידה'), inset=0.02, fill=(250, 250, 248), border=(150, 150, 150), ink=(28, 28, 28), lock=False, steady=True):
+def apply(frames, t0, box, start_ok=0, lines=('מפתח/ת', 'למידה'), inset=0.02, fill=(250, 250, 248), border=(150, 150, 150), ink=(28, 28, 28), lock=False, steady=True, plain=False):
     tr = track(frames, t0, box, scales=(1.0,) if lock else (0.95, 1.0, 1.05))
     if steady:
         # never fade: hold the last good position through tracking drops; keep the card level
@@ -87,7 +105,16 @@ def apply(frames, t0, box, start_ok=0, lines=('מפתח/ת', 'למידה'), inse
     for i, f in enumerate(frames):
         if sm[i] <= 0.02: continue
         w, h = tr[i][2], tr[i][3]; cw, ch = max(10, int(w * (1 - 2 * inset))), max(8, int(h * (1 - 2 * inset)))
-        p = card_img(cw, ch, tuple(lines), tuple(fill), tuple(border), tuple(ink)).rotate(float(angs[i]), resample=Image.BICUBIC, expand=True)
+        if plain:
+            # text printed on the badge itself: fill only the inner area in the badge's own colour, soft edges
+            cx0, cy0 = int(cxs[i] - w / 2), int(cys[i] - h / 2)
+            reg = f[max(0, cy0):cy0 + int(h), max(0, cx0):cx0 + int(w)].reshape(-1, 3)
+            l = reg.mean(-1); col = np.median(reg[l > np.percentile(l, 70)], 0)
+            iw, ih = max(10, int(w * 0.9)), max(8, int(h * 0.86))
+            p = plain_img(iw, ih, tuple(lines), tuple(int(c) for c in (col // 3 * 3)), tuple(ink))
+        else:
+            p = card_img(cw, ch, tuple(lines), tuple(fill), tuple(border), tuple(ink))
+        p = p.rotate(float(angs[i]), resample=Image.BICUBIC, expand=True)
         pa = np.array(p, np.float32); pw, ph = p.size; ox, oy = int(cxs[i] - pw / 2), int(cys[i] - ph / 2)
         if ox < 0 or oy < 0 or ox + pw > W or oy + ph > H: continue
         a = pa[..., 3:] / 255 * float(min(1, sm[i]))
