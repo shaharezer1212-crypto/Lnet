@@ -332,3 +332,40 @@ p { margin: 0; }
   .sketch-line path { stroke-dashoffset: 0; }
   .dial .needle { transform: rotate(-12deg); }
 }
+
+/* ---------- every slide lives in the sketched office ----------
+   Scenes with the characters, or (on card-heavy slides) a faint empty office. */
+.scene-bg.faint img { opacity: .6; }
+.slide .goal__path { grid-template-columns: 1fr 1fr; gap: 26px 30px; margin: 10px 0 0; }
+.slide .goal__path::before { display: none; }
+.slide .goal__path li { grid-template-columns: 70px 1fr; align-items: center; gap: 16px; }
+.slide .goal__path b { width: 70px; height: 70px; font-size: 40px; background: var(--wing); color: #fff; box-shadow: 4px 4px 0 rgb(0 0 0 / .15); }
+.slide .goal__path li:first-child b { background: var(--leaf); color: var(--ink); }
+.slide .goal__path span { color: var(--ink); font-size: 30px; }
+.slide .who__facts { width: 100%; margin-top: 6px; gap: 22px; }
+.slide .who__facts .card { padding: 22px 24px; }
+.slide .who__facts h3 { font-size: 36px; }
+.slide .who__facts .card p { font-size: 27px; }
+.slide .quote { color: var(--clay); font-size: 84px; }
+.levels { display: grid; grid-template-columns: repeat(5, auto); gap: 0; justify-content: end; }
+.levels span { font: 700 28px/1 "Josefin Display", sans-serif; padding: 16px 20px 12px; border: 2.4px solid var(--ink); background: var(--card); }
+.levels span + span { border-left: 0; }
+.levels span:first-child { border-radius: 999px 0 0 999px; }
+.levels span:last-child { border-radius: 0 999px 999px 0; background: var(--wing); color: #fff; }
+.levels span:nth-child(2) { background: #fbf1d9; } .levels span:nth-child(3) { background: #f2d99a; } .levels span:nth-child(4) { background: #c7a9ef; }
+.notes-wall--2 { grid-template-columns: 1fr 1fr; gap: 22px 26px; margin-top: 0; }
+.notes-wall--2 .card { min-height: 130px; font-size: 32px; padding: 20px 26px; }
+.s-vs { padding: 0; }
+.vs__text { position: absolute; top: 110px; width: 700px; display: grid; gap: 18px; }
+.vs__text--a { right: 130px; }
+.vs__text--b { left: 130px; }
+.vs__text h3 { font: 700 150px/.9 "Josefin Display", sans-serif; direction: ltr; text-align: right; }
+.vs__text .big { color: var(--ink); max-width: 18ch; }
+.vs__text .mid { color: var(--graphite); max-width: 26ch; font-size: 36px; }
+.s-vs .vs__badge { top: 330px; }
+.s-vs .src { color: var(--muted); }
+.s-doors h2 { font-size: 100px; }
+.sign { position: absolute; top: 470px; width: 330px; translate: -50% 0; padding: 22px 24px; display: grid; gap: 8px; text-align: center; }
+.sign h3 { font-size: 40px; margin: 0; text-align: center !important; }
+.sign p { font-size: 26px; line-height: 1.25; }
+.sign .sign__where { font-size: 22px; color: var(--graphite); }
