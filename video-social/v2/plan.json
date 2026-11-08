@@ -39,7 +39,8 @@
     "inset": 0.0,
     "lock": true,
     "plain": true,
-    "textonly": true
+    "textonly": true,
+    "steady": false
    }
   },
   {
