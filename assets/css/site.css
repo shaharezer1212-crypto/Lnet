@@ -558,7 +558,7 @@ main { overflow-x: clip; }
   transition: background-color .15s;
 }
 .materials a:hover { background: var(--paper); }
-.file-kind { flex: none; font-family: "Josefin Display", sans-serif; font-weight: 700; font-size: .75rem; background: var(--paper-deep); border-radius: 6px; padding: .2rem .4rem .05rem; min-width: 3.2em; text-align: center; }
+.file-kind { flex: none; font-family: "Josefin Display", "Gazoz", sans-serif; font-weight: 700; font-size: .75rem; background: var(--paper-deep); border-radius: 6px; padding: .2rem .4rem .05rem; min-width: 3.2em; text-align: center; }
 .materials .empty { color: var(--graphite); }
 
 /* one session */
