@@ -2,7 +2,7 @@
 usage: python3 compose.py plan.json outdir"""
 import json, sys, os, subprocess, numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import grade as G, badge as B
+import grade as G, badge as B, detect as D
 from PIL import Image, ImageFilter
 W, H, FPS = 1080, 1920, 30
 PAPER = G.PAPER
@@ -36,7 +36,7 @@ prev = None
 def scene_key(sc, prev_key):
     h = hashlib.md5((json.dumps(sc, sort_keys=True) + str(prev_key)).encode())
     if sc.get('clip'): h.update(str(os.path.getmtime(sc['clip'])).encode())
-    for f in ('grade.py', 'badge.py', 'compose.py'): h.update(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), f), 'rb').read())
+    for f in ('grade.py', 'badge.py', 'compose.py', 'detect.py'): h.update(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), f), 'rb').read())
     return h.hexdigest()[:12]
 prev_key = None
 for sc in plan['scenes']:
@@ -61,6 +61,8 @@ for sc in plan['scenes']:
         while len(clip) < n_clip: clip.append(clip[-1].copy())
     if clip:
         clip = [G.grade(f) for f in clip]
+        if sc.get('detect'):
+            dd = sc['detect']; D.apply(clip, tuple(dd['start']), manual=tuple(dd['manual']) if dd.get('manual') else None)
         for bd in ([sc['badge']] if isinstance(sc.get('badge'), dict) else sc.get('badge', [])):
             B.apply(clip, bd['t0'], tuple(bd['box']), bd.get('ok', 0), **{k: bd[k] for k in ('lines', 'fill', 'border', 'ink', 'inset', 'lock', 'plain', 'textonly', 'steady') if k in bd})
     first = clip[0] if clip else np.array(Image.open(sc['still']).convert('RGB').resize((W, H)), np.float32)

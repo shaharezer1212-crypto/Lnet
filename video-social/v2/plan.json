@@ -17,30 +17,35 @@
    "len": 3.8
   },
   {
-   "clip": "clips/sd_comp.mp4",
-   "start": 0.0,
+   "clip": "clips/s4b.mp4",
+   "start": 0.3,
    "draw": 0.8,
    "len": 3.8,
-   "maxclip": 2.6
+   "detect": {
+    "start": [
+     261,
+     1545
+    ]
+   }
   },
   {
    "clip": "clips/s5.mp4",
    "start": 1.6,
    "draw": 0.8,
    "len": 3.8,
-   "badge": {
-    "t0": 87,
-    "box": [
-     236,
-     1450,
-     343,
-     1550
+   "detect": {
+    "start": [
+     418,
+     1588
     ],
-    "inset": 0.0,
-    "lock": true,
-    "plain": true,
-    "textonly": true,
-    "steady": false
+    "manual": [
+     46,
+     418,
+     1588,
+     131,
+     90,
+     4
+    ]
    }
   },
   {
