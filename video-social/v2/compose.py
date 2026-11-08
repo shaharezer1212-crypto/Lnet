@@ -62,7 +62,7 @@ for sc in plan['scenes']:
     if clip:
         clip = [G.grade(f) for f in clip]
         for bd in ([sc['badge']] if isinstance(sc.get('badge'), dict) else sc.get('badge', [])):
-            B.apply(clip, bd['t0'], tuple(bd['box']), bd.get('ok', 0), **{k: bd[k] for k in ('lines', 'fill', 'border', 'ink', 'inset', 'lock', 'plain') if k in bd})
+            B.apply(clip, bd['t0'], tuple(bd['box']), bd.get('ok', 0), **{k: bd[k] for k in ('lines', 'fill', 'border', 'ink', 'inset', 'lock', 'plain', 'textonly') if k in bd})
     first = clip[0] if clip else np.array(Image.open(sc['still']).convert('RGB').resize((W, H)), np.float32)
     if prev is not None:   # erase the previous scene with a quick sweep back to paper
         for i in range(sc.get('erase', 8)):

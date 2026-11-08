@@ -49,10 +49,10 @@ def card_img(w, h, lines, fill=(250, 250, 248), border=(150, 150, 150), ink=(28,
     for t, b in zip(lines, bbs):
         d.text((2 + (w - (b[2] - b[0])) / 2 - b[0], y - b[1]), t, font=f, fill=ink + (255,), direction='rtl'); y += (b[3] - b[1]) + size * .22
     im = im.filter(ImageFilter.GaussianBlur(0.5)); _cache[key] = im; return im
-def plain_img(w, h, lines, col, ink=(28, 28, 28)):
-    key = ('plain', w, h, lines, col, ink)
+def plain_img(w, h, lines, col, ink=(28, 28, 28), fa=255):
+    key = ('plain', w, h, lines, col, ink, fa)
     if key in _cache: return _cache[key]
-    m = Image.new('L', (w, h), 0); ImageDraw.Draw(m).rounded_rectangle((3, 3, w - 4, h - 4), radius=max(3, w // 10), fill=255)
+    m = Image.new('L', (w, h), 0); ImageDraw.Draw(m).rounded_rectangle((3, 3, w - 4, h - 4), radius=max(3, w // 10), fill=fa)
     m = m.filter(ImageFilter.GaussianBlur(max(1.2, w / 60)))
     im = Image.new('RGBA', (w, h), col + (0,)); im.putalpha(m)
     d = ImageDraw.Draw(im)
@@ -80,7 +80,7 @@ def measure_angle(frame, cx, cy, w, h):
     th = (th + 90) % 180 - 90
     if abs(th) > 45: return None
     return -th
-def apply(frames, t0, box, start_ok=0, lines=('מפתח/ת', 'למידה'), inset=0.02, fill=(250, 250, 248), border=(150, 150, 150), ink=(28, 28, 28), lock=False, steady=True, plain=False):
+def apply(frames, t0, box, start_ok=0, lines=('מפתח/ת', 'למידה'), inset=0.02, fill=(250, 250, 248), border=(150, 150, 150), ink=(28, 28, 28), lock=False, steady=True, plain=False, textonly=False):
     tr = track(frames, t0, box, scales=(1.0,) if lock else (0.95, 1.0, 1.05))
     if steady:
         # never fade: hold the last good position through tracking drops; keep the card level
@@ -111,7 +111,7 @@ def apply(frames, t0, box, start_ok=0, lines=('מפתח/ת', 'למידה'), inse
             reg = f[max(0, cy0):cy0 + int(h), max(0, cx0):cx0 + int(w)].reshape(-1, 3)
             l = reg.mean(-1); col = np.median(reg[l > np.percentile(l, 70)], 0)
             iw, ih = max(10, int(w * 0.9)), max(8, int(h * 0.86))
-            p = plain_img(iw, ih, tuple(lines), tuple(int(c) for c in (col // 3 * 3)), tuple(ink))
+            p = plain_img(iw, ih, tuple(lines), tuple(int(c) for c in (col // 3 * 3)), tuple(ink), 0 if textonly else 255)
         else:
             p = card_img(cw, ch, tuple(lines), tuple(fill), tuple(border), tuple(ink))
         p = p.rotate(float(angs[i]), resample=Image.BICUBIC, expand=True)

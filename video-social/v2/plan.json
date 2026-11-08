@@ -8,92 +8,45 @@
    "clip": "clips/sd_entry.mp4",
    "start": 0,
    "draw": 1.0,
-   "len": 10.0,
-   "badge": {
-    "t0": 239,
-    "box": [
-     357,
-     1468,
-     557,
-     1606
-    ],
-    "ok": 222,
-    "inset": 0.0,
-    "plain": true
-   }
+   "len": 10.0
   },
   {
    "clip": "clips/sd_book.mp4",
    "start": 0.3,
    "draw": 0.8,
-   "len": 3.8,
-   "badge": {
-    "t0": 51,
-    "box": [
-     303,
-     1363,
-     480,
-     1466
-    ],
-    "inset": 0.0,
-    "lock": true,
-    "plain": true
-   }
+   "len": 3.8
   },
   {
    "clip": "clips/sd_comp.mp4",
    "start": 0.0,
    "draw": 0.8,
    "len": 3.8,
-   "badge": {
-    "t0": 60,
-    "box": [
-     205,
-     1475,
-     305,
-     1577
-    ],
-    "inset": 0.0,
-    "lock": true,
-    "plain": true
-   },
    "maxclip": 2.6
   },
   {
-   "clip": "clips/sd_studio.mp4",
-   "start": 2.0,
+   "clip": "clips/s5.mp4",
+   "start": 1.6,
    "draw": 0.8,
    "len": 3.8,
    "badge": {
-    "t0": 30,
+    "t0": 87,
     "box": [
-     265,
-     1213,
-     372,
-     1312
+     236,
+     1450,
+     343,
+     1550
     ],
     "inset": 0.0,
     "lock": true,
-    "plain": true
+    "plain": true,
+    "textonly": true
    }
   },
   {
    "clip": "clips/sd_s6.mp4",
    "start": 1.0,
    "draw": 0.8,
-   "len": 4.2,
-   "badge": {
-    "t0": 89,
-    "box": [
-     205,
-     1612,
-     325,
-     1715
-    ],
-    "inset": 0.0,
-    "lock": true,
-    "plain": true
-   }
+   "len": 4.2
   }
  ]
 }
