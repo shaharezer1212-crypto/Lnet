@@ -24,20 +24,37 @@
 
       var media = document.createElement("div");
       media.className = "project__media";
+      var images = p.images || [];
       var panel = document.createElement("figure");
-      panel.className = "panel" + (p.image ? "" : " panel--todo");
+      panel.className = "panel" + (images.length ? "" : " panel--todo");
       panel.style.setProperty("--r", tilts[i % tilts.length] + "deg");
-      if (p.image) {
+      panel.style.setProperty("--ar", "16 / 9");
+      if (images.length) {
         var img = document.createElement("img");
-        img.src = p.image; img.alt = ""; img.loading = "lazy";
+        img.src = images[0]; img.alt = p.title + ", " + p.client; img.loading = "lazy";
         panel.appendChild(img);
       } else {
         var note = document.createElement("figcaption");
         note.className = "panel__note";
-        note.textContent = "כאן: איור או צילום מסך של הפרויקט";
+        note.textContent = "כאן: צילום מסך של הפרויקט";
         panel.appendChild(note);
       }
       media.appendChild(panel);
+      if (images.length > 1) {
+        var strip = document.createElement("div");
+        strip.className = "project__strip";
+        images.slice(1).forEach(function (src, n) {
+          var f = document.createElement("figure");
+          f.className = "panel";
+          f.style.setProperty("--r", (n % 2 ? 2 : -2) + "deg");
+          f.style.setProperty("--ar", "16 / 9");
+          var t = document.createElement("img");
+          t.src = src; t.alt = ""; t.loading = "lazy";
+          f.appendChild(t);
+          strip.appendChild(f);
+        });
+        media.appendChild(strip);
+      }
 
       var body = document.createElement("div");
       var num = document.createElement("div");
@@ -57,7 +74,26 @@
       var text = document.createElement("p");
       text.className = "project__text";
       text.textContent = p.text;
-      body.append(num, title, meta, text);
+      body.append(num);
+      if (p.award) {
+        var award = document.createElement("div");
+        award.className = "project__award";
+        award.textContent = p.award;
+        body.append(award);
+      }
+      body.append(title, meta, text);
+      if (p.stats && p.stats.length) {
+        var stats = document.createElement("dl");
+        stats.className = "project__stats";
+        p.stats.forEach(function (st) {
+          var d = document.createElement("div");
+          var dd = document.createElement("dd"); dd.textContent = st.num;
+          var dt = document.createElement("dt"); dt.textContent = st.label;
+          d.append(dd, dt);
+          stats.appendChild(d);
+        });
+        body.append(stats);
+      }
 
       el.append(media, body);
       list.appendChild(el);

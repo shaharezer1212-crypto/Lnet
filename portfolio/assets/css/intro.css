@@ -96,28 +96,34 @@
 .slide__box { padding: 16px 20px; background: #f3f7fb; border: 1px solid #c3cdd8; border-radius: 6px; }
 .slide__box h3 { margin: 0 0 10px; font-size: 17px; }
 
-.tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 12px; }
-.tabs div {
-  display: grid;
-  place-items: center;
-  height: 150px;
-  padding: 10px;
+.topics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 8px; }
+.topics button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 230px;
+  padding: 14px;
   background: linear-gradient(#f9fbfd, #e3ebf3);
   border: 1px solid #a9b8c8;
   border-radius: 8px;
-  font-weight: 700;
-  text-align: center;
   color: #1f5a9b;
+  font: inherit;
+  font-weight: 700;
+  font-size: 19px;
+  cursor: pointer;
 }
-.tabs div::before {
-  content: "";
-  width: 44px;
-  height: 44px;
-  margin-bottom: -30px;
-  border-radius: 50%;
-  background: #2f6fb3;
-}
+.topics button::before { content: attr(data-icon); font-size: 54px; line-height: 1; }
+.topics button small { color: #5a6b7d; font-weight: 400; font-size: 13px; }
+.topics button:hover,
+.topics button.is-picked { background: #d6e4f3; border-color: #1f5a9b; }
 .hint { margin-top: 22px; color: #5a6b7d; font-size: 14px; }
+
+.verdict { margin: 40px 0 14px; font-size: 44px; font-weight: 700; }
+.verdict.is-right { color: #2e8b57; }
+.verdict.is-wrong { color: #c0392b; }
+.feedback { max-width: 30em; margin: 0; font-size: 21px; }
 
 .quiz { margin: 0; padding: 0; list-style: none; }
 .quiz li {
@@ -131,7 +137,8 @@
   cursor: pointer;
 }
 .quiz li::before { content: ""; flex: none; width: 15px; height: 15px; border: 2px solid #7d8da0; border-radius: 50%; }
-.quiz li:hover { background: #f3f7fb; }
+.quiz li:hover,
+.quiz li.is-picked { background: #d6e4f3; border-color: #1f5a9b; }
 
 .player__bar {
   grid-column: 1 / -1;
@@ -156,8 +163,6 @@
   cursor: pointer;
 }
 .player__btn[disabled] { opacity: 0.45; cursor: default; }
-.player__btn--next { animation: nudge 1.6s ease-in-out infinite; }
-@keyframes nudge { 50% { box-shadow: 0 0 0 5px rgba(47, 111, 179, 0.28); } }
 
 /* ---------- השיבוש ---------- */
 
@@ -202,34 +207,45 @@
   to { transform: scale(var(--fit, 1)) translateY(130vh) rotate(-14deg); }
 }
 
-.burst {
+.breakout {
   position: absolute;
+  inset: 0;
   z-index: 4;
-  width: min(88vw, 760px);
-  aspect-ratio: 1;
-  display: grid;
-  place-items: center;
-  background: #111;
-  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1vh;
+  padding: 16px;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
+.breakout img { width: min(1000px, 94vw); max-height: 66vh; object-fit: contain; }
+.breakout p {
+  margin: 0;
   font-family: "Poalim", Arial, sans-serif;
   font-weight: 700;
-  font-size: clamp(2.6rem, 9.5vw, 6.6rem);
-  line-height: 0.88;
+  font-size: clamp(2.6rem, 9vw, 8rem);
+  line-height: 0.9;
   letter-spacing: -0.03em;
-  text-align: center;
-  clip-path: polygon(50% 0, 58% 17%, 73% 5%, 73% 23%, 92% 17%, 83% 34%, 100% 40%, 85% 51%, 98% 66%, 80% 67%, 84% 87%, 68% 78%, 62% 97%, 50% 82%, 37% 98%, 33% 79%, 15% 88%, 21% 68%, 2% 66%, 15% 52%, 0 39%, 18% 34%, 9% 16%, 28% 23%, 28% 4%, 42% 17%);
-  transform: scale(0) rotate(-20deg);
+  color: #111;
 }
-.intro.is-break .burst { animation: pow 1.25s cubic-bezier(0.2, 1.4, 0.4, 1) forwards; }
+.intro.is-break .breakout { animation: breakout 1.9s linear forwards; }
+.intro.is-break .breakout img { animation: pow 0.55s cubic-bezier(0.2, 1.5, 0.4, 1) 0.15s both; }
+.intro.is-break .breakout p { animation: pow 0.45s cubic-bezier(0.2, 1.5, 0.4, 1) 0.5s both; }
+@keyframes breakout {
+  0%   { opacity: 0; }
+  8%   { opacity: 1; }
+  86%  { opacity: 1; }
+  100% { opacity: 0; }
+}
 @keyframes pow {
-  0%   { transform: scale(0) rotate(-20deg); }
-  28%  { transform: scale(1) rotate(-6deg); }
-  72%  { transform: scale(1.04) rotate(-5deg); opacity: 1; }
-  100% { transform: scale(3.2) rotate(4deg); opacity: 0; }
+  from { transform: scale(0.3) rotate(-8deg); opacity: 0; }
+  to   { transform: none; opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .intro.is-glitch .player,
-  .intro.is-glitch .intro__noise,
-  .player__btn--next { animation: none; }
+  .intro.is-glitch .intro__noise { animation: none; }
 }
