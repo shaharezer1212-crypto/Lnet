@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>שחר עזר | מפתח למידה</title>
+  <meta name="description" content="תיק העבודות של שחר עזר, מפתח למידה שהופך תהליכי למידה לקונספטים שרוצים להישאר בהם.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="preload" href="assets/fonts/Poalim-Bold.otf" as="font" type="font/otf" crossorigin>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/intro.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">דילוג לתוכן</a>
+
+  <div class="intro" id="intro" hidden role="dialog" aria-label="פתיח">
+    <div class="player">
+      <div class="player__top"><b>לומדה: נהלי עבודה בסיסיים</b><span>מודול 1 | משך משוער: 45 דקות</span></div>
+      <ul class="player__menu">
+        <li>1. ברוכים הבאים</li>
+        <li>2. מושגי יסוד</li>
+        <li>3. בחן את עצמך</li>
+        <li>4. נהלים, חלק א'</li>
+        <li>5. נהלים, חלק ב'</li>
+        <li>6. נהלים, חלק ג'</li>
+        <li>7. סיכום ביניים</li>
+        <li>8. מבחן מסכם</li>
+      </ul>
+      <div class="player__stage">
+        <section class="slide">
+          <h2>ברוכים הבאים ללומדה!</h2>
+          <p class="sub">נא לקרוא בעיון את כל המסכים.</p>
+          <div class="slide__box">
+            <h3>מטרות הלמידה. בסיום הלומדה תוכלו:</h3>
+            <ul>
+              <li>לזהות את שבעת הנהלים הבסיסיים.</li>
+              <li>לתאר את חשיבותו של כל נוהל.</li>
+              <li>למנות את השלבים לפי הסדר.</li>
+            </ul>
+          </div>
+        </section>
+        <section class="slide">
+          <h2>מושגי יסוד</h2>
+          <p class="sub">לחצו על כל אחת מהכרטיסיות כדי להמשיך.</p>
+          <div class="tabs"><div>הגדרה</div><div>רקע</div><div>דגשים</div><div>סיכום</div></div>
+          <p class="hint">יש לצפות בכל הכרטיסיות לפני המעבר למסך הבא.</p>
+        </section>
+        <section class="slide">
+          <h2>בחן את עצמך</h2>
+          <p class="sub">שאלה 1 מתוך 20. בחרו את התשובה הנכונה ביותר.</p>
+          <ul class="quiz">
+            <li>כל התשובות נכונות</li>
+            <li>תשובות א' ו־ג' נכונות</li>
+            <li>אף תשובה אינה נכונה</li>
+            <li>תשובה ב' בלבד</li>
+          </ul>
+        </section>
+      </div>
+      <div class="player__bar">
+        <button class="player__btn" type="button" data-prev>הקודם</button>
+        <span data-counter>שקף 1 מתוך 24</span>
+        <div class="player__track"><i></i></div>
+        <button class="player__btn player__btn--next" type="button" data-next>הבא</button>
+      </div>
+    </div>
+    <div class="intro__noise" aria-hidden="true"></div>
+    <div class="burst" aria-hidden="true">לא עוד<br>לומדה.</div>
+    <button class="intro__skip" type="button" data-skip>דילוג</button>
+  </div>
+
+  <header class="nav">
+    <a class="nav__logo" href="index.html">שחר עזר</a>
+    <ul class="nav__links">
+      <li><a class="chip" href="index.html" aria-current="page"><span>פרויקטים</span><span aria-hidden="true">פרויקטים</span></a></li>
+      <li><a class="chip" href="about.html"><span>מי אני</span><span aria-hidden="true">מי אני</span></a></li>
+      <li><a class="chip" href="contact.html"><span>יצירת קשר</span><span aria-hidden="true">יצירת קשר</span></a></li>
+    </ul>
+  </header>
+
+  <main id="main">
+    <section class="block hero">
+      <h1 class="display">
+        <span class="row row--in2" style="--i:0"><span>לא עוד</span></span>
+        <span class="row" style="--i:1"><span>לומדה.</span></span>
+      </h1>
+      <div class="hero__panels">
+        <figure class="panel panel--todo" data-reveal style="--r:-4deg; --ar:4 / 3;"><figcaption class="panel__note">כאן: שחר, תקריב, מחייך ומצביע למצלמה</figcaption></figure>
+        <figure class="panel panel--todo" data-reveal style="--r:3deg; --ar:3 / 2;"><figcaption class="panel__note">כאן: שחר קורע מסך לומדה לשניים</figcaption></figure>
+      </div>
+      <p class="lede" data-reveal>אני שחר, מפתח למידה. אני לוקח תהליך למידה והופך אותו לקונספט שמשאיר את הלומד על הכיסא, עם רצון ללמוד.</p>
+    </section>
+
+    <section class="block" id="projects">
+      <div class="projects__head">
+        <h2>פרויקטים</h2>
+        <span class="small-caps" data-project-count></span>
+      </div>
+      <div data-projects></div>
+    </section>
+  </main>
+
+  <a class="next" href="about.html">
+    <span class="small-caps">הלאה</span>
+    <span class="display"><span class="row"><span>מי אני</span></span></span>
+  </a>
+
+  <footer class="foot">
+    <span>שחר עזר, מפתח למידה</span>
+    <span>© <span data-year></span></span>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/intro.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>
