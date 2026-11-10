@@ -175,6 +175,34 @@ img { display: block; max-width: 100%; }
 .project:focus-within .panel img { filter: none; }
 .panel--art img { object-fit: contain; }
 
+/* נגיעות צבעי מים: צהוב ותכלת, נשפכות קצת מעבר למסגרת */
+.panel--art { overflow: visible; }
+.panel--art::after {
+  content: "";
+  position: absolute;
+  inset: var(--wash-inset, 8% -14% -16% 30%);
+  background: var(--wash) center / contain no-repeat;
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+  pointer-events: none;
+}
+.panel--y { --wash: url("../img/wash-yellow.webp"); }
+.panel--b { --wash: url("../img/wash-blue.webp"); --wash-inset: -14% 28% 12% -16%; }
+
+.display--wash { position: relative; isolation: isolate; }
+.display--wash::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset-inline-start: -2vw;
+  bottom: -0.16em;
+  width: 4.2em;
+  height: 0.9em;
+  background: url("../img/wash-mix.webp") center / 100% 100% no-repeat;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
 /* ממלא מקום עד שהאיור מגיע */
 .panel--todo {
   background-color: var(--paper);
@@ -213,7 +241,7 @@ img { display: block; max-width: 100%; }
 
 /* ---------- מבנה עמוד ---------- */
 
-main { padding-top: clamp(90px, 13vw, 170px); }
+main { padding-top: clamp(90px, 13vw, 170px); overflow-x: clip; }
 
 .block {
   position: relative;
