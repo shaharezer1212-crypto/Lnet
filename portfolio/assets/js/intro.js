@@ -165,7 +165,7 @@
       clearInterval(noise);
       intro.classList.remove("is-glitch");
       intro.classList.add("is-break");
-      setTimeout(finish, 1900);
+      setTimeout(finish, 2100);
     }, 1400);
   }
 

@@ -15,7 +15,29 @@
   // רשימת הפרויקטים
   var list = document.querySelector("[data-projects]");
   if (list) {
-    var tilts = [-3, 2.5, -2, 3.5];
+    var shapes = ["", "panel--b", "panel--c"];
+    // פאנל במסגרת לא ישרה; בלי תמונה מוצג ממלא מקום
+    function makePanel(src, alt, shape) {
+      var fig = document.createElement("figure");
+      fig.className = "panel" + (shape ? " " + shape : "");
+      fig.style.setProperty("--ar", "16 / 9");
+      var frame = document.createElement("span");
+      frame.className = "panel__frame";
+      if (src) {
+        var img = document.createElement("img");
+        img.src = src; img.alt = alt; img.loading = "lazy";
+        frame.appendChild(img);
+      } else {
+        var todo = document.createElement("span");
+        todo.className = "panel__todo";
+        var label = document.createElement("span");
+        label.textContent = "כאן: צילום מסך של הפרויקט";
+        todo.appendChild(label);
+        frame.appendChild(todo);
+      }
+      fig.appendChild(frame);
+      return fig;
+    }
     (window.PROJECTS || []).forEach(function (p, i) {
       var el = document.createElement(p.url ? "a" : "article");
       el.className = "project";
@@ -25,33 +47,12 @@
       var media = document.createElement("div");
       media.className = "project__media";
       var images = p.images || [];
-      var panel = document.createElement("figure");
-      panel.className = "panel" + (images.length ? "" : " panel--todo");
-      panel.style.setProperty("--r", tilts[i % tilts.length] + "deg");
-      panel.style.setProperty("--ar", "16 / 9");
-      if (images.length) {
-        var img = document.createElement("img");
-        img.src = images[0]; img.alt = p.title + ", " + p.client; img.loading = "lazy";
-        panel.appendChild(img);
-      } else {
-        var note = document.createElement("figcaption");
-        note.className = "panel__note";
-        note.textContent = "כאן: צילום מסך של הפרויקט";
-        panel.appendChild(note);
-      }
-      media.appendChild(panel);
+      media.appendChild(makePanel(images[0], p.title + ", " + p.client, shapes[i % shapes.length]));
       if (images.length > 1) {
         var strip = document.createElement("div");
         strip.className = "project__strip";
         images.slice(1).forEach(function (src, n) {
-          var f = document.createElement("figure");
-          f.className = "panel";
-          f.style.setProperty("--r", (n % 2 ? 2 : -2) + "deg");
-          f.style.setProperty("--ar", "16 / 9");
-          var t = document.createElement("img");
-          t.src = src; t.alt = ""; t.loading = "lazy";
-          f.appendChild(t);
-          strip.appendChild(f);
+          strip.appendChild(makePanel(src, "", shapes[(i + n + 1) % shapes.length]));
         });
         media.appendChild(strip);
       }
@@ -62,7 +63,9 @@
       num.textContent = (i < 9 ? "0" : "") + (i + 1);
       var title = document.createElement("h3");
       title.className = "project__title";
-      title.textContent = p.title;
+      var titleText = document.createElement("span");
+      titleText.textContent = p.title;
+      title.appendChild(titleText);
       var meta = document.createElement("ul");
       meta.className = "project__meta";
       [p.client, p.type, p.year].forEach(function (m) {
