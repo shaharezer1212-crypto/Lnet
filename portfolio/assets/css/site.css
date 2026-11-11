@@ -312,10 +312,13 @@ main {
 .project__media > .panel { transition: scale 0.6s var(--ease); }
 .project:hover .project__media > .panel { scale: 1.025; }
 
-/* צילומי הפרויקטים בשחור־לבן */
-.project .panel img { filter: grayscale(1) contrast(1.2); }
+/* צילומי הפרויקטים בשחור־לבן, והצבע מופיע כשנמצאים על הפרויקט */
+.project .panel img { filter: grayscale(1) contrast(1.2); transition: filter 0.45s; }
+.project:hover .panel img,
+.project:focus-within .panel img,
+.project.is-active .panel img { filter: none; }
 
-.project__strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3%; margin-top: 3%; padding: 0 3%; }
+.project__strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.4vw 3%; margin-top: 3%; padding: 0 3%; }
 
 .project__num { font-weight: 700; font-size: clamp(0.9rem, 1.1vw, 1.1rem); }
 .project__award {
@@ -331,7 +334,7 @@ main {
 .project__title {
   margin: 0.22em 0 0.3em;
   font-weight: 700;
-  font-size: clamp(2.6rem, 7vw, 7.6rem);
+  font-size: clamp(2.2rem, 5.2vw, 5.6rem);
   line-height: calc(0.74 * var(--tall));
   letter-spacing: -0.04em;
 }
@@ -376,6 +379,8 @@ main {
   border-top: var(--line) solid currentColor;
 }
 .timeline li:last-child { border-bottom: var(--line) solid currentColor; }
+.timeline ul { margin: 0; padding: 0; list-style: none; }
+.timeline ul li { display: block; padding: 0 0 4px; border: 0 !important; }
 .timeline b { font-size: clamp(1.2rem, 2.2vw, 2.2rem); line-height: 1.1; letter-spacing: -0.02em; }
 
 /* ---------- הסיום הצבעוני: נחשף רק בסוף הגלילה ---------- */

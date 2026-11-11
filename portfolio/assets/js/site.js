@@ -47,7 +47,7 @@
       var media = document.createElement("div");
       media.className = "project__media";
       var images = p.images || [];
-      media.appendChild(makePanel(images[0], p.title + ", " + p.client, shapes[i % shapes.length]));
+      media.appendChild(makePanel(images[0], p.title, shapes[i % shapes.length]));
       if (images.length > 1) {
         var strip = document.createElement("div");
         strip.className = "project__strip";
@@ -66,14 +66,6 @@
       var titleText = document.createElement("span");
       titleText.textContent = p.title;
       title.appendChild(titleText);
-      var meta = document.createElement("ul");
-      meta.className = "project__meta";
-      [p.client, p.type, p.year].forEach(function (m) {
-        if (!m) return;
-        var li = document.createElement("li");
-        li.textContent = m;
-        meta.appendChild(li);
-      });
       var text = document.createElement("p");
       text.className = "project__text";
       text.textContent = p.text;
@@ -84,7 +76,7 @@
         award.textContent = p.award;
         body.append(award);
       }
-      body.append(title, meta, text);
+      body.append(title, text);
       if (p.stats && p.stats.length) {
         var stats = document.createElement("dl");
         stats.className = "project__stats";
@@ -101,8 +93,13 @@
       el.append(media, body);
       list.appendChild(el);
     });
-    var count = document.querySelector("[data-project-count]");
-    if (count) count.textContent = "(" + (window.PROJECTS || []).length + ")";
+    // במסכי מגע אין מעבר עכבר: הפרויקט שבמרכז המסך מקבל את הצבע
+    if (window.matchMedia("(hover: none)").matches && "IntersectionObserver" in window) {
+      var mid = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { e.target.classList.toggle("is-active", e.isIntersecting); });
+      }, { rootMargin: "-42% 0px -42% 0px" });
+      list.querySelectorAll(".project").forEach(function (el) { mid.observe(el); });
+    }
   }
 
   // חשיפה בגלילה
