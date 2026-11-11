@@ -372,7 +372,7 @@ main {
 .timeline { margin: clamp(28px, 4vw, 60px) 0 0; padding: 0; list-style: none; }
 .timeline li {
   display: grid;
-  grid-template-columns: 9em 1fr 1.6fr;
+  grid-template-columns: 11em 1fr 2.2fr;
   gap: 16px;
   align-items: baseline;
   padding: 14px 0 12px;
@@ -380,7 +380,31 @@ main {
 }
 .timeline li:last-child { border-bottom: var(--line) solid currentColor; }
 .timeline ul { margin: 0; padding: 0; list-style: none; }
-.timeline ul li { display: block; padding: 0 0 4px; border: 0 !important; }
+.timeline ul li {
+  position: relative;
+  display: block;
+  padding: 0 1.15em 8px 0;
+  border: 0 !important;
+  font-size: clamp(1rem, 1.2vw, 1.25rem);
+  line-height: 1.35;
+}
+/* בולט צהוב לכל סעיף */
+.timeline ul li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.42em;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: var(--yellow);
+}
+.band__title {
+  margin: clamp(40px, 6vw, 90px) 0 0;
+  font-size: clamp(1.6rem, 3.4vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
 .timeline b { font-size: clamp(1.2rem, 2.2vw, 2.2rem); line-height: 1.1; letter-spacing: -0.02em; }
 
 /* ---------- הסיום הצבעוני: נחשף רק בסוף הגלילה ---------- */
@@ -442,11 +466,11 @@ main {
 .stamp {
   position: absolute;
   inset-inline: 0;
-  bottom: 13%;
+  bottom: 9%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 6px;
 }
 .stamp a {
   padding: 8px 14px 5px;
@@ -460,6 +484,7 @@ main {
   transform: rotate(-4deg);
   transition: transform 0.4s var(--ease), background 0.2s;
 }
+.stamp a + a { font-size: clamp(1rem, 2.2vw, 2.2rem); transform: rotate(3deg); }
 .stamp a:hover,
 .stamp a:focus-visible { transform: rotate(0deg) scale(1.06); background: var(--yellow); }
 .finale__links {

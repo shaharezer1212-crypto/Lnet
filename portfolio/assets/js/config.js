@@ -2,6 +2,7 @@
 window.SITE = {
   linkedinUrl: "https://www.linkedin.com/in/shahar-ezer-1466a0232/",
   email: "Shaharezer1212@gmail.com",
+  phone: "052-6641422",
   intro: true // false מבטל את פתיח הלומדה
 };
 
@@ -23,13 +24,13 @@ window.PROJECTS = [
   },
   {
     title: "מכבי - אונבורדינג למנהלים חדשים",
-    text: "כניסה לתפקיד ניהולי במכבי היא תהליך טובעני. במקום להוסיף עוד עומס, הפקנו סדרה של 12 סרטונים קצרים עם אנשי מפתח בארגון, על אסטרטגיה, כלכלת בריאות, משאבי אנוש, מדידה, חוויית המטופל ועוד. סרטונים שאפשר גם רק להאזין להם, בדרכים ובין לבין.",
+    text: "כניסה לתפקיד ניהולי במכבי היא תהליך טובעני. במקום להוסיף עוד עומס, הפקנו סדרה של 12 סרטונים קצרים עם אנשי מפתח בארגון, על אסטרטגיה, כלכלת בריאות, משאבי אנוש, מדידה, חוויית המטופל ועוד. סרטונים שאפשר גם רק להאזין להם, בדרכים ובין לבין, ובכך לצלוח את התהליך המקדים לכניסה לתפקיד.",
     images: ["assets/img/projects/maccabi-1.webp", "assets/img/projects/maccabi-2.webp", "assets/img/projects/maccabi-3.webp", "assets/img/projects/maccabi-4.webp"],
     url: ""
   },
   {
     title: "AppsFlyer - סרטון AI",
-    text: "סרטון שנועד לרתום את העובדים לשינוי במודל העבודה עם AI, מהלך שהיה יכול לעורר הרבה התנגדות. בחרנו לא להכריז על שינוי אלא להמליץ על דרך עבודה, והוספנו הרבה הומור. כך הסרטון מקליל את התהליך וגם מסביר מה עומד מאחורי הבחירה.",
+    text: "סרטון שנועד לרתום את העובדים לשינוי במודל העבודה עם AI, מהלך שהיה יכול לעורר הרבה התנגדות. העבודה שלי כללה הכול, מכתיבת התסריט ועד הפקת הסרטון במלואו. בחרנו לא להכריז על שינוי אלא להמליץ על דרך עבודה, והוספנו הרבה הומור, כדי להקליל את התהליך וגם להסביר מה עומד מאחורי הבחירה.",
     images: ["assets/img/projects/appsflyer-1.webp", "assets/img/projects/appsflyer-2.webp", "assets/img/projects/appsflyer-3.webp", "assets/img/projects/appsflyer-4.webp", "assets/img/projects/appsflyer-5.webp", "assets/img/projects/appsflyer-6.webp", "assets/img/projects/appsflyer-7.webp"],
     url: ""
   },
