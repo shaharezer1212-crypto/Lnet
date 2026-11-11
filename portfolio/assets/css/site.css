@@ -16,7 +16,7 @@
 :root {
   --ink: #111111;
   --paper: #ffffff;
-  --cream: #fffdf0;
+  --cream: #fdfdef;
   --yellow: #ffd426;
   --sky: #63c8f7;
   --line: 1.5px;
@@ -40,7 +40,7 @@ body {
   font-family: "Poalim", "Arial Hebrew", Arial, sans-serif;
   font-size: clamp(0.95rem, 1.05vw, 1.15rem);
   line-height: 1.4;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -70,9 +70,9 @@ img { display: block; max-width: 100%; }
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 40;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   padding: 12px var(--gutter);
   pointer-events: none;
@@ -80,7 +80,6 @@ img { display: block; max-width: 100%; }
 .nav > * { pointer-events: auto; }
 
 .nav__logo {
-  justify-self: start;
   padding: 2px 6px 0;
   background: var(--paper);
   font-weight: 700;
@@ -91,16 +90,12 @@ img { display: block; max-width: 100%; }
 }
 
 .nav__links {
-  display: contents;
+  display: flex;
+  gap: 6px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.nav__links li:nth-child(1),
-.nav__links li:nth-child(2) { grid-column: 2; grid-row: 1; }
-.nav__links li:nth-child(1) { margin-inline-end: clamp(90px, 22vw, 330px); }
-.nav__links li:nth-child(2) { margin-inline-start: clamp(90px, 22vw, 330px); }
-.nav__links li:nth-child(3) { grid-column: 3; justify-self: end; }
 
 .chip {
   position: relative;
@@ -152,6 +147,8 @@ img { display: block; max-width: 100%; }
 .display .row--in { padding-inline-start: 13vw; }
 .display .row--in2 { padding-inline-start: 31vw; }
 .display .row--in3 { padding-inline-start: 46vw; }
+/* שורות משנה בכותרת: קטנות יותר, כדי שמשפט ארוך ייכנס ברוחב */
+.display .display__sub { font-size: 0.64em; margin-top: -0.06em; }
 
 .js .display .row > span {
   transform: translateY(105%);
@@ -216,18 +213,6 @@ img { display: block; max-width: 100%; }
   clip-path: polygon(var(--q1), var(--q2), var(--q3), var(--q4));
 }
 
-/* כתם צבעי מים שנשפך מעבר למסגרת וצובע את הגרעין */
-.panel__wash {
-  position: absolute;
-  z-index: 2;
-  inset: var(--wash-inset, 6% -12% -14% 34%);
-  background: var(--wash) center / contain no-repeat;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-.panel--y { --wash: url("../img/wash-yellow.webp"); }
-.panel--s { --wash: url("../img/wash-blue.webp"); --wash-inset: -12% 32% 10% -14%; }
-
 /* ממלא מקום עד שמגיעה תמונה */
 .panel__todo {
   display: grid;
@@ -266,7 +251,15 @@ img { display: block; max-width: 100%; }
 
 /* ---------- מבנה עמוד ---------- */
 
-main { padding-top: clamp(84px, 9.5vw, 150px); overflow-x: clip; }
+main {
+  position: relative;
+  z-index: 1;
+  padding-top: clamp(84px, 9.5vw, 150px);
+  padding-bottom: clamp(40px, 6vw, 100px);
+  background: var(--paper);
+  overflow-x: clip;
+}
+.main--bare { padding: 0; }
 
 .block {
   position: relative;
@@ -285,6 +278,7 @@ main { padding-top: clamp(84px, 9.5vw, 150px); overflow-x: clip; }
   margin-top: calc(var(--display) * -0.5);
 }
 .scene__stage--end { justify-content: flex-end; }
+.scene__stage--low { margin-top: calc(var(--display) * -0.06); }
 .scene__stage--center { justify-content: center; }
 .scene__stage .note { align-self: flex-end; margin: 0 2vw 3vw; }
 .scene__stage .note--top { align-self: center; }
@@ -318,10 +312,8 @@ main { padding-top: clamp(84px, 9.5vw, 150px); overflow-x: clip; }
 .project__media > .panel { transition: scale 0.6s var(--ease); }
 .project:hover .project__media > .panel { scale: 1.025; }
 
-/* צילומי הפרויקטים בשחור־לבן, והצבע חוזר במעבר עכבר */
-.project .panel img { filter: grayscale(1) contrast(1.2); transition: filter 0.5s; }
-.project:hover .panel img,
-.project:focus-within .panel img { filter: none; }
+/* צילומי הפרויקטים בשחור־לבן */
+.project .panel img { filter: grayscale(1) contrast(1.2); }
 
 .project__strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3%; margin-top: 3%; padding: 0 3%; }
 
@@ -330,8 +322,8 @@ main { padding-top: clamp(84px, 9.5vw, 150px); overflow-x: clip; }
   display: inline-block;
   margin: 10px 0 0;
   padding: 6px 12px 4px;
-  background: var(--yellow);
-  border: var(--line) solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
   font-weight: 700;
   font-size: clamp(0.95rem, 1.3vw, 1.3rem);
   transform: rotate(-3deg);
@@ -351,15 +343,16 @@ main { padding-top: clamp(84px, 9.5vw, 150px); overflow-x: clip; }
 .project__stats dd { margin: 0; font-weight: 700; font-size: clamp(2.2rem, 4.6vw, 4.8rem); line-height: 1; letter-spacing: -0.04em; scale: 1 1.2; transform-origin: 50% 100%; }
 .project__stats dt { margin-top: 4px; font-weight: 700; font-size: 0.82rem; }
 
-/* ---------- בלוק תכלת ---------- */
+/* ---------- בלוק שחור ---------- */
 
 .band {
   position: relative;
   margin-top: clamp(50px, 7vw, 120px);
   padding: clamp(36px, 5vw, 80px) var(--gutter) clamp(50px, 7vw, 120px);
-  background: var(--sky);
+  background: var(--ink);
+  color: var(--paper);
 }
-.band ::selection { background: var(--ink); color: var(--sky); }
+.band ::selection { background: var(--paper); color: var(--ink); }
 
 .cols {
   display: grid;
@@ -380,12 +373,12 @@ main { padding-top: clamp(84px, 9.5vw, 150px); overflow-x: clip; }
   gap: 16px;
   align-items: baseline;
   padding: 14px 0 12px;
-  border-top: var(--line) solid var(--ink);
+  border-top: var(--line) solid currentColor;
 }
-.timeline li:last-child { border-bottom: var(--line) solid var(--ink); }
+.timeline li:last-child { border-bottom: var(--line) solid currentColor; }
 .timeline b { font-size: clamp(1.2rem, 2.2vw, 2.2rem); line-height: 1.1; letter-spacing: -0.02em; }
 
-/* ---------- עמוד הסיום: יצירת קשר ---------- */
+/* ---------- הסיום הצבעוני: נחשף רק בסוף הגלילה ---------- */
 
 .finale {
   position: relative;
@@ -394,19 +387,21 @@ main { padding-top: clamp(84px, 9.5vw, 150px); overflow-x: clip; }
   align-items: center;
   height: 100svh;
   min-height: 560px;
-  margin-top: calc(clamp(84px, 9.5vw, 150px) * -1);
   padding: 0 var(--gutter);
   background: var(--cream);
   overflow: hidden;
 }
+/* נשאר מודבק לתחתית המסך, והעמוד השחור־לבן מתרומם מעליו כמו מסך */
+.finale--reveal { position: sticky; bottom: 0; z-index: 0; }
+
 .finale__word {
   position: relative;
   z-index: 1;
   flex: none;
-  margin: -0.06em 0 0;
+  margin: 0.02em 0 0;
   color: var(--yellow);
   font-weight: 700;
-  font-size: min(41vw, 62svh);
+  font-size: min(31vw, 52svh);
   line-height: 1.02;
   letter-spacing: -0.05em;
   white-space: nowrap;
@@ -420,13 +415,29 @@ main { padding-top: clamp(84px, 9.5vw, 150px); overflow-x: clip; }
   min-height: 0;
   display: flex;
   justify-content: center;
-  margin-top: max(-13vw, -20svh);
+  margin-top: max(-12vw, -19svh);
 }
-.finale__stage img { height: 112%; width: auto; max-width: 96vw; object-fit: contain; object-position: 50% 0; }
+.finale__stage img { height: 100%; width: auto; max-width: 96vw; object-fit: contain; object-position: 50% 0; }
+
+/* הטיל ממריא פנימה בזמן שהסיום נחשף */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .finale--reveal .finale__stage img {
+      animation: liftoff linear both;
+      animation-timeline: scroll(root);
+      animation-range: calc(100% - 90vh) 100%;
+    }
+    @keyframes liftoff {
+      from { translate: -38vw 46vh; rotate: -14deg; }
+      to   { translate: 0 0; rotate: 0deg; }
+    }
+  }
+}
+
 .stamp {
   position: absolute;
   inset-inline: 0;
-  top: 50%;
+  bottom: 13%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -451,47 +462,15 @@ main { padding-top: clamp(84px, 9.5vw, 150px); overflow-x: clip; }
   inset: auto var(--gutter) 14px;
   z-index: 3;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 10px;
-}
-
-/* ---------- תחתית ---------- */
-
-.next {
-  display: block;
-  padding: clamp(30px, 4vw, 60px) var(--gutter) clamp(20px, 2vw, 30px);
-  border-top: var(--line) solid var(--ink);
-  background: var(--cream);
-  text-decoration: none;
-  overflow: hidden;
-}
-.next .display {
-  color: var(--yellow);
-  font-size: clamp(4rem, 19vw, 22rem);
-  -webkit-text-stroke: clamp(2px, 0.22vw, 4px) var(--ink);
-  text-shadow: clamp(3px, 0.4vw, 7px) clamp(3px, 0.4vw, 7px) 0 var(--ink);
-  transition: color 0.25s;
-}
-.next:hover .display,
-.next:focus-visible .display { color: var(--sky); }
-
-.foot {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 14px var(--gutter);
-  border-top: var(--line) solid var(--ink);
-  font-weight: 700;
-  font-size: 0.82rem;
 }
 
 /* ---------- מסכים צרים ---------- */
 
 @media (max-width: 760px) {
   :root { --display: clamp(3.4rem, 19vw, 9rem); }
-  .nav { grid-template-columns: auto 1fr; }
-  .nav__links { display: flex; justify-content: flex-end; gap: 6px; }
-  .nav__links li:nth-child(n) { margin: 0; }
   .chip { padding-inline: 7px; }
   .chip span + span { inset-inline: 7px; }
   .display .row--in { padding-inline-start: 6vw; }
@@ -506,10 +485,10 @@ main { padding-top: clamp(84px, 9.5vw, 150px); overflow-x: clip; }
   .project:nth-child(even) .project__media { order: 0; }
   .cols { grid-template-columns: 1fr; }
   .timeline li { grid-template-columns: 1fr; gap: 2px; }
-  .finale__word { font-size: 44vw; margin-top: 70px; }
-  .finale__stage { margin-top: -8vw; }
-  .finale__stage img { height: auto; width: 96vw; align-self: flex-start; }
-  .stamp { top: 30vw; }
+  .finale__word { font-size: 31vw; margin-top: 64px; }
+  .finale__stage { margin-top: -6vw; }
+  .finale__stage img { height: auto; width: 100vw; max-width: none; align-self: flex-start; }
+  .stamp { bottom: auto; top: 58vw; }
 }
 
 @media (prefers-reduced-motion: reduce) {
