@@ -12,11 +12,11 @@ window.PROJECTS = [
   {
     title: "ZIM - DARE TO AI",
     award: "פרויקט זוכה פרס",
-    text: "שלוש לומדות שפיתחתי כחלק מתהליך הטמעת AI ארגוני בצים: כתיבת פרומפטים, שימוש אחראי ב־AI וסוכני AI. במקום עוד הדרכת כלים, בנינו עולם שלם של ים, אוניות ומכולות, שמלווה את העובדים מהסרטון הראשון ועד הלומדה האחרונה.",
+    text: "במשך 14 חודשים השימוש ב־Copilot בצים עמד במקום. Dare to AI נועדה לשנות את זה אצל 5,000 עובדים ב־35 מדינות: סרטון השקה, מרכז AI פנימי, ושלוש לומדות שפיתחתי על כתיבת פרומפטים, שימוש אחראי ב־AI וסוכני AI. בסוף התוכנית שיעור האימוץ של Copilot הגיע ל־88%, לפי נתוני מיקרוסופט.",
     stats: [
       { num: "5,000", label: "עובדים" },
-      { num: "35", label: "מדינות" },
-      { num: "10,400", label: "הרשמות ללומדות" }
+      { num: "10,400", label: "הרשמות ללומדות" },
+      { num: "88%", label: "אימוץ של Copilot" }
     ],
     images: ["assets/img/projects/zim-1.webp", "assets/img/projects/zim-2.webp", "assets/img/projects/zim-3.webp", "assets/img/projects/zim-4.webp"],
     url: ""
@@ -24,10 +24,6 @@ window.PROJECTS = [
   {
     title: "מכבי - אונבורדינג למנהלים חדשים",
     text: "כניסה לתפקיד ניהולי במכבי היא תהליך טובעני. במקום להוסיף עוד עומס, הפקנו סדרה של 12 סרטונים קצרים עם אנשי מפתח בארגון, על אסטרטגיה, כלכלת בריאות, משאבי אנוש, מדידה, חוויית המטופל ועוד. סרטונים שאפשר גם רק להאזין להם, בדרכים ובין לבין.",
-    stats: [
-      { num: "12", label: "סרטונים" },
-      { num: "2", label: "פורמטים: פרזנטור ואנימציה" }
-    ],
     images: ["assets/img/projects/maccabi-1.webp", "assets/img/projects/maccabi-2.webp", "assets/img/projects/maccabi-3.webp", "assets/img/projects/maccabi-4.webp"],
     url: ""
   },
@@ -40,7 +36,7 @@ window.PROJECTS = [
   {
     title: "monday - משחק קלפים דיגיטלי",
     text: "כלי למנהלים שמשתלב בתהליך המשובים. לחברה היה משחק קלפים מודפס, והמרנו אותו לגרסה דיגיטלית: הוספנו קלפים, חשבנו מחדש על הממשק, ושמרנו על גרסה פשוטה ואינטואיטיבית שכל מטרתה לפתוח שיחה.",
-    images: [],
+    images: ["assets/img/projects/monday-1.webp", "assets/img/projects/monday-2.webp", "assets/img/projects/monday-3.webp", "assets/img/projects/monday-4.webp"],
     url: ""
   }
 ];
