@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מפגש 2: Skills</title>
+<meta name="robots" content="noindex">
+<link rel="preload" href="../../assets/fonts/FbGazoz-Bold.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="../../assets/img/scene-skillbox.webp" as="image">
+<link rel="stylesheet" href="deck.css">
+</head>
+<body>
+<!--
+  Session 2 deck: Skills. Every fact comes from an official Anthropic page (RESEARCH.md,
+  checked 2026-11-13); each content slide names its source. The L&D skill ideas on the
+  recommendations slide are ours, and say so.
+  Keys: ← or Space next, → back, N speaker notes, F full screen, Home / End, #n in the address.
+-->
+<main class="deck" id="deck">
+
+<!-- 1 cover -->
+<section class="slide s-cover" data-notes="פתיחה. היום מלמדים את Claude את שיטת העבודה שלנו, פעם אחת, ומשתמשים בה תמיד.">
+  <div class="scene-bg"><img src="../../assets/img/scene-skillbox.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <img class="cover__logo" src="../../assets/img/logo-black.png" alt="Gada | Lnet">
+  <div class="cover__text">
+    <p class="cover__chip">מפגש 2 מתוך 4</p>
+    <h1 class="split latin" dir="ltr" style="text-align:right">Skills</h1>
+    <p class="cover__sub">מלמדים את <span class="claude latin">Claude</span> את שיטת העבודה שלכם</p>
+  </div>
+</section>
+
+<!-- 2 recap -->
+<section class="slide s-vs" data-notes="חזרה קצרה מהמפגש הקודם: ההבדל בין פרויקט ל־Skill. ושאלה לקהל: מי הביא שיחה שעבדה ושיחה שלא?">
+  <div class="scene-bg"><img src="../../assets/img/scene-vs.webp" alt=""></div>
+  <div class="vs__text vs__text--a"><h3 style="color:var(--clay)">Project</h3><p class="big">ידע רקע שטעון תמיד.</p><p class="mid">החומרים של תוצר אחד: מסמך פיצוח, תוכן, הערות לקוח.</p></div>
+  <div class="vs__text vs__text--b"><h3 style="color:var(--wing)">Skill</h3><p class="big">ידע פרוצדורלי שנטען כשצריך.</p><p class="mid">איך אתם עושים דברים, בכל תוצר.</p></div>
+  <div class="vs__badge">VS</div>
+  <p class="src">נזכרים במפגש 1. מקור: support.claude.com/en/articles/12512176</p>
+</section>
+
+<!-- 3 agenda -->
+<section class="slide" data-notes="סדר היום. ממוספר כי זה באמת הסדר. החצי השני של המפגש הוא עבודה עצמית.">
+  <div class="scene-bg faint"><img src="../../assets/img/scene-office.webp" alt=""></div>
+  <img class="char char--perch" style="width:120px; top:118px; left:1205px" src="../../assets/img/fly-sit.webp" alt="">
+  <h2 class="split" style="margin-top:130px"><span class="ul ul--wing">מה עושים היום</span></h2>
+  <ol class="agenda" role="list">
+    <li>מה זה Skill, ואיך Claude טוען אותו</li>
+    <li>ממה בנוי Skill</li>
+    <li>איפה מוצאים Skills, ואיך בוחרים</li>
+    <li>מתקינים ועובדים עם Skill</li>
+    <li>התנסות: Skill משיחה, כולל בדיקות</li>
+    <li>Skills מומלצים לפיתוח למידה</li>
+  </ol>
+</section>
+
+<!-- 4 definition -->
+<section class="slide" data-notes="ההגדרה הרשמית. ההשוואה שלנו: Skill הוא נוהל עבודה שנותנים לעובד חדש. הוא לא קורא את כל הנהלים כל בוקר, הוא פותח את הנוהל הנכון כשמגיעה משימה.">
+  <div class="scene-bg"><img src="../../assets/img/scene-board.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene">
+    <span class="tag" style="background:var(--wing); color:#fff">הגדרה</span>
+    <h2 class="split">מה זה <span class="latin">Skill?</span></h2>
+    <p class="quote" style="max-width:none; font-size:50px">"folders of instructions, scripts, and resources<br>that Claude loads dynamically to improve<br>performance on specialized tasks"</p>
+    <p class="big">תיקייה עם הוראות, ולפעמים גם קבצים וסקריפטים, ש־Claude פותח רק כשהמשימה מתאימה.</p>
+    <p class="mid">כמו נוהל עבודה שנותנים לעובד חדש: לא קוראים אותו כל בוקר, פותחים אותו כשמגיעה המשימה.</p>
+  </div>
+  <p class="src">מקור: support.claude.com/en/articles/12512176</p>
+</section>
+
+<!-- 5 compare -->
+<section class="slide" data-notes="איפה Skill עומד מול הכלים שכבר מכירים. השורה התחתונה: Skill הוא ה'איך'.">
+  <div class="scene-bg faint"><img src="../../assets/img/scene-office.webp" alt=""></div>
+  <h2 class="split"><span class="ul ul--wing">מה ההבדל?</span></h2>
+  <div class="board board--4">
+    <div class="card sticky sticky--green"><i class="pin"></i><h3>Projects</h3><p>ידע רקע קבוע שטעון תמיד, בפרויקט אחד.</p></div>
+    <div class="card sticky"><i class="pin"></i><h3>הנחיות אישיות</h3><p>חלות באופן כללי על כל השיחות שלכם.</p></div>
+    <div class="card sticky sticky--blue"><i class="pin"></i><h3>Connectors</h3><p>מחברים את Claude לשירותים חיצוניים ולמידע.</p></div>
+    <div class="card sticky sticky--purple"><i class="pin"></i><h3>Skills</h3><p>ידע פרוצדורלי: איך עושים משימה, צעד אחר צעד.</p></div>
+  </div>
+  <p class="note">Connector מביא את המידע. Skill מסביר מה לעשות איתו.</p>
+  <p class="src">מקור: support.claude.com/en/articles/12512176</p>
+</section>
+
+<!-- 6 progressive disclosure -->
+<section class="slide" data-notes="למה אפשר להתקין הרבה Skills בלי להעמיס: Claude קורא קודם רק שם ותיאור. את השאר הוא פותח רק כשצריך. המספרים מהתיעוד הרשמי.">
+  <div class="scene-bg faint"><img src="../../assets/img/scene-office.webp" alt=""></div>
+  <h2 class="split">Claude פותח רק <span class="ul ul--wing">את מה שצריך</span></h2>
+  <div class="pd">
+    <div class="card pd__step" style="--c:var(--leaf)"><b class="pd__n">1</b><div><h3>שם ותיאור</h3><p>תמיד טעונים, לכל Skill. בערך 100 טוקנים.</p></div><span class="pd__when">תמיד</span></div>
+    <div class="card pd__step" style="--c:var(--sun)"><b class="pd__n">2</b><div><h3>ההוראות ב־SKILL.md</h3><p>נטענות רק כשהמשימה מתאימה. פחות מ־5,000 טוקנים.</p></div><span class="pd__when">כשמתאים</span></div>
+    <div class="card pd__step" style="--c:var(--wing)"><b class="pd__n">3</b><div><h3>קבצים נוספים</h3><p>דוגמאות, תבניות, סקריפטים. לא עולים כלום עד ש־Claude קורא אותם.</p></div><span class="pd__when">רק אם צריך</span></div>
+  </div>
+  <p class="note">לכן אפשר להחזיק הרבה Skills בלי לבזבז טוקנים.</p>
+  <p class="src">מקור: platform.claude.com/docs/en/agents-and-tools/agent-skills/overview</p>
+</section>
+
+<!-- 7 anatomy -->
+<section class="slide" data-notes="ממה בנוי Skill. רק SKILL.md חובה. השם באותיות קטנות, מספרים ומקפים, זהה לשם התיקייה. התיאור עד 1,024 תווים.">
+  <div class="scene-bg faint"><img src="../../assets/img/scene-office.webp" alt=""></div>
+  <h2 class="split"><span class="ul ul--wing">ממה בנוי Skill</span></h2>
+  <div class="anatomy">
+    <div class="card tree" dir="ltr">
+      <p><b>📁 learning-objectives/</b></p>
+      <p class="tree__req">├─ SKILL.md <span>חובה</span></p>
+      <p>├─ references/ <span>מסמכים לעיון</span></p>
+      <p>├─ assets/ <span>תבניות</span></p>
+      <p>└─ scripts/ <span>קוד להרצה</span></p>
+    </div>
+    <div class="term" data-a="rise"><div class="term__bar"><i></i><i></i><i></i></div><pre><span class="dim">---</span>
+<span class="ok">name:</span> learning-objectives
+<span class="ok">description:</span> Writes measurable learning
+  objectives using Bloom's taxonomy. Use when
+  planning a course, module or video.
+<span class="dim">---</span>
+<span class="cmd"># Learning objectives</span>
+1. One overarching goal, one sentence
+2. 3 to 6 sub-goals, one Bloom verb each
+...</pre></div>
+  </div>
+  <ul class="ticks ticks--row">
+    <li><b class="latin">name</b>: עד 64 תווים, אותיות קטנות, מספרים ומקפים</li>
+    <li><b class="latin">description</b>: עד 1,024 תווים, מה ה־Skill עושה ומתי להשתמש בו</li>
+    <li>ההוראות: עד כ־500 שורות</li>
+  </ul>
+  <p class="src">מקורות: claude.com/docs/skills/how-to, platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices</p>
+</section>
+
+<!-- 8 description -->
+<section class="slide" data-notes="התיאור הוא הדבר היחיד ש־Claude קורא לפני שהוא מחליט לטעון את ה־Skill. אם Claude לא משתמש ב־Skill, קודם כל מתקנים את התיאור.">
+  <div class="scene-bg"><img src="../../assets/img/scene-flipchart.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene">
+    <span class="tag" style="background:var(--sun)">הסוד</span>
+    <h2 class="split">התיאור <span>קובע הכול</span></h2>
+    <p class="quote" style="max-width:none; font-size:46px">"The description is the only part Claude reads<br>before deciding to load the skill"</p>
+    <div class="who__facts who__facts--2">
+      <div class="card"><h3>מה</h3><p>מה ה־Skill עושה, בגוף שלישי.</p></div>
+      <div class="card"><h3>מתי</h3><p>באילו משימות ובאילו מילים להפעיל אותו.</p></div>
+    </div>
+    <p class="note">Claude לא משתמש ב־Skill? קודם בודקים את התיאור.</p>
+  </div>
+  <p class="src">מקורות: claude.com/docs/skills/how-to, platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices</p>
+</section>
+
+<!-- 9 divider: where -->
+<section class="slide s-divider" data-notes="מעבר לחלק השני: איפה מוצאים Skills מוכנים.">
+  <div class="scene-bg"><img src="../../assets/img/scene-library.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene">
+    <span class="tag" style="background:var(--wing); color:#fff">ספרייה</span>
+    <h2 class="split">איפה מוצאים <span class="latin">Skills?</span></h2>
+    <p class="big">מוכנים מ־Anthropic, מהארגון, או כאלה שכותבים בעצמנו.</p>
+  </div>
+</section>
+
+<!-- 10 sources -->
+<section class="slide" data-notes="שלושה מקורות. במאגר של Anthropic ב־GitHub כתוב שה־Skills הם להדגמה וללמידה. כדאי לקרוא אותם כדי ללמוד איך כותבים Skill טוב.">
+  <div class="scene-bg faint"><img src="../../assets/img/scene-office.webp" alt=""></div>
+  <h2 class="split"><span class="ul ul--wing">שלושה מקורות</span></h2>
+  <div class="doors doors--fit">
+    <div class="card door door--a"><div class="door__head"><p>מובנים</p><h3>מ־Anthropic</h3></div><div class="door__body"><p>יצירה ועריכה של קבצים:</p><div class="door__list"><span>Word</span><span>PowerPoint</span><span>Excel</span><span>PDF</span></div></div></div>
+    <div class="card door door--b"><div class="door__head"><p dir="ltr" style="text-align:right">github.com/anthropics/skills</p><h3 class="latin" dir="ltr" style="text-align:right">GitHub</h3></div><div class="door__body"><p>מאגר דוגמאות של Anthropic:</p><div class="door__list"><span>brand-guidelines</span><span>doc-coauthoring</span><span>internal-comms</span><span>skill-creator</span></div><small>"for demonstration and educational purposes"</small></div></div>
+    <div class="card door door--c"><div class="door__head"><p>מהצוות</p><h3>מהארגון</h3></div><div class="door__body"><p>Skills שעמיתים שיתפו איתכם, או שהמנהלים פרסמו לכל הארגון.</p><p class="mid" style="font-size:30px">בודקים מה כבר קיים לפני שכותבים.</p></div></div>
+  </div>
+  <p class="src">מקורות: github.com/anthropics/skills, support.claude.com/en/articles/12512180, 13119606</p>
+</section>
+
+<!-- 11 choose -->
+<section class="slide" data-notes="איך בוחרים. ההמלצה הרשמית: להתקין רק ממקורות אמינים ולקרוא את הקבצים לפני שמפעילים, גם כשעמית שיתף. הסיכונים: הוראות זדוניות והוצאת מידע.">
+  <div class="scene-bg"><img src="../../assets/img/scene-library.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene">
+    <h2 class="split">איך בוחרים <span>Skill נכון</span></h2>
+    <ul class="ticks">
+      <li>עושה משימה אחת, חוזרת וברורה</li>
+      <li>התיאור אומר מתי להשתמש בו</li>
+      <li>ההוראות ברורות, ויש דוגמאות</li>
+      <li>מתאים לתהליך שלכם, לא רק "נראה טוב"</li>
+    </ul>
+    <div class="card warn"><h3>בטיחות</h3><p>"Only install skills from trusted sources."<br>קוראים את הקבצים לפני שמפעילים, גם אם עמית שיתף. Skill יכול להכיל הוראות זדוניות או לשלוח מידע החוצה.</p></div>
+  </div>
+  <p class="src">מקורות: support.claude.com/en/articles/12512180, 12512198</p>
+</section>
+
+<!-- 12 install -->
+<section class="slide" data-notes="התקנה ב־Claude.ai, להראות בשידור חי. שימו לב: התפריט Customize מתחלף בימים אלה לשם Plugins, אז לבדוק איך זה נראה בחשבון שלהם. צריך שיצירת קבצים תהיה פעילה.">
+  <div class="scene-bg faint"><img src="../../assets/img/scene-office.webp" alt=""></div>
+  <h2 class="split"><span class="ul ul--wing">מתקינים Skill</span></h2>
+  <div class="trail">
+    <svg viewBox="0 0 1640 640" preserveAspectRatio="none" aria-hidden="true"><path class="trail__path" d="M1378 150 C1268 150 1258 490 1148 490 C1038 490 1028 150 918 150 C808 150 799 490 689 490 C579 490 569 150 459 150 C349 150 340 490 230 490"/></svg>
+    <div class="stop" style="left:84%; top:23%"><b>1</b><span>Settings: מפעילים יצירת קבצים</span></div>
+    <div class="stop" style="left:70%; top:77%"><b>2</b><span>Customize (או Plugins) ואז Skills</span></div>
+    <div class="stop" style="left:56%; top:23%"><b>3</b><span>לוחצים + ואז Create skill</span></div>
+    <div class="stop" style="left:42%; top:77%"><b>4</b><span>Upload a skill ובוחרים את קובץ ה־ZIP</span></div>
+    <div class="stop" style="left:28%; top:23%"><b>5</b><span>מדליקים את המתג ליד ה־Skill</span></div>
+    <div class="stop" style="left:14%; top:77%"><b>6</b><span>בודקים בשיחה חדשה</span></div>
+  </div>
+  <p class="note">ה־ZIP מכיל את התיקייה עצמה, לא קבצים פזורים.</p>
+  <p class="src">מקורות: support.claude.com/en/articles/12512180, 17740565, claude.com/docs/skills/how-to</p>
+</section>
+
+<!-- 13 use -->
+<section class="slide" data-notes="איך עובדים איתו. Claude בוחר לבד לפי התיאור, או שמקלידים / ובוחרים. Skill שהעליתם פרטי עד שמשתפים. ב־Claude Code אותו דבר, בתיקיית skills.">
+  <div class="scene-bg"><img src="../../assets/img/scene-skillbox.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene">
+    <h2 class="split">עובדים <span>עם Skill</span></h2>
+    <div class="who__facts">
+      <div class="card"><h3>אוטומטית</h3><p>Claude מתאים את הבקשה לתיאור וטוען את ה־Skill.</p></div>
+      <div class="card"><h3>ידנית</h3><p>מקלידים <b class="latin">/</b> ובוחרים, או מבקשים במפורש.</p></div>
+      <div class="card"><h3>שיתוף</h3><p>פרטי עד ששיתפתם. אפשר לשתף עמית או לפרסם לארגון.</p></div>
+    </div>
+    <div class="term" data-a="rise" style="width:auto"><div class="term__bar"><i></i><i></i><i></i></div><pre class="short"><span class="dim"># Claude Code</span>
+~/.claude/skills/<span class="ok">my-skill</span>/SKILL.md   <span class="he">אישי</span>
+.claude/skills/<span class="ok">my-skill</span>/SKILL.md     <span class="he">לפרויקט</span>
+<span class="cmd">/my-skill</span>                            <span class="he">הפעלה</span></pre></div>
+  </div>
+  <p class="src">מקורות: claude.com/docs/skills/overview, support.claude.com/en/articles/12512180, code.claude.com/docs/en/skills</p>
+</section>
+
+<!-- 14 divider: practice -->
+<section class="slide s-divider" data-notes="מעבר לחלק המעשי: יוצרים Skill בעצמנו.">
+  <div class="scene-bg"><img src="../../assets/img/scene-workshop.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene">
+    <span class="tag" style="background:var(--leaf)">התנסות</span>
+    <h2 class="split">יוצרים Skill <span>משיחה</span></h2>
+    <p class="big">לא כותבים מאפס. מתחילים ממשימה שכבר עבדה.</p>
+  </div>
+</section>
+
+<!-- 15 create -->
+<section class="slide" data-notes="השיטה: קודם עושים את המשימה עם Claude עד שהיא טובה, ואז מבקשים ממנו להפוך את השיחה ל־Skill. skill-creator יודע לחלץ את התהליך מהשיחה. כדאי שיהיה מופעל.">
+  <div class="scene-bg faint"><img src="../../assets/img/scene-office.webp" alt=""></div>
+  <h2 class="split"><span class="ul ul--wing">מהשיחה ל־Skill</span></h2>
+  <div class="trail">
+    <svg viewBox="0 0 1640 640" preserveAspectRatio="none" aria-hidden="true"><path class="trail__path" d="M1378 150 C1268 150 1258 490 1148 490 C1038 490 1028 150 918 150 C808 150 799 490 689 490 C579 490 569 150 459 150 C349 150 340 490 230 490"/></svg>
+    <div class="stop" style="left:84%; top:23%"><b>1</b><span>עושים משימה אמיתית עם Claude, עד שהתוצר טוב</span></div>
+    <div class="stop" style="left:70%; top:77%"><b>2</b><span>שמים לב מה הסברתם שוב ושוב</span></div>
+    <div class="stop" style="left:56%; top:23%"><b>3</b><span>מבקשים: "turn this into a skill" בעזרת skill-creator</span></div>
+    <div class="stop" style="left:42%; top:77%"><b>4</b><span>קוראים, מקצרים ומדייקים את התיאור</span></div>
+    <div class="stop" style="left:28%; top:23%"><b>5</b><span>מורידים ZIP ומעלים</span></div>
+    <div class="stop" style="left:14%; top:77%"><b>6</b><span>בודקים בשיחה חדשה</span></div>
+  </div>
+  <p class="src">מקורות: claude.com/docs/skills/how-to, github.com/anthropics/skills (skill-creator), platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices</p>
+</section>
+
+<!-- 16 writing tips -->
+<section class="slide" data-notes="טיפים רשמיים לכתיבה. הכי חשוב: Claude כבר חכם, כותבים רק מה שהוא לא יודע: הסטנדרט שלכם.">
+  <div class="scene-bg"><img src="../../assets/img/scene-flipchart.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene" style="width:1000px">
+    <h2 class="split">כותבים Skill טוב</h2>
+    <div class="notes-wall notes-wall--2">
+      <div class="card sticky">קצר. Claude כבר חכם, כותבים רק מה שהוא לא יודע.</div>
+      <div class="card sticky sticky--green">משימה אחת, חוזרת וברורה.</div>
+      <div class="card sticky sticky--pink">תיאור שאומר מה ומתי.</div>
+      <div class="card sticky sticky--blue">דוגמה לתוצר שאתם מצפים לו.</div>
+      <div class="card sticky sticky--purple">צעדים ברורים, במינוח אחיד.</div>
+      <div class="card sticky">בודקים אחרי כל שינוי.</div>
+    </div>
+  </div>
+  <p class="src">מקורות: platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices, claude.com/docs/skills/how-to, support.claude.com/en/articles/12512198</p>
+</section>
+
+<!-- 17 testing -->
+<section class="slide" data-notes="בדיקות. זה שה־Skill הופעל לא אומר שהוא עשה את מה שרציתם. משווים את אותה בקשה עם ובלי ה־Skill, בשיחה חדשה. ב־Skill של כתיבה קוראים את התוצר.">
+  <div class="scene-bg"><img src="../../assets/img/scene-testing.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene">
+    <span class="tag" style="background:var(--leaf)">בדיקות</span>
+    <h2 class="split">בודקים <span>לפני שסומכים</span></h2>
+    <p class="quote" style="max-width:none; font-size:44px">"Seeing a skill trigger tells you Claude found it,<br>not that it did what you intended."</p>
+    <ul class="ticks">
+      <li>שלוש בקשות בדיקה אמיתיות, לפחות</li>
+      <li>אותה בקשה עם ה־Skill ובלעדיו, בשיחה חדשה</li>
+      <li>קוראים את התוצר מול הסטנדרט שלכם</li>
+      <li>מתקנים, ובודקים שוב</li>
+    </ul>
+  </div>
+  <p class="src">מקורות: code.claude.com/docs/en/skills, platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices, claude.com/docs/skills/how-to</p>
+</section>
+
+<!-- 18 task -->
+<section class="slide s-divider" data-notes="תרגול עצמי, כ־40 דקות. אני עובר בין המשתתפים. מי שאין לו שיחה מוכנה מתחיל משיחה חדשה על אחת המשימות מהשקף הבא.">
+  <div class="scene-bg"><img src="../../assets/img/scene-workshop.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene">
+    <h2 class="split">הזמן שלכם</h2>
+    <div class="card task">
+      <h3>ה־Skill הראשון שלכם</h3>
+      <ol>
+        <li>בוחרים משימה שחוזרת אצלכם כל שבוע</li>
+        <li>פותחים שיחה קיימת שעבדה, או עושים אותה עכשיו</li>
+        <li>מבקשים מ־Claude להפוך אותה ל־Skill</li>
+        <li>מעלים ומדליקים</li>
+        <li>בודקים עם שלוש בקשות, ומתקנים</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 19 recommendations -->
+<section class="slide" data-notes="אלה ההמלצות שלנו, לא של Anthropic: Skills שאנחנו עובדים איתם בפיתוח למידה. כל אחד הוא משימה חוזרת עם סטנדרט ברור.">
+  <div class="scene-bg faint"><img src="../../assets/img/scene-office.webp" alt=""></div>
+  <h2 class="split"><span class="ul ul--wing">Skills לפיתוח למידה</span></h2>
+  <p class="mid">ההמלצות שלנו: משימות שחוזרות בכל תוצר.</p>
+  <div class="board">
+    <div class="card sticky"><i class="pin"></i><h3>מטרות למידה</h3><p>מטרת על ומטרות ביניים מדידות, לפי בלום.</p></div>
+    <div class="card sticky sticky--green"><i class="pin"></i><h3>מסמך פיצוח</h3><p>רקע, קהל יעד, מטרות וקו קריאטיבי, במבנה הקבוע.</p></div>
+    <div class="card sticky sticky--blue"><i class="pin"></i><h3>תסריט לומדה</h3><p>מסכים, שאלות ודגשי הפקה, בתבנית שלכם.</p></div>
+    <div class="card sticky sticky--pink"><i class="pin"></i><h3>שאלות ומסיחים</h3><p>מאגר שאלות לפי נושא ורמת קושי, בכללי הניסוח שלכם.</p></div>
+    <div class="card sticky sticky--purple"><i class="pin"></i><h3>עריכה לשונית</h3><p>הגהה לפי כללי האקדמיה, עם הצעות לאישור.</p></div>
+    <div class="card sticky"><i class="pin"></i><h3>QA לתוצר</h3><p>צ'קליסט בדיקה לפני הגשה ללקוח.</p></div>
+  </div>
+</section>
+
+<!-- 20 brand -->
+<section class="slide" data-notes="הדוגמה הרשמית ש־Anthropic נותנת הכי הרבה: Skill של שפה מותגית. אצלנו: מדריך הסגנון של הלקוח או של החברה, כדי שכל תוצר ייראה וישמע אותו דבר.">
+  <div class="scene-bg"><img src="../../assets/img/scene-artifacts.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene">
+    <span class="tag" style="background:var(--clay); color:#fff">דוגמה רשמית</span>
+    <h2 class="split latin" dir="ltr" style="text-align:right">brand-guidelines</h2>
+    <p class="big">הדוגמה ש־Anthropic מביאה הכי הרבה: צבעים, גופנים וטון של מותג, בכל מסמך ומצגת.</p>
+    <p class="mid">אצלנו: מדריך הסגנון של הלקוח, כדי שכל לומדה וכל מסמך ייראו וישמעו אותו דבר.</p>
+  </div>
+  <p class="src">מקורות: claude.com/docs/skills/how-to, github.com/anthropics/skills</p>
+</section>
+
+<!-- 21 next -->
+<section class="slide" data-notes="משימה למפגש הבא, ומבט קדימה למפגש 3.">
+  <div class="scene-bg"><img src="../../assets/img/scene-code.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="on-scene">
+    <span class="tag" style="background:var(--wing); color:#fff">עד הפעם הבאה</span>
+    <h2 class="split">משתמשים, <span>ומשפרים</span></h2>
+    <ul class="ticks">
+      <li>להשתמש ב־Skill שבניתם על משימה אמיתית</li>
+      <li>לרשום מה עבד ומה צריך תיקון</li>
+      <li>להביא למפגש הבא תוכן של לומדה קצרה</li>
+    </ul>
+    <p class="mid">במפגש 3: Claude כמפיק, לומדה בשיטת vibe coding.</p>
+  </div>
+</section>
+
+<!-- 22 end -->
+<section class="slide s-end" data-notes="סגירה. מזכירים שאני זמין לליווי בין המפגשים.">
+  <div class="scene-bg"><img src="../../assets/img/hero-trio.webp" alt=""></div>
+  <div class="scene-fade"></div>
+  <div class="end__text">
+    <h2 class="split">תמיד <span>מוזמנים להתייעץ</span></h2>
+    <p class="big">ההקלטה, המצגת והקישורים מחכים באזור המשתתפים.</p>
+    <img class="end__slogan" src="../../assets/img/level-up.webp" alt="TIME TO LEVEL-UP!">
+  </div>
+</section>
+
+</main>
+
+<aside class="notes" id="notes" hidden></aside>
+<p class="counter" id="counter" aria-live="polite"></p>
+
+<script src="../../assets/js/sketch.js"></script>
+<script src="deck.js"></script>
+</body>
+</html>

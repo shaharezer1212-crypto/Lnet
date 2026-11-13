@@ -380,3 +380,36 @@ p, li, .card, .stop span, .sign p { text-wrap: pretty; }
 .floor-shadow { position: absolute; z-index: 0; height: 34px; border-radius: 50%; background: radial-gradient(closest-side, rgb(0 0 0 / .28), transparent); }
 .on-scene .big { max-width: none; }
 .slide .mid { max-width: none; }
+
+/* ---------- session 2 additions ---------- */
+.board--4 { grid-template-columns: repeat(4, 1fr); margin-top: 10px; }
+.board--4 .card { min-height: 320px; }
+/* progressive disclosure: three layers, each heavier than the last */
+.pd { display: grid; gap: 30px; margin-top: 10px; }
+.pd__step { display: grid; grid-template-columns: 110px 1fr 260px; align-items: center; gap: 34px; padding: 26px 36px; }
+.pd__step:nth-child(2) { margin-inline-start: 90px; } .pd__step:nth-child(3) { margin-inline-start: 180px; }
+.pd__n { width: 96px; height: 96px; border-radius: 50%; background: var(--c); color: #fff; display: grid; place-items: center; font: 700 56px/1 "Josefin Display", sans-serif; padding-top: 6px; }
+.pd__step:first-child .pd__n, .pd__step:nth-child(2) .pd__n { color: var(--ink); }
+.pd__step h3 { font-size: 46px; margin-bottom: 6px; }
+.pd__step p { font-size: 32px; }
+.pd__when { justify-self: end; font-size: 30px; font-weight: 700; padding: 10px 22px 4px; border-radius: 999px; background: var(--c); color: var(--ink); }
+.pd__step:nth-child(3) .pd__when { color: #fff; }
+/* anatomy: folder tree + SKILL.md */
+.anatomy { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+.tree { font: 600 38px/1.7 "Josefin Display", ui-monospace, monospace; text-align: left; }
+.tree p { font-size: 38px; white-space: nowrap; }
+.tree span { font-family: "Gazoz", sans-serif; font-size: 28px; color: var(--graphite); margin-left: 16px; }
+.tree__req { color: var(--wing); font-weight: 700; }
+.anatomy .term { width: auto; }
+.anatomy .term pre { font-size: 26px; }
+.term pre { direction: ltr; text-align: left; white-space: pre; }
+.ticks--row { grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.ticks--row li { font-size: 30px; }
+.who__facts--2 { grid-template-columns: 1fr 1fr; }
+.door__body small { font-family: "Josefin Display", sans-serif; font-size: 24px; color: var(--graphite); direction: ltr; text-align: right; }
+.door__head p[dir="ltr"] { font-family: "Josefin Display", sans-serif; font-size: 26px; }
+.term pre.short { min-height: 0; }
+.term .he { font-family: "Gazoz", sans-serif; color: #8a8a8a; }
+.doors--fit { flex: 0 1 auto; align-items: start; }
+.doors--fit .door__body { font-size: 36px; }
+.door__list { display: grid; gap: 4px; direction: ltr; text-align: right; font-family: "Josefin Display", sans-serif; font-size: 32px; }
