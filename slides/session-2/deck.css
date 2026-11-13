@@ -434,3 +434,11 @@ p, li, .card, .stop span, .sign p { text-wrap: pretty; }
 .real__notes h3 { font-size: 38px; } .real__notes p { font-size: 30px; }
 .card.bad h3 { color: #c0392b; } .card.good h3 { color: #3d7a12; }
 .s-end .ticks li { font-size: 40px; }
+.on-scene--wide { width: 1500px; }
+.on-scene--wide .who__facts--2 { max-width: 1300px; }
+.end__photo { position: absolute; left: 90px; top: 150px; width: 900px; margin: 0; padding: 14px; rotate: -2deg; background: #fff; }
+.end__photo img { display: block; width: 100%; border-radius: 18px; }
+.s-end .end__text { width: 760px; right: 110px; }
+.slide .on-scene--wide .who__facts h3 { font-size: 48px; } .slide .on-scene--wide .who__facts .card p { font-size: 40px; line-height: 1.3; } .slide .on-scene--wide .who__facts .card { padding: 30px 36px; }
+.on-scene--wide .mid { font-size: 44px; } .on-scene--wide .note { font-size: 38px; }
+.end__photo { top: 270px; }
