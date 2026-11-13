@@ -442,3 +442,12 @@ p, li, .card, .stop span, .sign p { text-wrap: pretty; }
 .slide .on-scene--wide .who__facts h3 { font-size: 48px; } .slide .on-scene--wide .who__facts .card p { font-size: 40px; line-height: 1.3; } .slide .on-scene--wide .who__facts .card { padding: 30px 36px; }
 .on-scene--wide .mid { font-size: 44px; } .on-scene--wide .note { font-size: 38px; }
 .end__photo { top: 270px; }
+.end__photo { left: 0; top: 0; bottom: 0; width: 1240px; padding: 0; rotate: 0deg; background: none; display: flex; align-items: center; }
+.end__photo img { border-radius: 0; -webkit-mask-image: linear-gradient(to right, #000 62%, transparent 98%), linear-gradient(to bottom, transparent 0, #000 8%, #000 90%, transparent 100%); -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, #000 62%, transparent 98%), linear-gradient(to bottom, transparent 0, #000 8%, #000 90%, transparent 100%); mask-composite: intersect; }
+.s-end .end__text { width: 680px; right: 90px; }
+.end__photo { width: 1480px; }
+.end__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 0 50%; -webkit-mask-image: linear-gradient(to right, #000 55%, transparent 97%); mask-image: linear-gradient(to right, #000 55%, transparent 97%); }
+.end__photo { width: 1240px; left: 10px; }
+.end__photo img { height: auto; object-fit: contain; -webkit-mask-image: radial-gradient(ellipse 72% 70% at 45% 50%, #000 62%, transparent 100%); mask-image: radial-gradient(ellipse 72% 70% at 45% 50%, #000 62%, transparent 100%); }
+.end__photo { width: 1130px; left: 20px; }
+.end__photo img { -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); -webkit-mask-composite: source-over; mask-composite: add; }
